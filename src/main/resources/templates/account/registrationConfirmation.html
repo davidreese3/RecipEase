@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Confirmation</title>
+</head>
+
+<body>
+<header>
+    <nav></nav>
+    <h1>Your account has been registered!</h1>
+</header>
+
+<main>
+    <p th:text="'An account has been created for ' + ${email} + '.'">
+    <p>Please check your email regarding account activation.</p>
+</main>
+
+<footer>
+    <button onclick="location.href='/'">Back to homepage</button>
+</footer>
+</body>
+
+</html>

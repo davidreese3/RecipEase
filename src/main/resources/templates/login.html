@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+
+<body>
+<header>
+    <nav></nav>
+    <h1>Welcome to RecipEase</h1>
+</header>
+
+<main>
+    <div th:if="${param.inactive}" style="color: red;">Your account is not active. Please check your email to activate it.</div>
+    <div th:if="${param.error}" style="color: red;">Invalid username and password.</div>
+    <div th:if="${param.logout}" style="color: green;">You have been logged out.</div>
+    <form name="f" th:action="@{/login}" method="post">
+        <table>
+            <tr>
+                <td><label for="username">Email:</label></td>
+                <td><input type="text" id="username" name="username" /></td>
+            </tr>
+            <tr>
+                <td><label for="password">Password:</label></td>
+                <td><input type="password" id="password" name="password" /></td>
+            </tr>
+            <tr>
+                <td><button type="submit">Log in</button></td>
+            </tr>
+        </table>
+        <a href="/">Cancel<br></a>
+    </form>
+    <div>
+        <button onclick="location.href='/account/register'">Register</button>
+    </div>
+</main>
+
+<footer>
+    <p>footer</p>
+</footer>
+</body>
+
+</html>

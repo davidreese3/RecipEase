@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RecipEase Landing</title>
+</head>
+
+<body>
+<header>
+    <nav></nav>
+    <h1>Welcome to RecipEase</h1>
+</header>
+
+<main>
+    <p>main</p>
+    <div>
+        <form th:action="@{/logout}" method="post">
+            <button type="submit">Logout</button>
+        </form>
+    </div>
+</main>
+
+<footer>
+    <p>footer</p>
+</footer>
+</body>
+
+</html>

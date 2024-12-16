@@ -1,0 +1,38 @@
+services:
+  RecipEaseDB:
+    image: postgres
+    container_name: RecipEaseDB
+    ports:
+      - 5432:5432
+    networks:
+      - spring-postgres-JDBC
+    environment:
+      - POSTGRES_DB=postgres  # Set the default database to docker
+      - POSTGRES_USER=postgres # Create the user docker
+      - POSTGRES_PASSWORD=mypswd  # Set the password for the docker user
+    volumes:
+      - RecipEaseDB:/var/lib/postgresql/data
+      - ./db-init:/docker-entrypoint-initdb.d
+    restart: always
+
+  recipease:
+    image: recipease
+    build: .
+    container_name: recipease
+    ports:
+      - 8080:8080
+    networks:
+      - spring-postgres-JDBC
+    environment:
+      - DB_URL=jdbc:postgresql://RecipEaseDB:5432/docker  # Connect to the docker database
+      - DB_USER=docker  # Use the docker user
+      - DB_PASSWORD=pswd-docker  # Password for docker user
+    depends_on:
+      - RecipEaseDB
+    restart: always
+
+volumes:
+  RecipEaseDB:
+
+networks:
+  spring-postgres-JDBC:

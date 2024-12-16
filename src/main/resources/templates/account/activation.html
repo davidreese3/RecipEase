@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RecipEase Homepage</title>
+</head>
+
+<body>
+<header>
+    <nav></nav>
+    <h1>Activate your account</h1>
+</header>
+
+<main>
+    <div th:if="${error}" th:text="${error}" style="color: red;"></div>
+    <form action="#" th:action="@{/account/activate}" method="post">
+        <input type="hidden" name="email" th:value="${email}" />
+        <table>
+            <tr>
+                <td>Activation Code:</td>
+                <td><input type="number" th:name="code" /></td>
+            </tr>
+            <tr>
+                <td><button type="submit">Activate</button></td><td></td>
+            </tr>
+        </table>
+    </form>
+    <!--
+    <div>
+        <button onclick="location.href='/account/register'">Register</button>
+        <button onclick="location.href='/login'">Login</button>
+    </div>
+    -->
+</main>
+
+<footer>
+    <p>footer</p>
+</footer>
+</body>
+
+</html>
