@@ -17,6 +17,7 @@ public interface AccountDao {
     // READ OPS
     public Account getAccountByEmail(String email);
     public Integer getActivationCodeByEmail(String email);
+    public String getPasswordByEmail(String email);
 
     // UPDATE OPS
     boolean verifyActivationCodeAndActivate(String email, int code);

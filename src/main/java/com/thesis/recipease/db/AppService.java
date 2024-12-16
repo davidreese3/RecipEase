@@ -1,7 +1,9 @@
 package com.thesis.recipease.db;
 
 import com.thesis.recipease.db.account.AccountDao;
+import com.thesis.recipease.db.profile.ProfileDao;
 import com.thesis.recipease.model.Account;
+import com.thesis.recipease.model.Profile;
 import com.thesis.recipease.model.WebAccount;
 import com.thesis.recipease.model.WebProfile;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,25 +15,34 @@ import java.util.List;
 public class AppService {
     @Autowired
     private AccountDao accountDao;
+    @Autowired
+    private ProfileDao profileDao;
 
     // ------------------------
     // ACCOUNT OPERATIONS
     // ------------------------
 
     // CREATE OPS
-    public Account addAccount(WebAccount webAccount, List<String> roles, WebProfile webProfile){
+    public Account addAccount(WebAccount webAccount, List<String> roles, WebProfile webProfile) {
         return accountDao.addAccount(webAccount, roles, webProfile);
     }
+
     // READ OPS
     public Account getAccountByEmail(String email) {
         return accountDao.getAccountByEmail(email);
     }
-    public Integer getActivationCodeById(String email){
+
+    public Integer getActivationCodeById(String email) {
         return accountDao.getActivationCodeByEmail(email);
     }
+
     // UPDATE OPS
-    public boolean verifyActivationCodeAndActivate(String email, int code){
+    public boolean verifyActivationCodeAndActivate(String email, int code) {
         return accountDao.verifyActivationCodeAndActivate(email, code);
+    }
+
+    public String getPasswordByEmail(String email){
+        return accountDao.getPasswordByEmail(email);
     }
 
     // DELETE OPS
@@ -42,7 +53,16 @@ public class AppService {
 
     // CREATE OPS
     // READ OPS
+
+    public Profile getProfileByEmail(String email) {
+        return profileDao.getProfileByEmail(email);
+    }
+
     // UPDATE OPS
+    public WebProfile updateProfile(WebProfile webProfile) {
+        return profileDao.updateProfile(webProfile);
+    }
+
     // DELETE OPS
 
     // ------------------------

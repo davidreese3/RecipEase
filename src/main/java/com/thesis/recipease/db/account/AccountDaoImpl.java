@@ -113,6 +113,18 @@ public class AccountDaoImpl implements AccountDao{
             return null;
         }
     }
+    public String getPasswordByEmail(String email){
+        final String SQL = "select password from account where email = ?";
+        try {
+            return jdbcTemplate.queryForObject(SQL, String.class, email);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
+    // ------------------------------------------------
+    // UPDATE OPS
+    // ------------------------------------------------
     public boolean verifyActivationCodeAndActivate(String email, int code) {
         if(getActivationCodeByEmail(email) == code){
             final String SQL = "update account set active = true where email = ?";
@@ -123,10 +135,6 @@ public class AccountDaoImpl implements AccountDao{
             return false;
         }
     }
-
-        // ------------------------------------------------
-    // UPDATE OPS
-    // ------------------------------------------------
 
     // ------------------------------------------------
     // DELETE OPS

@@ -15,6 +15,9 @@
 
 <main>
     <p>main</p>
+    <button onclick="location.href='/profile/view/personal'">View Personal Profile</button>
+    <button onclick="location.href='/profile/view?email=david33reese@gmail.com'">View Other Profile</button>
+
     <div>
         <form th:action="@{/logout}" method="post">
             <button type="submit">Logout</button>

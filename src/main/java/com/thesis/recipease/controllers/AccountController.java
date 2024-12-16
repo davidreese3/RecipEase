@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -77,4 +78,39 @@ public class AccountController {
         }
         return "account/activationConfirmation";
     }
+
+/*
+    @RequestMapping(value = "account/edit", method = RequestMethod.GET)
+    public String displayEditAccountForm(Model model, Principal principal){
+        WebAccount webAccount = new WebAccount();
+        webAccount.setEmail(principal.getName());
+        model.addAttribute("webAccount",webAccount);
+        return "account/editAccount";
+    }
+
+    @RequestMapping(value = "/account/edit", method = RequestMethod.GET)
+    public String processEditAccountForm(Model model, Principal principal, WebAccount webAccount){
+        if(!accountValidator.isAccountValid(model,webAccount)){
+            return "account/editAccount";
+        }
+        if(!passwordEncoder.matches(webAccount.getPassword(), appService.getPasswordByEmail(principal.getName())) && !principal.getName().equals(webAccount.getEmail())){
+            //update
+            //send email
+        }
+        else if(!passwordEncoder.matches(webAccount.getPassword(), appService.getPasswordByEmail(principal.getName()))) {
+            //update
+            //send email
+        }
+        else if(!principal.getName().equals(webAccount.getEmail())){
+
+        }
+
+
+        //update DB
+        //send email
+        //log user out
+
+
+    }
+*/
 }
