@@ -4,13 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>View Profile</title>
+    <title th:if="${personal}">Your Profile</title>
+    <title th:if="${!personal}">View Profile</title>
 </head>
 
 <body>
 <header>
     <nav></nav>
-    <h1>View profile</h1>
+    <h1 th:if="${personal}">View Your Profile</h1>
+    <h1 th:if="${!personal}">View Other's Profile</h1>
 </header>
 
 <main>
@@ -20,6 +22,7 @@
     <div th:if="${error}" th:text="${error}" style="color: red;"></div>
     <div th:if="${message}" th:text="${message}" style="color: green;"></div>
     <table th:if="${profile}">
+        <tr th:if="${personal}"></tr>
         <tr>
             <td>First Name:</td>
             <td th:text="${profile.firstName}"></td>

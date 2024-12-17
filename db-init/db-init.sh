@@ -147,11 +147,11 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
         primary key (recipeID, dietType)
     );
 
-    -- equipment
-    create table if not exists equipment (
+    -- cooking level
+    create table if not exists cookingLevel (
         recipeID int references info(recipeID) on delete cascade,
-        equipment varchar(30),
-        primary key (recipeID, equipment)
+        cookingLevel varchar(30),
+        primary key (recipeID, cookingLevel)
     );
 
     -- ======
@@ -187,15 +187,15 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
     -- user substitutions
     create table if not exists userSubs (
         recipeID int references info(recipeID) on delete cascade,
-        componentO varchar(30),
-        quantityO int,
-        measurementO varchar(20), --change once prepop made
-        preparationO varchar(20), --change once prepop made
-        componentS varchar(30),
-        quantityS int,
-        measurementS varchar(20), --change once prepop made
-        preparationS varchar(20), --change once prepop made
-        primary key(recipeID, componentO, componentS)
+        originalComponent varchar(30),
+        originalQuantity int,
+        originalMeasurement varchar(20), --change once prepop made
+        originalPreparation varchar(20), --change once prepop made
+        substitutedComponent varchar(30),
+        substitutedQuantity int,
+        substitutedMeasurement varchar(20), --change once prepop made
+        substitutedPreparation varchar(20), --change once prepop made
+        primary key(recipeID, originalComponent, substitutedComponent)
     );
 
     -- =============================
@@ -204,15 +204,15 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
 
     -- knownSubs
     create table if not exists knownSubs (
-        componentO varchar(30),
-        quantityO int,
-        measurementO varchar(20), --change once prepop made
-        preparationO varchar(20), --change once prepop made
-        componentS varchar(30),
-        quantityS int,
-        measurementS varchar(20), --change once prepop made
-        preparationS varchar(20), --change once prepop made
-        primary key(componentO, componentS)
+        originalComponent varchar(30),
+        originalQuantity int,
+        originalMeasurement varchar(20), --change once prepop made
+        originalPreparation varchar(20), --change once prepop made
+        substitutedComponent varchar(30),
+        substitutedQuantity int,
+        substitutedMeasurement varchar(20), --change once prepop made
+        substitutedPreparation varchar(20), --change once prepop made
+        primary key(originalComponent, substitutedComponent)
     );
 
     -- glossary
@@ -297,37 +297,83 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
     ('Whip', 'To beat ingredients to increase volume and incorporate air.'),
     ('Zest', 'The outer colored layer of citrus fruit peel, used for flavor.');
 
-    INSERT INTO knownSubs (componentO, quantityO, measurementO, preparationO, componentS, quantityS, measurementS, preparationS)
-    VALUES
     -- Common baking and cooking substitutions
-    ('Oil', 1, 'cup', '', 'Applesauce', 1, 'cup', ''),
-    ('Butter', 1, 'cup', '', 'Margarine', 1, 'cup', ''),
-    ('Milk', 1, 'cup', '', 'Almond Milk', 1, 'cup', ''),
-    ('Heavy Cream', 1, 'cup', '', 'Coconut Cream', 1, 'cup', ''),
-    ('Egg', 1, 'unit', '', 'Flaxseed Meal', 1, 'tbsp', 'Ground'),
-    ('Egg', 1, 'unit', '', 'Chia Seeds', 1, 'tbsp', 'Ground'),
-    ('Sugar', 1, 'cup', '', 'Honey', 0.75, 'cup', ''),
-    ('White Flour', 1, 'cup', '', 'Whole Wheat Flour', 1, 'cup', ''),
-    ('Sour Cream', 1, 'cup', '', 'Yogurt', 1, 'cup', ''),
-    ('Buttermilk', 1, 'cup', '', 'Milk + Lemon Juice', 1, 'cup', 'Mixed'),
-    ('Ground Beef', 1, 'lb', '', 'Ground Turkey', 1, 'lb', ''),
-    ('Ground Beef', 1, 'lb', '', 'Lentils', 1, 'lb', 'Cooked'),
-    ('Cream Cheese', 1, 'cup', '', 'Greek Yogurt', 1, 'cup', ''),
-    ('Mayonnaise', 1, 'cup', '', 'Avocado', 1, 'cup', 'Mashed'),
-    ('Breadcrumbs', 1, 'cup', '', 'Rolled Oats', 1, 'cup', 'Blended'),
-    ('Breadcrumbs', 1, 'cup', '', 'Crushed Cornflakes', 1, 'cup', ''),
-    ('Brown Sugar', 1, 'cup', '', 'White Sugar + Molasses', 1, 'cup', 'Mixed'),
-    ('Chocolate Chips', 1, 'cup', '', 'Cacao Nibs', 1, 'cup', ''),
-    ('Heavy Cream', 1, 'cup', '', 'Evaporated Milk', 1, 'cup', ''),
-    ('Vegetable Oil', 1, 'cup', '', 'Coconut Oil', 1, 'cup', 'Melted'),
-    ('Salt', 1, 'tsp', '', 'Soy Sauce', 1, 'tsp', ''),
-    ('Soy Sauce', 1, 'tbsp', '', 'Tamari', 1, 'tbsp', ''),
-    ('Pasta', 1, 'cup', 'Cooked', 'Zucchini Noodles', 1, 'cup', 'Spiralized'),
-    ('Rice', 1, 'cup', 'Cooked', 'Cauliflower Rice', 1, 'cup', 'Grated');
+    INSERT INTO knownSubs (originalComponent, originalQuantity, originalMeasurement, originalPreparation, substitutedComponent, substitutedQuantity, substitutedMeasurement, substitutedPreparation)
+    VALUES
+        -- Fats and Oils
+        ('Butter', 1, 'cup', '', 'Coconut Oil', 1, 'cup', 'Melted'),
+        ('Butter', 1, 'cup', '', 'Olive Oil', 0.75, 'cup', ''),
+        ('Oil', 1, 'cup', '', 'Mashed Banana', 0.5, 'cup', ''),
+        ('Oil', 1, 'cup', '', 'Greek Yogurt', 0.75, 'cup', ''),
+        ('Oil', 1, 'cup', '', 'Applesauce', 0.75, 'cup', 'Unsweetened'),
+        ('Shortening', 1, 'cup', '', 'Butter', 1, 'cup', ''),
+        ('Butter', 1, 'tbsp', '', 'Ghee', 1, 'tbsp', ''),
+
+        -- Dairy
+        ('Milk', 1, 'cup', '', 'Soy Milk', 1, 'cup', ''),
+        ('Milk', 1, 'cup', '', 'Oat Milk', 1, 'cup', ''),
+        ('Heavy Cream', 1, 'cup', '', 'Milk + Butter', 1, 'cup', 'Combined'),
+        ('Cream Cheese', 1, 'cup', '', 'Ricotta Cheese', 1, 'cup', ''),
+        ('Sour Cream', 1, 'cup', '', 'Cottage Cheese', 1, 'cup', 'Blended'),
+        ('Buttermilk', 1, 'cup', '', 'Yogurt + Water', 1, 'cup', 'Mixed'),
+        ('Milk', 1, 'cup', '', 'Cashew Milk', 1, 'cup', ''),
+        ('Butter', 1, 'cup', '', 'Avocado', 1, 'cup', 'Mashed'),
+
+        -- Eggs
+        ('Egg', 1, 'unit', '', 'Banana', 0.5, 'cup', 'Mashed'),
+        ('Egg', 1, 'unit', '', 'Unsweetened Applesauce', 0.25, 'cup', ''),
+        ('Egg', 1, 'unit', '', 'Silken Tofu', 0.25, 'cup', 'Blended'),
+        ('Egg', 1, 'unit', '', 'Commercial Egg Replacer', 1, 'tbsp', 'Mixed with water'),
+        ('Egg', 1, 'unit', '', 'Yogurt', 0.25, 'cup', ''),
+
+        -- Flours
+        ('White Flour', 1, 'cup', '', 'Almond Flour', 1, 'cup', ''),
+        ('White Flour', 1, 'cup', '', 'Oat Flour', 1, 'cup', 'Blended'),
+        ('White Flour', 1, 'cup', '', 'Coconut Flour', 0.25, 'cup', ''),
+        ('White Flour', 1, 'cup', '', 'Rice Flour', 1, 'cup', ''),
+        ('White Flour', 1, 'cup', '', 'Chickpea Flour', 1, 'cup', ''),
+
+        -- Sugars and Sweeteners
+        ('Sugar', 1, 'cup', '', 'Maple Syrup', 0.75, 'cup', ''),
+        ('Sugar', 1, 'cup', '', 'Agave Nectar', 0.75, 'cup', ''),
+        ('Sugar', 1, 'cup', '', 'Stevia', 1, 'tsp', 'Powdered'),
+        ('Brown Sugar', 1, 'cup', '', 'Coconut Sugar', 1, 'cup', ''),
+        ('Honey', 1, 'cup', '', 'Maple Syrup', 1, 'cup', ''),
+        ('Honey', 1, 'cup', '', 'Molasses', 0.75, 'cup', ''),
+
+        -- Grains and Pasta
+        ('Pasta', 1, 'cup', 'Cooked', 'Spaghetti Squash', 1, 'cup', 'Cooked'),
+        ('Rice', 1, 'cup', 'Cooked', 'Quinoa', 1, 'cup', 'Cooked'),
+        ('Rice', 1, 'cup', 'Cooked', 'Barley', 1, 'cup', 'Cooked'),
+        ('Couscous', 1, 'cup', 'Cooked', 'Cauliflower Rice', 1, 'cup', 'Grated'),
+
+        -- Proteins
+        ('Ground Beef', 1, 'lb', '', 'Mushrooms', 1, 'lb', 'Chopped'),
+        ('Ground Chicken', 1, 'lb', '', 'Ground Turkey', 1, 'lb', ''),
+        ('Ground Meat', 1, 'lb', '', 'Tofu', 1, 'lb', 'Crumbled'),
+        ('Ground Beef', 1, 'lb', '', 'Black Beans', 1, 'lb', 'Cooked'),
+        ('Chicken Breast', 1, 'cup', 'Shredded', 'Jackfruit', 1, 'cup', 'Shredded'),
+
+        -- Thickeners and Binders
+        ('Cornstarch', 1, 'tbsp', '', 'Arrowroot Powder', 1, 'tbsp', ''),
+        ('Cornstarch', 1, 'tbsp', '', 'Tapioca Starch', 2, 'tbsp', ''),
+        ('Gelatin', 1, 'tbsp', '', 'Agar Agar', 1, 'tbsp', ''),
+
+        -- Miscellaneous
+        ('Salt', 1, 'tsp', '', 'Seaweed Powder', 1, 'tsp', ''),
+        ('Soy Sauce', 1, 'tbsp', '', 'Coconut Aminos', 1, 'tbsp', ''),
+        ('Vinegar', 1, 'tbsp', '', 'Lemon Juice', 1, 'tbsp', ''),
+        ('Wine', 1, 'cup', '', 'Grape Juice + Vinegar', 1, 'cup', 'Mixed'),
+        ('Breadcrumbs', 1, 'cup', '', 'Crushed Crackers', 1, 'cup', ''),
+        ('Breadcrumbs', 1, 'cup', '', 'Ground Nuts', 1, 'cup', ''),
+        ('Baking Powder', 1, 'tsp', '', 'Baking Soda + Lemon Juice', 0.5, 'tsp', 'Combined'),
+        ('Tomato Sauce', 1, 'cup', '', 'Tomato Paste + Water', 0.5, 'cup', 'Mixed'),
+        ('Cocoa Powder', 1, 'tbsp', '', 'Carob Powder', 1, 'tbsp', '');
+
 
     -- Insert into account table
     INSERT INTO account (email, password, active, activationCode)
-    VALUES ('david33reese@gmail.com', '\$2a\$10\$5TWVNOeNdsnF5/WOOgqFkO.cNZJ04YGi9TbI9dCKlE8ps7qauqUDS', TRUE, 123456);
+    VALUES ('david33reese@gmail.com', '\$2b\$12\$FaFSKjH6oBrIk3JxHimLfuK2Q.QCqEczCn92.bX3pN/cly71SCNv6', TRUE, 123456);
 
     -- Insert into profile table
     INSERT INTO profile (email, firstName, lastName, cookingLevel, favoriteDish, favoriteCuisine)
@@ -352,7 +398,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
     alter table cuisine owner to docker;
     alter table allergen owner to docker;
     alter table dietType owner to docker;
-    alter table equipment owner to docker;
+    alter table cookingLevel owner to docker;
     alter table photo owner to docker;
     alter table link owner to docker;
     alter table notes owner to docker;

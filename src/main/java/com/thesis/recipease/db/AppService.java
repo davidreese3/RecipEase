@@ -3,6 +3,7 @@ package com.thesis.recipease.db;
 import com.thesis.recipease.db.account.AccountDao;
 import com.thesis.recipease.db.profile.ProfileDao;
 import com.thesis.recipease.db.glossary.GlossaryDao;
+import com.thesis.recipease.db.substitution.SubstitutionDao;
 import com.thesis.recipease.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,8 @@ public class AppService {
     private ProfileDao profileDao;
     @Autowired
     private GlossaryDao glossaryDao;
+    @Autowired
+    private SubstitutionDao substitutionDao;
 
     // ------------------------
     // ACCOUNT OPERATIONS
@@ -92,6 +95,9 @@ public class AppService {
 
     // CREATE OPS
     // READ OPS
+    public List<SubstitutionEntry> getAllSubstitutionEntries(){
+        return substitutionDao.getAllSubstitutionEntries();
+    }
     // UPDATE OPS
     // DELETE OPS
 }

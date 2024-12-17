@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RecipEase Substitutions</title>
+</head>
+
+<body>
+<header>
+    <nav></nav>
+    <h1>Browse through the known substitutions</h1>
+</header>
+
+<main>
+    <p>main</p>
+    <table>
+        <thead>
+        <tr>
+            <th>Original</th>
+            <th>Amount and Preparation</th>
+            <th>Substituted</th>
+            <th>Amount and Preparation</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="substitution : ${substitutions}">
+            <td th:text="${substitution.originalComponent}"></td>
+            <td th:text="${substitution.originalQuantity} + ' ' + ${substitution.originalMeasurement} + ' ' + ${substitution.originalPreparation}"></td>
+            <td th:text="${substitution.substitutedComponent}"></td>
+            <td th:text="${substitution.substitutedQuantity} + ' ' + ${substitution.substitutedMeasurement} + ' ' + ${substitution.substitutedPreparation}"></td>
+        </tr>
+
+        </tbody>
+    </table>
+</main>
+
+<footer>
+    <p>footer</p>
+</footer>
+</body>
+
+</html>
