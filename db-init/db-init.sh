@@ -22,6 +22,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
         primary key (id)
     );
 
+
     -- profile
     create table if not exists profile (
         email varchar(50) references account(email) on delete cascade on update cascade,
@@ -187,9 +188,11 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
     create table if not exists userSubs (
         recipeID int references info(recipeID) on delete cascade,
         componentO varchar(30),
+        quantityO int,
         measurementO varchar(20), --change once prepop made
         preparationO varchar(20), --change once prepop made
         componentS varchar(30),
+        quantityS int,
         measurementS varchar(20), --change once prepop made
         preparationS varchar(20), --change once prepop made
         primary key(recipeID, componentO, componentS)
@@ -202,9 +205,11 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
     -- knownSubs
     create table if not exists knownSubs (
         componentO varchar(30),
+        quantityO int,
         measurementO varchar(20), --change once prepop made
         preparationO varchar(20), --change once prepop made
         componentS varchar(30),
+        quantityS int,
         measurementS varchar(20), --change once prepop made
         preparationS varchar(20), --change once prepop made
         primary key(componentO, componentS)
@@ -217,7 +222,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
         primary key(term, definition)
     );
 
-    -- Insertion script with accented and non-accented terms
+    -- Insert glossary terms and definitions
     INSERT INTO glossary (term, definition) VALUES
     ('Al dente', 'Italian term meaning "to the tooth," used to describe pasta or rice cooked until it offers slight resistance when bitten.'),
     ('Bain-marie', 'A water bath used to gently heat or cook food, often for custards, sauces, or melting chocolate.'),
@@ -246,7 +251,6 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
     ('Ferment', 'To allow food or drink to sit and develop flavor through natural microbial activity.'),
     ('Fillet', 'To remove the bones from meat or fish.'),
     ('Flambé', 'To ignite alcohol in a dish for dramatic effect and flavor enhancement.'),
-    ('Flambe', 'To ignite alcohol in a dish for dramatic effect and flavor enhancement.'),
     ('Fold', 'To gently combine ingredients, usually to preserve air in a mixture.'),
     ('Fry', 'To cook food in hot fat or oil.'),
     ('Ganache', 'A mixture of chocolate and cream, often used as a glaze or filling.'),
@@ -276,7 +280,6 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
     ('Roast', 'To cook food in the oven with dry heat.'),
     ('Roux', 'A mixture of fat and flour used to thicken sauces.'),
     ('Sauté', 'To cook food quickly in a small amount of oil or fat.'),
-    ('Saute', 'To cook food quickly in a small amount of oil or fat.'),
     ('Scald', 'To heat liquid just below boiling.'),
     ('Score', 'To cut shallow lines into food for decoration or to help it cook evenly.'),
     ('Sear', 'To brown the surface of food quickly at high heat.'),
@@ -293,6 +296,48 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
     ('Whisk', 'To beat ingredients together, incorporating air for a lighter texture.'),
     ('Whip', 'To beat ingredients to increase volume and incorporate air.'),
     ('Zest', 'The outer colored layer of citrus fruit peel, used for flavor.');
+
+    INSERT INTO knownSubs (componentO, quantityO, measurementO, preparationO, componentS, quantityS, measurementS, preparationS)
+    VALUES
+    -- Common baking and cooking substitutions
+    ('Oil', 1, 'cup', '', 'Applesauce', 1, 'cup', ''),
+    ('Butter', 1, 'cup', '', 'Margarine', 1, 'cup', ''),
+    ('Milk', 1, 'cup', '', 'Almond Milk', 1, 'cup', ''),
+    ('Heavy Cream', 1, 'cup', '', 'Coconut Cream', 1, 'cup', ''),
+    ('Egg', 1, 'unit', '', 'Flaxseed Meal', 1, 'tbsp', 'Ground'),
+    ('Egg', 1, 'unit', '', 'Chia Seeds', 1, 'tbsp', 'Ground'),
+    ('Sugar', 1, 'cup', '', 'Honey', 0.75, 'cup', ''),
+    ('White Flour', 1, 'cup', '', 'Whole Wheat Flour', 1, 'cup', ''),
+    ('Sour Cream', 1, 'cup', '', 'Yogurt', 1, 'cup', ''),
+    ('Buttermilk', 1, 'cup', '', 'Milk + Lemon Juice', 1, 'cup', 'Mixed'),
+    ('Ground Beef', 1, 'lb', '', 'Ground Turkey', 1, 'lb', ''),
+    ('Ground Beef', 1, 'lb', '', 'Lentils', 1, 'lb', 'Cooked'),
+    ('Cream Cheese', 1, 'cup', '', 'Greek Yogurt', 1, 'cup', ''),
+    ('Mayonnaise', 1, 'cup', '', 'Avocado', 1, 'cup', 'Mashed'),
+    ('Breadcrumbs', 1, 'cup', '', 'Rolled Oats', 1, 'cup', 'Blended'),
+    ('Breadcrumbs', 1, 'cup', '', 'Crushed Cornflakes', 1, 'cup', ''),
+    ('Brown Sugar', 1, 'cup', '', 'White Sugar + Molasses', 1, 'cup', 'Mixed'),
+    ('Chocolate Chips', 1, 'cup', '', 'Cacao Nibs', 1, 'cup', ''),
+    ('Heavy Cream', 1, 'cup', '', 'Evaporated Milk', 1, 'cup', ''),
+    ('Vegetable Oil', 1, 'cup', '', 'Coconut Oil', 1, 'cup', 'Melted'),
+    ('Salt', 1, 'tsp', '', 'Soy Sauce', 1, 'tsp', ''),
+    ('Soy Sauce', 1, 'tbsp', '', 'Tamari', 1, 'tbsp', ''),
+    ('Pasta', 1, 'cup', 'Cooked', 'Zucchini Noodles', 1, 'cup', 'Spiralized'),
+    ('Rice', 1, 'cup', 'Cooked', 'Cauliflower Rice', 1, 'cup', 'Grated');
+
+    -- Insert into account table
+    INSERT INTO account (email, password, active, activationCode)
+    VALUES ('david33reese@gmail.com', '\$2a\$10\$5TWVNOeNdsnF5/WOOgqFkO.cNZJ04YGi9TbI9dCKlE8ps7qauqUDS', TRUE, 123456);
+
+    -- Insert into profile table
+    INSERT INTO profile (email, firstName, lastName, cookingLevel, favoriteDish, favoriteCuisine)
+    VALUES ('david33reese@gmail.com', 'David', 'Reese', 'Intermediate', 'Spaghetti Carbonara', 'Italian');
+
+    -- Insert into authority table
+    INSERT INTO authority (email, role)
+    VALUES ('david33reese@gmail.com', 'ROLE_USER');
+
+
 
     alter table account owner to docker;
     alter table authority owner to docker;

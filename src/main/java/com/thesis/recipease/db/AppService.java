@@ -2,10 +2,8 @@ package com.thesis.recipease.db;
 
 import com.thesis.recipease.db.account.AccountDao;
 import com.thesis.recipease.db.profile.ProfileDao;
-import com.thesis.recipease.model.Account;
-import com.thesis.recipease.model.Profile;
-import com.thesis.recipease.model.WebAccount;
-import com.thesis.recipease.model.WebProfile;
+import com.thesis.recipease.db.glossary.GlossaryDao;
+import com.thesis.recipease.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +15,8 @@ public class AppService {
     private AccountDao accountDao;
     @Autowired
     private ProfileDao profileDao;
+    @Autowired
+    private GlossaryDao glossaryDao;
 
     // ------------------------
     // ACCOUNT OPERATIONS
@@ -80,6 +80,9 @@ public class AppService {
 
     // CREATE OPS
     // READ OPS
+    public List<GlossaryEntry> getAllGlossaryEntries(){
+        return glossaryDao.getAllGlossaryEntries();
+    }
     // UPDATE OPS
     // DELETE OPS
 

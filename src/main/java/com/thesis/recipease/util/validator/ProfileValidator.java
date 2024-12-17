@@ -22,6 +22,7 @@ public class ProfileValidator {
             model.addAttribute("error", "Last name cannot be blank.");
             return false;
         }
+        /*
         if(!isFieldValid(webProfile.getCookingLevel())){
             model.addAttribute("error", "Cooking level cannot be blank.");
             return false;
@@ -34,6 +35,7 @@ public class ProfileValidator {
             model.addAttribute("error", "Favorite cuisine cannot be blank.");
             return false;
         }
+        */
         return true;
     }
 

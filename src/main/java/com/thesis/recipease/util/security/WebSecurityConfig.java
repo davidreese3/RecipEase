@@ -151,7 +151,7 @@ public class WebSecurityConfig {
                 authz
                         .requestMatchers("/", "/login", "/account/register", "/account/activate", "/403", "/logout", "/resources/**", "/static/**", "/css/**").permitAll()
                         // Protected URLs
-                        .requestMatchers("/landing").authenticated()
+                        .requestMatchers("/landing","/profile/**","/glossary/**").authenticated()
                         .requestMatchers("/user/db/**").hasRole("FACULTY")
                         .anyRequest().authenticated();
             } catch (Exception e) {

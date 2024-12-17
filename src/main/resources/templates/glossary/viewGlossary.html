@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RecipEase Glossary</title>
+</head>
+
+<body>
+<header>
+    <nav></nav>
+    <h1>Browse through the glossary for terms and their definitions</h1>
+</header>
+
+<main>
+    <p>main</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Term</th>
+                <th>Definition</th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr th:each="entry : ${glossary}">
+            <td th:text="${entry.term}"></td>
+            <td th:text="${entry.definition}"></td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+
+<footer>
+    <p>footer</p>
+</footer>
+</body>
+
+</html>

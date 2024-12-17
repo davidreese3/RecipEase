@@ -8,42 +8,76 @@
 </head>
 
 <body>
-    <header>
-        <nav></nav>
-        <h1>Register your account</h1>
-    </header>
+<header>
+    <nav></nav>
+    <h1>Register your account and create your profile</h1>
+</header>
 
-    <main>
-        <div th:if="${error}" th:text="${error}" style="color: red;"></div>
-        <ul th:if="${passwordCriteria}">
-            <li th:each="criteria : ${passwordCriteria}"
-                style="color: #555;"
-                th:text="${criteria}"></li>
-        </ul>
-            <form action="#" th:action="@{/account/register}" th:object="${webAccount}" method="post">
-            <table>
-                <tr>
-                    <td>Email:</td>
-                    <td><input type="text" th:field="*{email}"/></td>
-                </tr>
-                <tr>
-                    <td>Password:</td>
-                    <td><input type="password" th:field="*{password}"/></td>
-                </tr>
-                <tr>
-                    <td>Confirm Password:</td>
-                    <td><input type="password" th:field="*{confirmPassword}"/></td>
-                </tr>
-                <tr>
-                    <td><button type="submit">Register</button></td><td></td>
-                </tr>
-            </table>
-        </form>
-    </main>
+<main>
+    <div th:if="${error}" th:text="${error}" style="color: red;"></div>
+    <ul th:if="${passwordCriteria}">
+        <li th:each="criteria : ${passwordCriteria}"
+            style="color: #555;"
+            th:text="${criteria}"></li>
+    </ul>
+    <form action="#" th:action="@{/account/register}" th:object="${registrationForm}" method="post">
+        <h2>Account Information</h2>
+        <table>
+            <tr>
+                <td>Email:</td>
+                <td><input type="text" th:field="*{webAccount.email}"/></td>
+            </tr>
+            <tr>
+                <td>Password:</td>
+                <td><input type="password" th:field="*{webAccount.password}"/></td>
+            </tr>
+            <tr>
+                <td>Confirm Password:</td>
+                <td><input type="password" th:field="*{webAccount.confirmPassword}"/></td>
+            </tr>
+        </table>
 
-    <footer>
-        <button onclick="location.href='/'">Cancel</button>
-    </footer>
+        <h2>Profile Information</h2>
+        <table>
+            <tr>
+                <td>First Name:</td>
+                <td><input type="text" th:field="*{webProfile.firstName}"/></td>
+            </tr>
+            <tr>
+                <td>Last Name:</td>
+                <td><input type="text" th:field="*{webProfile.lastName}"/></td>
+            </tr>
+            <tr>
+                <td>Favorite Dish:</td>
+                <td><input type="text" th:field="*{webProfile.favoriteDish}"/></td>
+            </tr>
+            <tr>
+                <td>Cooking Level:</td>
+                <td>
+                    <select th:field="*{webProfile.cookingLevel}">
+                        <option value="">Select a cooking level</option>
+                        <option value="Novice">Novice</option>
+                        <option value="Beginner">Beginner</option>
+                        <option value="Intermediate">Intermediate</option>
+                        <option value="Advanced">Advanced</option>
+                        <option value="Expert">Expert</option>
+                        <option value="Chef-Level">Chef-Level</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Favorite Cuisine:</td>
+                <td><input type="text" th:field="*{webProfile.favoriteCuisine}"/></td>
+            </tr>
+        </table>
+
+        <button type="submit">Register and Create Profile</button>
+    </form>
+</main>
+
+<footer>
+    <button onclick="location.href='/'">Cancel</button>
+</footer>
 </body>
 
 </html>
