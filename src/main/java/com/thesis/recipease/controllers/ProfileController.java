@@ -30,7 +30,7 @@ public class ProfileController {
         else{
             model.addAttribute("profile", profile);
         }
-        model.addAttribute("personal",true);
+        model.addAttribute("isPersonal",true);
         return "profile/viewProfile";
     }
 
@@ -43,7 +43,7 @@ public class ProfileController {
         else{
             model.addAttribute("profile", profile);
         }
-        model.addAttribute("personal",true);
+        model.addAttribute("isPersonal",true);
         return "profile/viewProfile";
     }
 
