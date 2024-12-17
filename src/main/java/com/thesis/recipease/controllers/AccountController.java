@@ -17,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -79,38 +80,54 @@ public class AccountController {
         return "account/activationConfirmation";
     }
 
-/*
-    @RequestMapping(value = "account/edit", method = RequestMethod.GET)
+    @RequestMapping(value = "account/edit/email", method = RequestMethod.GET)
     public String displayEditAccountForm(Model model, Principal principal){
         WebAccount webAccount = new WebAccount();
         webAccount.setEmail(principal.getName());
         model.addAttribute("webAccount",webAccount);
-        return "account/editAccount";
+        return "account/editEmail";
     }
 
-    @RequestMapping(value = "/account/edit", method = RequestMethod.GET)
-    public String processEditAccountForm(Model model, Principal principal, WebAccount webAccount){
-        if(!accountValidator.isAccountValid(model,webAccount)){
+    @RequestMapping(value = "/account/edit/email", method = RequestMethod.POST)
+    public String processEditAccountEmailForm(Model model, Principal principal, WebAccount webAccount){
+        if(accountValidator.isEmailValid( webAccount.getEmail())){
+            model.addAttribute("error", "Invalid email address.");
             return "account/editAccount";
         }
-        if(!passwordEncoder.matches(webAccount.getPassword(), appService.getPasswordByEmail(principal.getName())) && !principal.getName().equals(webAccount.getEmail())){
-            //update
-            //send email
-        }
-        else if(!passwordEncoder.matches(webAccount.getPassword(), appService.getPasswordByEmail(principal.getName()))) {
-            //update
-            //send email
-        }
         else if(!principal.getName().equals(webAccount.getEmail())){
-
+            model.addAttribute("error","The email you entered is the same as your current one. No changes have been made.");
+            return "account/editAccount";
         }
+        //update DB
+        //update session email
+        model.addAttribute("message", "Your email has been updated.");
+        return "profile/viewProfile";
+    }
 
+    @RequestMapping(value = "account/edit/password", method = RequestMethod.GET)
+    public String displayEditAccountPasswordForm(Model model){
+        WebAccount webAccount = new WebAccount();
+        model.addAttribute("webAccount",webAccount);
+        return "account/editPassword";
+    }
 
+    @RequestMapping(value = "account/edit/password", method = RequestMethod.POST)
+    public String displayEditAccountPasswordForm(Model model, WebAccount webAccount){
+        if(accountValidator.isPasswordValid(webAccount.getPassword())){
+            model.addAttribute("error", "Password is not strong enough. It must include:");
+            List<String> passwordCriteria = Arrays.asList(
+                    "At least one lowercase letter",
+                    "At least one uppercase letter",
+                    "At least one special character",
+                    "A minimum length of 8 characters",
+                    "No spaces at all."
+            );
+            model.addAttribute("passwordCriteria",passwordCriteria);
+            return "account/editAccount";
+        }
         //update DB
         //send email
-        //log user out
-
-
+        model.addAttribute("message", "Your password has been updated.");
+        return "profile/viewProfile";
     }
-*/
 }

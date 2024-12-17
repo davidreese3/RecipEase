@@ -26,11 +26,11 @@ public class AccountValidator {
         if (!isPasswordValid(webAccount.getPassword())) {
             model.addAttribute("error", "Password is not strong enough. It must include:");
             List<String> passwordCriteria = Arrays.asList(
-                "At least one lowercase letter",
-                "At least one uppercase letter",
-                "At least one special character",
-                "A minimum length of 8 characters",
-                "No spaces at all."
+                    "At least one lowercase letter",
+                    "At least one uppercase letter",
+                    "At least one special character",
+                    "A minimum length of 8 characters",
+                    "No spaces at all."
             );
             model.addAttribute("passwordCriteria",passwordCriteria);
             return false;
@@ -46,14 +46,14 @@ public class AccountValidator {
         return true;
     }
 
-    private boolean isEmailValid(String email) {
+    public boolean isEmailValid(String email) {
         String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
         Pattern pattern = Pattern.compile(emailRegex);
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
     }
 
-    private boolean isPasswordValid(String password) {
+    public boolean isPasswordValid(String password) {
         String passwordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\W)\\S{8,}$";
         Pattern pattern = Pattern.compile(passwordRegex);
         Matcher matcher = pattern.matcher(password);
@@ -61,11 +61,11 @@ public class AccountValidator {
     }
 
 
-    private boolean arePasswordsMatching(String password, String confirmPassword){
+    public boolean arePasswordsMatching(String password, String confirmPassword){
         return password.equals(confirmPassword);
     }
 
-    private boolean isEmailUnique(String email){
+    public boolean isEmailUnique(String email){
         return appService.getAccountByEmail(email.toLowerCase()) == null;
     }
 }

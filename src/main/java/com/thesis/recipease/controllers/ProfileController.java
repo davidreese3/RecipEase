@@ -56,7 +56,7 @@ public class ProfileController {
     @RequestMapping(value = "profile/edit", method = RequestMethod.POST)
     public String processEditProfileForm(Model model, Principal principal, WebProfile webProfile, RedirectAttributes redirectAttributes){
         webProfile.setEmail(principal.getName());
-        if (!profileValidator.isProfileValid(model,webProfile)){
+        if (profileValidator.isProfileValid(model, webProfile)){
             return "profile/editProfile";
         }
         appService.updateProfile(webProfile);
