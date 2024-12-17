@@ -12,20 +12,20 @@
 <header>
     <nav></nav>
     <h1 th:if="${isPersonal}">View Your Profile</h1>
-    <h1 th:if="${!isPersonal}">View Other's Profile</h1>
+    <h1 th:if="${!isPersonal}" th:text="'View ' + ${profile.firstName} + ' ' + ${profile.lastName} + '\'s Profile'"></h1>
 </header>
 
 <main>
     <button onclick="location.href='/profile/edit'" th:if="${isPersonal}">Edit Profile</button>
-    <button onclick="location.href='/account/edit'" th:if="${isPersonal}">Edit Account</button>
+    <button onclick="location.href='/account/edit/email'" th:if="${isPersonal}">Edit Email</button>
+    <button onclick="location.href='/account/edit/password'" th:if="${isPersonal}">Edit Password</button>
     <p>main</p>
     <div th:if="${error}" th:text="${error}" style="color: red;"></div>
     <div th:if="${message}" th:text="${message}" style="color: green;"></div>
     <table th:if="${profile}">
-        <tr th:if="${isPersonal}">
+        <tr>
             <td>Email:</td>
             <td th:text="${profile.email}"></td>
-            <td><button>Change Email</button></td>
         <tr>
             <td>First Name:</td>
             <td th:text="${profile.firstName}"></td>

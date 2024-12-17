@@ -372,16 +372,20 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
 
 
     -- Insert into account table
-    INSERT INTO account (email, password, active, activationCode)
-    VALUES ('david33reese@gmail.com', '\$2b\$12\$FaFSKjH6oBrIk3JxHimLfuK2Q.QCqEczCn92.bX3pN/cly71SCNv6', TRUE, 123456);
+    INSERT INTO account (email, password, active, activationCode) VALUES
+    ('david33reese@gmail.com', '\$2b\$12\$FaFSKjH6oBrIk3JxHimLfuK2Q.QCqEczCn92.bX3pN/cly71SCNv6', TRUE, 123456),
+    ('frank_reese@yahoo.com', '\$2b\$12\$FaFSKjH6oBrIk3JxHimLfuK2Q.QCqEczCn92.bX3pN/cly71SCNv6', TRUE, 123456);
+
 
     -- Insert into profile table
-    INSERT INTO profile (email, firstName, lastName, cookingLevel, favoriteDish, favoriteCuisine)
-    VALUES ('david33reese@gmail.com', 'David', 'Reese', 'Intermediate', 'Spaghetti Carbonara', 'Italian');
+    INSERT INTO profile (email, firstName, lastName, cookingLevel, favoriteDish, favoriteCuisine) VALUES
+      ('david33reese@gmail.com', 'David', 'Reese', 'Intermediate', 'Spaghetti Carbonara', 'Italian'),
+      ('frank_reese@yahoo.com', 'Frank', 'Reese', 'Intermediate', 'Enchiladas', 'Mexican');
 
     -- Insert into authority table
-    INSERT INTO authority (email, role)
-    VALUES ('david33reese@gmail.com', 'ROLE_USER');
+    INSERT INTO authority (email, role) VALUES
+      ('david33reese@gmail.com', 'ROLE_USER'),
+      ('frank_reese@yahoo.com', 'ROLE_USER');
 
 
 
