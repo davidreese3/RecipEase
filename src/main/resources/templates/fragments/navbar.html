@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="navbar">
+    <header>
+        <nav>
+            <ul>
+                <!-- Header Section -->
+                <li><a href="#">Header</a></li>
+
+                <!-- Subheader with a link -->
+                <li><a href="#">Subheader</a></li>
+
+                <!-- Account Section -->
+                <li><a href="#">Account</a>
+                    <ul>
+                        <li><a href="/profile/view/personal">View Your Profile</a></li>
+                        <li>
+                            <form th:action="@{/logout}" method="post">
+                                <button type="submit">Logout</button>
+                            </form>
+                        </li>
+                        <li><a href="/profile/edit">Edit Profile</a></li>
+                        <li><a href="/account/edit/email">Edit Email</a></li>
+                        <li><a href="/account/edit/password">Edit Password</a></li>
+                        <li><a href="/account/delete">Delete Account</a></li>
+                    </ul>
+                </li>
+
+                <!-- Recipe Section -->
+                <li><a href="#">Recipe</a>
+                    <ul>
+                        <li><a href="/recipe/create">Create a Recipe</a></li>
+                        <li><a href="/recipe/search">Search for Recipes</a></li>
+                    </ul>
+                </li>
+
+                <!-- Glossary Section -->
+                <li><a href="#">Glossary</a>
+                    <ul>
+                        <li><a href="/glossary/view">View Glossary</a></li>
+                    </ul>
+                </li>
+
+                <!-- Substitutions Section -->
+                <li><a href="#">Substitutions</a>
+                    <ul>
+                        <li><a href="/substitution/view">View Known Substitutions</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </header>
+</div>
