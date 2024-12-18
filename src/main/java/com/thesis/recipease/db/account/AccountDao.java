@@ -20,7 +20,7 @@ public interface AccountDao {
     public String getPasswordByEmail(String email);
     public String updatePasswordByEmail(String email, String password);
     // UPDATE OPS
-    public boolean verifyActivationCodeAndActivate(String email, int code);
+    public boolean verifyActivationCodeAndActivate(String email, int code, int activationCode);
     public String updateEmailByEmail(String originalEmail, String newEmail);
     // DELETE OPS
     public String deleteAccountByEmail(String email);

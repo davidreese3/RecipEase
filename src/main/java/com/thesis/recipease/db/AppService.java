@@ -35,7 +35,7 @@ public class AppService {
         return accountDao.getAccountByEmail(email);
     }
 
-    public Integer getActivationCodeById(String email) {
+    public Integer getActivationCodeByEmail(String email) {
         return accountDao.getActivationCodeByEmail(email);
     }
 
@@ -44,8 +44,8 @@ public class AppService {
     }
 
     // UPDATE OPS
-    public boolean verifyActivationCodeAndActivate(String email, int code) {
-        return accountDao.verifyActivationCodeAndActivate(email, code);
+    public boolean verifyActivationCodeAndActivate(String email, int code, int activationCode) {
+        return accountDao.verifyActivationCodeAndActivate(email, code, activationCode);
     }
 
     public String updateEmailByEmail(String originalEmail, String newEmail){

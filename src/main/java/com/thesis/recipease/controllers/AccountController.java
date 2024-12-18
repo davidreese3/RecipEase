@@ -77,7 +77,8 @@ public class AccountController {
 
     @RequestMapping(value = "/account/activate", method = RequestMethod.POST)
     public String processActivationForm(Model model, @RequestParam("email") String email, @RequestParam("code") int code) {
-        if (!appService.verifyActivationCodeAndActivate(email,code)){
+        int activationCode = appService.getActivationCodeByEmail(email);
+        if (!appService.verifyActivationCodeAndActivate(email,code,activationCode)){
             model.addAttribute("email",email);
             model.addAttribute("error", "Invalid Activation Code");
             return "account/activation";
@@ -164,7 +165,6 @@ public class AccountController {
         model.addAttribute("success","Your account has been deleted.");
         return "login";
     }
-
     // ------------------------------------------------
     // HELPER METHODS
     // ------------------------------------------------

@@ -130,8 +130,8 @@ public class AccountDaoImpl implements AccountDao{
     // ------------------------------------------------
 
     @Override
-    public boolean verifyActivationCodeAndActivate(String email, int code) {
-        if(getActivationCodeByEmail(email) == code){
+    public boolean verifyActivationCodeAndActivate(String email, int code, int activationCode) {
+        if(activationCode == code){
             final String SQL = "update account set active = true where email = ?";
             jdbcTemplate.update(SQL, email);
             return true;
