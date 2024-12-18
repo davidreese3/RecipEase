@@ -51,10 +51,10 @@ public class ProfileDaoImpl implements ProfileDao{
     // ------------------------------------------------
 
     @Override
-    public WebProfile updateProfile(WebProfile webProfile) {
+    public Profile updateProfile(WebProfile webProfile) {
         final String SQL = "update profile set firstName = ?, lastName = ?, cookingLevel = ?, favoriteDish = ? , favoriteCuisine = ? where email = ?";
         jdbcTemplate.update(SQL, webProfile.getFirstName(), webProfile.getLastName(), webProfile.getCookingLevel(), webProfile.getFavoriteDish(), webProfile.getFavoriteCuisine(), webProfile.getEmail());
-        return webProfile;
+        return getProfileByEmail(webProfile.getEmail());
     }
 
     // ------------------------------------------------

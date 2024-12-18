@@ -150,23 +150,13 @@ public class AccountDaoImpl implements AccountDao{
             ps.setString(2, originalEmail);
             return ps;
         });
-        final String getSQL = "select * from account where email = ?";
-        try {
-            return jdbcTemplate.queryForObject(getSQL, new AccountMapper(), newEmail);
-        } catch (EmptyResultDataAccessException e) {
-            return null;
-        }
+        return getAccountByEmail(newEmail);
     }
 
     @Override
     public Account deleteAccountByEmail(String email) {
         final String getSQL = "select * from account where email = ?";
-        Account account = new Account();
-        try {
-            account = jdbcTemplate.queryForObject(getSQL, new AccountMapper(), email);
-        } catch (EmptyResultDataAccessException e) {
-            account = null;
-        }
+        Account account = getAccountByEmail(email);
         final String SQL = "delete from account where email = ?";
         jdbcTemplate.update(dataSource -> {
             PreparedStatement ps = dataSource.prepareStatement(SQL);
@@ -185,12 +175,7 @@ public class AccountDaoImpl implements AccountDao{
             ps.setString(2, email);
             return ps;
         });
-        final String getSQL = "select * from account where email = ?";
-        try {
-            return jdbcTemplate.queryForObject(getSQL, new AccountMapper(), email);
-        } catch (EmptyResultDataAccessException e) {
-            return null;
-        }
+        return getAccountByEmail(email);
     }
     // ------------------------------------------------
     // DELETE OPS

@@ -23,6 +23,10 @@ public class AccountValidator {
             model.addAttribute("error", "Invalid email address.");
             return false;
         }
+        if(isEmailTooLong(model, webAccount.getEmail())){
+            model.addAttribute("error", "Email cannot be longer than 50 characters.");
+            return false;
+        }
         if (!isPasswordValid(webAccount.getPassword())) {
             model.addAttribute("error", "Password is not strong enough. It must include:");
             List<String> passwordCriteria = Arrays.asList(
@@ -51,6 +55,10 @@ public class AccountValidator {
         Pattern pattern = Pattern.compile(emailRegex);
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
+    }
+
+    public boolean isEmailTooLong(Model model, String email){
+        return email.length() > 50;
     }
 
     public boolean isPasswordValid(String password) {

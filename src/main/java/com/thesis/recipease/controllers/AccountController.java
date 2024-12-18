@@ -98,16 +98,18 @@ public class AccountController {
     public String processEditAccountEmailForm(Model model, Principal principal, HttpServletRequest request, HttpServletResponse response, WebAccount webAccount){
         if(!accountValidator.isEmailValid(webAccount.getEmail())){
             model.addAttribute("error", "Invalid email address.");
+            webAccount.setEmail(principal.getName());
             return "account/editEmail";
         }
         else if(principal.getName().equals(webAccount.getEmail())){
             model.addAttribute("message","The email you entered is the same as your current one. No changes have been made.");
+            webAccount.setEmail(principal.getName());
             return "account/editEmail";
         }
         Account account = appService.updateEmailByEmail(principal.getName(), webAccount.getEmail());
         model.addAttribute("success", "Your email has been updated. Please log in again.");
         invalidateSession(request, response);
-        return "login";
+        return "redirect:/login";
     }
 
     @RequestMapping(value = "account/edit/password", method = RequestMethod.GET)

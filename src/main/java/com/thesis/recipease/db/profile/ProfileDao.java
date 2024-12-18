@@ -15,7 +15,7 @@ public interface ProfileDao {
     // READ OPS
     public Profile getProfileByEmail(String email);
     // UPDATE OPS
-    public WebProfile updateProfile(WebProfile webProfile);
+    public Profile updateProfile(WebProfile webProfile);
     // DELETE OPS
 
 
