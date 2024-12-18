@@ -54,7 +54,7 @@ public class AccountController {
         WebProfile webProfile = registrationForm.getWebProfile();
         webProfile.setEmail(webAccount.getEmail());
         if (!accountValidator.isAccountValid(model, webAccount) || !profileValidator.isProfileValid(model, webProfile)) {
-            model.addAttribute(new RegistrationForm());
+            model.addAttribute(registrationForm);
             return "account/registration";
         }
         List<String> roles = List.of("ROLE_USER");
@@ -167,6 +167,7 @@ public class AccountController {
         model.addAttribute("success","Your account has been deleted.");
         return "login";
     }
+
     // ------------------------------------------------
     // HELPER METHODS
     // ------------------------------------------------
