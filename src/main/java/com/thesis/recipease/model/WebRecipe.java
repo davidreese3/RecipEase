@@ -1,37 +1,33 @@
 package com.thesis.recipease.model;
 
 public class WebRecipe {
-    private String recipeName;
+    private String name;
     private String description;
     private double servings;
     private String unitOfServings;
     private int prepMin;
     private int prepHr;
-    private int cookMin;
-    private int cookHr;
-    private int totalMin;
-    private int totalHr;
+    private int processMin;
+    private int processHr;
 
     public WebRecipe(){}
-    public WebRecipe(String recipeName, String description, double servings, String unitOfServings, int prepMin, int prepHr, int cookMin, int cookHr, int totalMin, int totalHr) {
-        this.recipeName = recipeName;
+    public WebRecipe(String name, String description, double servings, String unitOfServings, int prepMin, int prepHr, int processMin, int processHr) {
+        this.name = name;
         this.description = description;
         this.servings = servings;
         this.unitOfServings = unitOfServings;
         this.prepMin = prepMin;
         this.prepHr = prepHr;
-        this.cookMin = cookMin;
-        this.cookHr = cookHr;
-        this.totalMin = totalMin;
-        this.totalHr = totalHr;
+        this.processMin = processMin;
+        this.processHr = processHr;
     }
 
-    public String getRecipeName() {
-        return recipeName;
+    public String getName() {
+        return name;
     }
 
-    public void setRecipeName(String recipeName) {
-        this.recipeName = recipeName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {
@@ -74,35 +70,33 @@ public class WebRecipe {
         this.prepHr = prepHr;
     }
 
-    public int getCookMin() {
-        return cookMin;
+    public int getProcessMin() {
+        return processMin;
     }
 
-    public void setCookMin(int cookMin) {
-        this.cookMin = cookMin;
+    public void setProcessMin(int processMin) {
+        this.processMin = processMin;
     }
 
-    public int getCookHr() {
-        return cookHr;
+    public int getProcessHr() {
+        return processHr;
     }
 
-    public void setCookHr(int cookHr) {
-        this.cookHr = cookHr;
+    public void getProcessHr(int processHr) {
+        this.processHr = processHr;
     }
 
-    public int getTotalMin() {
-        return totalMin;
-    }
-
-    public void setTotalMin(int totalMin) {
-        this.totalMin = totalMin;
-    }
-
-    public int getTotalHr() {
-        return totalHr;
-    }
-
-    public void setTotalHr(int totalHr) {
-        this.totalHr = totalHr;
+    @Override
+    public String toString() {
+        return "WebRecipe{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", servings=" + servings +
+                ", unitOfServings='" + unitOfServings + '\'' +
+                ", prepMin=" + prepMin +
+                ", prepHr=" + prepHr +
+                ", processMin=" + processMin +
+                ", processHr=" + processHr +
+                '}';
     }
 }

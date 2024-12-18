@@ -49,14 +49,14 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
     create table if not exists info (
         recipeID serial,
         email varchar(50) references account(email) on update cascade,
-        recipeName varchar(40),
+        name varchar(40),
         description varchar(1000),
         servings numeric,
         unitOfServings varchar(20), --change once prepop made
         prepMin int,
         prepHr int,
-        cookMin int,
-        cookHr int,
+        processMin int,
+        processHr int,
         totalMin int, -- trigger
         totalHr int,
         primary key (recipeID)

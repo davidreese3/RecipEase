@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RecipEase Recipe Creation</title>
+</head>
+
+<body>
+<header>
+    <div th:replace="~{fragments/headerAndNavbar}"></div>
+    <h2>Create your recipe</h2>
+</header>
+
+<main>
+    <div th:if="${error}" th:text="${error}" style="color: red;"></div>
+    <form action="#" th:action="@{/recipe/create}" th:object="${webRecipe}" method="post">
+        <table>
+            <tr>
+                <td colspan="4"><h3>Required Fields</h3></td>
+            </tr>
+            <tr>
+                <td>Recipe Name:</td>
+                <td><input type="text" th:field="*{name}"/></td>
+            </tr>
+            <tr>
+                <td>Recipe Description</td>
+                <td colspan="3"><textarea rows="3" cols="65" th:field="*{description}"></textarea></td>
+            </tr>
+            <tr>
+                <td>Servings:</td>
+                <td><input type="number" th:field="*{servings}"/></td>
+                <td>Unit:</td>
+                <td>
+                    <select th:field="*{unitOfServings}">
+                        <option value="">Select a unit of servings</option>
+                        <!-- Specific Food Portions -->
+                        <option value="Slices">Slices</option>
+                        <option value="Pieces">Pieces</option>
+                        <option value="Loaves">Loaves</option>
+                        <option value="Bowls">Bowls</option>
+                        <option value="Plates">Plates</option>
+                        <option value="Patties">Patties</option>
+                        <option value="Rolls">Rolls</option>
+                        <option value="Cookies">Cookies</option>
+                        <option value="Muffins">Muffins</option>
+                        <option value="Cupcakes">Cupcakes</option>
+                        <option value="Pies">Pies</option>
+                        <option value="Cakes">Cakes</option>
+                        <!-- Measurement Units -->
+                        <option value="Ounces">Oz</option>
+                        <option value="Grams">Grams</option>
+                        <option value="Kilograms">Kilograms</option>
+                        <option value="Liters">Liters</option>
+                        <option value="Milliliters">Milliliters</option>
+                        <option value="Pints">Pints</option>
+                        <option value="Quarts">Quarts</option>
+                        <option value="Gallons">Gallons</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Preparation Hours:</td>
+                <td><input type="number" th:field ="*{prepHr}"></td>
+                <td>Preparation Minutes:</td>
+                <td><input type="number" th:field ="*{prepMin}"></td>
+            </tr>
+            <tr>
+                <td>Process Hours:</td>
+                <td><input type="number" th:field ="*{processHr}"></td>
+                <td>Process Minutes:</td>
+                <td><input type="number" th:field ="*{processMin}"></td>
+            </tr>
+            <tr>
+                <td colspan="4"><h3>Optional Fields</h3></td>
+            </tr>
+        </table>
+        <button type="submit">Create Recipe</button>
+    </form>
+</main>
+
+<footer>
+    <p>footer</p>
+</footer>
+</body>
+
+</html>
