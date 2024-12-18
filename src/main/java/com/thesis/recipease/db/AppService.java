@@ -73,7 +73,7 @@ public class AppService {
     }
 
     // UPDATE OPS
-    public WebProfile updateProfile(WebProfile webProfile) {
+    public Profile updateProfile(WebProfile webProfile) {
         return profileDao.updateProfile(webProfile);
     }
 
