@@ -18,29 +18,35 @@ public class ProfileValidator {
             model.addAttribute("error", "First name cannot be blank.");
             return false;
         }
+        if(!isFeildLengthValid(webProfile.getFirstName(), 20)) {
+            model.addAttribute("error", "First name cannot be longer than 20 characters.");
+            return false;
+        }
         if(!isFieldValid(webProfile.getLastName())){
             model.addAttribute("error", "Last name cannot be blank.");
             return false;
         }
-        /*
-        if(!isFieldValid(webProfile.getCookingLevel())){
-            model.addAttribute("error", "Cooking level cannot be blank.");
+        if(!isFeildLengthValid(webProfile.getLastName(), 20)) {
+            model.addAttribute("error", "Last name cannot be longer than 20 characters.");
             return false;
         }
-        if(!isFieldValid(webProfile.getFavoriteDish())){
-            model.addAttribute("error", "Favorite dish cannot be blank.");
+        //cooking level is from drop down
+        if(!isFeildLengthValid(webProfile.getFavoriteDish(), 40)) {
+            model.addAttribute("error", "Favorite Dish cannot be longer than 20 characters.");
             return false;
         }
-        if(!isFieldValid(webProfile.getFavoriteCuisine())){
-            model.addAttribute("error", "Favorite cuisine cannot be blank.");
+        if(!isFeildLengthValid(webProfile.getFavoriteCuisine(), 40)) {
+            model.addAttribute("error", "Favorite Cuisine cannot be longer than 20 characters.");
             return false;
         }
-        */
         return true;
     }
 
     public boolean isFieldValid(String field) {
         return field != null && !field.trim().isEmpty();
+    }
+    public boolean isFeildLengthValid(String field, int characterLimit) {
+        return field.length() < characterLimit;
     }
 
 }
