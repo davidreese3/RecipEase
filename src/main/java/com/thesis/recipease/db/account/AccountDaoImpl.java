@@ -105,6 +105,7 @@ public class AccountDaoImpl implements AccountDao{
         }
     }
 
+    @Override
     public Integer getActivationCodeByEmail(String email) {
         final String SQL = "select activationCode from account where email = ?";
         try {
@@ -113,6 +114,8 @@ public class AccountDaoImpl implements AccountDao{
             return null;
         }
     }
+
+    @Override
     public String getPasswordByEmail(String email){
         final String SQL = "select password from account where email = ?";
         try {
@@ -125,6 +128,8 @@ public class AccountDaoImpl implements AccountDao{
     // ------------------------------------------------
     // UPDATE OPS
     // ------------------------------------------------
+
+    @Override
     public boolean verifyActivationCodeAndActivate(String email, int code) {
         if(getActivationCodeByEmail(email) == code){
             final String SQL = "update account set active = true where email = ?";
@@ -136,6 +141,7 @@ public class AccountDaoImpl implements AccountDao{
         }
     }
 
+    @Override
     public String updateEmailByEmail(String originalEmail, String newEmail){
         final String SQL = "update account set email = ? where email = ?";
         jdbcTemplate.update(dataSource -> {
@@ -158,6 +164,7 @@ public class AccountDaoImpl implements AccountDao{
         return email;
     }
 
+    @Override
     public String updatePasswordByEmail(String email, String password){
         final String SQL = "update account set password = ? where email = ?";
         jdbcTemplate.update(dataSource -> {

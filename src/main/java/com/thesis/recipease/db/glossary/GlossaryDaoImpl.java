@@ -32,6 +32,7 @@ public class GlossaryDaoImpl implements  GlossaryDao{
     // ------------------------------------------------
     // READ OPS
     // ------------------------------------------------
+    @Override
     public List<GlossaryEntry> getAllGlossaryEntries(){
         final String SQL = "select * from glossary order by term asc";
         List<GlossaryEntry> glossary = jdbcTemplate.query(SQL, new GlossaryEntryMapper());

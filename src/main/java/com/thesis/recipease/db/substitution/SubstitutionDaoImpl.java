@@ -31,6 +31,7 @@ public class SubstitutionDaoImpl implements SubstitutionDao{
     // ------------------------------------------------
     // READ OPS
     // ------------------------------------------------
+    @Override
     public List<SubstitutionEntry> getAllSubstitutionEntries(){
         final String SQL = "select * from knownSubs order by originalComponent asc";
         List<SubstitutionEntry> substitutions = jdbcTemplate.query(SQL, new SubstitutionDaoImpl.SubstitutionEntryMapper());

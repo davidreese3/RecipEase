@@ -57,7 +57,6 @@ public class ProfileDaoImpl implements ProfileDao{
         return webProfile;
     }
 
-
     // ------------------------------------------------
     // DELETE OPS
     // ------------------------------------------------
