@@ -39,17 +39,28 @@ public class AppService {
         return accountDao.getActivationCodeByEmail(email);
     }
 
+    public String getPasswordByEmail(String email){
+        return accountDao.getPasswordByEmail(email);
+    }
+
     // UPDATE OPS
     public boolean verifyActivationCodeAndActivate(String email, int code) {
         return accountDao.verifyActivationCodeAndActivate(email, code);
     }
 
-    public String getPasswordByEmail(String email){
-        return accountDao.getPasswordByEmail(email);
+    public String updateEmailByEmail(String originalEmail, String newEmail){
+        return accountDao.updateEmailByEmail(originalEmail, newEmail);
     }
 
-    // DELETE OPS
+    public String updatePasswordByEmail(String email, String password){
+        return accountDao.updatePasswordByEmail(email, password);
+    }
 
+
+    // DELETE OPS
+    public String deleteAccountByEmail(String email){
+        return accountDao.deleteAccountByEmail(email);
+    }
     // ------------------------
     // PROFILE OPERATIONS
     // ------------------------

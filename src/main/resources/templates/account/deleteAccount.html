@@ -4,27 +4,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Account</title>
+    <title>Delete Account</title>
 </head>
 
 <body>
 <header>
     <nav></nav>
-    <h1>Change your email</h1>
+    <h1>Delete your account</h1>
 </header>
 
 <main>
     <div th:if="${error}" th:text="${error}" style="color: red;"></div>
-    <div th:if="${message}" th:text="${message}" style="color: orange;"></div>
-    <div th:if="${success}" th:text="${success}" style="color: green;"></div>
-    <form action="#" th:action="@{/account/edit/email}" th:object="${webAccount}" method="post">
+    <form action="#" th:action="@{/account/delete}" th:object="${webAccount}" method="post">
         <table>
             <tr>
-                <td>Email</td>
-                <td><input type="text" th:field="*{email}" th:placeholder="${webAccount.email}" /></td>
+                <td>Password:</td>
+                <td><input type="password" th:field="*{password}" /></td>
             </tr>
             <tr>
-                <td><button type="submit">Edit</button></td><td></td>
+                <td><button type="submit">Delete</button></td><td></td>
             </tr>
         </table>
     </form>

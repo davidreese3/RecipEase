@@ -18,10 +18,11 @@ public interface AccountDao {
     public Account getAccountByEmail(String email);
     public Integer getActivationCodeByEmail(String email);
     public String getPasswordByEmail(String email);
-
+    public String updatePasswordByEmail(String email, String password);
     // UPDATE OPS
-    boolean verifyActivationCodeAndActivate(String email, int code);
+    public boolean verifyActivationCodeAndActivate(String email, int code);
+    public String updateEmailByEmail(String originalEmail, String newEmail);
     // DELETE OPS
-
+    public String deleteAccountByEmail(String email);
 
 }

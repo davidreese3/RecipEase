@@ -136,6 +136,38 @@ public class AccountDaoImpl implements AccountDao{
         }
     }
 
+    public String updateEmailByEmail(String originalEmail, String newEmail){
+        final String SQL = "update account set email = ? where email = ?";
+        jdbcTemplate.update(dataSource -> {
+            PreparedStatement ps = dataSource.prepareStatement(SQL);
+            ps.setString(1, newEmail);
+            ps.setString(2, originalEmail);
+            return ps;
+        });
+        return newEmail;
+    }
+
+    @Override
+    public String deleteAccountByEmail(String email) {
+        final String SQL = "delete from account where email = ?";
+        jdbcTemplate.update(dataSource -> {
+            PreparedStatement ps = dataSource.prepareStatement(SQL);
+            ps.setString(1, email);
+            return ps;
+        });
+        return email;
+    }
+
+    public String updatePasswordByEmail(String email, String password){
+        final String SQL = "update account set password = ? where email = ?";
+        jdbcTemplate.update(dataSource -> {
+            PreparedStatement ps = dataSource.prepareStatement(SQL);
+            ps.setString(1, password);
+            ps.setString(2, email);
+            return ps;
+        });
+        return password;
+    }
     // ------------------------------------------------
     // DELETE OPS
     // ------------------------------------------------
