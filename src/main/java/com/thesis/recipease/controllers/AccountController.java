@@ -104,7 +104,7 @@ public class AccountController {
             model.addAttribute("message","The email you entered is the same as your current one. No changes have been made.");
             return "account/editEmail";
         }
-        appService.updateEmailByEmail(principal.getName(), webAccount.getEmail());
+        Account account = appService.updateEmailByEmail(principal.getName(), webAccount.getEmail());
         model.addAttribute("success", "Your email has been updated. Please log in again.");
         invalidateSession(request, response);
         return "login";
@@ -140,7 +140,7 @@ public class AccountController {
             return "account/editPassword";
         }
         webAccount.setPassword(passwordEncoder.encode(webAccount.getPassword()));
-        appService.updatePasswordByEmail(principal.getName(), webAccount.getPassword());
+        Account account = appService.updatePasswordByEmail(principal.getName(), webAccount.getPassword());
         mailService.sendPasswordResetEmail(principal.getName());
         model.addAttribute("success", "Your password has been updated.");
         return "account/editPassword";

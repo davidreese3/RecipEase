@@ -142,7 +142,7 @@ public class AccountDaoImpl implements AccountDao{
     }
 
     @Override
-    public String updateEmailByEmail(String originalEmail, String newEmail){
+    public Account updateEmailByEmail(String originalEmail, String newEmail){
         final String SQL = "update account set email = ? where email = ?";
         jdbcTemplate.update(dataSource -> {
             PreparedStatement ps = dataSource.prepareStatement(SQL);
@@ -150,22 +150,34 @@ public class AccountDaoImpl implements AccountDao{
             ps.setString(2, originalEmail);
             return ps;
         });
-        return newEmail;
+        final String getSQL = "select * from account where email = ?";
+        try {
+            return jdbcTemplate.queryForObject(getSQL, new AccountMapper(), newEmail);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     @Override
-    public String deleteAccountByEmail(String email) {
+    public Account deleteAccountByEmail(String email) {
+        final String getSQL = "select * from account where email = ?";
+        Account account = new Account();
+        try {
+            account = jdbcTemplate.queryForObject(getSQL, new AccountMapper(), email);
+        } catch (EmptyResultDataAccessException e) {
+            account = null;
+        }
         final String SQL = "delete from account where email = ?";
         jdbcTemplate.update(dataSource -> {
             PreparedStatement ps = dataSource.prepareStatement(SQL);
             ps.setString(1, email);
             return ps;
         });
-        return email;
+        return account;
     }
 
     @Override
-    public String updatePasswordByEmail(String email, String password){
+    public Account updatePasswordByEmail(String email, String password){
         final String SQL = "update account set password = ? where email = ?";
         jdbcTemplate.update(dataSource -> {
             PreparedStatement ps = dataSource.prepareStatement(SQL);
@@ -173,7 +185,12 @@ public class AccountDaoImpl implements AccountDao{
             ps.setString(2, email);
             return ps;
         });
-        return password;
+        final String getSQL = "select * from account where email = ?";
+        try {
+            return jdbcTemplate.queryForObject(getSQL, new AccountMapper(), email);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
     // ------------------------------------------------
     // DELETE OPS

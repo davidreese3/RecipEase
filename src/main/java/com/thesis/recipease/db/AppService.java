@@ -48,17 +48,17 @@ public class AppService {
         return accountDao.verifyActivationCodeAndActivate(email, code, activationCode);
     }
 
-    public String updateEmailByEmail(String originalEmail, String newEmail){
+    public Account updateEmailByEmail(String originalEmail, String newEmail){
         return accountDao.updateEmailByEmail(originalEmail, newEmail);
     }
 
-    public String updatePasswordByEmail(String email, String password){
+    public Account updatePasswordByEmail(String email, String password){
         return accountDao.updatePasswordByEmail(email, password);
     }
 
 
     // DELETE OPS
-    public String deleteAccountByEmail(String email){
+    public Account deleteAccountByEmail(String email){
         return accountDao.deleteAccountByEmail(email);
     }
     // ------------------------
