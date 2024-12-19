@@ -3,9 +3,16 @@ package com.thesis.recipease.db;
 import com.thesis.recipease.db.account.AccountDao;
 import com.thesis.recipease.db.profile.ProfileDao;
 import com.thesis.recipease.db.glossary.GlossaryDao;
+import com.thesis.recipease.db.recipe.RecipeDao;
 import com.thesis.recipease.db.substitution.SubstitutionDao;
 import com.thesis.recipease.model.*;
+import com.thesis.recipease.model.web.WebAccount;
+import com.thesis.recipease.model.web.WebProfile;
+import com.thesis.recipease.model.web.WebRecipeInfo;
+import com.thesis.recipease.util.security.CustomUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,9 +22,11 @@ public class AppService {
     @Autowired
     private AccountDao accountDao;
     @Autowired
+    private GlossaryDao glossaryDao;
+    @Autowired
     private ProfileDao profileDao;
     @Autowired
-    private GlossaryDao glossaryDao;
+    private RecipeDao recipeDao;
     @Autowired
     private SubstitutionDao substitutionDao;
 
@@ -26,40 +35,26 @@ public class AppService {
     // ------------------------
 
     // CREATE OPS
-    public Account addAccount(WebAccount webAccount, List<String> roles, WebProfile webProfile) {
-        return accountDao.addAccount(webAccount, roles, webProfile);
-    }
+    public Account addAccount(WebAccount webAccount, List<String> roles, WebProfile webProfile) { return accountDao.addAccount(webAccount, roles, webProfile); }
 
     // READ OPS
     public Account getAccountByEmail(String email) {
         return accountDao.getAccountByEmail(email);
     }
-
-    public Integer getActivationCodeByEmail(String email) {
-        return accountDao.getActivationCodeByEmail(email);
-    }
-
-    public String getPasswordByEmail(String email){
-        return accountDao.getPasswordByEmail(email);
+    public Integer getActivationCodeById(int id) { return accountDao.getActivationCodeById(id); }
+    public String getPasswordById(int id){
+        return accountDao.getPasswordById(id);
     }
 
     // UPDATE OPS
-    public boolean verifyActivationCodeAndActivate(String email, int code, int activationCode) {
-        return accountDao.verifyActivationCodeAndActivate(email, code, activationCode);
-    }
-
-    public Account updateEmailByEmail(String originalEmail, String newEmail){
-        return accountDao.updateEmailByEmail(originalEmail, newEmail);
-    }
-
-    public Account updatePasswordByEmail(String email, String password){
-        return accountDao.updatePasswordByEmail(email, password);
-    }
+    public boolean verifyActivationCodeAndActivate(int id, int code, int activationCode) { return accountDao.verifyActivationCodeAndActivate(id, code, activationCode); }
+    public Account updateEmailById(int id, String newEmail){ return accountDao.updateEmailById(id, newEmail); }
+    public Account updatePasswordById(int id, String password){ return accountDao.updatePasswordById(id, password); }
 
 
     // DELETE OPS
-    public Account deleteAccountByEmail(String email){
-        return accountDao.deleteAccountByEmail(email);
+    public Account deleteAccountById(int id){
+        return accountDao.deleteAccountById(id);
     }
     // ------------------------
     // PROFILE OPERATIONS
@@ -68,8 +63,8 @@ public class AppService {
     // CREATE OPS
     // READ OPS
 
-    public Profile getProfileByEmail(String email) {
-        return profileDao.getProfileByEmail(email);
+    public Profile getProfileById(int id) {
+        return profileDao.getProfileById(id);
     }
 
     // UPDATE OPS
@@ -84,6 +79,7 @@ public class AppService {
     // ------------------------
 
     // CREATE OPS
+    public Recipe addRecipe(String email, WebRecipeInfo webRecipeInfo){ return recipeDao.addRecipe(email, webRecipeInfo); }
     // READ OPS
     // UPDATE OPS
     // DELETE OPS
@@ -111,4 +107,17 @@ public class AppService {
     }
     // UPDATE OPS
     // DELETE OPS
+
+
+    // ------------------------------------------------
+    // HELPER METHODS
+    // ------------------------------------------------
+    public int getLoggedInUserId() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof CustomUserDetails) {
+            CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+            return Math.toIntExact(userDetails.getUserId()); // Safely convert Long to int
+        }
+        throw new IllegalStateException("User is not authenticated or user details are invalid");
+    }
 }

@@ -3,14 +3,17 @@ package com.thesis.recipease.controllers;
 import com.thesis.recipease.db.AppService;
 import com.thesis.recipease.model.Account;
 import com.thesis.recipease.model.RegistrationForm;
-import com.thesis.recipease.model.WebAccount;
-import com.thesis.recipease.model.WebProfile;
+import com.thesis.recipease.model.web.WebAccount;
+import com.thesis.recipease.model.web.WebProfile;
 import com.thesis.recipease.util.mail.service.MailService;
+import com.thesis.recipease.util.security.CustomUserDetails;
 import com.thesis.recipease.util.validator.AccountValidator;
 import com.thesis.recipease.util.validator.ProfileValidator;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.CookieClearingLogoutHandler;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.security.web.authentication.rememberme.AbstractRememberMeServices;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.util.Arrays;
@@ -52,7 +56,7 @@ public class AccountController {
         WebAccount webAccount = registrationForm.getWebAccount();
         webAccount.setEmail(webAccount.getEmail().toLowerCase());
         WebProfile webProfile = registrationForm.getWebProfile();
-        webProfile.setEmail(webAccount.getEmail());
+        webProfile.setId(0);
         if (!accountValidator.isAccountValid(model, webAccount) || !profileValidator.isProfileValid(model, webProfile)) {
             model.addAttribute(registrationForm);
             return "account/registration";
@@ -60,7 +64,7 @@ public class AccountController {
         List<String> roles = List.of("ROLE_USER");
         webAccount.setPassword(passwordEncoder.encode(webAccount.getPassword()));
         Account account = appService.addAccount(webAccount, roles, webProfile);
-        String activationLink = "http://localhost:8080/account/activate?email=" + account.getEmail();
+        String activationLink = "http://localhost:8080/account/activate?id=" + account.getId();
         mailService.sendActivationEmail(webAccount.getEmail(), activationLink, account.getActivationCode());
         model.addAttribute("email", webAccount.getEmail());
         return "account/registrationConfirmation";
@@ -70,16 +74,16 @@ public class AccountController {
     // Activate Account
     // =======================
     @RequestMapping(value = "/account/activate", method = RequestMethod.GET)
-    public String displayActivationForm(Model model, @RequestParam("email") String email) {
-        model.addAttribute("email", email);
+    public String displayActivationForm(Model model, @RequestParam("id") int id) {
+        model.addAttribute("id", id);
         return "account/activation";
     }
 
     @RequestMapping(value = "/account/activate", method = RequestMethod.POST)
-    public String processActivationForm(Model model, @RequestParam("email") String email, @RequestParam("code") int code) {
-        int activationCode = appService.getActivationCodeByEmail(email);
-        if (!appService.verifyActivationCodeAndActivate(email,code,activationCode)){
-            model.addAttribute("email",email);
+    public String processActivationForm(Model model, @RequestParam("id") int id, @RequestParam("code") int code) {
+        int activationCode = appService.getActivationCodeById(id);
+        if (!appService.verifyActivationCodeAndActivate(id,code,activationCode)){
+            model.addAttribute("id",id);
             model.addAttribute("error", "Invalid Activation Code");
             return "account/activation";
         }
@@ -95,7 +99,7 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/account/edit/email", method = RequestMethod.POST)
-    public String processEditAccountEmailForm(Model model, Principal principal, HttpServletRequest request, HttpServletResponse response, WebAccount webAccount){
+    public String processEditAccountEmailForm(Model model, Principal principal, RedirectAttributes redirectAttributes, HttpServletRequest request, HttpServletResponse response, WebAccount webAccount){
         if(!accountValidator.isEmailValid(webAccount.getEmail())){
             model.addAttribute("error", "Invalid email address.");
             webAccount.setEmail(principal.getName());
@@ -106,8 +110,9 @@ public class AccountController {
             webAccount.setEmail(principal.getName());
             return "account/editEmail";
         }
-        Account account = appService.updateEmailByEmail(principal.getName(), webAccount.getEmail());
-        model.addAttribute("success", "Your email has been updated. Please log in again.");
+        int id = appService.getLoggedInUserId();
+        Account account = appService.updateEmailById(id, webAccount.getEmail());
+        redirectAttributes.addFlashAttribute("success", "Your email has been updated. Please log in again.");
         invalidateSession(request, response);
         return "redirect:/login";
     }
@@ -137,12 +142,13 @@ public class AccountController {
             model.addAttribute("error", "Passwords do not match.");
             return "account/editPassword";
         }
-        if(passwordEncoder.matches(webAccount.getPassword(),appService.getPasswordByEmail(principal.getName()))){
+        int id = appService.getLoggedInUserId();
+        if(passwordEncoder.matches(webAccount.getPassword(),appService.getPasswordById(id))){
             model.addAttribute("message","The password you entered is the same as your current one. No changes have been made.");
             return "account/editPassword";
         }
         webAccount.setPassword(passwordEncoder.encode(webAccount.getPassword()));
-        Account account = appService.updatePasswordByEmail(principal.getName(), webAccount.getPassword());
+        Account account = appService.updatePasswordById(id, webAccount.getPassword());
         mailService.sendPasswordResetEmail(principal.getName());
         model.addAttribute("success", "Your password has been updated.");
         return "account/editPassword";
@@ -157,11 +163,12 @@ public class AccountController {
 
     @RequestMapping(value = "/account/delete", method = RequestMethod.POST)
     public String ProcessDeleteForm(Model model, HttpServletRequest request, Principal principal, HttpServletResponse response, WebAccount webAccount){
-        if(!passwordEncoder.matches(webAccount.getPassword(),appService.getPasswordByEmail(principal.getName()))){
+        int id = appService.getLoggedInUserId();
+        if(!passwordEncoder.matches(webAccount.getPassword(),appService.getPasswordById(id))){
             model.addAttribute("error","The password you entered is incorrect.");
             return "account/deleteAccount";
         }
-        appService.deleteAccountByEmail(principal.getName());
+        appService.deleteAccountById(id);
         mailService.sendAccountDeletionEmail(principal.getName());
         invalidateSession(request, response);
         model.addAttribute("success","Your account has been deleted.");

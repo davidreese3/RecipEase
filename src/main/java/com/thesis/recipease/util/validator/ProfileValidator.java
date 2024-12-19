@@ -1,7 +1,7 @@
 package com.thesis.recipease.util.validator;
 
 import com.thesis.recipease.db.AppService;
-import com.thesis.recipease.model.WebProfile;
+import com.thesis.recipease.model.web.WebProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;

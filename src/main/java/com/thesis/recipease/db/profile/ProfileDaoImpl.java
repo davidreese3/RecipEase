@@ -1,9 +1,7 @@
 package com.thesis.recipease.db.profile;
 
-import com.thesis.recipease.db.account.AccountDaoImpl;
-import com.thesis.recipease.model.Account;
 import com.thesis.recipease.model.Profile;
-import com.thesis.recipease.model.WebProfile;
+import com.thesis.recipease.model.web.WebProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -38,10 +36,10 @@ public class ProfileDaoImpl implements ProfileDao{
     // READ OPS
     // ------------------------------------------------
     @Override
-    public Profile getProfileByEmail(String email) {
-        final String SQL = "select * from profile where email = ?";
+    public Profile getProfileById(int id) {
+        final String SQL = "select * from profile where id = ?";
         try {
-            return jdbcTemplate.queryForObject(SQL, new ProfileDaoImpl.ProfileMapper(), email);
+            return jdbcTemplate.queryForObject(SQL, new ProfileDaoImpl.ProfileMapper(), id);
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
@@ -52,9 +50,9 @@ public class ProfileDaoImpl implements ProfileDao{
 
     @Override
     public Profile updateProfile(WebProfile webProfile) {
-        final String SQL = "update profile set firstName = ?, lastName = ?, cookingLevel = ?, favoriteDish = ? , favoriteCuisine = ? where email = ?";
-        jdbcTemplate.update(SQL, webProfile.getFirstName(), webProfile.getLastName(), webProfile.getCookingLevel(), webProfile.getFavoriteDish(), webProfile.getFavoriteCuisine(), webProfile.getEmail());
-        return getProfileByEmail(webProfile.getEmail());
+        final String SQL = "update profile set firstName = ?, lastName = ?, cookingLevel = ?, favoriteDish = ? , favoriteCuisine = ? where id = ?";
+        jdbcTemplate.update(SQL, webProfile.getFirstName(), webProfile.getLastName(), webProfile.getCookingLevel(), webProfile.getFavoriteDish(), webProfile.getFavoriteCuisine(), webProfile.getId());
+        return getProfileById(webProfile.getId());
     }
 
     // ------------------------------------------------
@@ -68,7 +66,7 @@ public class ProfileDaoImpl implements ProfileDao{
         @Override
         public Profile mapRow(ResultSet rs, int rowNum) throws SQLException {
             Profile profile = new Profile();
-            profile.setEmail(rs.getString("email"));
+            profile.setId(rs.getInt("id"));
             profile.setFirstName(rs.getString("firstName"));
             profile.setLastName(rs.getString("lastName"));
             profile.setCookingLevel(rs.getString("cookingLevel"));

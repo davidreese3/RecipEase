@@ -1,4 +1,4 @@
-package com.thesis.recipease.model;
+package com.thesis.recipease.model.web;
 
 public class WebAccount {
     private String email;

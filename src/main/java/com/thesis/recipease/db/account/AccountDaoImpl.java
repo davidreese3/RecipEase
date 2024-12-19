@@ -1,8 +1,8 @@
 package com.thesis.recipease.db.account;
 
 import com.thesis.recipease.model.Account;
-import com.thesis.recipease.model.WebAccount;
-import com.thesis.recipease.model.WebProfile;
+import com.thesis.recipease.model.web.WebAccount;
+import com.thesis.recipease.model.web.WebProfile;
 import org.springframework.stereotype.Repository;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
@@ -13,7 +13,6 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.stereotype.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -47,6 +46,7 @@ public class AccountDaoImpl implements AccountDao{
     @Override
     public Account addAccount(WebAccount webAccount, List<String> roles, WebProfile webProfile) {
         Random random = new Random();
+        int id;
         int activationCode = 100000 + random.nextInt(900000);
         DefaultTransactionDefinition def = new DefaultTransactionDefinition();
         def.setIsolationLevel(TransactionDefinition.ISOLATION_REPEATABLE_READ);
@@ -63,6 +63,15 @@ public class AccountDaoImpl implements AccountDao{
                 return ps;
             }, keyHolder);
 
+            //get id
+
+            List<Map<String, Object>> keylist= keyHolder.getKeyList();
+            if (!keyHolder.getKeyList().isEmpty()) {
+                Map<String, Object> keyMap = keyHolder.getKeyList().get(0); // Get the first key map
+                id = (int) keyMap.get("id"); // Fetch the 'id' field
+            } else {
+                throw new IllegalStateException("Failed to retrieve the generated user ID.");
+            }
             // insert into authority
             final String rolesSQL = "insert into authority (email, role) values (?, ?)";
             for (String role : roles) {
@@ -70,10 +79,10 @@ public class AccountDaoImpl implements AccountDao{
             }
 
             // insert into profile
-            final String profileSQL = "insert into profile (email, firstname, lastname, cookinglevel, favoritedish, favoritecuisine) values (?, ?, ?, ?, ?, ?)";
+            final String profileSQL = "insert into profile (id, firstname, lastname, cookinglevel, favoritedish, favoritecuisine) values (?, ?, ?, ?, ?, ?)";
             jdbcTemplate.update(dataSource -> {
                 PreparedStatement ps = dataSource.prepareStatement(profileSQL);
-                ps.setString(1, webProfile.getEmail());
+                ps.setInt(1, id);
                 ps.setString(2, webProfile.getFirstName());
                 ps.setString(3, webProfile.getLastName());
                 ps.setString(4, webProfile.getCookingLevel());
@@ -89,12 +98,22 @@ public class AccountDaoImpl implements AccountDao{
             throw e;
         }
 
-        return getAccountByEmail(webAccount.getEmail());
+        return getAccountById(id);
     }
 
     // ------------------------------------------------
     // READ OPS
     // ------------------------------------------------
+    @Override
+    public Account getAccountById(int id) {
+        final String SQL = "select * from account where id = ?";
+        try {
+            return jdbcTemplate.queryForObject(SQL, new AccountMapper(), id);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
     @Override
     public Account getAccountByEmail(String email) {
         final String SQL = "select * from account where email = ?";
@@ -106,20 +125,20 @@ public class AccountDaoImpl implements AccountDao{
     }
 
     @Override
-    public Integer getActivationCodeByEmail(String email) {
-        final String SQL = "select activationCode from account where email = ?";
+    public Integer getActivationCodeById(int id) {
+        final String SQL = "select activationCode from account where id = ?";
         try {
-            return jdbcTemplate.queryForObject(SQL, Integer.class, email);
+            return jdbcTemplate.queryForObject(SQL, Integer.class, id);
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
     }
 
     @Override
-    public String getPasswordByEmail(String email){
-        final String SQL = "select password from account where email = ?";
+    public String getPasswordById(int id){
+        final String SQL = "select password from account where id = ?";
         try {
-            return jdbcTemplate.queryForObject(SQL, String.class, email);
+            return jdbcTemplate.queryForObject(SQL, String.class, id);
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
@@ -130,10 +149,10 @@ public class AccountDaoImpl implements AccountDao{
     // ------------------------------------------------
 
     @Override
-    public boolean verifyActivationCodeAndActivate(String email, int code, int activationCode) {
+    public boolean verifyActivationCodeAndActivate(int id, int code, int activationCode) {
         if(activationCode == code){
-            final String SQL = "update account set active = true where email = ?";
-            jdbcTemplate.update(SQL, email);
+            final String SQL = "update account set active = true where id = ?";
+            jdbcTemplate.update(SQL, id);
             return true;
         }
         else {
@@ -142,44 +161,44 @@ public class AccountDaoImpl implements AccountDao{
     }
 
     @Override
-    public Account updateEmailByEmail(String originalEmail, String newEmail){
-        final String SQL = "update account set email = ? where email = ?";
+    public Account updateEmailById(int id, String newEmail){
+        final String SQL = "update account set email = ? where id = ?";
         jdbcTemplate.update(dataSource -> {
             PreparedStatement ps = dataSource.prepareStatement(SQL);
             ps.setString(1, newEmail);
-            ps.setString(2, originalEmail);
+            ps.setInt(2, id);
             return ps;
         });
         return getAccountByEmail(newEmail);
     }
 
     @Override
-    public Account deleteAccountByEmail(String email) {
-        final String getSQL = "select * from account where email = ?";
-        Account account = getAccountByEmail(email);
-        final String SQL = "delete from account where email = ?";
-        jdbcTemplate.update(dataSource -> {
-            PreparedStatement ps = dataSource.prepareStatement(SQL);
-            ps.setString(1, email);
-            return ps;
-        });
-        return account;
-    }
-
-    @Override
-    public Account updatePasswordByEmail(String email, String password){
-        final String SQL = "update account set password = ? where email = ?";
+    public Account updatePasswordById(int id, String password){
+        final String SQL = "update account set password = ? where id = ?";
         jdbcTemplate.update(dataSource -> {
             PreparedStatement ps = dataSource.prepareStatement(SQL);
             ps.setString(1, password);
-            ps.setString(2, email);
+            ps.setInt(2, id);
             return ps;
         });
-        return getAccountByEmail(email);
+        return getAccountById(id);
     }
     // ------------------------------------------------
     // DELETE OPS
     // ------------------------------------------------
+
+    @Override
+    public Account deleteAccountById(int id) {
+        final String getSQL = "select * from account where id = ?";
+        Account account = getAccountById(id);
+        final String SQL = "delete from account where id = ?";
+        jdbcTemplate.update(dataSource -> {
+            PreparedStatement ps = dataSource.prepareStatement(SQL);
+            ps.setInt(1, id);
+            return ps;
+        });
+        return account;
+    }
 
     // ------------------------------------------------
     // MAPPERS

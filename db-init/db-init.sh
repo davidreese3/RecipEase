@@ -25,13 +25,13 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
 
     -- profile
     create table if not exists profile (
-        email varchar(50) references account(email) on delete cascade on update cascade,
+        id int references account(id) on delete cascade on update cascade,
         firstName varchar(20),
         lastName varchar(20),
         cookingLevel varchar(20),
         favoriteDish varchar(40),
         favoriteCuisine varchar(40),
-        primary key (email)
+        primary key (id)
     );
 
     -- authority
@@ -47,40 +47,40 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
 
     -- info
     create table if not exists info (
-        recipeID serial,
-        email varchar(50) references account(email) on update cascade,
+        recipeId serial,
+        id int references account(id) on delete cascade on update cascade,
         name varchar(40),
         description varchar(1000),
-        servings numeric,
-        unitOfServings varchar(20), --change once prepop made
+        yield numeric,
+        unitOfYield varchar(20), --change once prepop made
         prepMin int,
         prepHr int,
         processMin int,
         processHr int,
         totalMin int, -- trigger
         totalHr int,
-        primary key (recipeID)
+        primary key (recipeId)
     );
 
     -- direction
     create table if not exists direction (
-        recipeID int references info(recipeID) on delete cascade,
+        recipeId int references info(recipeId) on delete cascade,
         stepNum int,
         direction varchar(300),
         method varchar(30), --change once prepop made
         temp int,
         level varchar(10), --change once prepop made
-        primary key(recipeID, stepNum)
+        primary key(recipeId, stepNum)
     );
 
     -- ingredient
     create table if not exists ingredient (
-        recipeID int references info(recipeID) on delete cascade,
+        recipeId int references info(recipeId) on delete cascade,
         component varchar(30),
         quantity int,
         measurement varchar(20), --change once prepop made
         preparation varchar(20), --change once prepop made
-        primary key (recipeID, component)
+        primary key (recipeId, component)
     );
 
     -- =============================
@@ -89,19 +89,19 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
 
     -- comment
     create table if not exists comment (
-        recipeID int references info(recipeID) on delete cascade,
-        commentID serial, --used for PK
-        commentEmail varchar(50) references account(email) on delete cascade on update cascade, --technically do they link?
+        recipeId int references info(recipeId) on delete cascade,
+        commentId serial, --used for PK
+        commentUserId int references account(id) on delete cascade on update cascade, --technically do they link?
         commentText varchar(500),
-        primary key(recipeID, commentID)
+        primary key(recipeId, commentID)
     );
 
     --rating
     create table if not exists rating (
-        recipeID int references info(recipeID) on delete cascade,
-        raterEmail varchar(50) references account(email) on delete cascade on update cascade,
+        recipeId int references info(recipeId) on delete cascade,
+        ratingUserId int references account(id) on delete cascade on update cascade, --technically do they link?
         ratingValue int,
-        primary key (recipeID, raterEmail)
+        primary key (recipeId, ratingUserId)
     );
 
     -- =============================
@@ -114,44 +114,44 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
 
     -- holiday
     create table if not exists holiday (
-        recipeID int references info(recipeID) on delete cascade,
+        recipeId int references info(recipeId) on delete cascade,
         holiday varchar(30),
-        primary key (recipeID, holiday)
+        primary key (recipeId, holiday)
     );
 
     -- meal type
     create table if not exists mealType (
-        recipeID int references info(recipeID) on delete cascade,
+        recipeId int references info(recipeId) on delete cascade,
         mealType varchar(30),
-        primary key (recipeID, mealType)
+        primary key (recipeId, mealType)
     );
 
     -- cuisine
     create table if not exists cuisine (
-        recipeID int references info(recipeID) on delete cascade,
+        recipeId int references info(recipeId) on delete cascade,
         cuisine varchar(30),
-        primary key (recipeID, cuisine)
+        primary key (recipeId, cuisine)
     );
 
     -- allergen
     create table if not exists allergen (
-        recipeID int references info(recipeID) on delete cascade,
+        recipeId int references info(recipeId) on delete cascade,
         allergen varchar(30),
-        primary key (recipeID, allergen)
+        primary key (recipeId, allergen)
     );
 
     -- diet type
     create table if not exists dietType (
-        recipeID int references info(recipeID) on delete cascade,
+        recipeId int references info(recipeId) on delete cascade,
         dietType varchar(30),
-        primary key (recipeID, dietType)
+        primary key (recipeId, dietType)
     );
 
     -- cooking level
     create table if not exists cookingLevel (
-        recipeID int references info(recipeID) on delete cascade,
+        recipeId int references info(recipeId) on delete cascade,
         cookingLevel varchar(30),
-        primary key (recipeID, cookingLevel)
+        primary key (recipeId, cookingLevel)
     );
 
     -- ======
@@ -160,16 +160,16 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
 
     -- photo
     create table if not exists photo (
-        recipeID int references info(recipeID) on delete cascade,
+        recipeId int references info(recipeId) on delete cascade,
         fileLocation varchar(125),
-        primary key (recipeID)
+        primary key (recipeId)
     );
 
     -- link
     create table if not exists link (
-        recipeID int references info(recipeID) on delete cascade,
+        recipeId int references info(recipeId) on delete cascade,
         link varchar(125),
-        primary key (recipeID)
+        primary key (recipeId)
     );
 
 
@@ -179,14 +179,14 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
 
     -- notes
     create table if not exists notes (
-        recipeID int references info(recipeID) on delete cascade,
+        recipeId int references info(recipeId) on delete cascade,
         notes varchar(2500),
-        primary key (recipeID)
+        primary key (recipeId)
     );
 
     -- user substitutions
     create table if not exists userSubs (
-        recipeID int references info(recipeID) on delete cascade,
+        recipeId int references info(recipeId) on delete cascade,
         originalComponent varchar(30),
         originalQuantity int,
         originalMeasurement varchar(20), --change once prepop made
@@ -195,7 +195,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
         substitutedQuantity int,
         substitutedMeasurement varchar(20), --change once prepop made
         substitutedPreparation varchar(20), --change once prepop made
-        primary key(recipeID, originalComponent, substitutedComponent)
+        primary key(recipeId, originalComponent, substitutedComponent)
     );
 
     -- =============================
@@ -378,9 +378,9 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
 
 
     -- Insert into profile table
-    INSERT INTO profile (email, firstName, lastName, cookingLevel, favoriteDish, favoriteCuisine) VALUES
-      ('david33reese@gmail.com', 'David', 'Reese', 'Intermediate', 'Spaghetti Carbonara', 'Italian'),
-      ('frank_reese@yahoo.com', 'Frank', 'Reese', 'Intermediate', 'Enchiladas', 'Mexican');
+    INSERT INTO profile (id, firstName, lastName, cookingLevel, favoriteDish, favoriteCuisine) VALUES
+      (1, 'David', 'Reese', 'Intermediate', 'Spaghetti Carbonara', 'Italian'),
+      (2, 'Frank', 'Reese', 'Intermediate', 'Enchiladas', 'Mexican');
 
     -- Insert into authority table
     INSERT INTO authority (email, role) VALUES

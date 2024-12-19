@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.util.List;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
@@ -20,25 +21,29 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(
-                    "SELECT email, password, active FROM account WHERE email = ?"
+                    "SELECT id, email, password, active FROM account WHERE email = ?"
             );
             statement.setString(1, username);
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
+                Long userId = resultSet.getLong("id");
                 String email = resultSet.getString("email");
                 String password = resultSet.getString("password");
                 boolean isActive = resultSet.getBoolean("active");
 
                 if (!isActive) {
-                    throw new InactiveAccountException("Account is not active"); // Custom exception
+                    throw new InactiveAccountException("Account is not active");
                 }
 
-                // Return a UserDetails object
-                return User.withUsername(email)
-                        .password(password)
-                        .roles("USER") // Update role logic as per your app
-                        .build();
+                // Return CustomUserDetails
+                return new CustomUserDetails(
+                        userId,
+                        email,
+                        password,
+                        isActive,
+                        List.of() // Replace with actual roles/authorities if needed
+                );
             } else {
                 throw new UsernameNotFoundException("User not found");
             }

@@ -15,26 +15,29 @@
 
 <main>
     <div th:if="${error}" th:text="${error}" style="color: red;"></div>
-    <form action="#" th:action="@{/recipe/create}" th:object="${webRecipe}" method="post">
+    <form action="#" th:action="@{/recipe/create}" th:object="${webRecipeInfo}" method="post">
         <table>
             <tr>
                 <td colspan="4"><h3>Required Fields</h3></td>
+            </tr>
+            <tr>
+                <td colspan="4"><h4>Recipe Info</h4></td>
             </tr>
             <tr>
                 <td>Recipe Name:</td>
                 <td><input type="text" th:field="*{name}"/></td>
             </tr>
             <tr>
-                <td>Recipe Description</td>
+                <td>Recipe Description:</td>
                 <td colspan="3"><textarea rows="3" cols="65" th:field="*{description}"></textarea></td>
             </tr>
             <tr>
-                <td>Servings:</td>
-                <td><input type="number" th:field="*{servings}"/></td>
-                <td>Unit:</td>
+                <td>Yield:</td>
+                <td><input type="number" step="0.1" min="0.1" value="0.1" th:field="*{yield}"/></td>
+                <td>Unit Of Yield:</td>
                 <td>
-                    <select th:field="*{unitOfServings}">
-                        <option value="">Select a unit of servings</option>
+                    <select th:field="*{unitOfYield}">
+                        <option value="">Select a unit of yield</option>
                         <!-- Specific Food Portions -->
                         <option value="Slices">Slices</option>
                         <option value="Pieces">Pieces</option>
@@ -62,15 +65,21 @@
             </tr>
             <tr>
                 <td>Preparation Hours:</td>
-                <td><input type="number" th:field ="*{prepHr}"></td>
+                <td><input type="number" step="1" min="0" value="0" th:field="*{prepHr}"></td>
                 <td>Preparation Minutes:</td>
-                <td><input type="number" th:field ="*{prepMin}"></td>
+                <td><input type="number" step="1" min="0" max="59" value="0" th:field="*{prepMin}"></td>
             </tr>
             <tr>
                 <td>Process Hours:</td>
-                <td><input type="number" th:field ="*{processHr}"></td>
+                <td><input type="number" step="1" min="0" value="0" th:field="*{processHr}"></td>
                 <td>Process Minutes:</td>
-                <td><input type="number" th:field ="*{processMin}"></td>
+                <td><input type="number" step="1" min="0" max="59" value="0" th:field="*{processMin}"></td>
+            </tr>
+            <tr>
+                <td colspan="4"><h4>Ingredients</h4></td>
+            </tr>
+            <tr>
+                <td colspan="4"><h4>Directions</h4></td>
             </tr>
             <tr>
                 <td colspan="4"><h3>Optional Fields</h3></td>

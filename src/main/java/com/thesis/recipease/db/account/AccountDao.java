@@ -2,8 +2,8 @@ package com.thesis.recipease.db.account;
 
 
 import com.thesis.recipease.model.Account;
-import com.thesis.recipease.model.WebAccount;
-import com.thesis.recipease.model.WebProfile;
+import com.thesis.recipease.model.web.WebAccount;
+import com.thesis.recipease.model.web.WebProfile;
 import org.springframework.stereotype.Repository;
 import javax.sql.DataSource;
 
@@ -15,14 +15,15 @@ public interface AccountDao {
     // CREATE OPS
     public Account addAccount(WebAccount webAccount, List<String> roles, WebProfile webProfile);
     // READ OPS
+    public Account getAccountById(int id);
     public Account getAccountByEmail(String email);
-    public Integer getActivationCodeByEmail(String email);
-    public String getPasswordByEmail(String email);
+    public Integer getActivationCodeById(int id);
+    public String getPasswordById(int id);
     // UPDATE OPS
-    public Account updatePasswordByEmail(String email, String password);
-    public boolean verifyActivationCodeAndActivate(String email, int code, int activationCode);
-    public Account updateEmailByEmail(String originalEmail, String newEmail);
+    public Account updatePasswordById(int id, String password);
+    public boolean verifyActivationCodeAndActivate(int id, int code, int activationCode);
+    public Account updateEmailById(int id, String newEmail);
     // DELETE OPS
-    public Account deleteAccountByEmail(String email);
+    public Account deleteAccountById(int id);
 
 }

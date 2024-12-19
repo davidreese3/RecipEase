@@ -16,7 +16,7 @@
 <main>
     <div th:if="${error}" th:text="${error}" style="color: red;"></div>
     <form action="#" th:action="@{/account/activate}" method="post">
-        <input type="hidden" name="email" th:value="${email}" />
+        <input type="hidden" name="id" th:value="${id}" />
         <table>
             <tr>
                 <td>Activation Code:</td>

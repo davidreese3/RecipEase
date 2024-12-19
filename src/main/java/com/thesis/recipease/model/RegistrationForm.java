@@ -1,5 +1,8 @@
 package com.thesis.recipease.model;
 
+import com.thesis.recipease.model.web.WebAccount;
+import com.thesis.recipease.model.web.WebProfile;
+
 public class RegistrationForm {
     private WebAccount webAccount;
     private WebProfile webProfile;

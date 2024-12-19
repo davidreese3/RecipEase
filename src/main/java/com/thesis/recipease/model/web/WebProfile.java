@@ -1,7 +1,7 @@
-package com.thesis.recipease.model;
+package com.thesis.recipease.model.web;
 
 public class WebProfile {
-    String email;
+    int id;
     String firstName;
     String lastName;
     String cookingLevel;
@@ -9,8 +9,8 @@ public class WebProfile {
     String favoriteCuisine;
 
     public WebProfile(){}
-    public WebProfile(String email, String firstName, String lastName, String cookingLevel, String favoriteDish, String favoriteCuisine) {
-        this.email = email;
+    public WebProfile(int id, String firstName, String lastName, String cookingLevel, String favoriteDish, String favoriteCuisine) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.cookingLevel = cookingLevel;
@@ -18,12 +18,12 @@ public class WebProfile {
         this.favoriteCuisine = favoriteCuisine;
     }
 
-    public String getEmail() {
-        return email;
+    public int getId() {
+        return id;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getFirstName() {
