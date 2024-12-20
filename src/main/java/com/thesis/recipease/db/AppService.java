@@ -6,9 +6,10 @@ import com.thesis.recipease.db.glossary.GlossaryDao;
 import com.thesis.recipease.db.recipe.RecipeDao;
 import com.thesis.recipease.db.substitution.SubstitutionDao;
 import com.thesis.recipease.model.*;
+import com.thesis.recipease.model.recipe.Recipe;
 import com.thesis.recipease.model.web.WebAccount;
 import com.thesis.recipease.model.web.WebProfile;
-import com.thesis.recipease.model.web.WebRecipeInfo;
+import com.thesis.recipease.model.web.recipe.WebRecipe;
 import com.thesis.recipease.util.security.CustomUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -79,8 +80,9 @@ public class AppService {
     // ------------------------
 
     // CREATE OPS
-    public Recipe addRecipe(String email, WebRecipeInfo webRecipeInfo){ return recipeDao.addRecipe(email, webRecipeInfo); }
+    public Recipe addRecipe(int userId, WebRecipe webRecipe){ return recipeDao.addRecipe(userId, webRecipe); }
     // READ OPS
+    public Recipe getRecipeById(int recipeId) { return recipeDao.getRecipeById(recipeId); }
     // UPDATE OPS
     // DELETE OPS
 

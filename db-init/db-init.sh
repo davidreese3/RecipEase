@@ -48,7 +48,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
     -- info
     create table if not exists info (
         recipeId serial,
-        id int references account(id) on delete cascade on update cascade,
+        userId int references account(id) on delete cascade on update cascade,
         name varchar(40),
         description varchar(1000),
         yield numeric,
@@ -62,6 +62,16 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
         primary key (recipeId)
     );
 
+    -- ingredient
+        create table if not exists ingredient (
+            recipeId int references info(recipeId) on delete cascade,
+            component varchar(30),
+            quantity int,
+            measurement varchar(20), --change once prepop made
+            preparation varchar(20), --change once prepop made
+            primary key (recipeId, component)
+        );
+
     -- direction
     create table if not exists direction (
         recipeId int references info(recipeId) on delete cascade,
@@ -71,16 +81,6 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
         temp int,
         level varchar(10), --change once prepop made
         primary key(recipeId, stepNum)
-    );
-
-    -- ingredient
-    create table if not exists ingredient (
-        recipeId int references info(recipeId) on delete cascade,
-        component varchar(30),
-        quantity int,
-        measurement varchar(20), --change once prepop made
-        preparation varchar(20), --change once prepop made
-        primary key (recipeId, component)
     );
 
     -- =============================

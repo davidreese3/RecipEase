@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RecipEase View Recipe</title>
+</head>
+
+<body>
+<header>
+    <div th:replace="~{fragments/headerAndNavbar}"></div>
+    <h2 th:text="'View ' + ${recipe.recipeInfo.name}"></h2>
+    <div th:if="${message}" th:text="${message}" style="color: green;"></div>
+</header>
+
+<main>
+    <table>
+        <tr>
+            <td><strong>Recipe Info</strong></td>
+        </tr>
+        <tr>
+            <td th:text="${recipe.recipeInfo.name}"></td>
+        </tr>
+        <tr>
+            <td th:text = ${recipe.recipeInfo.description}></td>
+        </tr>
+        <tr>
+            <td th:text="'Makes ' + ${recipe.recipeInfo.yield} + ' ' + ${recipe.recipeInfo.unitOfYield}"></td>
+        </tr>
+        <tr>
+            <td th:text="'Preparation Time: ' + ${recipe.recipeInfo.prepHr} + ' Hour' + (${recipe.recipeInfo.prepHr > 1 ? 's' : ''}) + ' ' + ${recipe.recipeInfo.prepMin} + ' Minute' + (${recipe.recipeInfo.prepMin > 1 ? 's' : ''})"></td>
+        </tr>
+        <tr>
+            <td th:text="'Process Time: ' + ${recipe.recipeInfo.processHr} + ' Hour' + (${recipe.recipeInfo.processHr > 1 ? 's' : ''}) + ' ' + ${recipe.recipeInfo.processMin} + ' Minute' + (${recipe.recipeInfo.processMin > 1 ? 's' : ''})"></td>
+        </tr>
+        <tr>
+            <td th:text="'Total Time: ' + ${recipe.recipeInfo.totalHr} + ' Hour' + (${recipe.recipeInfo.totalHr > 1 ? 's' : ''}) + ' ' + ${recipe.recipeInfo.totalMin} + ' Minute' + (${recipe.recipeInfo.totalMin > 1 ? 's' : ''})"></td>
+        </tr>
+        <tr>
+            <td><strong>Ingredients</strong></td>
+        </tr>
+        <tr th:each="ingredient : ${recipe.recipeIngredients}">
+            <td><input type="checkbox"><span th:text="${ingredient.quantity} + ' ' + ${ingredient.measurement} + ' ' + ${ingredient.preparation} + ' ' + ${ingredient.component}"></span></td>
+        </tr>
+        <tr>
+            <td><strong>Direction</strong></td>
+        </tr>
+
+        <tr th:each="direction : ${recipe.recipeDirections}">
+            <td th:text="'Step ' + ${direction.stepNum} + ': ' + ${direction.direction}"></td>
+            <td th:if="${!#strings.isEmpty(direction.method) and #strings.isEmpty(direction.level) and direction.temp > 0}"
+                th:text="${direction.method} + ' at ' + ${direction.temp} + '°F'"></td>
+            <td th:if="${!#strings.isEmpty(direction.method) and !#strings.isEmpty(direction.level) and direction.temp == 0}"
+                th:text="${direction.method} + ' at ' + ${direction.level}"></td>
+            <td th:if="${!#strings.isEmpty(direction.method) and !#strings.isEmpty(direction.level) and direction.temp > 0}"
+                th:text="${direction.method} + ' at ' + ${direction.temp} + '°F or ' + ${direction.level}"></td>
+            <td th:if="${!#strings.isEmpty(direction.method) and direction.temp == 0 and #strings.isEmpty(direction.level)}"
+                th:text="${direction.method}"></td>
+        </tr>
+    </table>
+</main>
+
+<footer>
+    <p>footer</p>
+</footer>
+</body>
+
+</html>

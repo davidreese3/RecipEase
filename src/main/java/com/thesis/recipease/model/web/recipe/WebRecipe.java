@@ -1,8 +1,8 @@
-package com.thesis.recipease.model.web;
+package com.thesis.recipease.model.web.recipe;
 
 import java.util.List;
 
-public class WebRecipeInfo {
+public class WebRecipe {
     private String name;
     private String description;
     private Double yield;
@@ -11,11 +11,14 @@ public class WebRecipeInfo {
     private Integer prepHr;
     private Integer processMin;
     private Integer processHr;
+    private int totalMin;
+    private int totalHr;
     private List<WebIngredient> ingredients;
+    private List<WebDirection> directions;
 
 
-    public WebRecipeInfo(){}
-    public WebRecipeInfo(String name, String description, Double yield, String unitOfYield, Integer prepMin, Integer prepHr, Integer processMin, Integer processHr, List<WebIngredient> ingredients) {
+    public WebRecipe(){}
+    public WebRecipe(String name, String description, Double yield, String unitOfYield, Integer prepMin, Integer prepHr, Integer processMin, Integer processHr, int totalMin, int totalHr, List<WebIngredient> ingredients, List<WebDirection> directions) {
         this.name = name;
         this.description = description;
         this.yield = yield;
@@ -24,7 +27,10 @@ public class WebRecipeInfo {
         this.prepHr = prepHr;
         this.processMin = processMin;
         this.processHr = processHr;
+        this.totalMin = totalMin;
+        this.totalHr = totalHr;
         this.ingredients = ingredients;
+        this.directions = directions;
     }
 
     public String getName() {
@@ -83,7 +89,6 @@ public class WebRecipeInfo {
         this.processMin = processMin;
     }
 
-
     public Integer getProcessHr() {
         return processHr;
     }
@@ -91,6 +96,14 @@ public class WebRecipeInfo {
     public void setProcessHr(Integer processHr) {
         this.processHr = processHr;
     }
+
+    public int getTotalMin() { return totalMin; }
+
+    public void setTotalMin(int totalMin) { this.totalMin = totalMin; }
+
+    public int getTotalHr() { return totalHr; }
+
+    public void setTotalHr(int totalHr) { this.totalHr = totalHr; }
 
     public List<WebIngredient> getIngredients() {
         return ingredients;
@@ -100,8 +113,42 @@ public class WebRecipeInfo {
         this.ingredients = ingredients;
     }
 
+    public List<WebDirection> getDirections() {
+        return directions;
+    }
+
+    public void setDirections(List<WebDirection> directions) {
+        this.directions = directions;
+    }
+
     @Override
     public String toString() {
+        StringBuilder ingredientInfo = new StringBuilder();
+        if (ingredients != null && !ingredients.isEmpty()) {
+            ingredientInfo.append("[");
+            for (WebIngredient ingredient : ingredients) {
+                ingredientInfo.append(ingredient.toString()).append(", ");
+            }
+            // Remove the trailing comma and space
+            ingredientInfo.setLength(ingredientInfo.length() - 2);
+            ingredientInfo.append("]");
+        } else {
+            ingredientInfo.append("[]");
+        }
+
+        StringBuilder directionInfo = new StringBuilder();
+        if (directions != null && !directions.isEmpty()) {
+            directionInfo.append("[");
+            for (WebDirection direction : directions) {
+                directionInfo.append(direction.toString()).append(", ");
+            }
+            // Remove the trailing comma and space
+            directionInfo.setLength(directionInfo.length() - 2);
+            directionInfo.append("]");
+        } else {
+            directionInfo.append("[]");
+        }
+
         return "WebRecipe{" +
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
@@ -111,6 +158,8 @@ public class WebRecipeInfo {
                 ", prepHr=" + prepHr +
                 ", processMin=" + processMin +
                 ", processHr=" + processHr +
+                ", ingredients=" + ingredientInfo.toString() +
+                ", directions=" + directionInfo.toString() +
                 '}';
     }
 }

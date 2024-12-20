@@ -1,8 +1,8 @@
-package com.thesis.recipease.model;
+package com.thesis.recipease.model.recipe;
 
-public class Recipe {
-    private int id;
-    private String email;
+public class RecipeInfo {
+    private int recipeId;
+    private int userId;
     private String name;
     private String description;
     private double yield;
@@ -14,10 +14,10 @@ public class Recipe {
     private int totalMin;
     private int totalHr;
 
-    public Recipe(){}
-    public Recipe(int id, String email, String name, String description, double yield, String unitOfYield, int prepMin, int prepHr, int processMin, int processHr, int totalMin, int totalHr) {
-        this.id = id;
-        this.email = email;
+    public RecipeInfo(){}
+    public RecipeInfo(int recipeId, int userId, String name, String description, double yield, String unitOfYield, int prepMin, int prepHr, int processMin, int processHr, int totalMin, int totalHr) {
+        this.recipeId = recipeId;
+        this.userId = userId;
         this.name = name;
         this.description = description;
         this.yield = yield;
@@ -30,20 +30,20 @@ public class Recipe {
         this.totalHr = totalHr;
     }
 
-    public int getId() {
-        return id;
+    public int getRecipeId() {
+        return recipeId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setRecipeId(int recipeId) {
+        this.recipeId = recipeId;
     }
 
-    public String getEmail() {
-        return email;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getName() {
@@ -58,17 +58,13 @@ public class Recipe {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+    public void setDescription(String description) { this.description = description; }
 
     public double getYield() {
         return yield;
     }
 
-    public void setYield(double yield) {
-        this.yield = yield;
-    }
+    public void setYield(double yield) { this.yield = yield; }
 
     public String getUnitOfYield() {
         return unitOfYield;
@@ -86,9 +82,7 @@ public class Recipe {
         this.prepMin = prepMin;
     }
 
-    public int getPrepHr() {
-        return prepHr;
-    }
+    public int getPrepHr() { return prepHr; }
 
     public void setPrepHr(int prepHr) {
         this.prepHr = prepHr;
@@ -110,27 +104,19 @@ public class Recipe {
         this.processHr = processHr;
     }
 
-    public int getTotalMin() {
-        return totalMin;
-    }
+    public int getTotalMin() { return totalMin; }
 
-    public void setTotalMin(int totalMin) {
-        this.totalMin = totalMin;
-    }
+    public void setTotalMin(int totalMin) { this.totalMin = totalMin; }
 
-    public int getTotalHr() {
-        return totalHr;
-    }
+    public int getTotalHr() { return totalHr; }
 
-    public void setTotalHr(int totalHr) {
-        this.totalHr = totalHr;
-    }
+    public void setTotalHr(int totalHr) { this.totalHr = totalHr; }
 
     @Override
     public String toString() {
-        return "Recipe{" +
-                "id=" + id +
-                ", email='" + email + '\'' +
+        return "RecipeInfo{" +
+                "recipeId=" + recipeId + '\'' +
+                ", userId='" + userId + '\'' +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", yield=" + yield +
@@ -144,4 +130,3 @@ public class Recipe {
                 '}';
     }
 }
-

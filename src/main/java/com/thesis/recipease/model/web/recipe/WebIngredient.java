@@ -1,13 +1,13 @@
-package com.thesis.recipease.model.web;
+package com.thesis.recipease.model.web.recipe;
 
 public class WebIngredient {
     private String component;
-    private Integer quantity;
+    private Double quantity;
     private String measurement;
     private String preparation;
 
     public WebIngredient(){}
-    public WebIngredient(String component, Integer quantity, String measurement, String preparation) {
+    public WebIngredient(String component, Double quantity, String measurement, String preparation) {
         this.component = component;
         this.quantity = quantity;
         this.measurement = measurement;
@@ -22,11 +22,11 @@ public class WebIngredient {
         this.component = component;
     }
 
-    public Integer getQuantity() {
+    public Double getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(Double quantity) {
         this.quantity = quantity;
     }
 
@@ -45,4 +45,15 @@ public class WebIngredient {
     public void setPreparation(String preparation) {
         this.preparation = preparation;
     }
+
+    @Override
+    public String toString() {
+        return "WebIngredient{" +
+                "component='" + component + '\'' +
+                ", quantity=" + quantity +
+                ", measurement='" + measurement + '\'' +
+                ", preparation='" + preparation + '\'' +
+                '}';
+    }
+
 }

@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RecipEase Recipe Creation</title>
+    <script src="/js/addIngredient.js" defer></script>
+    <script src="/js/addDirection.js" defer></script>
 </head>
 
 <body>
@@ -15,7 +17,7 @@
 
 <main>
     <div th:if="${error}" th:text="${error}" style="color: red;"></div>
-    <form action="#" th:action="@{/recipe/create}" th:object="${webRecipeInfo}" method="post">
+    <form action="#" th:action="@{/recipe/create}" th:object="${webRecipe}" method="post">
         <table>
             <tr>
                 <td colspan="4"><h3>Required Fields</h3></td>
@@ -25,18 +27,18 @@
             </tr>
             <tr>
                 <td>Recipe Name:</td>
-                <td><input type="text" th:field="*{name}"/></td>
+                <td><input type="text" th:field="*{name}" required/></td>
             </tr>
             <tr>
                 <td>Recipe Description:</td>
-                <td colspan="3"><textarea rows="3" cols="65" th:field="*{description}"></textarea></td>
+                <td colspan="3"><textarea rows="3" cols="65" th:field="*{description}" placeholder="Not required, but encouraged."></textarea></td>
             </tr>
             <tr>
-                <td>Yield:</td>
-                <td><input type="number" step="0.1" min="0.1" value="0.1" th:field="*{yield}"/></td>
-                <td>Unit Of Yield:</td>
+                <td>Makes:</td>
+                <td><input type="number" step="0.1" min="0.1" value="0.1" th:field="*{yield}" required/></td>
+                <td>Unit:</td>
                 <td>
-                    <select th:field="*{unitOfYield}">
+                    <select th:field="*{unitOfYield}" required>
                         <option value="">Select a unit of yield</option>
                         <!-- Specific Food Portions -->
                         <option value="Slices">Slices</option>
@@ -65,22 +67,111 @@
             </tr>
             <tr>
                 <td>Preparation Hours:</td>
-                <td><input type="number" step="1" min="0" value="0" th:field="*{prepHr}"></td>
+                <td><input type="number" step="1" min="0" value="0" th:field="*{prepHr}" required></td>
                 <td>Preparation Minutes:</td>
-                <td><input type="number" step="1" min="0" max="59" value="0" th:field="*{prepMin}"></td>
+                <td><input type="number" step="1" min="0" max="59" value="0" th:field="*{prepMin}" required></td>
             </tr>
             <tr>
                 <td>Process Hours:</td>
-                <td><input type="number" step="1" min="0" value="0" th:field="*{processHr}"></td>
+                <td><input type="number" step="1" min="0" value="0" th:field="*{processHr}" required></td>
                 <td>Process Minutes:</td>
-                <td><input type="number" step="1" min="0" max="59" value="0" th:field="*{processMin}"></td>
+                <td><input type="number" step="1" min="0" max="59" value="0" th:field="*{processMin}" required></td>
             </tr>
             <tr>
-                <td colspan="4"><h4>Ingredients</h4></td>
+                <td colspan="4">
+                    <h4>Ingredients</h4>
+                    <button type="button" id="addIngredientBtn">Add Ingredient</button>
+                    <div id="ingredientList">
+                        <!-- The first ingredient entry is always present -->
+                        <div class="ingredient-entry">
+                            <input type="text" name="ingredients[0].component" placeholder="Ingredient Name" required>
+                            <input type="number" step=".1" min = "0" name="ingredients[0].quantity" placeholder="Quantity" required>
+                            <select name="ingredients[0].measurement" required>
+                                <option value="">Select a measurement</option>
+                                <!-- Volume -->
+                                <option value="Teaspoon">Teaspoon (tsp)</option>
+                                <option value="Tablespoon">Tablespoon (tbsp)</option>
+                                <option value="Cup">Cup</option>
+                                <option value="Milliliter">Milliliter (ml)</option>
+                                <option value="Liter">Liter (L)</option>
+                                <option value="FluidOunce">Fluid Ounce (fl oz)</option>
+                                <!-- Weight -->
+                                <option value="Ounce">Ounce (oz)</option>
+                                <option value="Pound">Pound (lb)</option>
+                                <option value="Gram">Gram (g)</option>
+                                <option value="Kilogram">Kilogram (kg)</option>
+                                <!-- Other -->
+                                <option value="Pinch">Pinch</option>
+                                <option value="Dash">Dash</option>
+                                <option value="Whole">Whole</option>
+                            </select>
+                            <select name="ingredients[0].preparation" required>
+                                <option value="">Select preparation</option>
+                                <!-- Cutting -->
+                                <option value="Diced">Diced</option>
+                                <option value="Chopped">Chopped</option>
+                                <option value="Minced">Minced</option>
+                                <option value="Sliced">Sliced</option>
+                                <option value="Julienned">Julienned</option>
+                                <option value="Cubed">Cubed</option>
+                                <!-- Grinding & Crushing -->
+                                <option value="Crushed">Crushed</option>
+                                <option value="Ground">Ground</option>
+                                <option value="Mashed">Mashed</option>
+                                <!-- Liquids -->
+                                <option value="Shaken">Shaken</option>
+                                <option value="Stirred">Stirred</option>
+                                <option value="Whisked">Whisked</option>
+                                <option value="Beaten">Beaten</option>
+                                <!-- Other -->
+                                <option value="Peeled">Peeled</option>
+                                <option value="Grated">Grated</option>
+                                <option value="Zested">Zested</option>
+                                <option value="Toasted">Toasted</option>
+                                <option value="Boiled">Boiled</option>
+                                <option value="Roasted">Roasted</option>
+                            </select>
+                        </div>
+                    </div>
+                </td>
             </tr>
+
             <tr>
-                <td colspan="4"><h4>Directions</h4></td>
+                <td colspan="4">
+                    <h4>Directions</h4>
+                    <button type="button" id="addDirectionBtn">Add Direction</button>
+                    <div id="directionList">
+                        <!-- The first direction entry is always present -->
+                        <div class="direction-entry">
+                            <textarea name="directions[0].direction" rows="2" cols="50" placeholder="Step Description" required></textarea>
+                            <br>
+                            <select name="directions[0].method">
+                                <option value="">Select a method</option>
+                                <option value="Baking">Baking</option>
+                                <option value="Boiling">Boiling</option>
+                                <option value="Frying">Frying</option>
+                                <option value="Grilling">Grilling</option>
+                                <option value="Roasting">Roasting</option>
+                                <option value="Searing">Searing</option>
+                                <option value="Simmering">Simmering</option>
+                                <option value="Steaming">Steaming</option>
+                                <option value="Stirring">Stirring</option>
+                                <option value="Whisking">Whisking</option>
+                                <option value="Mixing">Mixing</option>
+                                <option value="Assembling">Assembling</option>
+                            </select>
+                            <input type="number" name="directions[0].temp" placeholder="Temperature (°F)" min="0">
+                            <select name="directions[0].level">
+                                <option value="">Select level</option>
+                                <option value="Low">Low</option>
+                                <option value="Medium">Medium</option>
+                                <option value="High">High</option>
+                            </select>
+                        </div>
+                    </div>
+                </td>
             </tr>
+
             <tr>
                 <td colspan="4"><h3>Optional Fields</h3></td>
             </tr>
