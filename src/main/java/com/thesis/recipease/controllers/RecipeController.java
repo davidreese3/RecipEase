@@ -35,7 +35,6 @@ public class RecipeController {
         System.out.println("[After Sanitizer]: " + webRecipe.toString());
         //needs to get fixed
         Recipe recipe = appService.addRecipe(appService.getLoggedInUserId(), webRecipe);
-        //System.out.println("[Recipe From DB in String]: " + recipe.toString());
         //redirectAttributes.addFlashAttribute("recipe", recipe);
         redirectAttributes.addFlashAttribute("message", "Your recipe has been posted!");
         return "redirect:/recipe/view?recipeId=" + recipe.getRecipeInfo().getRecipeId();

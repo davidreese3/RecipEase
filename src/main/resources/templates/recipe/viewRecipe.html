@@ -25,26 +25,43 @@
         <tr>
             <td th:text = ${recipe.recipeInfo.description}></td>
         </tr>
+        <td th:text="'Makes ' + ${recipe.recipeInfo.yield} + ' ' + (${recipe.recipeInfo.yield == 1} ? ${#strings.substring(recipe.recipeInfo.unitOfYield, 0, recipe.recipeInfo.unitOfYield.lastIndexOf('s'))} : ${recipe.recipeInfo.unitOfYield})">
+        </td>
+
         <tr>
-            <td th:text="'Makes ' + ${recipe.recipeInfo.yield} + ' ' + ${recipe.recipeInfo.unitOfYield}"></td>
+            <td th:if="${recipe.recipeInfo.prepHr > 0}"
+                th:text="'Preparation Time: ' + ${recipe.recipeInfo.prepHr} + ' Hour' + (${recipe.recipeInfo.prepHr > 1 ? 's' : ''}) + ' ' + ${recipe.recipeInfo.prepMin} + ' Minute' + (${recipe.recipeInfo.prepMin > 1 ? 's' : ''})">
+            </td>
+            <td th:if="${recipe.recipeInfo.prepHr == 0}"
+                th:text="'Process Time: ' + ${recipe.recipeInfo.prepMin} + ' Minute' + (${recipe.recipeInfo.prepMin != 1 ? 's' : ''})">
+            </td>
         </tr>
         <tr>
-            <td th:text="'Preparation Time: ' + ${recipe.recipeInfo.prepHr} + ' Hour' + (${recipe.recipeInfo.prepHr > 1 ? 's' : ''}) + ' ' + ${recipe.recipeInfo.prepMin} + ' Minute' + (${recipe.recipeInfo.prepMin > 1 ? 's' : ''})"></td>
+            <td th:if="${recipe.recipeInfo.processHr > 0}"
+                th:text="'Process Time: ' + ${recipe.recipeInfo.processHr} + ' Hour' + (${recipe.recipeInfo.processHr > 1 ? 's' : ''}) + ' ' + ${recipe.recipeInfo.processMin} + ' Minute' + (${recipe.recipeInfo.processMin > 1 ? 's' : ''})">
+            </td>
+            <td th:if="${recipe.recipeInfo.processHr == 0}"
+                th:text="'Process Time: ' + ${recipe.recipeInfo.processMin} + ' Minute' + (${recipe.recipeInfo.processMin != 1 ? 's' : ''})">
+            </td>
         </tr>
+
         <tr>
-            <td th:text="'Process Time: ' + ${recipe.recipeInfo.processHr} + ' Hour' + (${recipe.recipeInfo.processHr > 1 ? 's' : ''}) + ' ' + ${recipe.recipeInfo.processMin} + ' Minute' + (${recipe.recipeInfo.processMin > 1 ? 's' : ''})"></td>
-        </tr>
-        <tr>
-            <td th:text="'Total Time: ' + ${recipe.recipeInfo.totalHr} + ' Hour' + (${recipe.recipeInfo.totalHr > 1 ? 's' : ''}) + ' ' + ${recipe.recipeInfo.totalMin} + ' Minute' + (${recipe.recipeInfo.totalMin > 1 ? 's' : ''})"></td>
+            <td th:if="${recipe.recipeInfo.totalHr > 0}"
+                th:text="'Total Time: ' + ${recipe.recipeInfo.totalHr} + ' Hour' + (${recipe.recipeInfo.totalHr > 1 ? 's' : ''}) + ' ' + ${recipe.recipeInfo.totalMin} + ' Minute' + (${recipe.recipeInfo.totalMin > 1 ? 's' : ''})">
+            </td>
+            <td th:if="${recipe.recipeInfo.totalHr == 0}"
+                th:text="'Total Time: ' + ${recipe.recipeInfo.totalMin} + ' Minute' + (${recipe.recipeInfo.totalMin != 1 ? 's' : ''})">
+            </td>
         </tr>
         <tr>
             <td><strong>Ingredients</strong></td>
         </tr>
         <tr th:each="ingredient : ${recipe.recipeIngredients}">
-            <td><input type="checkbox"><span th:text="${ingredient.quantity} + ' ' + ${ingredient.measurement} + ' ' + ${ingredient.preparation} + ' ' + ${ingredient.component}"></span></td>
+            <td><input type="checkbox"><span th:text="(${ingredient.wholeNumberQuantity > 0 ? ingredient.wholeNumberQuantity + ' ' : ''} + ${ingredient.fractionQuantity != '0' ? ingredient.fractionQuantity + ' ' : ''} + ${ingredient.wholeNumberQuantity != 1 and ingredient.fractionQuantity!= '0' ? ingredient.measurement + '' : ingredient.measurement + 's'} + ' ' + ${ingredient.preparation} + ' ' + ${ingredient.component})"></span></td>
         </tr>
         <tr>
-            <td><strong>Direction</strong></td>
+            <td><strong>Directions</strong></td>
+            <td>Simplified Directions</td>
         </tr>
 
         <tr th:each="direction : ${recipe.recipeDirections}">

@@ -2,14 +2,17 @@ package com.thesis.recipease.model.web.recipe;
 
 public class WebIngredient {
     private String component;
-    private Double quantity;
+    private Integer wholeNumberQuantity;
+    private String fractionQuantity;
     private String measurement;
     private String preparation;
 
     public WebIngredient(){}
-    public WebIngredient(String component, Double quantity, String measurement, String preparation) {
+
+    public WebIngredient(String component, int wholeNumberQuantity, String fractionQuantity, String measurement, String preparation) {
         this.component = component;
-        this.quantity = quantity;
+        this.wholeNumberQuantity = wholeNumberQuantity;
+        this.fractionQuantity = fractionQuantity;
         this.measurement = measurement;
         this.preparation = preparation;
     }
@@ -22,13 +25,22 @@ public class WebIngredient {
         this.component = component;
     }
 
-    public Double getQuantity() {
-        return quantity;
+    public Integer getWholeNumberQuantity() {
+        return wholeNumberQuantity;
     }
 
-    public void setQuantity(Double quantity) {
-        this.quantity = quantity;
+    public void setWholeNumberQuantity(Integer wholeNumberQuantity) {
+        this.wholeNumberQuantity = wholeNumberQuantity;
     }
+
+    public String getFractionQuantity() {
+        return fractionQuantity;
+    }
+
+    public void setFractionQuantity(String fractionQuantity) {
+        this.fractionQuantity = fractionQuantity;
+    }
+
 
     public String getMeasurement() {
         return measurement;
@@ -50,10 +62,10 @@ public class WebIngredient {
     public String toString() {
         return "WebIngredient{" +
                 "component='" + component + '\'' +
-                ", quantity=" + quantity +
+                ", wholeNumberQuantity=" + wholeNumberQuantity +
+                ", fractionQuantity='" + fractionQuantity + '\'' +
                 ", measurement='" + measurement + '\'' +
                 ", preparation='" + preparation + '\'' +
                 '}';
     }
-
 }

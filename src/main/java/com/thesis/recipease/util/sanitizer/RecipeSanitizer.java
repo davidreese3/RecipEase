@@ -17,7 +17,7 @@ public class RecipeSanitizer {
         if (webRecipe.getProcessMin() == null) webRecipe.setProcessMin(0);
         if (webRecipe.getProcessHr() == null) webRecipe.setProcessHr(0);
         if (webRecipe.getYield() == null) webRecipe.setYield(1.0);
-        webRecipe.setTotalMin(webRecipe.getPrepMin() + webRecipe.getProcessMin() % 60);
+        webRecipe.setTotalMin((webRecipe.getPrepMin() + webRecipe.getProcessMin()) % 60);
         webRecipe.setTotalHr(webRecipe.getPrepHr() + webRecipe.getProcessHr() + ((webRecipe.getPrepMin() + webRecipe.getProcessMin()) / 60));
 
         //ingredients
@@ -27,6 +27,9 @@ public class RecipeSanitizer {
         while(ingredientIterator.hasNext()) {
             webIngredient = ingredientIterator.next();
             if (isIngredientNull(webIngredient)) {
+                ingredientIterator.remove();
+            }
+            else if(isIngredientZero(webIngredient)){
                 ingredientIterator.remove();
             }
         }
@@ -54,9 +57,14 @@ public class RecipeSanitizer {
 
     public static boolean isIngredientNull(WebIngredient webIngredient){
         return webIngredient.getComponent() == null &&
-                webIngredient.getQuantity() == null &&
+                webIngredient.getWholeNumberQuantity() == null &&
+                webIngredient.getFractionQuantity() == null &&
                 webIngredient.getMeasurement() == null &&
                 webIngredient.getPreparation() == null;
+    }
+
+    public static boolean isIngredientZero(WebIngredient webIngredient){
+        return webIngredient.getWholeNumberQuantity() == 0 && webIngredient.getFractionQuantity().equals("0");
     }
 
     public static boolean isDirectionNull(WebDirection webDirection){
@@ -65,4 +73,5 @@ public class RecipeSanitizer {
                 webDirection.getTemp() == null &&
                 webDirection.getLevel() == null;
     }
+
 }

@@ -3,15 +3,17 @@ package com.thesis.recipease.model.recipe;
 public class RecipeIngredient {
     private int recipeId;
     private String component;
-    private Double quantity;
+    private Integer wholeNumberQuantity;
+    private String fractionQuantity;
     private String measurement;
     private String preparation;
 
     public RecipeIngredient(){}
-    public RecipeIngredient(int recipeId, String component, Double quantity, String measurement, String preparation) {
+    public RecipeIngredient(int recipeId, String component, Integer wholeNumberQuantity, String fractionQuantity, String measurement, String preparation) {
         this.recipeId = recipeId;
         this.component = component;
-        this.quantity = quantity;
+        this.wholeNumberQuantity = wholeNumberQuantity;
+        this.fractionQuantity = fractionQuantity;
         this.measurement = measurement;
         this.preparation = preparation;
     }
@@ -32,12 +34,20 @@ public class RecipeIngredient {
         this.component = component;
     }
 
-    public Double getQuantity() {
-        return quantity;
+    public Integer getWholeNumberQuantity() {
+        return wholeNumberQuantity;
     }
 
-    public void setQuantity(Double quantity) {
-        this.quantity = quantity;
+    public void setWholeNumberQuantity(Integer wholeNumberQuantity) {
+        this.wholeNumberQuantity = wholeNumberQuantity;
+    }
+
+    public String getFractionQuantity() {
+        return fractionQuantity;
+    }
+
+    public void setFractionQuantity(String fractionQuantity) {
+        this.fractionQuantity = fractionQuantity;
     }
 
     public String getMeasurement() {
@@ -59,8 +69,10 @@ public class RecipeIngredient {
     @Override
     public String toString() {
         return "RecipeIngredient{" +
-                "component='" + component + '\'' +
-                ", quantity=" + quantity +
+                "recipeId=" + recipeId +
+                ", component='" + component + '\'' +
+                ", wholeNumberQuantity=" + wholeNumberQuantity +
+                ", fractionQuantity='" + fractionQuantity + '\'' +
                 ", measurement='" + measurement + '\'' +
                 ", preparation='" + preparation + '\'' +
                 '}';

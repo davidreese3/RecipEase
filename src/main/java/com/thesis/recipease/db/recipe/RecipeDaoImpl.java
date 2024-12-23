@@ -81,7 +81,7 @@ public class RecipeDaoImpl implements RecipeDao{
             } else {
                 throw new IllegalStateException("Failed to retrieve the generated recipe ID.");
             }
-            final String ingredientSQL = "insert into ingredient (recipeid, component, quantity, measurement, preparation) values (?, ?, ?, ?, ?)";
+            final String ingredientSQL = "insert into ingredient (recipeid, component, wholeNumberQuantity, fractionQuantity, measurement, preparation) values (?, ?, ?, ?, ?, ?)";
             List<WebIngredient> webIngredients = webRecipe.getIngredients();
             for(WebIngredient webIngredient : webIngredients){
                 System.out.println("inserting ingredient");
@@ -89,9 +89,10 @@ public class RecipeDaoImpl implements RecipeDao{
                     PreparedStatement ps = dataSource.prepareStatement(ingredientSQL);
                     ps.setInt(1, recipeId);
                     ps.setString(2, webIngredient.getComponent());
-                    ps.setDouble(3, webIngredient.getQuantity());
-                    ps.setString(4, webIngredient.getMeasurement());
-                    ps.setString(5, webIngredient.getPreparation());
+                    ps.setDouble(3, webIngredient.getWholeNumberQuantity());
+                    ps.setString(4, webIngredient.getFractionQuantity());
+                    ps.setString(5, webIngredient.getMeasurement());
+                    ps.setString(6, webIngredient.getPreparation());
                     return ps;
                 });
             }
@@ -191,7 +192,8 @@ public class RecipeDaoImpl implements RecipeDao{
             RecipeIngredient recipeIngredient = new RecipeIngredient();
             recipeIngredient.setRecipeId(rs.getInt("recipeId"));
             recipeIngredient.setComponent(rs.getString("component"));
-            recipeIngredient.setQuantity(rs.getDouble("quantity"));
+            recipeIngredient.setWholeNumberQuantity(rs.getInt("wholeNumberQuantity"));
+            recipeIngredient.setFractionQuantity(rs.getString("fractionQuantity"));
             recipeIngredient.setMeasurement(rs.getString("measurement"));
             recipeIngredient.setPreparation(rs.getString("preparation"));
             return recipeIngredient;

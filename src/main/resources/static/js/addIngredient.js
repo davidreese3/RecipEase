@@ -12,21 +12,45 @@ document.addEventListener('DOMContentLoaded', function () {
         const ingredientDiv = document.createElement('div');
         ingredientDiv.classList.add('ingredient-entry');
 
-        // Input for component
+        // Input for component (ingredient name)
         const componentInput = document.createElement('input');
         componentInput.setAttribute('type', 'text');
         componentInput.setAttribute('name', `ingredients[${ingredientList.children.length}].component`);
         componentInput.setAttribute('placeholder', 'Ingredient Name');
         componentInput.required = true;
 
-        // Input for quantity
-        const quantityInput = document.createElement('input');
-        quantityInput.setAttribute('type', 'number');
-        quantityInput.setAttribute('name', `ingredients[${ingredientList.children.length}].quantity`);
-        quantityInput.setAttribute('step', '.1');
-        quantityInput.setAttribute('min', '0');
-        quantityInput.setAttribute('placeholder', 'Quantity');
-        quantityInput.required = true;
+        // Input for whole number quantity
+        const wholeNumberInput = document.createElement('input');
+        wholeNumberInput.setAttribute('type', 'number');
+        wholeNumberInput.setAttribute('min', '0');
+        wholeNumberInput.setAttribute('name', `ingredients[${ingredientList.children.length}].wholeNumberQuantity`);
+        wholeNumberInput.setAttribute('placeholder', 'Enter Number Quantity');
+
+        // Dropdown for fractional quantity
+        const fractionSelect = document.createElement('select');
+        fractionSelect.setAttribute('name', `ingredients[${ingredientList.children.length}].fractionQuantity`);
+
+        // Fraction options
+        const fractionOptions = [
+            { value: '0', text: 'Select a fractional quantity (if needed)' },
+            { value: '0', text: 'No fraction' },
+            { value: '1/8', text: '1/8' },
+            { value: '1/4', text: '1/4' },
+            { value: '3/8', text: '3/8' },
+            { value: '1/3', text: '1/3' },
+            { value: '1/2', text: '1/2' },
+            { value: '5/8', text: '5/8' },
+            { value: '2/3', text: '2/3' },
+            { value: '3/4', text: '3/4' },
+            { value: '1', text: '1' }
+        ];
+
+        fractionOptions.forEach(optionData => {
+            const option = document.createElement('option');
+            option.value = optionData.value;
+            option.textContent = optionData.text;
+            fractionSelect.appendChild(option);
+        });
 
         // Dropdown for measurement
         const measurementSelect = document.createElement('select');
@@ -35,22 +59,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const measurementOptions = [
             { value: '', text: 'Select a measurement' },
-            // Volume
             { value: 'Teaspoon', text: 'Teaspoon (tsp)' },
             { value: 'Tablespoon', text: 'Tablespoon (tbsp)' },
             { value: 'Cup', text: 'Cup' },
             { value: 'Milliliter', text: 'Milliliter (ml)' },
             { value: 'Liter', text: 'Liter (L)' },
             { value: 'FluidOunce', text: 'Fluid Ounce (fl oz)' },
-            // Weight
             { value: 'Ounce', text: 'Ounce (oz)' },
             { value: 'Pound', text: 'Pound (lb)' },
             { value: 'Gram', text: 'Gram (g)' },
             { value: 'Kilogram', text: 'Kilogram (kg)' },
-            // Other
             { value: 'Pinch', text: 'Pinch' },
-            { value: 'Dash', text: 'Dash' },
-            { value: 'Whole', text: 'Whole' }
+            { value: 'Dash', text: 'Dash' }
         ];
 
         measurementOptions.forEach(optionData => {
@@ -67,26 +87,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const preparationOptions = [
             { value: '', text: 'Select preparation' },
-            // Cutting
             { value: 'Diced', text: 'Diced' },
             { value: 'Chopped', text: 'Chopped' },
             { value: 'Minced', text: 'Minced' },
             { value: 'Sliced', text: 'Sliced' },
             { value: 'Julienned', text: 'Julienned' },
             { value: 'Cubed', text: 'Cubed' },
-            // Grinding & Crushing
             { value: 'Crushed', text: 'Crushed' },
             { value: 'Ground', text: 'Ground' },
             { value: 'Mashed', text: 'Mashed' },
-            // Liquids
             { value: 'Shaken', text: 'Shaken' },
             { value: 'Stirred', text: 'Stirred' },
             { value: 'Whisked', text: 'Whisked' },
             { value: 'Beaten', text: 'Beaten' },
-            // Other
             { value: 'Peeled', text: 'Peeled' },
             { value: 'Grated', text: 'Grated' },
             { value: 'Zested', text: 'Zested' },
+            { value: 'Whole', text: 'Whole' },
             { value: 'Toasted', text: 'Toasted' },
             { value: 'Boiled', text: 'Boiled' },
             { value: 'Roasted', text: 'Roasted' }
@@ -109,7 +126,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Append all inputs and the remove button to the ingredient div
         ingredientDiv.appendChild(componentInput);
-        ingredientDiv.appendChild(quantityInput);
+        ingredientDiv.appendChild(wholeNumberInput);
+        ingredientDiv.appendChild(fractionSelect);
         ingredientDiv.appendChild(measurementSelect);
         ingredientDiv.appendChild(preparationSelect);
         ingredientDiv.appendChild(removeButton);
