@@ -57,63 +57,10 @@ public class RecipeDaoImpl implements RecipeDao{
         def.setIsolationLevel(TransactionDefinition.ISOLATION_REPEATABLE_READ);
         TransactionStatus status = transactionManager.getTransaction(def);
         try {
-            final String infoSQL = "insert into info (userid, name, description, yield, unitOfYield, prepMin, prepHr, processMin, processHr, totalMin, totalHr) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-            KeyHolder keyHolder = new GeneratedKeyHolder();
-            jdbcTemplate.update(dataSource -> {
-                PreparedStatement ps = dataSource.prepareStatement(infoSQL, Statement.RETURN_GENERATED_KEYS);
-                ps.setInt(1, userId);
-                ps.setString(2, webRecipe.getName());
-                ps.setString(3, webRecipe.getDescription());
-                ps.setDouble(4, webRecipe.getYield());
-                ps.setString(5, webRecipe.getUnitOfYield());
-                ps.setInt(6, webRecipe.getPrepMin());
-                ps.setInt(7, webRecipe.getPrepHr());
-                ps.setInt(8, webRecipe.getProcessMin());
-                ps.setInt(9, webRecipe.getProcessHr());
-                ps.setInt(10, webRecipe.getTotalMin());
-                ps.setInt(11, webRecipe.getTotalHr());
-                return ps;
-            }, keyHolder);
-            List<Map<String, Object>> keylist= keyHolder.getKeyList();
-            if (!keyHolder.getKeyList().isEmpty()) {
-                Map<String, Object> keyMap = keyHolder.getKeyList().get(0); // Get the first key map
-                recipeId = (int) keyMap.get("recipeid"); // Fetch the 'recipeid' field
-            } else {
-                throw new IllegalStateException("Failed to retrieve the generated recipe ID.");
-            }
-            final String ingredientSQL = "insert into ingredient (recipeid, component, wholeNumberQuantity, fractionQuantity, measurement, preparation) values (?, ?, ?, ?, ?, ?)";
-            List<WebIngredient> webIngredients = webRecipe.getIngredients();
-            for(WebIngredient webIngredient : webIngredients){
-                System.out.println("inserting ingredient");
-                jdbcTemplate.update(dataSource -> {
-                    PreparedStatement ps = dataSource.prepareStatement(ingredientSQL);
-                    ps.setInt(1, recipeId);
-                    ps.setString(2, webIngredient.getComponent());
-                    ps.setDouble(3, webIngredient.getWholeNumberQuantity());
-                    ps.setString(4, webIngredient.getFractionQuantity());
-                    ps.setString(5, webIngredient.getMeasurement());
-                    ps.setString(6, webIngredient.getPreparation());
-                    return ps;
-                });
-            }
-            int stepNum = 1;
-            final String directionSQL = "insert into direction (recipeid, stepNum, direction, method, temp, level) values (?, ?, ?, ?, ?, ?)";
-            List<WebDirection> webDirections = webRecipe.getDirections();
-            for(WebDirection webDirection : webDirections){
-                System.out.println("inserting direction");
-                int finalStepNum = stepNum;
-                jdbcTemplate.update(dataSource -> {
-                    PreparedStatement ps = dataSource.prepareStatement(directionSQL);
-                    ps.setInt(1, recipeId);
-                    ps.setInt(2, finalStepNum);
-                    ps.setString(3, webDirection.getDirection());
-                    ps.setString(4, webDirection.getMethod());
-                    ps.setDouble(5, webDirection.getTemp());
-                    ps.setString(6, webDirection.getLevel());
-                    return ps;
-                });
-                stepNum++;
-            }
+            //insertInfo
+            recipeId = insertRecipeInfo(userId,webRecipe);
+            insertRecipeIngredients(userId, webRecipe, recipeId);
+            insertRecipeDirections(userId, webRecipe, recipeId);
             transactionManager.commit(status);
             System.out.println("Success");
         }
@@ -125,6 +72,74 @@ public class RecipeDaoImpl implements RecipeDao{
         return getRecipeById(recipeId);
     }
 
+    // HELPER METHODS
+    private int insertRecipeInfo(int userId, WebRecipe webRecipe){
+        int recipeId;
+        final String SQL = "insert into info (userid, name, description, yield, unitOfYield, prepMin, prepHr, processMin, processHr, totalMin, totalHr) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update(dataSource -> {
+            PreparedStatement ps = dataSource.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, userId);
+            ps.setString(2, webRecipe.getName());
+            ps.setString(3, webRecipe.getDescription());
+            ps.setDouble(4, webRecipe.getYield());
+            ps.setString(5, webRecipe.getUnitOfYield());
+            ps.setInt(6, webRecipe.getPrepMin());
+            ps.setInt(7, webRecipe.getPrepHr());
+            ps.setInt(8, webRecipe.getProcessMin());
+            ps.setInt(9, webRecipe.getProcessHr());
+            ps.setInt(10, webRecipe.getTotalMin());
+            ps.setInt(11, webRecipe.getTotalHr());
+            return ps;
+        }, keyHolder);
+        List<Map<String, Object>> keylist= keyHolder.getKeyList();
+        if (!keyHolder.getKeyList().isEmpty()) {
+            Map<String, Object> keyMap = keyHolder.getKeyList().get(0); // Get the first key map
+            recipeId = (int) keyMap.get("recipeid"); // Fetch the 'recipeid' field
+            return recipeId;
+        } else {
+            throw new IllegalStateException("Failed to retrieve the generated recipe ID.");
+        }
+    }
+
+    private void insertRecipeIngredients(int userId, WebRecipe webRecipe, int recipeId){
+        final String SQL = "insert into ingredient (recipeid, component, wholeNumberQuantity, fractionQuantity, measurement, preparation) values (?, ?, ?, ?, ?, ?)";
+        List<WebIngredient> webIngredients = webRecipe.getIngredients();
+        for(WebIngredient webIngredient : webIngredients){
+            System.out.println("inserting ingredient");
+            jdbcTemplate.update(dataSource -> {
+                PreparedStatement ps = dataSource.prepareStatement(SQL);
+                ps.setInt(1, recipeId);
+                ps.setString(2, webIngredient.getComponent());
+                ps.setDouble(3, webIngredient.getWholeNumberQuantity());
+                ps.setString(4, webIngredient.getFractionQuantity());
+                ps.setString(5, webIngredient.getMeasurement());
+                ps.setString(6, webIngredient.getPreparation());
+                return ps;
+            });
+        }
+    }
+
+    private void insertRecipeDirections(int userId, WebRecipe webRecipe, int recipeId){
+        int stepNum = 1;
+        final String SQL = "insert into direction (recipeid, stepNum, direction, method, temp, level) values (?, ?, ?, ?, ?, ?)";
+        List<WebDirection> webDirections = webRecipe.getDirections();
+        for(WebDirection webDirection : webDirections){
+            System.out.println("inserting direction");
+            int finalStepNum = stepNum;
+            jdbcTemplate.update(dataSource -> {
+                PreparedStatement ps = dataSource.prepareStatement(SQL);
+                ps.setInt(1, recipeId);
+                ps.setInt(2, finalStepNum);
+                ps.setString(3, webDirection.getDirection());
+                ps.setString(4, webDirection.getMethod());
+                ps.setDouble(5, webDirection.getTemp());
+                ps.setString(6, webDirection.getLevel());
+                return ps;
+            });
+            stepNum++;
+        }
+    }
 
     // ------------------------------------------------
     // READ OPS
