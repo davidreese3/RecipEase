@@ -17,7 +17,7 @@
 <main>
     <table>
         <tr>
-            <td><strong>Recipe Info</strong></td>
+            <td><h3>Recipe Info</h3></td>
         </tr>
         <tr>
             <td th:text="${recipe.recipeInfo.name}"></td>
@@ -54,13 +54,13 @@
             </td>
         </tr>
         <tr>
-            <td><strong>Ingredients</strong></td>
+            <td><h3>Ingredients</h3></td>
         </tr>
         <tr th:each="ingredient : ${recipe.recipeIngredients}">
             <td><input type="checkbox"><span th:text="(${ingredient.wholeNumberQuantity > 0 ? ingredient.wholeNumberQuantity + ' ' : ''} + ${ingredient.fractionQuantity != '0' ? ingredient.fractionQuantity + ' ' : ''} + ${ingredient.wholeNumberQuantity != 1 and ingredient.fractionQuantity!= '0' ? ingredient.measurement + '' : ingredient.measurement + 's'} + ' ' + ${ingredient.preparation} + ' ' + ${ingredient.component})"></span></td>
         </tr>
         <tr>
-            <td><strong>Directions</strong></td>
+            <td><h3>Directions</h3></td>
             <td>Simplified Directions</td>
         </tr>
 
@@ -76,6 +76,20 @@
                 th:text="${direction.method}"></td>
         </tr>
     </table>
+    <div th:if="${glossaryList}">
+        <hr>
+        <h3>Glossary Terms</h3>
+        <table>
+            <tbody>
+            <tr th:each="entry : ${glossaryList}">
+                <td>
+                    <strong th:text="${entry.term}"></strong>
+                    <span th:text="': ' + ${entry.definition}"></span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </main>
 
 <footer>

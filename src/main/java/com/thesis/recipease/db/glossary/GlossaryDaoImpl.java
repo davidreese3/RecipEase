@@ -56,6 +56,7 @@ public class GlossaryDaoImpl implements  GlossaryDao{
             GlossaryEntry glossaryEntry = new GlossaryEntry();
             glossaryEntry.setTerm(rs.getString("term"));
             glossaryEntry.setDefinition(rs.getString("definition"));
+            glossaryEntry.setRelatedTerms(rs.getString("relatedForms").split(", "));
             return glossaryEntry;
         }
     }

@@ -59,18 +59,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const measurementOptions = [
             { value: '', text: 'Select a measurement' },
-            { value: 'Teaspoon', text: 'Teaspoon (tsp)' },
-            { value: 'Tablespoon', text: 'Tablespoon (tbsp)' },
-            { value: 'Cup', text: 'Cup' },
-            { value: 'Milliliter', text: 'Milliliter (ml)' },
-            { value: 'Liter', text: 'Liter (L)' },
-            { value: 'FluidOunce', text: 'Fluid Ounce (fl oz)' },
-            { value: 'Ounce', text: 'Ounce (oz)' },
-            { value: 'Pound', text: 'Pound (lb)' },
-            { value: 'Gram', text: 'Gram (g)' },
-            { value: 'Kilogram', text: 'Kilogram (kg)' },
-            { value: 'Pinch', text: 'Pinch' },
-            { value: 'Dash', text: 'Dash' }
+            { value: 'Teaspoons', text: 'Teaspoons (tsp)' },
+            { value: 'Tablespoons', text: 'Tablespoons (tbsp)' },
+            { value: 'Cups', text: 'Cups' },
+            { value: 'Milliliters', text: 'Milliliters (ml)' },
+            { value: 'Liters', text: 'Liters (L)' },
+            { value: 'FluidOunces', text: 'Fluid Ounces (fl oz)' },
+            { value: 'Ounces', text: 'Ounces (oz)' },
+            { value: 'Pounds', text: 'Pounds (lb)' },
+            { value: 'Grams', text: 'Grams (g)' },
+            { value: 'Kilograms', text: 'Kilograms (kg)' },
+            { value: 'Pinches', text: 'Pinches' },
+            { value: 'Dashes', text: 'Dashes' }
         ];
 
         measurementOptions.forEach(optionData => {
