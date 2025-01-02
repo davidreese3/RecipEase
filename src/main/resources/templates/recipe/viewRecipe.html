@@ -101,7 +101,7 @@
                 th:text="${direction.method}"></td>
         </tr>
     </table>
-    <div th:if="${glossaryList}">
+    <div th:if="${glossaryList.size != 0}">
         <hr>
         <h3>Glossary Terms</h3>
         <table>
@@ -115,7 +115,7 @@
             </tbody>
         </table>
     </div>
-    <div th:if="${substitutionList}">
+    <div th:if="${substitutionList.size != 0}">
         <hr>
         <h3>Known Substitution</h3>
         <table>
