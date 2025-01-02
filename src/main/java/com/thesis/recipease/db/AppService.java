@@ -67,6 +67,9 @@ public class AppService {
     public Profile getProfileById(int id) {
         return profileDao.getProfileById(id);
     }
+    public String getNameById(int id) {
+        return profileDao.getNameById(id);
+    }
 
     // UPDATE OPS
     public Profile updateProfile(WebProfile webProfile) {

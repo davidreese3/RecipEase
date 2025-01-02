@@ -115,12 +115,16 @@ public class RecipeController {
         List<SubstitutionEntry> substitutionEntries = appService.getAllSubstitutionEntries();
         List<SubstitutionEntry> substitutionList = new ArrayList<SubstitutionEntry>();
 
-        for(SubstitutionEntry substitutionEntry : substitutionEntries){
-            if(substitutionLemmasFinal.contains(substitutionEntry.getOriginalComponent().toLowerCase())){
+        for(SubstitutionEntry substitutionEntry : substitutionEntries) {
+            if (substitutionLemmasFinal.contains(substitutionEntry.getOriginalComponent().toLowerCase())) {
                 substitutionList.add(substitutionEntry);
             }
         }
         model.addAttribute("substitutionList", substitutionList);
+        int userId = recipe.getRecipeInfo().getUserId();
+        String authorName = appService.getNameById(userId);
+        model.addAttribute("authorName", authorName);
+        model.addAttribute("profileLink", "http://localhost:8080/profile/view?id=" + userId);
         return "recipe/viewRecipe";
     }
 

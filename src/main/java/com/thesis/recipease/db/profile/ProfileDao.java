@@ -12,6 +12,7 @@ public interface ProfileDao {
     // CREATE OPS
     // READ OPS
     public Profile getProfileById(int id);
+    public String getNameById(int id);
     // UPDATE OPS
     public Profile updateProfile(WebProfile webProfile);
     // DELETE OPS

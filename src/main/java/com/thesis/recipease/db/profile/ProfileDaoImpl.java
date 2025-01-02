@@ -44,6 +44,16 @@ public class ProfileDaoImpl implements ProfileDao{
             return null;
         }
     }
+
+    @Override
+    public String getNameById(int id) {
+        final String SQL = "select concat(firstName, ' ', lastName) as fullName from profile where id = ?";
+        try {
+            return jdbcTemplate.queryForObject(SQL, String.class, id);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
     // ------------------------------------------------
     // UPDATE OPS
     // ------------------------------------------------

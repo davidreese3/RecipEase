@@ -23,6 +23,11 @@
             <td th:text="${recipe.recipeInfo.name}"></td>
         </tr>
         <tr>
+            <td>
+                <a th:href="${profileLink}" th:text="${authorName}"></a>
+            </td>
+        </tr>
+        <tr>
             <td th:text = ${recipe.recipeInfo.description}></td>
         </tr>
         <td th:text="
