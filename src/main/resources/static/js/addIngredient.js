@@ -70,7 +70,8 @@ document.addEventListener('DOMContentLoaded', function () {
             { value: 'Grams', text: 'Grams (g)' },
             { value: 'Kilograms', text: 'Kilograms (kg)' },
             { value: 'Pinches', text: 'Pinches' },
-            { value: 'Dashes', text: 'Dashes' }
+            { value: 'Dashes', text: 'Dashes' },
+            { value: 'Whole', text: 'Whole Ingredient' }
         ];
 
         measurementOptions.forEach(optionData => {
@@ -103,7 +104,7 @@ document.addEventListener('DOMContentLoaded', function () {
             { value: 'Peeled', text: 'Peeled' },
             { value: 'Grated', text: 'Grated' },
             { value: 'Zested', text: 'Zested' },
-            { value: 'Whole', text: 'Whole' },
+            { value: 'Whole', text: 'Whole Ingredient' },
             { value: 'Toasted', text: 'Toasted' },
             { value: 'Boiled', text: 'Boiled' },
             { value: 'Roasted', text: 'Roasted' }

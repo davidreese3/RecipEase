@@ -61,18 +61,21 @@
                 <input type="checkbox">
                 <span th:text="
                     ${ingredient.wholeNumberQuantity > 0 ? ingredient.wholeNumberQuantity + ' ' : ''} +
-                    ${ingredient.fractionQuantity != '0' ? ingredient.fractionQuantity + ' ' : ''} +
+                    ${ingredient.fractionQuantity != null && ingredient.fractionQuantity != '0' ? ingredient.fractionQuantity + ' ' : ''} +
                     ${
-                        ingredient.wholeNumberQuantity == 1 && ingredient.fractionQuantity == '0'
-                            ? (ingredient.measurement.endsWith('es')
-                                ? ingredient.measurement.substring(0, ingredient.measurement.length() - 2)
-                                : ingredient.measurement.substring(0, ingredient.measurement.length() - 1))
-                            : ingredient.measurement
-                        } + ' ' + ${ingredient.preparation} + ' ' + ${ingredient.component}
-                    ">
+                        ingredient.measurement != null && ingredient.preparation != null && ingredient.measurement == 'Whole' && ingredient.preparation == 'Whole'
+                            ? ''
+                            : (
+                                ingredient.measurement != null && ingredient.wholeNumberQuantity == 1 && ingredient.fractionQuantity == '0' && ingredient.measurement != 'Whole'
+                                    ? (ingredient.measurement.endsWith('es')
+                                        ? ingredient.measurement.substring(0, ingredient.measurement.length() - 2)
+                                        : ingredient.measurement.substring(0, ingredient.measurement.length() - 1))
+                                    : ingredient.measurement
+                              )
+                    } + ' ' + ${ingredient.preparation != null ? ingredient.preparation : ''} + ' ' + ${ingredient.component}
+                ">
                 </span>
             </td>
-
         </tr>
         <tr>
             <td><h3>Directions</h3></td>
