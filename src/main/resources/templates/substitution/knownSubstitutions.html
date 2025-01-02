@@ -27,9 +27,27 @@
         <tbody>
         <tr th:each="substitution : ${substitutions}">
             <td th:text="${substitution.originalComponent}"></td>
-            <td th:text="${substitution.originalQuantity} + ' ' + ${substitution.originalMeasurement} + ' ' + ${substitution.originalPreparation}"></td>
+
+            <td th:if="${substitution.originalFractionQuantity == null}"
+                th:text="${substitution.originalWholeNumberQuantity + ' ' + substitution.originalMeasurement + ' ' + substitution.originalPreparation}">
+            </td>
+            <td th:if="${substitution.originalWholeNumberQuantity == 0}"
+                th:text="${substitution.originalFractionQuantity + ' ' + substitution.originalMeasurement + ' ' + substitution.originalPreparation}">
+            </td>
+            <td th:if="${substitution.originalFractionQuantity != null && substitution.originalWholeNumberQuantity != 0}"
+                th:text="${substitution.originalWholeNumberQuantity + ' ' + substitution.originalFractionQuantity + ' ' + substitution.originalMeasurement + ' ' + substitution.originalPreparation}">
+            </td>
             <td th:text="${substitution.substitutedComponent}"></td>
-            <td th:text="${substitution.substitutedQuantity} + ' ' + ${substitution.substitutedMeasurement} + ' ' + ${substitution.substitutedPreparation}"></td>
+
+            <td th:if="${substitution.substitutedFractionQuantity == null}"
+                th:text="${substitution.substitutedWholeNumberQuantity + ' ' + substitution.substitutedMeasurement + ' ' + substitution.substitutedPreparation}">
+            </td>
+            <td th:if="${substitution.substitutedWholeNumberQuantity == 0}"
+                th:text="${substitution.substitutedFractionQuantity + ' ' + substitution.substitutedMeasurement + ' ' + substitution.substitutedPreparation}">
+            </td>
+            <td th:if="${substitution.substitutedFractionQuantity != null && substitution.substitutedWholeNumberQuantity != 0}"
+                th:text="${substitution.substitutedWholeNumberQuantity + ' ' + substitution.substitutedFractionQuantity + ' ' + substitution.substitutedMeasurement + ' ' + substitution.substitutedPreparation}">
+            </td>
         </tr>
 
         </tbody>

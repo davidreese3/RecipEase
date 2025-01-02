@@ -2,6 +2,7 @@ package com.thesis.recipease.controllers;
 
 import com.thesis.recipease.db.AppService;
 import com.thesis.recipease.model.GlossaryEntry;
+import com.thesis.recipease.model.SubstitutionEntry;
 import com.thesis.recipease.model.recipe.Recipe;
 import com.thesis.recipease.model.recipe.RecipeDirection;
 import com.thesis.recipease.model.recipe.RecipeIngredient;
@@ -106,8 +107,17 @@ public class RecipeController {
         for(GlossaryEntry glossaryEntry : glossaryList){
             System.out.println("To Attatch: " + glossaryEntry.getTerm() + " " + glossaryEntry.getDefinition());
         }
-        //anywayto take out if is an ingredient?
         model.addAttribute("glossaryList", glossaryList);
+
+        List<SubstitutionEntry> substitutionEntries = appService.getAllSubstitutionEntries();
+        List<SubstitutionEntry> substitutionList = new ArrayList<SubstitutionEntry>();
+
+        for(SubstitutionEntry substitutionEntry : substitutionEntries){
+            if(substitutionLemmasFinal.contains(substitutionEntry.getOriginalComponent().toLowerCase())){
+                substitutionList.add(substitutionEntry);
+            }
+        }
+        model.addAttribute("substitutionList", substitutionList);
         return "recipe/viewRecipe";
     }
 

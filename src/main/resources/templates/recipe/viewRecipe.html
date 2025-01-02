@@ -57,7 +57,22 @@
             <td><h3>Ingredients</h3></td>
         </tr>
         <tr th:each="ingredient : ${recipe.recipeIngredients}">
-            <td><input type="checkbox"><span th:text="(${ingredient.wholeNumberQuantity > 0 ? ingredient.wholeNumberQuantity + ' ' : ''} + ${ingredient.fractionQuantity != '0' ? ingredient.fractionQuantity + ' ' : ''} + ${ingredient.wholeNumberQuantity != 1 and ingredient.fractionQuantity!= '0' ? ingredient.measurement + '' : ingredient.measurement + 's'} + ' ' + ${ingredient.preparation} + ' ' + ${ingredient.component})"></span></td>
+            <td>
+                <input type="checkbox">
+                <span th:text="
+                    ${ingredient.wholeNumberQuantity > 0 ? ingredient.wholeNumberQuantity + ' ' : ''} +
+                    ${ingredient.fractionQuantity != '0' ? ingredient.fractionQuantity + ' ' : ''} +
+                    ${
+                        ingredient.wholeNumberQuantity == 1 && ingredient.fractionQuantity == '0'
+                            ? (ingredient.measurement.endsWith('es')
+                                ? ingredient.measurement.substring(0, ingredient.measurement.length() - 2)
+                                : ingredient.measurement.substring(0, ingredient.measurement.length() - 1))
+                            : ingredient.measurement
+                        } + ' ' + ${ingredient.preparation} + ' ' + ${ingredient.component}
+                    ">
+                </span>
+            </td>
+
         </tr>
         <tr>
             <td><h3>Directions</h3></td>
@@ -81,11 +96,52 @@
         <h3>Glossary Terms</h3>
         <table>
             <tbody>
-            <tr th:each="entry : ${glossaryList}">
-                <td>
-                    <strong th:text="${entry.term}"></strong>
-                    <span th:text="': ' + ${entry.definition}"></span>
+                <tr th:each="entry : ${glossaryList}">
+                    <td>
+                        <strong th:text="${entry.term}"></strong>
+                        <span th:text="': ' + ${entry.definition}"></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:if="${substitutionList}">
+        <hr>
+        <h3>Known Substitution</h3>
+        <table>
+            <thead>
+            <tr>
+                <th>Original</th>
+                <th>Amount and Preparation</th>
+                <th>Substituted</th>
+                <th>Amount and Preparation</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="entry : ${substitutionList}">
+                <td th:text="${entry.originalComponent}"></td>
+
+                <td th:if="${entry.originalFractionQuantity == null}"
+                    th:text="${entry.originalWholeNumberQuantity + ' ' + entry.originalMeasurement + ' ' + entry.originalPreparation}">
                 </td>
+                <td th:if="${entry.originalWholeNumberQuantity == 0}"
+                    th:text="${entry.originalFractionQuantity + ' ' + entry.originalMeasurement + ' ' + entry.originalPreparation}">
+                </td>
+                <td th:if="${entry.originalFractionQuantity != null && entry.originalWholeNumberQuantity != 0}"
+                    th:text="${entry.originalWholeNumberQuantity + ' ' + entry.originalFractionQuantity + ' ' + entry.originalMeasurement + ' ' + entry.originalPreparation}">
+                </td>
+                <td th:text="${entry.substitutedComponent}"></td>
+
+                <td th:if="${entry.substitutedFractionQuantity == null}"
+                    th:text="${entry.substitutedWholeNumberQuantity + ' ' + entry.substitutedMeasurement + ' ' + entry.substitutedPreparation}">
+                </td>
+                <td th:if="${entry.substitutedWholeNumberQuantity == 0}"
+                    th:text="${entry.substitutedFractionQuantity + ' ' + entry.substitutedMeasurement + ' ' + entry.substitutedPreparation}">
+                </td>
+                <td th:if="${entry.substitutedFractionQuantity != null && entry.substitutedWholeNumberQuantity != 0}"
+                    th:text="${entry.substitutedWholeNumberQuantity + ' ' + entry.substitutedFractionQuantity + ' ' + entry.substitutedMeasurement + ' ' + entry.substitutedPreparation}">
+                </td>
+            </tr>
             </tr>
             </tbody>
         </table>

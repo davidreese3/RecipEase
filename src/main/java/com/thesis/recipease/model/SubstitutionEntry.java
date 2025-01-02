@@ -2,22 +2,27 @@ package com.thesis.recipease.model;
 
 public class SubstitutionEntry {
     private String originalComponent;
-    private int originalQuantity;
+    private Integer originalWholeNumberQuantity;
+    private String originalFractionQuantity;
     private String originalMeasurement;
     private String originalPreparation;
     private String substitutedComponent;
-    private int substitutedQuantity;
+    private Integer substitutedWholeNumberQuantity;
+    private String substitutedFractionQuantity;
     private String substitutedMeasurement;
     private String substitutedPreparation;
 
     public SubstitutionEntry(){}
-    public SubstitutionEntry(String originalComponent, int originalQuantity, String originalMeasurement, String originalPreparation, String substitutedComponent, int substitutedQuantity, String substitutedMeasurement, String substitutedPreparation) {
+
+    public SubstitutionEntry(String originalComponent, Integer originalWholeNumberQuantity, String originalFractionQuantity, String originalMeasurement, String originalPreparation, String substitutedComponent, Integer substitutedWholeNumberQuantity, String substitutedFractionQuantity, String substitutedMeasurement, String substitutedPreparation) {
         this.originalComponent = originalComponent;
-        this.originalQuantity = originalQuantity;
+        this.originalWholeNumberQuantity = originalWholeNumberQuantity;
+        this.originalFractionQuantity = originalFractionQuantity;
         this.originalMeasurement = originalMeasurement;
         this.originalPreparation = originalPreparation;
         this.substitutedComponent = substitutedComponent;
-        this.substitutedQuantity = substitutedQuantity;
+        this.substitutedWholeNumberQuantity = substitutedWholeNumberQuantity;
+        this.substitutedFractionQuantity = substitutedFractionQuantity;
         this.substitutedMeasurement = substitutedMeasurement;
         this.substitutedPreparation = substitutedPreparation;
     }
@@ -30,12 +35,20 @@ public class SubstitutionEntry {
         this.originalComponent = originalComponent;
     }
 
-    public int getOriginalQuantity() {
-        return originalQuantity;
+    public Integer getOriginalWholeNumberQuantity() {
+        return originalWholeNumberQuantity;
     }
 
-    public void setOriginalQuantity(int originalQuantity) {
-        this.originalQuantity = originalQuantity;
+    public void setOriginalWholeNumberQuantity(Integer originalWholeNumberQuantity) {
+        this.originalWholeNumberQuantity = originalWholeNumberQuantity;
+    }
+
+    public String getOriginalFractionQuantity() {
+        return originalFractionQuantity;
+    }
+
+    public void setOriginalFractionQuantity(String originalFractionQuantity) {
+        this.originalFractionQuantity = originalFractionQuantity;
     }
 
     public String getOriginalMeasurement() {
@@ -62,12 +75,20 @@ public class SubstitutionEntry {
         this.substitutedComponent = substitutedComponent;
     }
 
-    public int getSubstitutedQuantity() {
-        return substitutedQuantity;
+    public Integer getSubstitutedWholeNumberQuantity() {
+        return substitutedWholeNumberQuantity;
     }
 
-    public void setSubstitutedQuantity(int substitutedQuantity) {
-        this.substitutedQuantity = substitutedQuantity;
+    public void setSubstitutedWholeNumberQuantity(Integer substitutedWholeNumberQuantity) {
+        this.substitutedWholeNumberQuantity = substitutedWholeNumberQuantity;
+    }
+
+    public String getSubstitutedFractionQuantity() {
+        return substitutedFractionQuantity;
+    }
+
+    public void setSubstitutedFractionQuantity(String substitutedFractionQuantity) {
+        this.substitutedFractionQuantity = substitutedFractionQuantity;
     }
 
     public String getSubstitutedMeasurement() {
