@@ -7,6 +7,7 @@ import com.thesis.recipease.model.web.WebAccount;
 import com.thesis.recipease.model.web.WebProfile;
 import com.thesis.recipease.util.mail.service.MailService;
 import com.thesis.recipease.util.security.CustomUserDetails;
+import com.thesis.recipease.util.security.SecurityService;
 import com.thesis.recipease.util.validator.AccountValidator;
 import com.thesis.recipease.util.validator.ProfileValidator;
 import jakarta.servlet.http.HttpServletRequest;
@@ -41,6 +42,8 @@ public class AccountController {
     private MailService mailService;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private SecurityService securityService;
 
     // =======================
     // Register Account
@@ -110,7 +113,7 @@ public class AccountController {
             webAccount.setEmail(principal.getName());
             return "account/editEmail";
         }
-        int id = appService.getLoggedInUserId();
+        int id = securityService.getLoggedInUserId();
         Account account = appService.updateEmailById(id, webAccount.getEmail());
         redirectAttributes.addFlashAttribute("success", "Your email has been updated. Please log in again.");
         invalidateSession(request, response);
@@ -142,7 +145,7 @@ public class AccountController {
             model.addAttribute("error", "Passwords do not match.");
             return "account/editPassword";
         }
-        int id = appService.getLoggedInUserId();
+        int id = securityService.getLoggedInUserId();
         if(passwordEncoder.matches(webAccount.getPassword(),appService.getPasswordById(id))){
             model.addAttribute("message","The password you entered is the same as your current one. No changes have been made.");
             return "account/editPassword";
@@ -163,7 +166,7 @@ public class AccountController {
 
     @RequestMapping(value = "/account/delete", method = RequestMethod.POST)
     public String ProcessDeleteForm(Model model, HttpServletRequest request, Principal principal, HttpServletResponse response, WebAccount webAccount){
-        int id = appService.getLoggedInUserId();
+        int id = securityService.getLoggedInUserId();
         if(!passwordEncoder.matches(webAccount.getPassword(),appService.getPasswordById(id))){
             model.addAttribute("error","The password you entered is incorrect.");
             return "account/deleteAccount";

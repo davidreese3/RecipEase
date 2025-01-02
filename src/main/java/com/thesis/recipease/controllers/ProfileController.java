@@ -3,6 +3,7 @@ package com.thesis.recipease.controllers;
 import com.thesis.recipease.db.AppService;
 import com.thesis.recipease.model.Profile;
 import com.thesis.recipease.model.web.WebProfile;
+import com.thesis.recipease.util.security.SecurityService;
 import com.thesis.recipease.util.validator.ProfileValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,10 +21,12 @@ public class ProfileController {
     private ProfileValidator profileValidator;
     @Autowired
     private AppService appService;
+    @Autowired
+    private SecurityService securityService;
 
     @RequestMapping(value = "/profile/view/personal", method = RequestMethod.GET)
     public String displayPersonalProfile(Model model, Principal principal){
-        Profile profile = appService.getProfileById(appService.getLoggedInUserId());
+        Profile profile = appService.getProfileById(securityService.getLoggedInUserId());
         if(profile == null){
             model.addAttribute("error","You do not have a profile created.");
         }
@@ -49,13 +52,13 @@ public class ProfileController {
 
     @RequestMapping(value = "profile/edit", method = RequestMethod.GET)
     public String displayEditProfileForm(Model model, Principal principal){
-        Profile profile = appService.getProfileById(appService.getLoggedInUserId());
+        Profile profile = appService.getProfileById(securityService.getLoggedInUserId());
         model.addAttribute("webProfile", profile);
         return "profile/editProfile";
     }
     @RequestMapping(value = "profile/edit", method = RequestMethod.POST)
     public String processEditProfileForm(Model model, Principal principal,RedirectAttributes redirectAttributes, WebProfile webProfile){
-        webProfile.setId(appService.getLoggedInUserId());
+        webProfile.setId(securityService.getLoggedInUserId());
         if (!profileValidator.isProfileValid(model, webProfile)){
             return "profile/editProfile";
         }

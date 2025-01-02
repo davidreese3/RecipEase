@@ -109,17 +109,4 @@ public class AppService {
     }
     // UPDATE OPS
     // DELETE OPS
-
-
-    // ------------------------------------------------
-    // HELPER METHODS
-    // ------------------------------------------------
-    public int getLoggedInUserId() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.getPrincipal() instanceof CustomUserDetails) {
-            CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-            return Math.toIntExact(userDetails.getUserId()); // Safely convert Long to int
-        }
-        throw new IllegalStateException("User is not authenticated or user details are invalid");
-    }
 }

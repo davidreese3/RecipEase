@@ -10,6 +10,7 @@ import com.thesis.recipease.model.web.recipe.WebRecipe;
 import com.thesis.recipease.util.normalizer.GlossaryNormalizer;
 import com.thesis.recipease.util.processer.LemmaProcessor;
 import com.thesis.recipease.util.sanitizer.RecipeSanitizer;
+import com.thesis.recipease.util.security.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +31,8 @@ public class RecipeController {
     private GlossaryNormalizer glossaryNormalizer;
     @Autowired
     private LemmaProcessor lemmaProcessor;
+    @Autowired
+    private SecurityService securityService;
 
     @RequestMapping(value = "/recipe/create", method = RequestMethod.GET)
     public String displayRecipeCreationForm(Model model){
@@ -44,7 +47,7 @@ public class RecipeController {
         webRecipe = RecipeSanitizer.sanitizeRecipe(webRecipe);
         System.out.println("[After Sanitizer]: " + webRecipe.toString());
         //needs to get fixed
-        Recipe recipe = appService.addRecipe(appService.getLoggedInUserId(), webRecipe);
+        Recipe recipe = appService.addRecipe(securityService.getLoggedInUserId(), webRecipe);
         redirectAttributes.addFlashAttribute("message", "Your recipe has been posted!");
         return "redirect:/recipe/view?recipeId=" + recipe.getRecipeInfo().getRecipeId();
     }
