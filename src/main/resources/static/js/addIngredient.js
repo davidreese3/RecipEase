@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
         wholeNumberInput.setAttribute('type', 'number');
         wholeNumberInput.setAttribute('min', '0');
         wholeNumberInput.setAttribute('name', `ingredients[${ingredientList.children.length}].wholeNumberQuantity`);
-        wholeNumberInput.setAttribute('placeholder', 'Enter Number Quantity');
+        wholeNumberInput.setAttribute('placeholder', 'Whole Number Quantity');
 
         // Dropdown for fractional quantity
         const fractionSelect = document.createElement('select');
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Fraction options
         const fractionOptions = [
-            { value: '0', text: 'Select a fractional quantity (if needed)' },
+            { value: '0', text: 'Fractional Quantity (if needed)' },
             { value: '0', text: 'No fraction' },
             { value: '1/8', text: '1/8' },
             { value: '1/4', text: '1/4' },
@@ -58,19 +58,19 @@ document.addEventListener('DOMContentLoaded', function () {
         measurementSelect.required = true;
 
         const measurementOptions = [
-            { value: '', text: 'Select a measurement' },
-            { value: 'Teaspoons', text: 'Teaspoons (tsp)' },
-            { value: 'Tablespoons', text: 'Tablespoons (tbsp)' },
+            { value: '', text: 'Measurement' },
             { value: 'Cups', text: 'Cups' },
-            { value: 'Milliliters', text: 'Milliliters (ml)' },
-            { value: 'Liters', text: 'Liters (L)' },
+            { value: 'Dashes', text: 'Dashes' },
             { value: 'FluidOunces', text: 'Fluid Ounces (fl oz)' },
-            { value: 'Ounces', text: 'Ounces (oz)' },
-            { value: 'Pounds', text: 'Pounds (lb)' },
             { value: 'Grams', text: 'Grams (g)' },
             { value: 'Kilograms', text: 'Kilograms (kg)' },
+            { value: 'Liters', text: 'Liters (L)' },
+            { value: 'Milliliters', text: 'Milliliters (ml)' },
+            { value: 'Ounces', text: 'Ounces (oz)' },
             { value: 'Pinches', text: 'Pinches' },
-            { value: 'Dashes', text: 'Dashes' },
+            { value: 'Pounds', text: 'Pounds (lb)' },
+            { value: 'Tablespoons', text: 'Tablespoons (tbsp)' },
+            { value: 'Teaspoons', text: 'Teaspoons (tsp)' },
             { value: 'Whole', text: 'Whole Ingredient' }
         ];
 
@@ -87,27 +87,27 @@ document.addEventListener('DOMContentLoaded', function () {
         preparationSelect.required = true;
 
         const preparationOptions = [
-            { value: '', text: 'Select preparation' },
-            { value: 'Diced', text: 'Diced' },
-            { value: 'Chopped', text: 'Chopped' },
-            { value: 'Minced', text: 'Minced' },
-            { value: 'Sliced', text: 'Sliced' },
-            { value: 'Julienned', text: 'Julienned' },
-            { value: 'Cubed', text: 'Cubed' },
-            { value: 'Crushed', text: 'Crushed' },
-            { value: 'Ground', text: 'Ground' },
-            { value: 'Mashed', text: 'Mashed' },
-            { value: 'Shaken', text: 'Shaken' },
-            { value: 'Stirred', text: 'Stirred' },
-            { value: 'Whisked', text: 'Whisked' },
+            { value: '', text: 'Preparation' },
             { value: 'Beaten', text: 'Beaten' },
-            { value: 'Peeled', text: 'Peeled' },
-            { value: 'Grated', text: 'Grated' },
-            { value: 'Zested', text: 'Zested' },
-            { value: 'Whole', text: 'Whole Ingredient' },
-            { value: 'Toasted', text: 'Toasted' },
             { value: 'Boiled', text: 'Boiled' },
-            { value: 'Roasted', text: 'Roasted' }
+            { value: 'Chopped', text: 'Chopped' },
+            { value: 'Crushed', text: 'Crushed' },
+            { value: 'Cubed', text: 'Cubed' },
+            { value: 'Diced', text: 'Diced' },
+            { value: 'Grated', text: 'Grated' },
+            { value: 'Ground', text: 'Ground' },
+            { value: 'Julienned', text: 'Julienned' },
+            { value: 'Mashed', text: 'Mashed' },
+            { value: 'Minced', text: 'Minced' },
+            { value: 'Peeled', text: 'Peeled' },
+            { value: 'Roasted', text: 'Roasted' },
+            { value: 'Shaken', text: 'Shaken' },
+            { value: 'Sliced', text: 'Sliced' },
+            { value: 'Stirred', text: 'Stirred' },
+            { value: 'Toasted', text: 'Toasted' },
+            { value: 'Whisked', text: 'Whisked' },
+            { value: 'Whole', text: 'Whole Ingredient' },
+            { value: 'Zested', text: 'Zested' }
         ];
 
         preparationOptions.forEach(optionData => {

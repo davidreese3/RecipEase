@@ -39,31 +39,30 @@
                 <td>Unit:</td>
                 <td>
                     <select th:field="*{unitOfYield}" required>
-                        <option value="">Select a unit of yield</option>
+                        <option value="">Select a Unit</option>
                         <!-- Specific Food Portions -->
-                        <option value="Servings">Servings</option>
-                        <option value="Slices">Slices</option>
-                        <option value="Pieces">Pieces</option>
-                        <option value="Loaves">Loaves</option>
                         <option value="Bowls">Bowls</option>
-                        <option value="Plates">Plates</option>
-                        <option value="Patties">Patties</option>
-                        <option value="Rolls">Rolls</option>
-                        <option value="Cookies">Cookies</option>
-                        <option value="Muffins">Muffins</option>
-                        <option value="Cupcakes">Cupcakes</option>
-                        <option value="Pies">Pies</option>
                         <option value="Cakes">Cakes</option>
-                        <!-- Measurement Units -->
-                        <option value="Ounces">Ounces (oz)</option>
+                        <option value="Cookies">Cookies</option>
+                        <option value="Cupcakes">Cupcakes</option>
+                        <option value="Finished Dishes">Finished Dishes (fully prepared meals)</option>
+                        <option value="Gallons">Gallons (gal)</option>
                         <option value="Grams">Grams (g)</option>
                         <option value="Kilograms">Kilograms (kg)</option>
                         <option value="Liters">Liters (l)</option>
+                        <option value="Loaves">Loaves</option>
                         <option value="Milliliters">Milliliters (ml)</option>
+                        <option value="Muffins">Muffins</option>
+                        <option value="Ounces">Ounces (oz)</option>
+                        <option value="Patties">Patties</option>
+                        <option value="Pieces">Pieces</option>
+                        <option value="Pies">Pies</option>
                         <option value="Pints">Pints (pt)</option>
+                        <option value="Plates">Plates</option>
                         <option value="Quarts">Quarts (qt)</option>
-                        <option value="Gallons">Gallons (gal)</option>
-                        <option value="Finished Dishes">Finished Dishes (fully prepared meals)</option>
+                        <option value="Rolls">Rolls</option>
+                        <option value="Servings">Servings</option>
+                        <option value="Slices">Slices</option>
                     </select>
                 </td>
             </tr>
@@ -90,7 +89,7 @@
                             <input type="text" name="ingredients[0].component" placeholder="Ingredient Name" required>
                             <input type="number" min = "0" name="ingredients[0].wholeNumberQuantity" placeholder="Whole Number Quantity">
                             <select name="ingredients[0].fractionQuantity">
-                                <option value="0">Select a fractional quantity (if needed)</option>
+                                <option value="0">Fractional Quantity (if needed)</option>
                                 <option value="0">No fraction</option>
                                 <option value="1/8">1/8</option>
                                 <option value="1/4">1/4</option>
@@ -103,50 +102,43 @@
                                 <option value="1">1</option>
                             </select>
                             <select name="ingredients[0].measurement" required>
-                                <option value="">Select a measurement</option>
-                                <!-- Volume -->
-                                <option value="Teaspoons">Teaspoons (tsp)</option>
-                                <option value="Tablespoons">Tablespoons (tbsp)</option>
+                                <option value="">Measurement</option>
                                 <option value="Cups">Cups</option>
-                                <option value="Milliliters">Milliliters (ml)</option>
-                                <option value="Liters">Liters (L)</option>
+                                <option value="Dashes">Dashes</option>
                                 <option value="Fluid Ounces">Fluid Ounces (fl oz)</option>
-                                <!-- Weight -->
-                                <option value="Ounces">Ounces (oz)</option>
-                                <option value="Pounds">Pounds (lb)</option>
                                 <option value="Grams">Grams (g)</option>
                                 <option value="Kilograms">Kilograms (kg)</option>
-                                <!-- Other -->
+                                <option value="Liters">Liters (L)</option>
+                                <option value="Milliliters">Milliliters (ml)</option>
+                                <option value="Ounces">Ounces (oz)</option>
                                 <option value="Pinches">Pinches</option>
-                                <option value="Dashes">Dashes</option>
+                                <option value="Pounds">Pounds (lb)</option>
+                                <option value="Tablespoons">Tablespoons (tbsp)</option>
+                                <option value="Teaspoons">Teaspoons (tsp)</option>
                                 <option value="Whole">Whole Ingredient</option>
                             </select>
                             <select name="ingredients[0].preparation" required>
-                                <option value="">Select preparation</option>
-                                <!-- Cutting -->
-                                <option value="Diced">Diced</option>
-                                <option value="Chopped">Chopped</option>
-                                <option value="Minced">Minced</option>
-                                <option value="Sliced">Sliced</option>
-                                <option value="Julienned">Julienned</option>
-                                <option value="Cubed">Cubed</option>
-                                <!-- Grinding & Crushing -->
-                                <option value="Crushed">Crushed</option>
-                                <option value="Ground">Ground</option>
-                                <option value="Mashed">Mashed</option>
-                                <!-- Liquids -->
-                                <option value="Shaken">Shaken</option>
-                                <option value="Stirred">Stirred</option>
-                                <option value="Whisked">Whisked</option>
+                                <option value="">Preparation</option>
                                 <option value="Beaten">Beaten</option>
-                                <!-- Other -->
-                                <option value="Peeled">Peeled</option>
-                                <option value="Grated">Grated</option>
-                                <option value="Zested">Zested</option>
-                                <option value="Whole">Whole Ingredient</option>
-                                <option value="Toasted">Toasted</option>
                                 <option value="Boiled">Boiled</option>
+                                <option value="Chopped">Chopped</option>
+                                <option value="Crushed">Crushed</option>
+                                <option value="Cubed">Cubed</option>
+                                <option value="Diced">Diced</option>
+                                <option value="Grated">Grated</option>
+                                <option value="Ground">Ground</option>
+                                <option value="Julienned">Julienned</option>
+                                <option value="Mashed">Mashed</option>
+                                <option value="Minced">Minced</option>
+                                <option value="Peeled">Peeled</option>
                                 <option value="Roasted">Roasted</option>
+                                <option value="Shaken">Shaken</option>
+                                <option value="Sliced">Sliced</option>
+                                <option value="Stirred">Stirred</option>
+                                <option value="Toasted">Toasted</option>
+                                <option value="Whisked">Whisked</option>
+                                <option value="Whole">Whole Ingredient</option>
+                                <option value="Zested">Zested</option>
                             </select>
                         </div>
                     </div>
@@ -163,23 +155,23 @@
                             <textarea name="directions[0].direction" rows="2" cols="50" placeholder="Step Description" required></textarea>
                             <br>
                             <select name="directions[0].method">
-                                <option value="">Select a method</option>
+                                <option value="">Method</option>
+                                <option value="Assembling">Assembling</option>
                                 <option value="Baking">Baking</option>
                                 <option value="Boiling">Boiling</option>
                                 <option value="Frying">Frying</option>
                                 <option value="Grilling">Grilling</option>
+                                <option value="Mixing">Mixing</option>
                                 <option value="Roasting">Roasting</option>
                                 <option value="Searing">Searing</option>
                                 <option value="Simmering">Simmering</option>
                                 <option value="Steaming">Steaming</option>
                                 <option value="Stirring">Stirring</option>
                                 <option value="Whisking">Whisking</option>
-                                <option value="Mixing">Mixing</option>
-                                <option value="Assembling">Assembling</option>
                             </select>
                             <input type="number" name="directions[0].temp" placeholder="Temperature (°F)" min="0">
                             <select name="directions[0].level">
-                                <option value="">Select level</option>
+                                <option value="">Heat Level</option>
                                 <option value="Low">Low</option>
                                 <option value="Medium">Medium</option>
                                 <option value="High">High</option>

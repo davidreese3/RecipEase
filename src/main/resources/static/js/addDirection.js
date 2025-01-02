@@ -25,19 +25,19 @@ document.addEventListener('DOMContentLoaded', function () {
         methodSelect.setAttribute('name', `directions[${directionList.children.length}].method`);
 
         const methodOptions = [
-            { value: '', text: 'Select a method' },
-            { value: 'Baking', text: 'Baking' },
-            { value: 'Boiling', text: 'Boiling' },
-            { value: 'Frying', text: 'Frying' },
-            { value: 'Grilling', text: 'Grilling' },
-            { value: 'Roasting', text: 'Roasting' },
-            { value: 'Searing', text: 'Searing' },
-            { value: 'Simmering', text: 'Simmering' },
-            { value: 'Steaming', text: 'Steaming' },
-            { value: 'Stirring', text: 'Stirring' },
-            { value: 'Whisking', text: 'Whisking' },
-            { value: 'Mixing', text: 'Mixing' },
-            { value: 'Assembling', text: 'Assembling' }
+                { value: '', text: 'Method' },
+                { value: 'Assembling', text: 'Assembling' },
+                { value: 'Baking', text: 'Baking' },
+                { value: 'Boiling', text: 'Boiling' },
+                { value: 'Frying', text: 'Frying' },
+                { value: 'Grilling', text: 'Grilling' },
+                { value: 'Mixing', text: 'Mixing' },
+                { value: 'Roasting', text: 'Roasting' },
+                { value: 'Searing', text: 'Searing' },
+                { value: 'Simmering', text: 'Simmering' },
+                { value: 'Steaming', text: 'Steaming' },
+                { value: 'Stirring', text: 'Stirring' },
+                { value: 'Whisking', text: 'Whisking' }
         ];
 
         methodOptions.forEach(optionData => {
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function () {
         levelSelect.setAttribute('name', `directions[${directionList.children.length}].level`);
 
         const levelOptions = [
-            { value: '', text: 'Select level' },
+            { value: '', text: 'Heat Level' },
             { value: 'Low', text: 'Low' },
             { value: 'Medium', text: 'Medium' },
             { value: 'High', text: 'High' }
