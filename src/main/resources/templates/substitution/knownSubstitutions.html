@@ -31,17 +31,7 @@
                 <span th:text="
                     ${substitution.originalWholeNumberQuantity != 0 ? substitution.originalWholeNumberQuantity + ' ' : ''} +
                     ${substitution.originalFractionQuantity != '0' ? substitution.originalFractionQuantity + ' ' : ''} +
-                    ${
-                        substitution.originalMeasurement == 'Whole'
-                        ? substitution.originalMeasurement
-                        : (
-                            substitution.originalMeasurement != null && substitution.originalWholeNumberQuantity == 1 && substitution.originalFractionQuantity == '0' && substitution.originalMeasurement != 'Whole'
-                            ? (substitution.originalMeasurement.endsWith('es')
-                                ? substitution.originalMeasurement.substring(0, substitution.originalMeasurement.length() - 2)
-                                : substitution.originalMeasurement.substring(0, substitution.originalMeasurement.length() - 1))
-                            : substitution.originalMeasurement
-                          )
-                    } + ' ' +
+                    ${substitution.originalMeasurement} + ' ' +
                     ${substitution.originalPreparation != null ? substitution.originalPreparation : ''}
                 "></span>
             </td>
@@ -50,17 +40,7 @@
                 <span th:text="
                     ${substitution.substitutedWholeNumberQuantity != 0 ? substitution.substitutedWholeNumberQuantity + ' ' : ''} +
                     ${substitution.substitutedFractionQuantity != '0' ? substitution.substitutedFractionQuantity + ' ' : ''} +
-                    ${
-                        substitution.substitutedMeasurement == 'Whole'
-                        ? substitution.substitutedMeasurement
-                        : (
-                            substitution.substitutedMeasurement != null && substitution.substitutedWholeNumberQuantity == 1 && substitution.substitutedFractionQuantity == '0' && substitution.substitutedMeasurement != 'Whole'
-                            ? (substitution.substitutedMeasurement.endsWith('es')
-                                ? substitution.substitutedMeasurement.substring(0, substitution.substitutedMeasurement.length() - 2)
-                                : substitution.substitutedMeasurement.substring(0, substitution.substitutedMeasurement.length() - 1))
-                            : substitution.substitutedMeasurement
-                          )
-                    } + ' ' +
+                    ${substitution.substitutedMeasurement} + ' ' +
                     ${substitution.substitutedPreparation != null ? substitution.substitutedPreparation : ''}
                 "></span>
             </td>
