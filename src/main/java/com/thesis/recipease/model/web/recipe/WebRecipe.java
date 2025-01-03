@@ -1,6 +1,6 @@
 package com.thesis.recipease.model.web.recipe;
 
-import com.thesis.recipease.model.web.recipe.tag.WebHoliday;
+import com.thesis.recipease.model.web.recipe.tag.*;
 
 import java.util.List;
 
@@ -18,10 +18,17 @@ public class WebRecipe {
     private List<WebIngredient> ingredients;
     private List<WebDirection> directions;
     private List<WebHoliday> holidays;
+    private List<WebMealType> mealTypes;
+    private List<WebCuisine> cuisines;
+    private List<WebAllergen> allergens;
+    private List<WebDietType> dietTypes;
+    private List<WebCookingLevel> cookingLevels;
+
 
 
     public WebRecipe(){}
-    public WebRecipe(String name, String description, Double yield, String unitOfYield, Integer prepMin, Integer prepHr, Integer processMin, Integer processHr, int totalMin, int totalHr, List<WebIngredient> ingredients, List<WebDirection> directions, List<WebHoliday> holidays) {
+
+    public WebRecipe(String name, String description, Double yield, String unitOfYield, Integer prepMin, Integer prepHr, Integer processMin, Integer processHr, int totalMin, int totalHr, List<WebIngredient> ingredients, List<WebDirection> directions, List<WebHoliday> holidays, List<WebMealType> mealTypes, List<WebCuisine> cuisines, List<WebAllergen> allergens, List<WebDietType> dietTypes, List<WebCookingLevel> cookingLevels) {
         this.name = name;
         this.description = description;
         this.yield = yield;
@@ -35,6 +42,11 @@ public class WebRecipe {
         this.ingredients = ingredients;
         this.directions = directions;
         this.holidays = holidays;
+        this.mealTypes = mealTypes;
+        this.cuisines = cuisines;
+        this.allergens = allergens;
+        this.dietTypes = dietTypes;
+        this.cookingLevels = cookingLevels;
     }
 
     public String getName() {
@@ -131,6 +143,46 @@ public class WebRecipe {
 
     public void setHolidays(List<WebHoliday> holidays) {
         this.holidays = holidays;
+    }
+
+    public List<WebMealType> getMealTypes() {
+        return mealTypes;
+    }
+
+    public void setMealTypes(List<WebMealType> mealTypes) {
+        this.mealTypes = mealTypes;
+    }
+
+    public List<WebCuisine> getCuisines() {
+        return cuisines;
+    }
+
+    public void setCuisines(List<WebCuisine> cuisines) {
+        this.cuisines = cuisines;
+    }
+
+    public List<WebAllergen> getAllergens() {
+        return allergens;
+    }
+
+    public void setAllergens(List<WebAllergen> allergens) {
+        this.allergens = allergens;
+    }
+
+    public List<WebDietType> getDietTypes() {
+        return dietTypes;
+    }
+
+    public void setDietTypes(List<WebDietType> dietTypes) {
+        this.dietTypes = dietTypes;
+    }
+
+    public List<WebCookingLevel> getCookingLevels() {
+        return cookingLevels;
+    }
+
+    public void setCookingLevels(List<WebCookingLevel> cookingLevels) {
+        this.cookingLevels = cookingLevels;
     }
 
     @Override

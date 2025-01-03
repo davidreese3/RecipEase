@@ -191,7 +191,7 @@ public class RecipeDaoImpl implements RecipeDao{
         }catch (EmptyResultDataAccessException e) {
             recipeHolidays = null;
         }
-        return new Recipe(recipeInfo, recipeIngredients, recipeDirections, recipeHolidays);
+        return new Recipe(recipeInfo, recipeIngredients, recipeDirections, recipeHolidays, null, null, null, null, null);
     }
 
     // ------------------------------------------------

@@ -1,6 +1,7 @@
 package com.thesis.recipease.model.recipe;
 
-import com.thesis.recipease.model.recipe.tag.RecipeHoliday;
+import com.thesis.recipease.model.recipe.tag.*;
+import com.thesis.recipease.model.web.recipe.tag.*;
 
 import java.util.List;
 
@@ -9,14 +10,24 @@ public class Recipe {
     private List<RecipeIngredient> recipeIngredients;
     private List<RecipeDirection> recipeDirections;
     private List<RecipeHoliday> recipeHolidays;
+    private List<RecipeMealType> recipeMealTypes;
+    private List<RecipeCuisine> recipeCuisines;
+    private List<RecipeAllergen> recipeAllergens;
+    private List<RecipeDietType> recipeDietTypes;
+    private List<RecipeCookingLevel> recipeCookingLevels;
 
     public Recipe(){}
 
-    public Recipe(RecipeInfo recipeInfo, List<RecipeIngredient> recipeIngredients, List<RecipeDirection> recipeDirections, List<RecipeHoliday> recipeHolidays) {
+    public Recipe(RecipeInfo recipeInfo, List<RecipeIngredient> recipeIngredients, List<RecipeDirection> recipeDirections, List<RecipeHoliday> recipeHolidays, List<RecipeMealType> recipeMealTypes, List<RecipeCuisine> recipeCuisines, List<RecipeAllergen> recipeAllergens, List<RecipeDietType> recipeDietTypes, List<RecipeCookingLevel> recipeCookingLevels) {
         this.recipeInfo = recipeInfo;
         this.recipeIngredients = recipeIngredients;
         this.recipeDirections = recipeDirections;
         this.recipeHolidays = recipeHolidays;
+        this.recipeMealTypes = recipeMealTypes;
+        this.recipeCuisines = recipeCuisines;
+        this.recipeAllergens = recipeAllergens;
+        this.recipeDietTypes = recipeDietTypes;
+        this.recipeCookingLevels = recipeCookingLevels;
     }
 
     public RecipeInfo getRecipeInfo() {
