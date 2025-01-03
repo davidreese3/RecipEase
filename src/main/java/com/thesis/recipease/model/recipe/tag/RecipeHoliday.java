@@ -1,4 +1,4 @@
-package com.thesis.recipease.model.recipe.category;
+package com.thesis.recipease.model.recipe.tag;
 
 public class RecipeHoliday {
     private int recipeId;

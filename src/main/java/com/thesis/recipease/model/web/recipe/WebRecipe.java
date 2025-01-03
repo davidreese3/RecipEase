@@ -1,6 +1,6 @@
 package com.thesis.recipease.model.web.recipe;
 
-import com.thesis.recipease.model.web.recipe.category.WebHoliday;
+import com.thesis.recipease.model.web.recipe.tag.WebHoliday;
 
 import java.util.List;
 

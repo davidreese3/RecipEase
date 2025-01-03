@@ -1,6 +1,6 @@
 package com.thesis.recipease.model.recipe;
 
-import com.thesis.recipease.model.recipe.category.RecipeHoliday;
+import com.thesis.recipease.model.recipe.tag.RecipeHoliday;
 
 import java.util.List;
 

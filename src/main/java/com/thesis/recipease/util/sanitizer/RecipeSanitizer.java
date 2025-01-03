@@ -3,7 +3,7 @@ package com.thesis.recipease.util.sanitizer;
 import com.thesis.recipease.model.web.recipe.WebDirection;
 import com.thesis.recipease.model.web.recipe.WebIngredient;
 import com.thesis.recipease.model.web.recipe.WebRecipe;
-import com.thesis.recipease.model.web.recipe.category.WebHoliday;
+import com.thesis.recipease.model.web.recipe.tag.WebHoliday;
 
 import java.util.Iterator;
 import java.util.List;

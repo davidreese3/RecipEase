@@ -1,4 +1,4 @@
-package com.thesis.recipease.model.web.recipe.category;
+package com.thesis.recipease.model.web.recipe.tag;
 
 public class WebHoliday {
     private String holiday;
