@@ -7,6 +7,7 @@ import com.thesis.recipease.model.recipe.Recipe;
 import com.thesis.recipease.model.recipe.RecipeDirection;
 import com.thesis.recipease.model.recipe.RecipeIngredient;
 import com.thesis.recipease.model.web.recipe.WebRecipe;
+import com.thesis.recipease.model.web.recipe.category.WebHoliday;
 import com.thesis.recipease.util.normalizer.GlossaryNormalizer;
 import com.thesis.recipease.util.normalizer.SubstitutionNormalizer;
 import com.thesis.recipease.util.processer.LemmaProcessor;
@@ -45,10 +46,10 @@ public class RecipeController {
 
     @RequestMapping(value = "/recipe/create", method = RequestMethod.POST)
     public String processRecipeCreationForm(Model model, Principal principal, WebRecipe webRecipe, RedirectAttributes redirectAttributes){
+        System.out.println("[Before]");
         webRecipe = RecipeSanitizer.sanitizeRecipe(webRecipe);
         Recipe recipe = appService.addRecipe(securityService.getLoggedInUserId(), webRecipe);
         redirectAttributes.addFlashAttribute("message", "Your recipe has been posted!");
-        System.out.println("[Holiday]: " + webRecipe.getHolidays().get(0).getHoliday());
         return "redirect:/recipe/view?recipeId=" + recipe.getRecipeInfo().getRecipeId();
     }
 

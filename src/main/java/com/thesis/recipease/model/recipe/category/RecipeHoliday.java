@@ -25,4 +25,9 @@ public class RecipeHoliday {
     public void setHoliday(String holiday) {
         this.holiday = holiday;
     }
+
+    @Override
+    public String toString() {
+        return holiday;
+    }
 }

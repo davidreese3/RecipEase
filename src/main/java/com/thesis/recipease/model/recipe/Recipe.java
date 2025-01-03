@@ -11,10 +11,12 @@ public class Recipe {
     private List<RecipeHoliday> recipeHolidays;
 
     public Recipe(){}
-    public Recipe(RecipeInfo recipeInfo, List<RecipeIngredient> recipeIngredients, List<RecipeDirection> recipeDirections){
+
+    public Recipe(RecipeInfo recipeInfo, List<RecipeIngredient> recipeIngredients, List<RecipeDirection> recipeDirections, List<RecipeHoliday> recipeHolidays) {
         this.recipeInfo = recipeInfo;
         this.recipeIngredients = recipeIngredients;
         this.recipeDirections = recipeDirections;
+        this.recipeHolidays = recipeHolidays;
     }
 
     public RecipeInfo getRecipeInfo() {

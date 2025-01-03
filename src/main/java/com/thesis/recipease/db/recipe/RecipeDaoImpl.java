@@ -4,9 +4,11 @@ import com.thesis.recipease.model.recipe.Recipe;
 import com.thesis.recipease.model.recipe.RecipeDirection;
 import com.thesis.recipease.model.recipe.RecipeInfo;
 import com.thesis.recipease.model.recipe.RecipeIngredient;
+import com.thesis.recipease.model.recipe.category.RecipeHoliday;
 import com.thesis.recipease.model.web.recipe.WebDirection;
 import com.thesis.recipease.model.web.recipe.WebIngredient;
 import com.thesis.recipease.model.web.recipe.WebRecipe;
+import com.thesis.recipease.model.web.recipe.category.WebHoliday;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -59,8 +61,9 @@ public class RecipeDaoImpl implements RecipeDao{
         try {
             //insertInfo
             recipeId = insertRecipeInfo(userId,webRecipe);
-            insertRecipeIngredients(userId, webRecipe, recipeId);
-            insertRecipeDirections(userId, webRecipe, recipeId);
+            insertRecipeIngredients(webRecipe, recipeId);
+            insertRecipeDirections(webRecipe, recipeId);
+            insertHolidays(webRecipe, recipeId);
             transactionManager.commit(status);
             System.out.println("Success");
         }
@@ -102,7 +105,7 @@ public class RecipeDaoImpl implements RecipeDao{
         }
     }
 
-    private void insertRecipeIngredients(int userId, WebRecipe webRecipe, int recipeId){
+    private void insertRecipeIngredients(WebRecipe webRecipe, int recipeId){
         final String SQL = "insert into ingredient (recipeid, component, wholeNumberQuantity, fractionQuantity, measurement, preparation) values (?, ?, ?, ?, ?, ?)";
         List<WebIngredient> webIngredients = webRecipe.getIngredients();
         for(WebIngredient webIngredient : webIngredients){
@@ -120,7 +123,7 @@ public class RecipeDaoImpl implements RecipeDao{
         }
     }
 
-    private void insertRecipeDirections(int userId, WebRecipe webRecipe, int recipeId){
+    private void insertRecipeDirections(WebRecipe webRecipe, int recipeId){
         int stepNum = 1;
         final String SQL = "insert into direction (recipeid, stepNum, direction, method, temp, level) values (?, ?, ?, ?, ?, ?)";
         List<WebDirection> webDirections = webRecipe.getDirections();
@@ -138,6 +141,20 @@ public class RecipeDaoImpl implements RecipeDao{
                 return ps;
             });
             stepNum++;
+        }
+    }
+
+    private void insertHolidays(WebRecipe webRecipe, int recipeId){
+        final String SQL = "insert into holiday (recipeid, holiday) values (?, ?)";
+        List<WebHoliday> webHolidays = webRecipe.getHolidays();
+        for(WebHoliday webHoliday : webHolidays){
+            System.out.println("inserting holiday");
+            jdbcTemplate.update(dataSource -> {
+                PreparedStatement ps = dataSource.prepareStatement(SQL);
+                ps.setInt(1, recipeId);
+                ps.setString(2, webHoliday.getHoliday());
+                return ps;
+            });
         }
     }
 
@@ -167,7 +184,14 @@ public class RecipeDaoImpl implements RecipeDao{
         } catch (EmptyResultDataAccessException e) {
             recipeDirections = null;
         }
-        return new Recipe(recipeInfo, recipeIngredients, recipeDirections);
+        List<RecipeHoliday> recipeHolidays;
+        final String holidaySQL = "select * from holiday where recipeid = ?";
+        try{
+            recipeHolidays = jdbcTemplate.query(holidaySQL, new RecipeDaoImpl.RecipeHolidayMapper(), recipeId);
+        }catch (EmptyResultDataAccessException e) {
+            recipeHolidays = null;
+        }
+        return new Recipe(recipeInfo, recipeIngredients, recipeDirections, recipeHolidays);
     }
 
     // ------------------------------------------------
@@ -227,5 +251,16 @@ public class RecipeDaoImpl implements RecipeDao{
             recipeDirection.setLevel(rs.getString("level"));
             return recipeDirection;
         }
+    }
+
+    class RecipeHolidayMapper implements RowMapper<RecipeHoliday> {
+        @Override
+        public RecipeHoliday mapRow(ResultSet rs, int rowNum) throws SQLException{
+            RecipeHoliday recipeHoliday = new RecipeHoliday();
+            recipeHoliday.setRecipeId(rs.getInt("recipeId"));
+            recipeHoliday.setHoliday(rs.getString("holiday"));
+            return recipeHoliday;
+        }
+
     }
 }

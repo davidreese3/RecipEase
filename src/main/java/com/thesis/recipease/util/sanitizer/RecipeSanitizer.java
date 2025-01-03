@@ -3,6 +3,7 @@ package com.thesis.recipease.util.sanitizer;
 import com.thesis.recipease.model.web.recipe.WebDirection;
 import com.thesis.recipease.model.web.recipe.WebIngredient;
 import com.thesis.recipease.model.web.recipe.WebRecipe;
+import com.thesis.recipease.model.web.recipe.category.WebHoliday;
 
 import java.util.Iterator;
 import java.util.List;
@@ -55,7 +56,23 @@ public class RecipeSanitizer {
             }
         }
         webRecipe.setDirections(webDirections);
-        // ==
+
+        // Categories
+        List<WebHoliday> webHolidays = webRecipe.getHolidays();
+        Iterator<WebHoliday> holidayIterator = webHolidays.iterator();
+        WebHoliday webHoliday;
+        while(holidayIterator.hasNext()){
+            webHoliday = holidayIterator.next();
+            if(webHoliday.getHoliday().trim().equals("")) {
+                System.out.println("Empty");
+                holidayIterator.remove();
+            }if(webHoliday.getHoliday() == null) {
+                System.out.println("Null");
+                holidayIterator.remove();
+            }
+        }
+        webRecipe.setHolidays(webHolidays);
+
 
 
         return webRecipe;

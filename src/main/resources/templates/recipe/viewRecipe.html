@@ -161,6 +161,15 @@
             </tbody>
         </table>
     </div>
+    <h3>Recipe Tags</h3>
+    <div th:if="${recipe.recipeHolidays.size != 0}">
+        <hr>
+        <p>
+            Holiday:
+            <span th:text="${#strings.arrayJoin(recipe.recipeHolidays, ', ')}"></span>
+        </p>
+    </div>
+
 </main>
 
 <footer>
