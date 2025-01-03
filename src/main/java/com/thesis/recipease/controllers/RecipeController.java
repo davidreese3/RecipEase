@@ -48,6 +48,7 @@ public class RecipeController {
         webRecipe = RecipeSanitizer.sanitizeRecipe(webRecipe);
         Recipe recipe = appService.addRecipe(securityService.getLoggedInUserId(), webRecipe);
         redirectAttributes.addFlashAttribute("message", "Your recipe has been posted!");
+        System.out.println("[Holiday]: " + webRecipe.getHolidays().get(0).getHoliday());
         return "redirect:/recipe/view?recipeId=" + recipe.getRecipeInfo().getRecipeId();
     }
 

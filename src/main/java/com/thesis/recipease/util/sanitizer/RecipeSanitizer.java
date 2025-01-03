@@ -26,10 +26,16 @@ public class RecipeSanitizer {
         WebIngredient webIngredient;
         while(ingredientIterator.hasNext()) {
             webIngredient = ingredientIterator.next();
+            System.out.println("[[" + webIngredient.getWholeNumberQuantity() + "||" + webIngredient.getFractionQuantity() + "]]");
+
             if (isIngredientNull(webIngredient)) {
                 ingredientIterator.remove();
+                break;
             }
-            else if(isIngredientZero(webIngredient)){
+            if(webIngredient.getWholeNumberQuantity() == null) {
+                webIngredient.setWholeNumberQuantity(0);
+            }
+            if(isIngredientZero(webIngredient)){
                 ingredientIterator.remove();
             }
         }

@@ -1,7 +1,6 @@
 package com.thesis.recipease.model.recipe;
 
-import com.thesis.recipease.model.web.recipe.WebDirection;
-import com.thesis.recipease.model.web.recipe.WebIngredient;
+import com.thesis.recipease.model.recipe.category.RecipeHoliday;
 
 import java.util.List;
 
@@ -9,6 +8,7 @@ public class Recipe {
     private RecipeInfo recipeInfo;
     private List<RecipeIngredient> recipeIngredients;
     private List<RecipeDirection> recipeDirections;
+    private List<RecipeHoliday> recipeHolidays;
 
     public Recipe(){}
     public Recipe(RecipeInfo recipeInfo, List<RecipeIngredient> recipeIngredients, List<RecipeDirection> recipeDirections){
@@ -40,7 +40,16 @@ public class Recipe {
     public void setRecipeDirections(List<RecipeDirection> recipeDirections) {
         this.recipeDirections = recipeDirections;
     }
-/*
+
+    public List<RecipeHoliday> getRecipeHolidays() {
+        return recipeHolidays;
+    }
+
+    public void setRecipeHolidays(List<RecipeHoliday> recipeHolidays) {
+        this.recipeHolidays = recipeHolidays;
+    }
+
+    /*
     @Override
     public String toString() {
         return "Recipe{" +

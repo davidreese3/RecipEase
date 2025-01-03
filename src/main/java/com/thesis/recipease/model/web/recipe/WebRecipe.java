@@ -1,5 +1,7 @@
 package com.thesis.recipease.model.web.recipe;
 
+import com.thesis.recipease.model.web.recipe.category.WebHoliday;
+
 import java.util.List;
 
 public class WebRecipe {
@@ -15,10 +17,11 @@ public class WebRecipe {
     private int totalHr;
     private List<WebIngredient> ingredients;
     private List<WebDirection> directions;
+    private List<WebHoliday> holidays;
 
 
     public WebRecipe(){}
-    public WebRecipe(String name, String description, Double yield, String unitOfYield, Integer prepMin, Integer prepHr, Integer processMin, Integer processHr, int totalMin, int totalHr, List<WebIngredient> ingredients, List<WebDirection> directions) {
+    public WebRecipe(String name, String description, Double yield, String unitOfYield, Integer prepMin, Integer prepHr, Integer processMin, Integer processHr, int totalMin, int totalHr, List<WebIngredient> ingredients, List<WebDirection> directions, List<WebHoliday> holidays) {
         this.name = name;
         this.description = description;
         this.yield = yield;
@@ -31,6 +34,7 @@ public class WebRecipe {
         this.totalHr = totalHr;
         this.ingredients = ingredients;
         this.directions = directions;
+        this.holidays = holidays;
     }
 
     public String getName() {
@@ -119,6 +123,14 @@ public class WebRecipe {
 
     public void setDirections(List<WebDirection> directions) {
         this.directions = directions;
+    }
+
+    public List<WebHoliday> getHolidays() {
+        return holidays;
+    }
+
+    public void setHolidays(List<WebHoliday> holidays) {
+        this.holidays = holidays;
     }
 
     @Override
