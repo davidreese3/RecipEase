@@ -7,6 +7,7 @@
     <title>RecipEase Recipe Creation</title>
     <script src="/js/addIngredient.js" defer></script>
     <script src="/js/addDirection.js" defer></script>
+
 </head>
 
 <body>
@@ -85,7 +86,6 @@
                     <div id="ingredientList">
                         <!-- The first ingredient entry is always present -->
                         <div class="ingredient-entry">
-                            <p>If you enter 0 as both the whole number and fraction the ingredient will not be saved.</p>
                             <input type="text" name="ingredients[0].component" placeholder="Ingredient Name" required>
                             <input type="number" min = "0" name="ingredients[0].wholeNumberQuantity" placeholder="Whole Number Quantity">
                             <select name="ingredients[0].fractionQuantity">
@@ -99,7 +99,6 @@
                                 <option value="5/8">5/8</option>
                                 <option value="2/3">2/3</option>
                                 <option value="3/4">3/4</option>
-                                <option value="1">1</option>
                             </select>
                             <select name="ingredients[0].measurement" required>
                                 <option value="">Measurement</option>

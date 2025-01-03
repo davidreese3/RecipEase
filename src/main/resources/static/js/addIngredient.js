@@ -41,8 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
             { value: '1/2', text: '1/2' },
             { value: '5/8', text: '5/8' },
             { value: '2/3', text: '2/3' },
-            { value: '3/4', text: '3/4' },
-            { value: '1', text: '1' }
+            { value: '3/4', text: '3/4' }
         ];
 
         fractionOptions.forEach(optionData => {
