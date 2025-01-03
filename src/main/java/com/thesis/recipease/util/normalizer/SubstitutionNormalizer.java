@@ -26,7 +26,7 @@ public class SubstitutionNormalizer {
     }
 
     public static String fixMeasurement(String substitutedMeasurement, Integer substitutedWholeNumberQuantity, String substitutedFractionQuantity) {
-        if ("Whole".equals(substitutedMeasurement)) {
+        if (substitutedMeasurement.equals("Whole")) {
             return substitutedMeasurement;
         }
         if (substitutedMeasurement != null && substitutedWholeNumberQuantity == 1 && substitutedFractionQuantity.equals("0")) {

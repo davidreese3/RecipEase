@@ -98,6 +98,7 @@ document.addEventListener('DOMContentLoaded', function () {
             { value: 'Ground', text: 'Ground' },
             { value: 'Julienned', text: 'Julienned' },
             { value: 'Mashed', text: 'Mashed' },
+            { value: 'Melted', text: 'Melted' },
             { value: 'Minced', text: 'Minced' },
             { value: 'Peeled', text: 'Peeled' },
             { value: 'Roasted', text: 'Roasted' },
