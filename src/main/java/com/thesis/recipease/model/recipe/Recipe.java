@@ -3,32 +3,42 @@ package com.thesis.recipease.model.recipe;
 import com.thesis.recipease.model.recipe.tag.*;
 import com.thesis.recipease.model.web.recipe.tag.*;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 public class Recipe {
     private RecipeInfo recipeInfo;
     private List<RecipeIngredient> recipeIngredients;
     private List<RecipeDirection> recipeDirections;
-    private List<RecipeTag> recipeHolidays;
-    private List<RecipeTag> recipeMealTypes;
-    private List<RecipeTag> recipeCuisines;
-    private List<RecipeTag> recipeAllergens;
-    private List<RecipeTag> recipeDietTypes;
-    private List<RecipeTag> recipeCookingLevels;
+//    private List<RecipeTag> recipeHolidays;
+//    private List<RecipeTag> recipeMealTypes;
+//    private List<RecipeTag> recipeCuisines;
+//    private List<RecipeTag> recipeAllergens;
+//    private List<RecipeTag> recipeDietTypes;
+//    private List<RecipeTag> recipeCookingLevels;
+    public LinkedHashMap<String, String> recipeTags;
 
     public Recipe(){}
 
-    public Recipe(RecipeInfo recipeInfo, List<RecipeIngredient> recipeIngredients, List<RecipeDirection> recipeDirections, List<RecipeTag> recipeHolidays, List<RecipeTag> recipeMealTypes, List<RecipeTag> recipeCuisines, List<RecipeTag> recipeAllergens, List<RecipeTag> recipeDietTypes, List<RecipeTag> recipeCookingLevels) {
+    public Recipe(RecipeInfo recipeInfo, List<RecipeIngredient> recipeIngredients, List<RecipeDirection> recipeDirections, LinkedHashMap<String, String> recipeTags) {
         this.recipeInfo = recipeInfo;
         this.recipeIngredients = recipeIngredients;
         this.recipeDirections = recipeDirections;
-        this.recipeHolidays = recipeHolidays;
-        this.recipeMealTypes = recipeMealTypes;
-        this.recipeCuisines = recipeCuisines;
-        this.recipeAllergens = recipeAllergens;
-        this.recipeDietTypes = recipeDietTypes;
-        this.recipeCookingLevels = recipeCookingLevels;
+        this.recipeTags = recipeTags;
     }
+
+    //    public Recipe(RecipeInfo recipeInfo, List<RecipeIngredient> recipeIngredients, List<RecipeDirection> recipeDirections, List<RecipeTag> recipeHolidays, List<RecipeTag> recipeMealTypes, List<RecipeTag> recipeCuisines, List<RecipeTag> recipeAllergens, List<RecipeTag> recipeDietTypes, List<RecipeTag> recipeCookingLevels) {
+//        this.recipeInfo = recipeInfo;
+//        this.recipeIngredients = recipeIngredients;
+//        this.recipeDirections = recipeDirections;
+//        this.recipeHolidays = recipeHolidays;
+//        this.recipeMealTypes = recipeMealTypes;
+//        this.recipeCuisines = recipeCuisines;
+//        this.recipeAllergens = recipeAllergens;
+//        this.recipeDietTypes = recipeDietTypes;
+//        this.recipeCookingLevels = recipeCookingLevels;
+//    }
 
     public RecipeInfo getRecipeInfo() {
         return recipeInfo;
@@ -54,53 +64,53 @@ public class Recipe {
         this.recipeDirections = recipeDirections;
     }
 
-    public List<RecipeTag> getRecipeHolidays() {
-        return recipeHolidays;
-    }
-
-    public void setRecipeHolidays(List<RecipeTag> recipeHolidays) {
-        this.recipeHolidays = recipeHolidays;
-    }
-
-    public List<RecipeTag> getRecipeMealTypes() {
-        return recipeMealTypes;
-    }
-
-    public void setRecipeMealTypes(List<RecipeTag> recipeMealTypes) {
-        this.recipeMealTypes = recipeMealTypes;
-    }
-
-    public List<RecipeTag> getRecipeCuisines() {
-        return recipeCuisines;
-    }
-
-    public void setRecipeCuisines(List<RecipeTag> recipeCuisines) {
-        this.recipeCuisines = recipeCuisines;
-    }
-
-    public List<RecipeTag> getRecipeAllergens() {
-        return recipeAllergens;
-    }
-
-    public void setRecipeAllergens(List<RecipeTag> recipeAllergens) {
-        this.recipeAllergens = recipeAllergens;
-    }
-
-    public List<RecipeTag> getRecipeDietTypes() {
-        return recipeDietTypes;
-    }
-
-    public void setRecipeDietTypes(List<RecipeTag> recipeDietTypes) {
-        this.recipeDietTypes = recipeDietTypes;
-    }
-
-    public List<RecipeTag> getRecipeCookingLevels() {
-        return recipeCookingLevels;
-    }
-
-    public void setRecipeCookingLevels(List<RecipeTag> recipeCookingLevels) {
-        this.recipeCookingLevels = recipeCookingLevels;
-    }
+//    public List<RecipeTag> getRecipeHolidays() {
+//        return recipeHolidays;
+//    }
+//
+//    public void setRecipeHolidays(List<RecipeTag> recipeHolidays) {
+//        this.recipeHolidays = recipeHolidays;
+//    }
+//
+//    public List<RecipeTag> getRecipeMealTypes() {
+//        return recipeMealTypes;
+//    }
+//
+//    public void setRecipeMealTypes(List<RecipeTag> recipeMealTypes) {
+//        this.recipeMealTypes = recipeMealTypes;
+//    }
+//
+//    public List<RecipeTag> getRecipeCuisines() {
+//        return recipeCuisines;
+//    }
+//
+//    public void setRecipeCuisines(List<RecipeTag> recipeCuisines) {
+//        this.recipeCuisines = recipeCuisines;
+//    }
+//
+//    public List<RecipeTag> getRecipeAllergens() {
+//        return recipeAllergens;
+//    }
+//
+//    public void setRecipeAllergens(List<RecipeTag> recipeAllergens) {
+//        this.recipeAllergens = recipeAllergens;
+//    }
+//
+//    public List<RecipeTag> getRecipeDietTypes() {
+//        return recipeDietTypes;
+//    }
+//
+//    public void setRecipeDietTypes(List<RecipeTag> recipeDietTypes) {
+//        this.recipeDietTypes = recipeDietTypes;
+//    }
+//
+//    public List<RecipeTag> getRecipeCookingLevels() {
+//        return recipeCookingLevels;
+//    }
+//
+//    public void setRecipeCookingLevels(List<RecipeTag> recipeCookingLevels) {
+//        this.recipeCookingLevels = recipeCookingLevels;
+//    }
 
     /*
     @Override

@@ -4,6 +4,7 @@ import com.thesis.recipease.db.AppService;
 import com.thesis.recipease.model.GlossaryEntry;
 import com.thesis.recipease.model.SubstitutionEntry;
 import com.thesis.recipease.model.recipe.Recipe;
+import com.thesis.recipease.model.recipe.tag.RecipeTag;
 import com.thesis.recipease.model.web.recipe.WebRecipe;
 import com.thesis.recipease.util.normalizer.SubstitutionNormalizer;
 import com.thesis.recipease.util.processer.PrepopulatedEntryProcessor;
@@ -41,7 +42,6 @@ public class RecipeController {
 
     @RequestMapping(value = "/recipe/create", method = RequestMethod.POST)
     public String processRecipeCreationForm(Model model, Principal principal, WebRecipe webRecipe, RedirectAttributes redirectAttributes){
-        System.out.println("[Before]");
         webRecipe = RecipeSanitizer.sanitizeRecipe(webRecipe);
         Recipe recipe = appService.addRecipe(securityService.getLoggedInUserId(), webRecipe);
         redirectAttributes.addFlashAttribute("message", "Your recipe has been posted!");
@@ -66,7 +66,16 @@ public class RecipeController {
         String authorName = appService.getNameById(userId);
         model.addAttribute("authorName", authorName);
         model.addAttribute("profileLink", "http://localhost:8080/profile/view?id=" + userId);
+
+
         return "recipe/viewRecipe";
     }
 
+    public String getString(List<RecipeTag> tags){
+        StringJoiner joiner = new StringJoiner(", ");
+        for (RecipeTag tag : tags) {
+            joiner.add(tag.getField());
+        }
+        return joiner.toString();
+    }
 }

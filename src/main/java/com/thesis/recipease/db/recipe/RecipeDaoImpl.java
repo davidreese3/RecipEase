@@ -4,6 +4,7 @@ import com.thesis.recipease.model.recipe.Recipe;
 import com.thesis.recipease.model.recipe.RecipeDirection;
 import com.thesis.recipease.model.recipe.RecipeInfo;
 import com.thesis.recipease.model.recipe.RecipeIngredient;
+import com.thesis.recipease.model.recipe.tag.RecipeTag;
 import com.thesis.recipease.model.web.recipe.WebDirection;
 import com.thesis.recipease.model.web.recipe.WebIngredient;
 import com.thesis.recipease.model.web.recipe.WebRecipe;
@@ -27,8 +28,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Repository
 public class RecipeDaoImpl implements RecipeDao{
@@ -60,9 +60,14 @@ public class RecipeDaoImpl implements RecipeDao{
         try {
             //insertInfo
             recipeId = insertRecipeInfo(userId,webRecipe);
-            insertRecipeIngredients(webRecipe, recipeId);
-            insertRecipeDirections(webRecipe, recipeId);
-            //insertHolidays(webRecipe, recipeId);
+            insertRecipeIngredients(webRecipe.getIngredients(), recipeId);
+            insertRecipeDirections(webRecipe.getDirections(), recipeId);
+            insertTags(webRecipe.getHolidays(), recipeId, "holiday");
+            insertTags(webRecipe.getMealTypes(), recipeId, "mealType");
+            insertTags(webRecipe.getCuisines(), recipeId, "cuisine");
+            insertTags(webRecipe.getAllergens(), recipeId, "allergen");
+            insertTags(webRecipe.getDietTypes(), recipeId, "dietType");
+            insertTags(webRecipe.getCookingLevels(), recipeId, "cookingLevel");
             transactionManager.commit(status);
             System.out.println("Success");
         }
@@ -104,9 +109,8 @@ public class RecipeDaoImpl implements RecipeDao{
         }
     }
 
-    private void insertRecipeIngredients(WebRecipe webRecipe, int recipeId){
+    private void insertRecipeIngredients(List<WebIngredient> webIngredients, int recipeId){
         final String SQL = "insert into ingredient (recipeid, component, wholeNumberQuantity, fractionQuantity, measurement, preparation) values (?, ?, ?, ?, ?, ?)";
-        List<WebIngredient> webIngredients = webRecipe.getIngredients();
         for(WebIngredient webIngredient : webIngredients){
             System.out.println("inserting ingredient");
             jdbcTemplate.update(dataSource -> {
@@ -122,10 +126,9 @@ public class RecipeDaoImpl implements RecipeDao{
         }
     }
 
-    private void insertRecipeDirections(WebRecipe webRecipe, int recipeId){
+    private void insertRecipeDirections(List<WebDirection> webDirections, int recipeId){
         int stepNum = 1;
         final String SQL = "insert into direction (recipeid, stepNum, direction, method, temp, level) values (?, ?, ?, ?, ?, ?)";
-        List<WebDirection> webDirections = webRecipe.getDirections();
         for(WebDirection webDirection : webDirections){
             System.out.println("inserting direction");
             int finalStepNum = stepNum;
@@ -143,54 +146,90 @@ public class RecipeDaoImpl implements RecipeDao{
         }
     }
 
-//    private void insertHolidays(WebRecipe webRecipe, int recipeId){
-//        final String SQL = "insert into holiday (recipeid, holiday) values (?, ?)";
-//        List<WebTag> webHolidays = webRecipe.getHolidays();
-//        for(WebHoliday webHoliday : webHolidays){
-//            System.out.println("inserting holiday");
-//            jdbcTemplate.update(dataSource -> {
-//                PreparedStatement ps = dataSource.prepareStatement(SQL);
-//                ps.setInt(1, recipeId);
-//                ps.setString(2, webHoliday.getHoliday());
-//                return ps;
-//            });
-//        }
-//    }
+    private void insertTags(List<WebTag> webTags, int recipeId, String field){
+        final String SQL = "insert into "+field+" (recipeid, "+field+") values (?, ?)";
+
+        for(WebTag webTag : webTags){
+            jdbcTemplate.update(dataSource -> {
+                PreparedStatement ps = dataSource.prepareStatement(SQL);
+                ps.setInt(1, recipeId);
+                ps.setString(2, webTag.getField());
+                return ps;
+            });
+        }
+    }
 
     // ------------------------------------------------
     // READ OPS
     // ------------------------------------------------
     @Override
     public Recipe getRecipeById(int recipeId){
+        RecipeInfo recipeInfo = getRecipeInfo(recipeId);
+        List<RecipeIngredient> recipeIngredients = getRecipeIngredients(recipeId);
+        List<RecipeDirection> recipeDirections = getRecipeDirections(recipeId);
+
+        LinkedHashMap<String, String> recipeTags = new LinkedHashMap<>();
+
+        List<RecipeTag> recipeHolidays = getTags(recipeId, "holiday");
+        recipeTags.put("Holiday", getTagString(recipeHolidays));
+        List<RecipeTag> recipeMealTypes = getTags(recipeId, "mealType");
+        recipeTags.put("Meal Type", getTagString(recipeMealTypes));
+        List<RecipeTag> recipeCuisines = getTags(recipeId, "cuisine");
+        recipeTags.put("Cuisine", getTagString(recipeCuisines));
+        List<RecipeTag> recipeAllergens = getTags(recipeId, "allergen");
+        recipeTags.put("Allergen", getTagString(recipeAllergens));
+        List<RecipeTag> recipeDietTypes = getTags(recipeId, "dietType");
+        recipeTags.put("Diet Type", getTagString(recipeDietTypes));
+        List<RecipeTag> recipeCookingLevels = getTags(recipeId, "cookingLevel");
+        recipeTags.put("Cooking Level", getTagString(recipeCookingLevels));
+
+        return new Recipe(recipeInfo, recipeIngredients, recipeDirections, recipeTags);
+    }
+    //HELPER OPS
+
+    private RecipeInfo getRecipeInfo(int recipeId){
         final String infoSQL = "select * from info where recipeid = ?";
         RecipeInfo recipeInfo = new RecipeInfo();
         try {
-            recipeInfo =jdbcTemplate.queryForObject(infoSQL, new RecipeDaoImpl.RecipeInfoMapper(), recipeId);
+            return jdbcTemplate.queryForObject(infoSQL, new RecipeDaoImpl.RecipeInfoMapper(), recipeId);
         } catch (EmptyResultDataAccessException e) {
-            recipeInfo = null;
+            return null;
         }
-        List<RecipeIngredient> recipeIngredients;
+    }
+
+    private List<RecipeIngredient> getRecipeIngredients(int recipeId){
         final String ingredientSQL = "select * from ingredient where recipeid = ?";
         try {
-            recipeIngredients = jdbcTemplate.query(ingredientSQL, new RecipeDaoImpl.RecipeIngredientMapper(), recipeId);
+            return jdbcTemplate.query(ingredientSQL, new RecipeDaoImpl.RecipeIngredientMapper(), recipeId);
         } catch (EmptyResultDataAccessException e) {
-            recipeIngredients = null;
+            return null;
         }
-        List<RecipeDirection> recipeDirections;
+    }
+
+    private List<RecipeDirection> getRecipeDirections(int recipeId){
         final String directionSQL = "select * from direction where recipeid = ?";
         try {
-            recipeDirections = jdbcTemplate.query(directionSQL, new RecipeDaoImpl.RecipeDirectionMapper(), recipeId);
+            return jdbcTemplate.query(directionSQL, new RecipeDaoImpl.RecipeDirectionMapper(), recipeId);
         } catch (EmptyResultDataAccessException e) {
-            recipeDirections = null;
+            return null;
         }
-//        List<RecipeHoliday> recipeHolidays;
-//        final String holidaySQL = "select * from holiday where recipeid = ?";
-//        try{
-//            recipeHolidays = jdbcTemplate.query(holidaySQL, new RecipeDaoImpl.RecipeHolidayMapper(), recipeId);
-//        }catch (EmptyResultDataAccessException e) {
-//            recipeHolidays = null;
-//        }
-        return new Recipe(recipeInfo, recipeIngredients, recipeDirections, null, null, null, null, null, null);
+    }
+
+    private List<RecipeTag> getTags(int recipeId, String field){
+        final String tagSQL = "select * from "+field+" where recipeid = ?";
+        try{
+            return jdbcTemplate.query(tagSQL, new RecipeTagMapper(field), recipeId);
+        }catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
+    private static String getTagString(List<RecipeTag> tags){
+        StringJoiner joiner = new StringJoiner(", ");
+        for (RecipeTag tag : tags) {
+            joiner.add(tag.getField());
+        }
+        return joiner.toString();
     }
 
     // ------------------------------------------------
@@ -251,15 +290,4 @@ public class RecipeDaoImpl implements RecipeDao{
             return recipeDirection;
         }
     }
-
-//    class RecipeHolidayMapper implements RowMapper<RecipeHoliday> {
-//        @Override
-//        public RecipeHoliday mapRow(ResultSet rs, int rowNum) throws SQLException{
-//            RecipeHoliday recipeHoliday = new RecipeHoliday();
-//            recipeHoliday.setRecipeId(rs.getInt("recipeId"));
-//            recipeHoliday.setHoliday(rs.getString("holiday"));
-//            return recipeHoliday;
-//        }
-//
-//    }
 }

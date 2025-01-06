@@ -92,33 +92,27 @@ public class RecipeSanitizer {
                 .distinct()
                 .toList();
 
-        return listOfTags;
+        return sortedTags;
     }
 
     public static WebRecipe setTags(WebRecipe webRecipe){
         List<WebTag> holidays = webRecipe.getHolidays();
-        processTag(holidays);
-        webRecipe.setHolidays(holidays);
+        webRecipe.setHolidays(processTag(holidays));
 
         List<WebTag> mealTypes = webRecipe.getMealTypes();
-        processTag(mealTypes);
-        webRecipe.setHolidays(mealTypes);
+        webRecipe.setMealTypes(processTag(mealTypes));
 
         List<WebTag> cuisines = webRecipe.getCuisines();
-        processTag(cuisines);
-        webRecipe.setHolidays(cuisines);
+        webRecipe.setCuisines(processTag(cuisines));
 
         List<WebTag> allergens = webRecipe.getAllergens();
-        processTag(allergens);
-        webRecipe.setHolidays(allergens);
+        webRecipe.setAllergens(processTag(allergens));
 
         List<WebTag> dietType = webRecipe.getDietTypes();
-        processTag(dietType);
-        webRecipe.setHolidays(dietType);
+        webRecipe.setDietTypes(processTag(dietType));
 
         List<WebTag> cookingLevels = webRecipe.getCookingLevels();
-        processTag(cookingLevels);
-        webRecipe.setHolidays(cookingLevels);
+        webRecipe.setCookingLevels(processTag(cookingLevels));
 
         return webRecipe;
     }
