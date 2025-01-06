@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
         cookingLevelDiv.classList.add('cooking-level-entry');
 
         const cookingLevelSelect = document.createElement('select');
-        cookingLevelSelect.setAttribute('name', `cookingLevels[${cookingLevelList.children.length}].cookingLevel`);
+        cookingLevelSelect.setAttribute('name', `cookingLevels[${cookingLevelList.children.length}].field`);
 
         const cookingLevelOptions = [
             { value: '', text: 'Select a cooking level' },

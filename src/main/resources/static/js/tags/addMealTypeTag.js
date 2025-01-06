@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
         mealTypeDiv.classList.add('meal-type-entry');
 
         const mealTypeSelect = document.createElement('select');
-        mealTypeSelect.setAttribute('name', `mealTypes[${mealTypeList.children.length}].mealType`);
+        mealTypeSelect.setAttribute('name', `mealTypes[${mealTypeList.children.length}].field`);
 
         const mealTypeOptions = [
             { value: '', text: 'Meal type' },

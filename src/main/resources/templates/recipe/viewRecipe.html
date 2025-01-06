@@ -169,6 +169,41 @@
             <span th:text="${#strings.arrayJoin(recipe.recipeHolidays, ', ')}"></span>
         </p>
     </div>
+    <div th:if="${recipe.mealTypes.size != 0}">
+        <hr>
+        <p>
+            Meal Types:
+            <span th:text="${#strings.arrayJoin(recipe.mealTypes, ', ')}"></span>
+        </p>
+    </div>
+    <div th:if="${recipe.cuisines.size != 0}">
+        <hr>
+        <p>
+            Cuisines:
+            <span th:text="${#strings.arrayJoin(recipe.cuisines, ', ')}"></span>
+        </p>
+    </div>
+    <div th:if="${recipe.allergens.size != 0}">
+        <hr>
+        <p>
+            Allergens:
+            <span th:text="${#strings.arrayJoin(recipe.allergens, ', ')}"></span>
+        </p>
+    </div>
+    <div th:if="${recipe.dietTypes.size != 0}">
+        <hr>
+        <p>
+            Diet Types:
+            <span th:text="${#strings.arrayJoin(recipe.dietTypes, ', ')}"></span>
+        </p>
+    </div>
+    <div th:if="${recipe.cookingLevels.size != 0}">
+        <hr>
+        <p>
+            Cooking Levels:
+            <span th:text="${#strings.arrayJoin(recipe.cookingLevels, ', ')}"></span>
+        </p>
+    </div>
 
 </main>
 

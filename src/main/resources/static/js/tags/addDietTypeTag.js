@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
         dietTypeDiv.classList.add('diet-type-entry');
 
         const dietTypeSelect = document.createElement('select');
-        dietTypeSelect.setAttribute('name', `dietTypes[${dietTypeList.children.length}].dietType`);
+        dietTypeSelect.setAttribute('name', `dietTypes[${dietTypeList.children.length}].field`);
 
         const dietTypeOptions = [
             { value: '', text: 'Select a diet type' },

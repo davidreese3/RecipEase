@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
         holidayDiv.classList.add('holiday-entry');
 
         const holidaySelect = document.createElement('select');
-        holidaySelect.setAttribute('name', `holidays[${holidayList.children.length}].holiday`);
+        holidaySelect.setAttribute('name', `holidays[${holidayList.children.length}].field`);
 
         const holidayOptions = [
             { value: '', text: 'Holiday' },

@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
         cuisineDiv.classList.add('cuisine-entry');
 
         const cuisineSelect = document.createElement('select');
-        cuisineSelect.setAttribute('name', `cuisines[${cuisineList.children.length}].cuisine`);
+        cuisineSelect.setAttribute('name', `cuisines[${cuisineList.children.length}].field`);
 
         const cuisineOptions = [
             { value: '', text: 'Select a cuisine' },

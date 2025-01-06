@@ -3,10 +3,9 @@ package com.thesis.recipease.util.sanitizer;
 import com.thesis.recipease.model.web.recipe.WebDirection;
 import com.thesis.recipease.model.web.recipe.WebIngredient;
 import com.thesis.recipease.model.web.recipe.WebRecipe;
-import com.thesis.recipease.model.web.recipe.tag.WebHoliday;
+import com.thesis.recipease.model.web.recipe.tag.WebTag;
 
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class RecipeSanitizer {
 
@@ -57,23 +56,8 @@ public class RecipeSanitizer {
         }
         webRecipe.setDirections(webDirections);
 
-        // Categories
-        List<WebHoliday> webHolidays = webRecipe.getHolidays();
-        Iterator<WebHoliday> holidayIterator = webHolidays.iterator();
-        WebHoliday webHoliday;
-        while(holidayIterator.hasNext()){
-            webHoliday = holidayIterator.next();
-            if(webHoliday.getHoliday().trim().equals("")) {
-                System.out.println("Empty");
-                holidayIterator.remove();
-            }if(webHoliday.getHoliday() == null) {
-                System.out.println("Null");
-                holidayIterator.remove();
-            }
-        }
-        webRecipe.setHolidays(webHolidays);
-
-
+        //process Tags
+        webRecipe = setTags(webRecipe);
 
         return webRecipe;
     }
@@ -95,6 +79,48 @@ public class RecipeSanitizer {
                 webDirection.getMethod() == null &&
                 webDirection.getTemp() == null &&
                 webDirection.getLevel() == null;
+    }
+
+    public static List<WebTag> processTag(List<WebTag> listOfTags) {
+        // Remove null or empty fields
+        listOfTags.removeIf(tag -> tag.getField() == null || tag.getField().trim().isEmpty());
+
+        // Sort alphabetically by field
+        listOfTags.sort(Comparator.comparing(WebTag::getField, String.CASE_INSENSITIVE_ORDER));
+
+        List<WebTag> sortedTags = listOfTags.stream()
+                .distinct()
+                .toList();
+
+        return listOfTags;
+    }
+
+    public static WebRecipe setTags(WebRecipe webRecipe){
+        List<WebTag> holidays = webRecipe.getHolidays();
+        processTag(holidays);
+        webRecipe.setHolidays(holidays);
+
+        List<WebTag> mealTypes = webRecipe.getMealTypes();
+        processTag(mealTypes);
+        webRecipe.setHolidays(mealTypes);
+
+        List<WebTag> cuisines = webRecipe.getCuisines();
+        processTag(cuisines);
+        webRecipe.setHolidays(cuisines);
+
+        List<WebTag> allergens = webRecipe.getAllergens();
+        processTag(allergens);
+        webRecipe.setHolidays(allergens);
+
+        List<WebTag> dietType = webRecipe.getDietTypes();
+        processTag(dietType);
+        webRecipe.setHolidays(dietType);
+
+        List<WebTag> cookingLevels = webRecipe.getCookingLevels();
+        processTag(cookingLevels);
+        webRecipe.setHolidays(cookingLevels);
+
+        return webRecipe;
     }
 
 }

@@ -17,18 +17,18 @@ public class WebRecipe {
     private int totalHr;
     private List<WebIngredient> ingredients;
     private List<WebDirection> directions;
-    private List<WebHoliday> holidays;
-    private List<WebMealType> mealTypes;
-    private List<WebCuisine> cuisines;
-    private List<WebAllergen> allergens;
-    private List<WebDietType> dietTypes;
-    private List<WebCookingLevel> cookingLevels;
+    private List<WebTag> holidays;
+    private List<WebTag> mealTypes;
+    private List<WebTag> cuisines;
+    private List<WebTag> allergens;
+    private List<WebTag> dietTypes;
+    private List<WebTag> cookingLevels;
 
 
 
     public WebRecipe(){}
 
-    public WebRecipe(String name, String description, Double yield, String unitOfYield, Integer prepMin, Integer prepHr, Integer processMin, Integer processHr, int totalMin, int totalHr, List<WebIngredient> ingredients, List<WebDirection> directions, List<WebHoliday> holidays, List<WebMealType> mealTypes, List<WebCuisine> cuisines, List<WebAllergen> allergens, List<WebDietType> dietTypes, List<WebCookingLevel> cookingLevels) {
+    public WebRecipe(String name, String description, Double yield, String unitOfYield, Integer prepMin, Integer prepHr, Integer processMin, Integer processHr, int totalMin, int totalHr, List<WebIngredient> ingredients, List<WebDirection> directions, List<WebTag> holidays, List<WebTag> mealTypes, List<WebTag> cuisines, List<WebTag> allergens, List<WebTag> dietTypes, List<WebTag> cookingLevels) {
         this.name = name;
         this.description = description;
         this.yield = yield;
@@ -137,51 +137,51 @@ public class WebRecipe {
         this.directions = directions;
     }
 
-    public List<WebHoliday> getHolidays() {
+    public List<WebTag> getHolidays() {
         return holidays;
     }
 
-    public void setHolidays(List<WebHoliday> holidays) {
+    public void setHolidays(List<WebTag> holidays) {
         this.holidays = holidays;
     }
 
-    public List<WebMealType> getMealTypes() {
+    public List<WebTag> getMealTypes() {
         return mealTypes;
     }
 
-    public void setMealTypes(List<WebMealType> mealTypes) {
+    public void setMealTypes(List<WebTag> mealTypes) {
         this.mealTypes = mealTypes;
     }
 
-    public List<WebCuisine> getCuisines() {
+    public List<WebTag> getCuisines() {
         return cuisines;
     }
 
-    public void setCuisines(List<WebCuisine> cuisines) {
+    public void setCuisines(List<WebTag> cuisines) {
         this.cuisines = cuisines;
     }
 
-    public List<WebAllergen> getAllergens() {
+    public List<WebTag> getAllergens() {
         return allergens;
     }
 
-    public void setAllergens(List<WebAllergen> allergens) {
+    public void setAllergens(List<WebTag> allergens) {
         this.allergens = allergens;
     }
 
-    public List<WebDietType> getDietTypes() {
+    public List<WebTag> getDietTypes() {
         return dietTypes;
     }
 
-    public void setDietTypes(List<WebDietType> dietTypes) {
+    public void setDietTypes(List<WebTag> dietTypes) {
         this.dietTypes = dietTypes;
     }
 
-    public List<WebCookingLevel> getCookingLevels() {
+    public List<WebTag> getCookingLevels() {
         return cookingLevels;
     }
 
-    public void setCookingLevels(List<WebCookingLevel> cookingLevels) {
+    public void setCookingLevels(List<WebTag> cookingLevels) {
         this.cookingLevels = cookingLevels;
     }
 

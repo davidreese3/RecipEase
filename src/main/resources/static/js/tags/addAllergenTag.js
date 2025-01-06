@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
         allergenDiv.classList.add('allergen-entry');
 
         const allergenSelect = document.createElement('select');
-        allergenSelect.setAttribute('name', `allergens[${allergenList.children.length}].allergen`);
+        allergenSelect.setAttribute('name', `allergens[${allergenList.children.length}].field`);
 
         const allergenOptions = [
             { value: '', text: 'Select an allergy' },

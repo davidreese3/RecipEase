@@ -4,11 +4,10 @@ import com.thesis.recipease.model.recipe.Recipe;
 import com.thesis.recipease.model.recipe.RecipeDirection;
 import com.thesis.recipease.model.recipe.RecipeInfo;
 import com.thesis.recipease.model.recipe.RecipeIngredient;
-import com.thesis.recipease.model.recipe.tag.RecipeHoliday;
 import com.thesis.recipease.model.web.recipe.WebDirection;
 import com.thesis.recipease.model.web.recipe.WebIngredient;
 import com.thesis.recipease.model.web.recipe.WebRecipe;
-import com.thesis.recipease.model.web.recipe.tag.WebHoliday;
+import com.thesis.recipease.model.web.recipe.tag.WebTag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -63,7 +62,7 @@ public class RecipeDaoImpl implements RecipeDao{
             recipeId = insertRecipeInfo(userId,webRecipe);
             insertRecipeIngredients(webRecipe, recipeId);
             insertRecipeDirections(webRecipe, recipeId);
-            insertHolidays(webRecipe, recipeId);
+            //insertHolidays(webRecipe, recipeId);
             transactionManager.commit(status);
             System.out.println("Success");
         }
@@ -144,19 +143,19 @@ public class RecipeDaoImpl implements RecipeDao{
         }
     }
 
-    private void insertHolidays(WebRecipe webRecipe, int recipeId){
-        final String SQL = "insert into holiday (recipeid, holiday) values (?, ?)";
-        List<WebHoliday> webHolidays = webRecipe.getHolidays();
-        for(WebHoliday webHoliday : webHolidays){
-            System.out.println("inserting holiday");
-            jdbcTemplate.update(dataSource -> {
-                PreparedStatement ps = dataSource.prepareStatement(SQL);
-                ps.setInt(1, recipeId);
-                ps.setString(2, webHoliday.getHoliday());
-                return ps;
-            });
-        }
-    }
+//    private void insertHolidays(WebRecipe webRecipe, int recipeId){
+//        final String SQL = "insert into holiday (recipeid, holiday) values (?, ?)";
+//        List<WebTag> webHolidays = webRecipe.getHolidays();
+//        for(WebHoliday webHoliday : webHolidays){
+//            System.out.println("inserting holiday");
+//            jdbcTemplate.update(dataSource -> {
+//                PreparedStatement ps = dataSource.prepareStatement(SQL);
+//                ps.setInt(1, recipeId);
+//                ps.setString(2, webHoliday.getHoliday());
+//                return ps;
+//            });
+//        }
+//    }
 
     // ------------------------------------------------
     // READ OPS
@@ -184,14 +183,14 @@ public class RecipeDaoImpl implements RecipeDao{
         } catch (EmptyResultDataAccessException e) {
             recipeDirections = null;
         }
-        List<RecipeHoliday> recipeHolidays;
-        final String holidaySQL = "select * from holiday where recipeid = ?";
-        try{
-            recipeHolidays = jdbcTemplate.query(holidaySQL, new RecipeDaoImpl.RecipeHolidayMapper(), recipeId);
-        }catch (EmptyResultDataAccessException e) {
-            recipeHolidays = null;
-        }
-        return new Recipe(recipeInfo, recipeIngredients, recipeDirections, recipeHolidays, null, null, null, null, null);
+//        List<RecipeHoliday> recipeHolidays;
+//        final String holidaySQL = "select * from holiday where recipeid = ?";
+//        try{
+//            recipeHolidays = jdbcTemplate.query(holidaySQL, new RecipeDaoImpl.RecipeHolidayMapper(), recipeId);
+//        }catch (EmptyResultDataAccessException e) {
+//            recipeHolidays = null;
+//        }
+        return new Recipe(recipeInfo, recipeIngredients, recipeDirections, null, null, null, null, null, null);
     }
 
     // ------------------------------------------------
@@ -253,14 +252,14 @@ public class RecipeDaoImpl implements RecipeDao{
         }
     }
 
-    class RecipeHolidayMapper implements RowMapper<RecipeHoliday> {
-        @Override
-        public RecipeHoliday mapRow(ResultSet rs, int rowNum) throws SQLException{
-            RecipeHoliday recipeHoliday = new RecipeHoliday();
-            recipeHoliday.setRecipeId(rs.getInt("recipeId"));
-            recipeHoliday.setHoliday(rs.getString("holiday"));
-            return recipeHoliday;
-        }
-
-    }
+//    class RecipeHolidayMapper implements RowMapper<RecipeHoliday> {
+//        @Override
+//        public RecipeHoliday mapRow(ResultSet rs, int rowNum) throws SQLException{
+//            RecipeHoliday recipeHoliday = new RecipeHoliday();
+//            recipeHoliday.setRecipeId(rs.getInt("recipeId"));
+//            recipeHoliday.setHoliday(rs.getString("holiday"));
+//            return recipeHoliday;
+//        }
+//
+//    }
 }
