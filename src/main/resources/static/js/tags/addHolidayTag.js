@@ -1,24 +1,45 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const ingredientList = document.querySelector('#holidayList'); // Reference the ingredientList div
-    const addButton = document.querySelector('#addHolidayBtn'); // Reference the Add Ingredient button
+    const holidayList = document.querySelector('#holidayList');
+    const addHolidayBtn = document.querySelector('#addHolidayBtn');
 
-    addButton.addEventListener('click', function () {
+    addHolidayBtn.addEventListener('click', function () {
         addHolidayField();
     });
 
     function addHolidayField() {
-        // Create a container for this ingredient's inputs
         const holidayDiv = document.createElement('div');
         holidayDiv.classList.add('holiday-entry');
 
-        // Input for component (ingredient name)
-        const componentInput = document.createElement('input');
-        componentInput.setAttribute('type', 'text');
-        componentInput.setAttribute('name', `holidays[${holidayList.children.length}].holiday`);
-        componentInput.setAttribute('placeholder', 'Holiday');
-        componentInput.required = false;
+        const holidaySelect = document.createElement('select');
+        holidaySelect.setAttribute('name', `holidays[${holidayList.children.length}].holiday`);
 
-        // Remove button for this ingredient
+        const holidayOptions = [
+            { value: '', text: 'Holiday' },
+            { value: 'Christmas', text: 'Christmas' },
+            { value: 'Diwali', text: 'Diwali' },
+            { value: 'Easter', text: 'Easter' },
+            { value: 'Father’s Day', text: 'Father’s Day' },
+            { value: 'Halloween', text: 'Halloween' },
+            { value: 'Hanukkah', text: 'Hanukkah' },
+            { value: 'Independence Day', text: 'Independence Day' },
+            { value: 'Kwanzaa', text: 'Kwanzaa' },
+            { value: 'Lunar New Year', text: 'Lunar New Year' },
+            { value: 'Mother’s Day', text: 'Mother’s Day' },
+            { value: 'New Year’s Day', text: 'New Year’s Day' },
+            { value: 'Ramadan', text: 'Ramadan' },
+            { value: 'St. Patrick’s Day', text: 'St. Patrick’s Day' },
+            { value: 'Thanksgiving', text: 'Thanksgiving' },
+            { value: 'Valentine’s Day', text: 'Valentine’s Day' },
+            { value: 'Other', text: 'Other' }
+        ];
+
+        holidayOptions.forEach(option => {
+            const opt = document.createElement('option');
+            opt.value = option.value;
+            opt.textContent = option.text;
+            holidaySelect.appendChild(opt);
+        });
+
         const removeButton = document.createElement('button');
         removeButton.textContent = 'Remove';
         removeButton.setAttribute('type', 'button');
@@ -26,11 +47,8 @@ document.addEventListener('DOMContentLoaded', function () {
             holidayDiv.remove();
         });
 
-        // Append all inputs and the remove button to the ingredient div
-        holidayDiv.appendChild(componentInput);
+        holidayDiv.appendChild(holidaySelect);
         holidayDiv.appendChild(removeButton);
-
-        // Append the ingredient div to the ingredientList
         holidayList.appendChild(holidayDiv);
     }
 });

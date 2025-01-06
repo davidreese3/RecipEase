@@ -1,24 +1,45 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const cuisineList = document.querySelector('#cuisineList'); // Reference the cuisineList div
-    const addButton = document.querySelector('#addCuisineBtn'); // Reference the Add Cuisine button
+    const cuisineList = document.querySelector('#cuisineList');
+    const addCuisineBtn = document.querySelector('#addCuisineBtn');
 
-    addButton.addEventListener('click', function () {
+    addCuisineBtn.addEventListener('click', function () {
         addCuisineField();
     });
 
     function addCuisineField() {
-        // Create a container for this cuisine's inputs
         const cuisineDiv = document.createElement('div');
         cuisineDiv.classList.add('cuisine-entry');
 
-        // Input for cuisine
-        const componentInput = document.createElement('input');
-        componentInput.setAttribute('type', 'text');
-        componentInput.setAttribute('name', `cuisines[${cuisineList.children.length}].cuisine`);
-        componentInput.setAttribute('placeholder', 'Cuisine');
-        componentInput.required = false;
+        const cuisineSelect = document.createElement('select');
+        cuisineSelect.setAttribute('name', `cuisines[${cuisineList.children.length}].cuisine`);
 
-        // Remove button for this cuisine
+        const cuisineOptions = [
+            { value: '', text: 'Select a cuisine' },
+            { value: 'African', text: 'African' },
+            { value: 'American', text: 'American' },
+            { value: 'Caribbean', text: 'Caribbean' },
+            { value: 'Chinese', text: 'Chinese' },
+            { value: 'French', text: 'French' },
+            { value: 'Greek', text: 'Greek' },
+            { value: 'Indian', text: 'Indian' },
+            { value: 'Italian', text: 'Italian' },
+            { value: 'Japanese', text: 'Japanese' },
+            { value: 'Mediterranean', text: 'Mediterranean' },
+            { value: 'Mexican', text: 'Mexican' },
+            { value: 'Middle Eastern', text: 'Middle Eastern' },
+            { value: 'Spanish', text: 'Spanish' },
+            { value: 'Thai', text: 'Thai' },
+            { value: 'Vietnamese', text: 'Vietnamese' },
+            { value: 'Other', text: 'Other' }
+        ];
+
+        cuisineOptions.forEach(option => {
+            const opt = document.createElement('option');
+            opt.value = option.value;
+            opt.textContent = option.text;
+            cuisineSelect.appendChild(opt);
+        });
+
         const removeButton = document.createElement('button');
         removeButton.textContent = 'Remove';
         removeButton.setAttribute('type', 'button');
@@ -26,11 +47,8 @@ document.addEventListener('DOMContentLoaded', function () {
             cuisineDiv.remove();
         });
 
-        // Append all inputs and the remove button to the cuisine div
-        cuisineDiv.appendChild(componentInput);
+        cuisineDiv.appendChild(cuisineSelect);
         cuisineDiv.appendChild(removeButton);
-
-        // Append the cuisine div to the cuisineList
         cuisineList.appendChild(cuisineDiv);
     }
 });

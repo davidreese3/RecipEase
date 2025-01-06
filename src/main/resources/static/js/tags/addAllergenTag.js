@@ -1,24 +1,39 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const allergenList = document.querySelector('#allergenList'); // Reference the allergenList div
-    const addButton = document.querySelector('#addAllergenBtn'); // Reference the Add Allergen button
+    const allergenList = document.querySelector('#allergenList');
+    const addAllergenBtn = document.querySelector('#addAllergenBtn');
 
-    addButton.addEventListener('click', function () {
+    addAllergenBtn.addEventListener('click', function () {
         addAllergenField();
     });
 
     function addAllergenField() {
-        // Create a container for this allergen's inputs
         const allergenDiv = document.createElement('div');
         allergenDiv.classList.add('allergen-entry');
 
-        // Input for allergen
-        const componentInput = document.createElement('input');
-        componentInput.setAttribute('type', 'text');
-        componentInput.setAttribute('name', `allergens[${allergenList.children.length}].allergen`);
-        componentInput.setAttribute('placeholder', 'Allergen');
-        componentInput.required = false;
+        const allergenSelect = document.createElement('select');
+        allergenSelect.setAttribute('name', `allergens[${allergenList.children.length}].allergen`);
 
-        // Remove button for this allergen
+        const allergenOptions = [
+            { value: '', text: 'Select an allergy' },
+            { value: 'Dairy-Free', text: 'Dairy-Free' },
+            { value: 'Egg-Free', text: 'Egg-Free' },
+            { value: 'Fish-Free', text: 'Fish-Free' },
+            { value: 'Gluten-Free', text: 'Gluten-Free' },
+            { value: 'Peanut-Free', text: 'Peanut-Free' },
+            { value: 'Sesame-Free', text: 'Sesame-Free' },
+            { value: 'Shellfish-Free', text: 'Shellfish-Free' },
+            { value: 'Soy-Free', text: 'Soy-Free' },
+            { value: 'Tree Nut-Free', text: 'Tree Nut-Free' },
+            { value: 'Other', text: 'Other' }
+        ];
+
+        allergenOptions.forEach(option => {
+            const opt = document.createElement('option');
+            opt.value = option.value;
+            opt.textContent = option.text;
+            allergenSelect.appendChild(opt);
+        });
+
         const removeButton = document.createElement('button');
         removeButton.textContent = 'Remove';
         removeButton.setAttribute('type', 'button');
@@ -26,11 +41,8 @@ document.addEventListener('DOMContentLoaded', function () {
             allergenDiv.remove();
         });
 
-        // Append all inputs and the remove button to the allergen div
-        allergenDiv.appendChild(componentInput);
+        allergenDiv.appendChild(allergenSelect);
         allergenDiv.appendChild(removeButton);
-
-        // Append the allergen div to the allergenList
         allergenList.appendChild(allergenDiv);
     }
 });
