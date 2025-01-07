@@ -144,15 +144,19 @@
             </tbody>
         </table>
     </div>
-    <h3>Notes</h3>
+    <div th:if="${recipe.recipeNote != null}">
+        <h3>Notes</h3>
         <span th:text="${recipe.recipeNote.note}"></span>
-    <h3>Recipe Tags</h3>
-    <ul>
-        <li th:each="tag : ${recipe.recipeTags}" th:if="${tag.value != ''}">
-            <span th:text="${tag.key}"></span>:
-            <span th:text="${tag.value}"></span>
-        </li>
-    </ul>
+    </div>
+    <div th:if="${tagsExist}">
+        <h3>Recipe Tags</h3>
+        <ul>
+            <li th:each="tag : ${recipe.recipeTags}" th:if="${tag.value != ''}">
+                <span th:text="${tag.key}"></span>:
+                <span th:text="${tag.value}"></span>
+            </li>
+        </ul>
+    </div>
 
 </main>
 
