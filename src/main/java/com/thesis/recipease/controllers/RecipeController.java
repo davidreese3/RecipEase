@@ -57,7 +57,6 @@ public class RecipeController {
         // reason for this is so that when versioning it can select the correct type from db
         recipe = recipeNormalizer.normalizeRecipe(recipe);
         boolean tagsExist = !(recipe.getRecipeTags().values().stream().allMatch(String::isEmpty));
-        System.out.println("[TO STRING TAGS]" + recipe.getRecipeTags().toString() + "Bool: " + tagsExist);
         model.addAttribute("recipe", recipe);
         model.addAttribute("tagsExist", tagsExist);
 
