@@ -25,17 +25,17 @@ public class SubstitutionNormalizer {
         return substitutionList;
     }
 
-    public static String fixMeasurement(String substitutedMeasurement, Integer substitutedWholeNumberQuantity, String substitutedFractionQuantity) {
-        if (substitutedMeasurement.equals("Whole")) {
-            return substitutedMeasurement;
+    public static String fixMeasurement(String measurement, Integer wholeNumberQuantity, String fractionQuantity) {
+        if (measurement.equals("Whole")) {
+            return measurement;
         }
-        if (substitutedMeasurement != null && substitutedWholeNumberQuantity == 1 && substitutedFractionQuantity.equals("0")) {
-            if (substitutedMeasurement.endsWith("es")) {
-                return substitutedMeasurement.substring(0, substitutedMeasurement.length() - 2);
-            } else if (substitutedMeasurement.endsWith("s")) {
-                return substitutedMeasurement.substring(0, substitutedMeasurement.length() - 1);
+        if (measurement != null && wholeNumberQuantity == 1 && fractionQuantity.equals("0")) {
+            if (measurement.endsWith("es")) {
+                return measurement.substring(0, measurement.length() - 2);
+            } else if (measurement.endsWith("s")) {
+                return measurement.substring(0, measurement.length() - 1);
             }
         }
-        return substitutedMeasurement;
+        return measurement;
     }
 }
