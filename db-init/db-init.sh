@@ -155,6 +155,13 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
         primary key (recipeId, cookingLevel)
     );
 
+    -- cooking style
+    create table if not exists cookingStyle (
+        recipeId int references info(recipeId) on delete cascade,
+        cookingStyle varchar(30),
+        primary key (recipeId, cookingStyle)
+    );
+
     -- ======
     -- Media
     -- ======
@@ -447,6 +454,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
     alter table allergen owner to docker;
     alter table dietType owner to docker;
     alter table cookingLevel owner to docker;
+    alter table cookingStyle owner to docker;
     alter table photo owner to docker;
     alter table link owner to docker;
     alter table notes owner to docker;

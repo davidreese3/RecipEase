@@ -163,48 +163,11 @@
     </div>
     <h3>Recipe Tags</h3>
     <ul>
-        <!-- Iterate over the map -->
-        <li th:each="entry : ${recipe.recipeTags}" th:if="${entry.value != ''}">
-            <span th:text="${entry.key}"></span>:
-            <span th:text="${entry.value}"></span>
+        <li th:each="tag : ${recipe.recipeTags}" th:if="${tag.value != ''}">
+            <span th:text="${tag.key}"></span>:
+            <span th:text="${tag.value}"></span>
         </li>
     </ul>
-<!--    <div th:if="${recipe.recipeTags['holiday'] != null and tags['holiday'].length() > 0}">-->
-<!--        <p>-->
-<!--            Holiday:-->
-<!--            <span th:text="${recipe.recipeTags['holiday']}"></span>-->
-<!--        </p>-->
-<!--    </div>-->
-<!--    <div th:if="${tags.get(1).length != 0}">-->
-<!--        <p>-->
-<!--            Meal Types:-->
-<!--            <span th:text="${#strings.arrayJoin(recipe.recipeMealTypes, ', ')}"></span>-->
-<!--        </p>-->
-<!--    </div>-->
-<!--    <div th:if="${recipe.recipeCuisines.size != 0}">-->
-<!--        <p>-->
-<!--            Cuisines:-->
-<!--            <span th:text="${#strings.arrayJoin(recipe.recipeCuisines, ', ')}"></span>-->
-<!--        </p>-->
-<!--    </div>-->
-<!--    <div th:if="${recipe.recipeAllergens.size != 0}">-->
-<!--        <p>-->
-<!--            Allergens:-->
-<!--            <span th:text="${#strings.arrayJoin(recipe.recipeAllergens, ', ')}"></span>-->
-<!--        </p>-->
-<!--    </div>-->
-<!--    <div th:if="${recipe.recipeDietTypes.size != 0}">-->
-<!--        <p>-->
-<!--            Diet Types:-->
-<!--            <span th:text="${#strings.arrayJoin(recipe.recipeDietTypes, ', ')}"></span>-->
-<!--        </p>-->
-<!--    </div>-->
-<!--    <div th:if="${recipe.recipeCookingLevels.size != 0}">-->
-<!--        <p>-->
-<!--            Cooking Levels:-->
-<!--            <span th:text="${#strings.arrayJoin(recipe.recipeCookingLevels, ', ')}"></span>-->
-<!--        </p>-->
-<!--    </div>-->
 
 </main>
 

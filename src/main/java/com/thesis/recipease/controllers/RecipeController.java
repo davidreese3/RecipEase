@@ -70,12 +70,4 @@ public class RecipeController {
 
         return "recipe/viewRecipe";
     }
-
-    public String getString(List<RecipeTag> tags){
-        StringJoiner joiner = new StringJoiner(", ");
-        for (RecipeTag tag : tags) {
-            joiner.add(tag.getField());
-        }
-        return joiner.toString();
-    }
 }

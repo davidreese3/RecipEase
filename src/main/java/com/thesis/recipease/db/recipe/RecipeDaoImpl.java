@@ -68,6 +68,7 @@ public class RecipeDaoImpl implements RecipeDao{
             insertTags(webRecipe.getAllergens(), recipeId, "allergen");
             insertTags(webRecipe.getDietTypes(), recipeId, "dietType");
             insertTags(webRecipe.getCookingLevels(), recipeId, "cookingLevel");
+            insertTags(webRecipe.getCookingStyles(), recipeId, "cookingStyle");
             transactionManager.commit(status);
             System.out.println("Success");
         }
@@ -182,6 +183,8 @@ public class RecipeDaoImpl implements RecipeDao{
         recipeTags.put("Diet Type", getTagString(recipeDietTypes));
         List<RecipeTag> recipeCookingLevels = getTags(recipeId, "cookingLevel");
         recipeTags.put("Cooking Level", getTagString(recipeCookingLevels));
+        List<RecipeTag> recipeCookingStyles = getTags(recipeId, "cookingStyle");
+        recipeTags.put("Cooking Style", getTagString(recipeCookingStyles));
 
         return new Recipe(recipeInfo, recipeIngredients, recipeDirections, recipeTags);
     }

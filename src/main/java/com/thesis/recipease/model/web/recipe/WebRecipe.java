@@ -23,12 +23,13 @@ public class WebRecipe {
     private List<WebTag> allergens;
     private List<WebTag> dietTypes;
     private List<WebTag> cookingLevels;
+    private List<WebTag> cookingStyles;
 
 
 
     public WebRecipe(){}
 
-    public WebRecipe(String name, String description, Double yield, String unitOfYield, Integer prepMin, Integer prepHr, Integer processMin, Integer processHr, int totalMin, int totalHr, List<WebIngredient> ingredients, List<WebDirection> directions, List<WebTag> holidays, List<WebTag> mealTypes, List<WebTag> cuisines, List<WebTag> allergens, List<WebTag> dietTypes, List<WebTag> cookingLevels) {
+    public WebRecipe(String name, String description, Double yield, String unitOfYield, Integer prepMin, Integer prepHr, Integer processMin, Integer processHr, int totalMin, int totalHr, List<WebIngredient> ingredients, List<WebDirection> directions, List<WebTag> holidays, List<WebTag> mealTypes, List<WebTag> cuisines, List<WebTag> allergens, List<WebTag> dietTypes, List<WebTag> cookingLevels, List<WebTag> cookingStyles) {
         this.name = name;
         this.description = description;
         this.yield = yield;
@@ -47,6 +48,7 @@ public class WebRecipe {
         this.allergens = allergens;
         this.dietTypes = dietTypes;
         this.cookingLevels = cookingLevels;
+        this.cookingStyles = cookingStyles;
     }
 
     public String getName() {
@@ -183,6 +185,14 @@ public class WebRecipe {
 
     public void setCookingLevels(List<WebTag> cookingLevels) {
         this.cookingLevels = cookingLevels;
+    }
+
+    public List<WebTag> getCookingStyles() {
+        return cookingStyles;
+    }
+
+    public void setCookingStyles(List<WebTag> cookingStyles) {
+        this.cookingStyles = cookingStyles;
     }
 
     @Override

@@ -114,6 +114,8 @@ public class RecipeSanitizer {
         List<WebTag> cookingLevels = webRecipe.getCookingLevels();
         webRecipe.setCookingLevels(processTag(cookingLevels));
 
+        List<WebTag> cookingStyles = webRecipe.getCookingStyles();
+        webRecipe.setCookingStyles(processTag(cookingStyles));
         return webRecipe;
     }
 
