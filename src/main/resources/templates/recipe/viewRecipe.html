@@ -30,16 +30,9 @@
         <tr>
             <td th:text = ${recipe.recipeInfo.description}></td>
         </tr>
-        <td th:text="
-            'Makes ' +
-            (${#numbers.formatDecimal(recipe.recipeInfo.yield, 0, recipe.recipeInfo.yield % 1 == 0 ? 0 : 1)}) + ' ' +
-            (${recipe.recipeInfo.yield == 1}
-                ? ${#strings.substring(recipe.recipeInfo.unitOfYield, 0, recipe.recipeInfo.unitOfYield.lastIndexOf('s'))}
-                : ${recipe.recipeInfo.unitOfYield})
-        "></td>
-
-        </td>
-
+        <tr>
+            <td th:text="'Makes ' + ${#numbers.formatDecimal(recipe.recipeInfo.yield, 0, recipe.recipeInfo.yield % 1 == 0 ? 0 : 1)} + ' ' + ${recipe.recipeInfo.unitOfYield}"></td>
+        </tr>
         <tr>
             <td th:if="${recipe.recipeInfo.prepHr > 0}"
                 th:text="'Preparation Time: ' + ${recipe.recipeInfo.prepHr} + ' Hour' + (${recipe.recipeInfo.prepHr > 1 ? 's' : ''}) + ' ' + ${recipe.recipeInfo.prepMin} + ' Minute' + (${recipe.recipeInfo.prepMin > 1 ? 's' : ''})">
@@ -74,17 +67,7 @@
                 <span th:text="
                     ${ingredient.wholeNumberQuantity != 0 ? ingredient.wholeNumberQuantity + ' ' : ''} +
                     ${ingredient.fractionQuantity != '0' ? ingredient.fractionQuantity + ' ' : ''} +
-                    ${
-                        ingredient.measurement != null && ingredient.preparation != null && ingredient.measurement == 'Whole' && ingredient.preparation == 'Whole'
-                            ? ''
-                            : (
-                                ingredient.measurement != null && ingredient.wholeNumberQuantity == 1 && ingredient.fractionQuantity == '0' && ingredient.measurement != 'Whole'
-                                    ? (ingredient.measurement.endsWith('es')
-                                        ? ingredient.measurement.substring(0, ingredient.measurement.length() - 2)
-                                        : ingredient.measurement.substring(0, ingredient.measurement.length() - 1))
-                                    : ingredient.measurement
-                              )
-                    } + ' ' + ${ingredient.preparation} + ' ' + ${ingredient.component}
+                    ${ingredient.measurement} + ' ' + ${ingredient.preparation} + ' ' + ${ingredient.component}
                 ">
                 </span>
             </td>

@@ -105,8 +105,8 @@ document.addEventListener('DOMContentLoaded', function () {
             { value: 'Sliced', text: 'Sliced' },
             { value: 'Stirred', text: 'Stirred' },
             { value: 'Toasted', text: 'Toasted' },
+            { value: 'Unprepared', text: 'Unprepared' },
             { value: 'Whisked', text: 'Whisked' },
-            { value: 'Whole', text: 'Whole Ingredient' },
             { value: 'Zested', text: 'Zested' }
         ];
 

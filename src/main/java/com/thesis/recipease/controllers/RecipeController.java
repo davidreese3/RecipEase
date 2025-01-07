@@ -6,6 +6,7 @@ import com.thesis.recipease.model.SubstitutionEntry;
 import com.thesis.recipease.model.recipe.Recipe;
 import com.thesis.recipease.model.recipe.tag.RecipeTag;
 import com.thesis.recipease.model.web.recipe.WebRecipe;
+import com.thesis.recipease.util.normalizer.RecipeNormalizer;
 import com.thesis.recipease.util.normalizer.SubstitutionNormalizer;
 import com.thesis.recipease.util.processer.PrepopulatedEntryProcessor;
 import com.thesis.recipease.util.sanitizer.RecipeSanitizer;
@@ -22,8 +23,8 @@ import java.util.*;
 
 @Controller
 public class RecipeController {
-    //@Autowired
-    //private RecipeSanitizer recipeSanitizer;
+    @Autowired
+    private RecipeSanitizer recipeSanitizer;
     @Autowired
     private AppService appService;
     @Autowired
@@ -32,6 +33,8 @@ public class RecipeController {
     private PrepopulatedEntryProcessor prepopulatedEntryProcessor;
     @Autowired
     private SubstitutionNormalizer substitutionNormalizer;
+    @Autowired
+    private RecipeNormalizer recipeNormalizer;
 
     @RequestMapping(value = "/recipe/create", method = RequestMethod.GET)
     public String displayRecipeCreationForm(Model model){
@@ -42,7 +45,7 @@ public class RecipeController {
 
     @RequestMapping(value = "/recipe/create", method = RequestMethod.POST)
     public String processRecipeCreationForm(Model model, Principal principal, WebRecipe webRecipe, RedirectAttributes redirectAttributes){
-        webRecipe = RecipeSanitizer.sanitizeRecipe(webRecipe);
+        webRecipe = recipeSanitizer.sanitizeRecipe(webRecipe);
         Recipe recipe = appService.addRecipe(securityService.getLoggedInUserId(), webRecipe);
         redirectAttributes.addFlashAttribute("message", "Your recipe has been posted!");
         return "redirect:/recipe/view?recipeId=" + recipe.getRecipeInfo().getRecipeId();
@@ -51,6 +54,8 @@ public class RecipeController {
     @RequestMapping(value = "/recipe/view", method = RequestMethod.GET)
     public String displayRecipe(Model model, @RequestParam("recipeId") int recipeId){
         Recipe recipe = appService.getRecipeById(recipeId);
+        // reason for this is so that when versioning it can select the correct type from db
+        recipe = recipeNormalizer.normalizeRecipe(recipe);
         model.addAttribute("recipe", recipe);
 
         prepopulatedEntryProcessor.gatherStartingStrings(recipe);

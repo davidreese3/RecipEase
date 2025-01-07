@@ -298,6 +298,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
     ('Tenderize', 'To make meat more tender by pounding or marinating.', 'tenderize, tenderized, tenderizing'),
     ('Toss', 'To mix ingredients lightly by lifting and dropping them.', 'toss, tossed, tossing'),
     ('Umami', 'A savory flavor, one of the five basic tastes.', 'umami'),
+    ('Unprepared', 'The ingredient is in its natural state without any cutting, peeling, cooking, or other preparation steps applied','unprepared'),
     ('Whip', 'To beat ingredients to increase volume and incorporate air.', 'whip, whipped, whipping');
 
 

@@ -11,13 +11,7 @@ public class Recipe {
     private RecipeInfo recipeInfo;
     private List<RecipeIngredient> recipeIngredients;
     private List<RecipeDirection> recipeDirections;
-//    private List<RecipeTag> recipeHolidays;
-//    private List<RecipeTag> recipeMealTypes;
-//    private List<RecipeTag> recipeCuisines;
-//    private List<RecipeTag> recipeAllergens;
-//    private List<RecipeTag> recipeDietTypes;
-//    private List<RecipeTag> recipeCookingLevels;
-    public LinkedHashMap<String, String> recipeTags;
+    private LinkedHashMap<String, String> recipeTags;
 
     public Recipe(){}
 
@@ -64,7 +58,15 @@ public class Recipe {
         this.recipeDirections = recipeDirections;
     }
 
-//    public List<RecipeTag> getRecipeHolidays() {
+    public LinkedHashMap<String, String> getRecipeTags() {
+        return recipeTags;
+    }
+
+    public void setRecipeTags(LinkedHashMap<String, String> recipeTags) {
+        this.recipeTags = recipeTags;
+    }
+
+    //    public List<RecipeTag> getRecipeHolidays() {
 //        return recipeHolidays;
 //    }
 //

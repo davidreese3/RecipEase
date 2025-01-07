@@ -9,12 +9,12 @@ import java.util.List;
 public class SubstitutionNormalizer {
     public List<SubstitutionEntry> normalize(List<SubstitutionEntry> substitutionList){
         for (SubstitutionEntry substitution : substitutionList) {
-            String fixedOriginal = fixMeasurement(
+            String fixedOriginal = normalizeMeasurement(
                     substitution.getOriginalMeasurement(),
                     substitution.getOriginalWholeNumberQuantity(),
                     substitution.getOriginalFractionQuantity()
             );
-            String fixedSubstituted = fixMeasurement(
+            String fixedSubstituted = normalizeMeasurement(
                     substitution.getSubstitutedMeasurement(),
                     substitution.getSubstitutedWholeNumberQuantity(),
                     substitution.getSubstitutedFractionQuantity()
@@ -25,7 +25,7 @@ public class SubstitutionNormalizer {
         return substitutionList;
     }
 
-    public static String fixMeasurement(String measurement, Integer wholeNumberQuantity, String fractionQuantity) {
+    public static String normalizeMeasurement(String measurement, Integer wholeNumberQuantity, String fractionQuantity) {
         if (measurement.equals("Whole")) {
             return measurement;
         }

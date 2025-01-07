@@ -4,12 +4,13 @@ import com.thesis.recipease.model.web.recipe.WebDirection;
 import com.thesis.recipease.model.web.recipe.WebIngredient;
 import com.thesis.recipease.model.web.recipe.WebRecipe;
 import com.thesis.recipease.model.web.recipe.tag.WebTag;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+@Service
 public class RecipeSanitizer {
-
-    public static WebRecipe sanitizeRecipe(WebRecipe webRecipe) {
+    public WebRecipe sanitizeRecipe(WebRecipe webRecipe) {
         // == required fields
         //info
         if (webRecipe.getPrepMin() == null) webRecipe.setPrepMin(0);
