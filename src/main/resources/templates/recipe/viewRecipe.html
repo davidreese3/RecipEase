@@ -144,6 +144,8 @@
             </tbody>
         </table>
     </div>
+    <h3>Notes</h3>
+        <span th:text="${recipe.recipeNote.note}"></span>
     <h3>Recipe Tags</h3>
     <ul>
         <li th:each="tag : ${recipe.recipeTags}" th:if="${tag.value != ''}">

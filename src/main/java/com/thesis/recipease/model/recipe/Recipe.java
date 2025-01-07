@@ -1,9 +1,5 @@
 package com.thesis.recipease.model.recipe;
 
-import com.thesis.recipease.model.recipe.tag.*;
-import com.thesis.recipease.model.web.recipe.tag.*;
-
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -11,14 +7,16 @@ public class Recipe {
     private RecipeInfo recipeInfo;
     private List<RecipeIngredient> recipeIngredients;
     private List<RecipeDirection> recipeDirections;
+    private RecipeNote recipeNote;
     private LinkedHashMap<String, String> recipeTags;
 
     public Recipe(){}
 
-    public Recipe(RecipeInfo recipeInfo, List<RecipeIngredient> recipeIngredients, List<RecipeDirection> recipeDirections, LinkedHashMap<String, String> recipeTags) {
+    public Recipe(RecipeInfo recipeInfo, List<RecipeIngredient> recipeIngredients, List<RecipeDirection> recipeDirections, RecipeNote recipeNote, LinkedHashMap<String, String> recipeTags) {
         this.recipeInfo = recipeInfo;
         this.recipeIngredients = recipeIngredients;
         this.recipeDirections = recipeDirections;
+        this.recipeNote = recipeNote;
         this.recipeTags = recipeTags;
     }
 
@@ -64,6 +62,14 @@ public class Recipe {
 
     public void setRecipeTags(LinkedHashMap<String, String> recipeTags) {
         this.recipeTags = recipeTags;
+    }
+
+    public RecipeNote getRecipeNote() {
+        return recipeNote;
+    }
+
+    public void setRecipeNote(RecipeNote recipeNote) {
+        this.recipeNote = recipeNote;
     }
 
     //    public List<RecipeTag> getRecipeHolidays() {

@@ -1,12 +1,10 @@
 package com.thesis.recipease.db.recipe;
 
-import com.thesis.recipease.model.recipe.Recipe;
-import com.thesis.recipease.model.recipe.RecipeDirection;
-import com.thesis.recipease.model.recipe.RecipeInfo;
-import com.thesis.recipease.model.recipe.RecipeIngredient;
+import com.thesis.recipease.model.recipe.*;
 import com.thesis.recipease.model.recipe.tag.RecipeTag;
 import com.thesis.recipease.model.web.recipe.WebDirection;
 import com.thesis.recipease.model.web.recipe.WebIngredient;
+import com.thesis.recipease.model.web.recipe.WebNote;
 import com.thesis.recipease.model.web.recipe.WebRecipe;
 import com.thesis.recipease.model.web.recipe.tag.WebTag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +60,7 @@ public class RecipeDaoImpl implements RecipeDao{
             recipeId = insertRecipeInfo(userId,webRecipe);
             insertRecipeIngredients(webRecipe.getIngredients(), recipeId);
             insertRecipeDirections(webRecipe.getDirections(), recipeId);
+            insertNote(webRecipe.getNote(), recipeId);
             insertTags(webRecipe.getHolidays(), recipeId, "holiday");
             insertTags(webRecipe.getMealTypes(), recipeId, "mealType");
             insertTags(webRecipe.getCuisines(), recipeId, "cuisine");
@@ -147,6 +146,18 @@ public class RecipeDaoImpl implements RecipeDao{
         }
     }
 
+    private void insertNote(WebNote webNote, int recipeId) {
+        if (webNote.getNote().length() > 0) {
+            final String SQL = "insert into note (recipeid, note) values (?, ?)";
+            jdbcTemplate.update(dataSource -> {
+                PreparedStatement ps = dataSource.prepareStatement(SQL);
+                ps.setInt(1, recipeId);
+                ps.setString(2, webNote.getNote());
+                return ps;
+            });
+        }
+    }
+
     private void insertTags(List<WebTag> webTags, int recipeId, String field){
         final String SQL = "insert into "+field+" (recipeid, "+field+") values (?, ?)";
 
@@ -171,6 +182,8 @@ public class RecipeDaoImpl implements RecipeDao{
 
         LinkedHashMap<String, String> recipeTags = new LinkedHashMap<>();
 
+        RecipeNote recipeNote = getNote(recipeId);
+
         List<RecipeTag> recipeHolidays = getTags(recipeId, "holiday");
         recipeTags.put("Holiday", getTagString(recipeHolidays));
         List<RecipeTag> recipeMealTypes = getTags(recipeId, "mealType");
@@ -186,7 +199,7 @@ public class RecipeDaoImpl implements RecipeDao{
         List<RecipeTag> recipeCookingStyles = getTags(recipeId, "cookingStyle");
         recipeTags.put("Cooking Style", getTagString(recipeCookingStyles));
 
-        return new Recipe(recipeInfo, recipeIngredients, recipeDirections, recipeTags);
+        return new Recipe(recipeInfo, recipeIngredients, recipeDirections, recipeNote, recipeTags);
     }
     //HELPER OPS
 
@@ -213,6 +226,15 @@ public class RecipeDaoImpl implements RecipeDao{
         final String directionSQL = "select * from direction where recipeid = ?";
         try {
             return jdbcTemplate.query(directionSQL, new RecipeDaoImpl.RecipeDirectionMapper(), recipeId);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
+    private RecipeNote getNote(int recipeId){
+        final String noteSQL = "select * from note where recipeid = ?";
+        try {
+            return jdbcTemplate.queryForObject(noteSQL, new RecipeDaoImpl.RecipeNoteMapper(), recipeId);
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
@@ -291,6 +313,16 @@ public class RecipeDaoImpl implements RecipeDao{
             recipeDirection.setTemp(rs.getInt("temp"));
             recipeDirection.setLevel(rs.getString("level"));
             return recipeDirection;
+        }
+    }
+
+    class RecipeNoteMapper implements RowMapper<RecipeNote> {
+        @Override
+        public RecipeNote mapRow(ResultSet rs, int rowNum) throws SQLException {
+            RecipeNote recipeNote = new RecipeNote();
+            recipeNote.setRecipeId(rs.getInt("recipeId"));
+            recipeNote.setNote(rs.getString("note"));
+            return recipeNote;
         }
     }
 }

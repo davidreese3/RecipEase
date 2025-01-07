@@ -17,6 +17,7 @@ public class WebRecipe {
     private int totalHr;
     private List<WebIngredient> ingredients;
     private List<WebDirection> directions;
+    private WebNote note;
     private List<WebTag> holidays;
     private List<WebTag> mealTypes;
     private List<WebTag> cuisines;
@@ -29,7 +30,7 @@ public class WebRecipe {
 
     public WebRecipe(){}
 
-    public WebRecipe(String name, String description, Double yield, String unitOfYield, Integer prepMin, Integer prepHr, Integer processMin, Integer processHr, int totalMin, int totalHr, List<WebIngredient> ingredients, List<WebDirection> directions, List<WebTag> holidays, List<WebTag> mealTypes, List<WebTag> cuisines, List<WebTag> allergens, List<WebTag> dietTypes, List<WebTag> cookingLevels, List<WebTag> cookingStyles) {
+    public WebRecipe(String name, String description, Double yield, String unitOfYield, Integer prepMin, Integer prepHr, Integer processMin, Integer processHr, int totalMin, int totalHr, List<WebIngredient> ingredients, List<WebDirection> directions, WebNote note, List<WebTag> holidays, List<WebTag> mealTypes, List<WebTag> cuisines, List<WebTag> allergens, List<WebTag> dietTypes, List<WebTag> cookingLevels, List<WebTag> cookingStyles) {
         this.name = name;
         this.description = description;
         this.yield = yield;
@@ -42,6 +43,7 @@ public class WebRecipe {
         this.totalHr = totalHr;
         this.ingredients = ingredients;
         this.directions = directions;
+        this.note = note;
         this.holidays = holidays;
         this.mealTypes = mealTypes;
         this.cuisines = cuisines;
@@ -137,6 +139,14 @@ public class WebRecipe {
 
     public void setDirections(List<WebDirection> directions) {
         this.directions = directions;
+    }
+
+    public WebNote getNote() {
+        return note;
+    }
+
+    public void setNote(WebNote note) {
+        this.note = note;
     }
 
     public List<WebTag> getHolidays() {

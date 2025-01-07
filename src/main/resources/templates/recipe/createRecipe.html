@@ -27,10 +27,10 @@
     <form id= "recipeForm" action="#" th:action="@{/recipe/create}" th:object="${webRecipe}" method="post">
         <table>
             <tr>
-                <td colspan="4"><h3>Required Fields</h3></td>
+                <td><h3>Required Fields</h3></td>
             </tr>
             <tr>
-                <td colspan="4"><h4>Recipe Info</h4></td>
+                <td><h4>Recipe Info</h4></td>
             </tr>
             <tr>
                 <td>Recipe Name:</td>
@@ -38,7 +38,7 @@
             </tr>
             <tr>
                 <td>Recipe Description:</td>
-                <td colspan="3"><textarea rows="3" cols="65" th:field="*{description}" placeholder="Not required, but encouraged."></textarea></td>
+                <td><textarea rows="3" cols="65" th:field="*{description}" placeholder="Not required, but encouraged."></textarea></td>
             </tr>
             <tr>
                 <td>Makes:</td>
@@ -86,7 +86,7 @@
                 <td><input type="number" step="1" min="0" max="59" value="0" th:field="*{processMin}"></td>
             </tr>
             <tr>
-                <td colspan="4">
+                <td>
                     <h4>Ingredients</h4>
                     <button type="button" id="addIngredientBtn">Add Ingredient</button>
                     <div id="ingredientList">
@@ -152,7 +152,7 @@
             </tr>
 
             <tr>
-                <td colspan="4">
+                <td>
                     <h4>Directions</h4>
                     <button type="button" id="addDirectionBtn">Add Direction</button>
                     <div id="directionList">
@@ -186,8 +186,20 @@
                     </div>
                 </td>
             </tr>
+            <tr><td><hr></td></tr>
             <tr>
-                <td colspan="4"><h3>Optional Fields</h3></td>
+                <td><h3>Optional Fields</h3></td>
+            </tr>
+            <tr>
+                <td><h4>Recipe Notes</h4></td>
+            </tr>
+            <tr>
+                <td>
+                    <textarea name="note.note" rows="2" cols="50" placeholder="Add any additional notes or tips about the recipe here..." maxlength="2500"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td><h4>Recipe Tags</h4></td>
             </tr>
             <tr>
                 <td>
