@@ -33,19 +33,15 @@
                 <td><h4>Recipe Info</h4></td>
             </tr>
             <tr>
-                <td>Recipe Name:</td>
-                <td><input type="text" th:field="*{name}" required/></td>
+                <td><label>Recipe Name: </label><input type="text" th:field="*{info.name}" placeholder="Recipe Name" maxlength="40" required/></td>
             </tr>
             <tr>
-                <td>Recipe Description:</td>
-                <td><textarea rows="3" cols="65" th:field="*{description}" placeholder="Not required, but encouraged."></textarea></td>
+                <td><label>Recipe Description: </label><textarea th:field="*{info.description}" placeholder="Recipe Description: Not required, but encouraged." maxlength="1000"></textarea></td>
             </tr>
             <tr>
-                <td>Makes:</td>
-                <td><input type="number" step="0.1" min="0.1" value="0.1" th:field="*{yield}" required/></td>
-                <td>Unit:</td>
-                <td>
-                    <select th:field="*{unitOfYield}" required>
+                <td><label>Makes: </label><input type="number" step="0.1" min="0.1" th:field="*{info.yield}" placeholder="Quantity recipe makes" required/></td>
+                <td><label>Unit</label>
+                    <select th:field="*{info.unitOfYield}" required>
                         <option value="">Select a Unit</option>
                         <!-- Specific Food Portions -->
                         <option value="Bowls">Bowls</option>
@@ -74,16 +70,12 @@
                 </td>
             </tr>
             <tr>
-                <td>Preparation Hours:</td>
-                <td><input type="number" step="1" min="0" value="0" th:field="*{prepHr}"></td>
-                <td>Preparation Minutes:</td>
-                <td><input type="number" step="1" min="0" max="59" value="0" th:field="*{prepMin}"></td>
+                <td><label>Preparation Hours: </label><input type="number" step="1" min="0" value="0" th:field="*{info.prepHr}"></td>
+                <td><label>Preparation Minutes: </label><input type="number" step="1" min="0" max="59" value="0" th:field="*{info.prepMin}"></td>
             </tr>
             <tr>
-                <td>Process Hours:</td>
-                <td><input type="number" step="1" min="0" value="0" th:field="*{processHr}"></td>
-                <td>Process Minutes:</td>
-                <td><input type="number" step="1" min="0" max="59" value="0" th:field="*{processMin}"></td>
+                <td><label>Process Hours: </label><input type="number" step="1" min="0" value="0" th:field="*{info.processHr}"></td>
+                <td><label>Process Minutes:</label><input type="number" step="1" min="0" max="59" value="0" th:field="*{info.processMin}"></td>
             </tr>
             <tr>
                 <td>
@@ -92,7 +84,7 @@
                     <div id="ingredientList">
                         <!-- The first ingredient entry is always present -->
                         <div class="ingredient-entry">
-                            <input type="text" name="ingredients[0].component" placeholder="Ingredient Name" required>
+                            <input type="text" name="ingredients[0].component" placeholder="Ingredient Name" maxlength="45" required>
                             <input type="number" min = "0" name="ingredients[0].wholeNumberQuantity" placeholder="Whole Number Quantity">
                             <select name="ingredients[0].fractionQuantity">
                                 <option value="0">Fractional Quantity (if needed)</option>
@@ -158,7 +150,7 @@
                     <div id="directionList">
                         <!-- The first direction entry is always present -->
                         <div class="direction-entry">
-                            <textarea name="directions[0].direction" rows="2" cols="50" placeholder="Step Description" required></textarea>
+                            <textarea name="directions[0].direction" placeholder="Step Description" maxlength="300" required></textarea>
                             <br>
                             <select name="directions[0].method">
                                 <option value="">Method</option>
@@ -195,7 +187,7 @@
             </tr>
             <tr>
                 <td>
-                    <textarea name="note.note" rows="2" cols="50" placeholder="Add any additional notes or tips about the recipe here..." maxlength="2500"></textarea>
+                    <textarea name="note.note" placeholder="Add any additional notes or tips about the recipe here..." maxlength="2500"></textarea>
                 </td>
             </tr>
             <tr>

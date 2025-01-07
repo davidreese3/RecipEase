@@ -2,10 +2,7 @@ package com.thesis.recipease.db.recipe;
 
 import com.thesis.recipease.model.recipe.*;
 import com.thesis.recipease.model.recipe.tag.RecipeTag;
-import com.thesis.recipease.model.web.recipe.WebDirection;
-import com.thesis.recipease.model.web.recipe.WebIngredient;
-import com.thesis.recipease.model.web.recipe.WebNote;
-import com.thesis.recipease.model.web.recipe.WebRecipe;
+import com.thesis.recipease.model.web.recipe.*;
 import com.thesis.recipease.model.web.recipe.tag.WebTag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -57,7 +54,7 @@ public class RecipeDaoImpl implements RecipeDao{
         TransactionStatus status = transactionManager.getTransaction(def);
         try {
             //insertInfo
-            recipeId = insertRecipeInfo(userId,webRecipe);
+            recipeId = insertRecipeInfo(userId,webRecipe.getInfo());
             insertRecipeIngredients(webRecipe.getIngredients(), recipeId);
             insertRecipeDirections(webRecipe.getDirections(), recipeId);
             insertNote(webRecipe.getNote(), recipeId);
@@ -80,23 +77,23 @@ public class RecipeDaoImpl implements RecipeDao{
     }
 
     // HELPER METHODS
-    private int insertRecipeInfo(int userId, WebRecipe webRecipe){
+    private int insertRecipeInfo(int userId, WebInfo webInfo){
         int recipeId;
         final String SQL = "insert into info (userid, name, description, yield, unitOfYield, prepMin, prepHr, processMin, processHr, totalMin, totalHr) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(dataSource -> {
             PreparedStatement ps = dataSource.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, userId);
-            ps.setString(2, webRecipe.getName());
-            ps.setString(3, webRecipe.getDescription());
-            ps.setDouble(4, webRecipe.getYield());
-            ps.setString(5, webRecipe.getUnitOfYield());
-            ps.setInt(6, webRecipe.getPrepMin());
-            ps.setInt(7, webRecipe.getPrepHr());
-            ps.setInt(8, webRecipe.getProcessMin());
-            ps.setInt(9, webRecipe.getProcessHr());
-            ps.setInt(10, webRecipe.getTotalMin());
-            ps.setInt(11, webRecipe.getTotalHr());
+            ps.setString(2, webInfo.getName());
+            ps.setString(3, webInfo.getDescription());
+            ps.setDouble(4, webInfo.getYield());
+            ps.setString(5, webInfo.getUnitOfYield());
+            ps.setInt(6, webInfo.getPrepMin());
+            ps.setInt(7, webInfo.getPrepHr());
+            ps.setInt(8, webInfo.getProcessMin());
+            ps.setInt(9, webInfo.getProcessHr());
+            ps.setInt(10, webInfo.getTotalMin());
+            ps.setInt(11, webInfo.getTotalHr());
             return ps;
         }, keyHolder);
         List<Map<String, Object>> keylist= keyHolder.getKeyList();

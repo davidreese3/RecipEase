@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
         directionTextarea.setAttribute('rows', '2');
         directionTextarea.setAttribute('cols', '50');
         directionTextarea.setAttribute('placeholder', 'Step Description');
+        directionTextarea.setAttribute('maxlength','300');
         directionTextarea.required = true;
 
         // Dropdown for method

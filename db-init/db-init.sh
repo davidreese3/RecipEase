@@ -65,7 +65,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
     -- ingredient
         create table if not exists ingredient (
             recipeId int references info(recipeId) on delete cascade,
-            component varchar(30),
+            component varchar(45),
             wholeNumberQuantity int,
             fractionQuantity varchar(4),
             measurement varchar(20), --change once prepop made
@@ -195,12 +195,12 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
     -- user substitutions
     create table if not exists userSubs (
         recipeId int references info(recipeId) on delete cascade,
-        originalComponent varchar(30),
+        originalComponent varchar(45),
         originalWholeNumberQuantity int,
         originalFractionQuantity varchar(4),
         originalMeasurement varchar(20), --change once prepop made
         originalPreparation varchar(20), --change once prepop made
-        substitutedComponent varchar(30),
+        substitutedComponent varchar(45),
         substitutedWholeNumberQuantity int,
         substitutedFractionQuantity varchar(4),
         substitutedMeasurement varchar(20), --change once prepop made
@@ -214,12 +214,12 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
 
     -- knownSubs
     create table if not exists knownSubs (
-        originalComponent varchar(30),
+        originalComponent varchar(45),
         originalWholeNumberQuantity int,
         originalFractionQuantity varchar(4),
         originalMeasurement varchar(20), --change once prepop made
         originalPreparation varchar(20), --change once prepop made
-        substitutedComponent varchar(30),
+        substitutedComponent varchar(45),
         substitutedWholeNumberQuantity int,
         substitutedFractionQuantity varchar(4),
         substitutedMeasurement varchar(20), --change once prepop made

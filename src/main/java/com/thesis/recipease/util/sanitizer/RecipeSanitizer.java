@@ -1,6 +1,7 @@
 package com.thesis.recipease.util.sanitizer;
 
 import com.thesis.recipease.model.web.recipe.WebDirection;
+import com.thesis.recipease.model.web.recipe.WebInfo;
 import com.thesis.recipease.model.web.recipe.WebIngredient;
 import com.thesis.recipease.model.web.recipe.WebRecipe;
 import com.thesis.recipease.model.web.recipe.tag.WebTag;
@@ -13,13 +14,15 @@ public class RecipeSanitizer {
     public WebRecipe sanitizeRecipe(WebRecipe webRecipe) {
         // == required fields
         //info
-        if (webRecipe.getPrepMin() == null) webRecipe.setPrepMin(0);
-        if (webRecipe.getPrepHr() == null) webRecipe.setPrepHr(0);
-        if (webRecipe.getProcessMin() == null) webRecipe.setProcessMin(0);
-        if (webRecipe.getProcessHr() == null) webRecipe.setProcessHr(0);
-        if (webRecipe.getYield() == null) webRecipe.setYield(1.0);
-        webRecipe.setTotalMin((webRecipe.getPrepMin() + webRecipe.getProcessMin()) % 60);
-        webRecipe.setTotalHr(webRecipe.getPrepHr() + webRecipe.getProcessHr() + ((webRecipe.getPrepMin() + webRecipe.getProcessMin()) / 60));
+        WebInfo webInfo = webRecipe.getInfo();
+        if (webInfo.getPrepMin() == null) webInfo.setPrepMin(0);
+        if (webInfo.getPrepHr() == null) webInfo.setPrepHr(0);
+        if (webInfo.getProcessMin() == null) webInfo.setProcessMin(0);
+        if (webInfo.getProcessHr() == null) webInfo.setProcessHr(0);
+        if (webInfo.getYield() == null) webInfo.setYield(1.0);
+        webInfo.setTotalMin((webInfo.getPrepMin() + webInfo.getProcessMin()) % 60);
+        webInfo.setTotalHr(webInfo.getPrepHr() + webInfo.getProcessHr() + ((webInfo.getPrepMin() + webInfo.getProcessMin()) / 60));
+        webRecipe.setInfo(webInfo);
 
         //ingredients
         List<WebIngredient> webIngredients = webRecipe.getIngredients();
@@ -41,8 +44,8 @@ public class RecipeSanitizer {
             }
         }
         webRecipe.setIngredients(webIngredients);
-        //directions
 
+        //directions
         List<WebDirection> webDirections = webRecipe.getDirections();
         Iterator<WebDirection> directionIterator = webDirections.iterator();
         WebDirection webDirection;
@@ -57,7 +60,7 @@ public class RecipeSanitizer {
         }
         webRecipe.setDirections(webDirections);
 
-        //process Tags
+        //tags
         webRecipe = setTags(webRecipe);
 
         return webRecipe;

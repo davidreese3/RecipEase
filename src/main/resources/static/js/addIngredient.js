@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
         componentInput.setAttribute('type', 'text');
         componentInput.setAttribute('name', `ingredients[${ingredientList.children.length}].component`);
         componentInput.setAttribute('placeholder', 'Ingredient Name');
+        componentInput.setAttribute('maxlength','45');
         componentInput.required = true;
 
         // Input for whole number quantity
