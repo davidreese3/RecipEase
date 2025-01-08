@@ -1,9 +1,9 @@
 package com.thesis.recipease.db.recipe;
 
 import com.thesis.recipease.model.recipe.*;
-import com.thesis.recipease.model.recipe.tag.RecipeTag;
+import com.thesis.recipease.model.recipe.RecipeTag;
 import com.thesis.recipease.model.web.recipe.*;
-import com.thesis.recipease.model.web.recipe.tag.WebTag;
+import com.thesis.recipease.model.web.recipe.WebTag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -58,6 +58,7 @@ public class RecipeDaoImpl implements RecipeDao{
             insertRecipeIngredients(webRecipe.getIngredients(), recipeId);
             insertRecipeDirections(webRecipe.getDirections(), recipeId);
             insertNote(webRecipe.getNote(), recipeId);
+            insertLinks(webRecipe.getLinks(), recipeId);
             insertTags(webRecipe.getHolidays(), recipeId, "holiday");
             insertTags(webRecipe.getMealTypes(), recipeId, "mealType");
             insertTags(webRecipe.getCuisines(), recipeId, "cuisine");
@@ -155,9 +156,20 @@ public class RecipeDaoImpl implements RecipeDao{
         }
     }
 
+    private void insertLinks(List<WebLink> webLinks, int recipeId){
+        final String SQL = "insert into link (recipeid, link) values (?, ?)";
+        for(WebLink webLink : webLinks){
+            jdbcTemplate.update(dataSource -> {
+                PreparedStatement ps = dataSource.prepareStatement(SQL);
+                ps.setInt(1, recipeId);
+                ps.setString(2, webLink.getLink());
+                return ps;
+            });
+        }
+    }
+
     private void insertTags(List<WebTag> webTags, int recipeId, String field){
         final String SQL = "insert into "+field+" (recipeid, "+field+") values (?, ?)";
-
         for(WebTag webTag : webTags){
             jdbcTemplate.update(dataSource -> {
                 PreparedStatement ps = dataSource.prepareStatement(SQL);
@@ -180,6 +192,7 @@ public class RecipeDaoImpl implements RecipeDao{
         LinkedHashMap<String, String> recipeTags = new LinkedHashMap<>();
 
         RecipeNote recipeNote = getNote(recipeId);
+        List<RecipeLink> recipeLinks = getLinks(recipeId);
 
         List<RecipeTag> recipeHolidays = getTags(recipeId, "holiday");
         recipeTags.put("Holiday", getTagString(recipeHolidays));
@@ -196,7 +209,7 @@ public class RecipeDaoImpl implements RecipeDao{
         List<RecipeTag> recipeCookingStyles = getTags(recipeId, "cookingStyle");
         recipeTags.put("Cooking Style", getTagString(recipeCookingStyles));
 
-        return new Recipe(recipeInfo, recipeIngredients, recipeDirections, recipeNote, recipeTags);
+        return new Recipe(recipeInfo, recipeIngredients, recipeDirections, recipeNote, recipeLinks, recipeTags);
     }
     //HELPER OPS
 
@@ -211,36 +224,45 @@ public class RecipeDaoImpl implements RecipeDao{
     }
 
     private List<RecipeIngredient> getRecipeIngredients(int recipeId){
-        final String ingredientSQL = "select * from ingredient where recipeid = ?";
+        final String SQL = "select * from ingredient where recipeid = ?";
         try {
-            return jdbcTemplate.query(ingredientSQL, new RecipeDaoImpl.RecipeIngredientMapper(), recipeId);
+            return jdbcTemplate.query(SQL, new RecipeDaoImpl.RecipeIngredientMapper(), recipeId);
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
     }
 
     private List<RecipeDirection> getRecipeDirections(int recipeId){
-        final String directionSQL = "select * from direction where recipeid = ?";
+        final String SQL = "select * from direction where recipeid = ?";
         try {
-            return jdbcTemplate.query(directionSQL, new RecipeDaoImpl.RecipeDirectionMapper(), recipeId);
+            return jdbcTemplate.query(SQL, new RecipeDaoImpl.RecipeDirectionMapper(), recipeId);
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
     }
 
     private RecipeNote getNote(int recipeId){
-        final String noteSQL = "select * from note where recipeid = ?";
+        final String SQL = "select * from note where recipeid = ?";
         try {
-            return jdbcTemplate.queryForObject(noteSQL, new RecipeDaoImpl.RecipeNoteMapper(), recipeId);
+            return jdbcTemplate.queryForObject(SQL, new RecipeDaoImpl.RecipeNoteMapper(), recipeId);
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
     }
 
-    private List<RecipeTag> getTags(int recipeId, String field){
-        final String tagSQL = "select * from "+field+" where recipeid = ?";
+    private List<RecipeLink> getLinks(int recipeId){
+        final String SQL = "select * from link where recipeid = ?";
         try{
-            return jdbcTemplate.query(tagSQL, new RecipeTagMapper(field), recipeId);
+            return jdbcTemplate.query(SQL, new RecipeDaoImpl.RecipeLinkMapper(), recipeId);
+        }catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
+    private List<RecipeTag> getTags(int recipeId, String field){
+        final String SQL = "select * from "+field+" where recipeid = ?";
+        try{
+            return jdbcTemplate.query(SQL, new RecipeTagMapper(field), recipeId);
         }catch (EmptyResultDataAccessException e) {
             return null;
         }
@@ -320,6 +342,16 @@ public class RecipeDaoImpl implements RecipeDao{
             recipeNote.setRecipeId(rs.getInt("recipeId"));
             recipeNote.setNote(rs.getString("note"));
             return recipeNote;
+        }
+    }
+
+    class RecipeLinkMapper implements RowMapper<RecipeLink> {
+        @Override
+        public RecipeLink mapRow(ResultSet rs, int rowNum) throws SQLException {
+            RecipeLink recipeLink = new RecipeLink();
+            recipeLink.setRecipeId(rs.getInt("recipeId"));
+            recipeLink.setLink(rs.getString("link"));
+            return recipeLink;
         }
     }
 }

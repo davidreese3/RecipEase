@@ -7,7 +7,8 @@
     <title>RecipEase Recipe Creation</title>
     <script src="/js/addIngredient.js" defer></script>
     <script src="/js/addDirection.js" defer></script>
-    <script src="/js/tags/addTags.js" defer></script>
+    <script src="/js/addLink.js" defer></script>
+    <script src="/js/addTags.js" defer></script>
 </head>
 
 <body>
@@ -182,6 +183,19 @@
             <tr>
                 <td>
                     <textarea name="note.note" placeholder="Add any additional notes or tips about the recipe here..." maxlength="2500"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td><h4>Recipe Links</h4></td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="button" id="addLinkBtn">Add Link</button>
+                    <div id="linkList">
+                        <div id="link-entry">
+                            <input type="text" th:field =*{links[0].link} placeholder="Link" maxlength="125"/>
+                        </div>
+                    </div>
                 </td>
             </tr>
             <tr>

@@ -1,4 +1,4 @@
-package com.thesis.recipease.model.web.recipe.tag;
+package com.thesis.recipease.model.web.recipe;
 
 public class WebTag {
     String field;

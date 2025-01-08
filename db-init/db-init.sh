@@ -177,7 +177,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
     create table if not exists link (
         recipeId int references info(recipeId) on delete cascade,
         link varchar(125),
-        primary key (recipeId)
+        primary key (recipeId, link)
     );
 
 

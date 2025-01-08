@@ -4,7 +4,6 @@ import com.thesis.recipease.db.AppService;
 import com.thesis.recipease.model.GlossaryEntry;
 import com.thesis.recipease.model.SubstitutionEntry;
 import com.thesis.recipease.model.recipe.Recipe;
-import com.thesis.recipease.model.recipe.tag.RecipeTag;
 import com.thesis.recipease.model.web.recipe.WebRecipe;
 import com.thesis.recipease.util.normalizer.RecipeNormalizer;
 import com.thesis.recipease.util.normalizer.SubstitutionNormalizer;
@@ -74,6 +73,7 @@ public class RecipeController {
         model.addAttribute("authorName", authorName);
         model.addAttribute("profileLink", "http://localhost:8080/profile/view?id=" + userId);
 
+        System.out.println("[[" + recipe.getRecipeLink().size() + "]]");
 
         return "recipe/viewRecipe";
     }

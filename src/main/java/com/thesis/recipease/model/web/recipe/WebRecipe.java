@@ -1,7 +1,5 @@
 package com.thesis.recipease.model.web.recipe;
 
-import com.thesis.recipease.model.web.recipe.tag.*;
-
 import java.util.List;
 
 public class WebRecipe {
@@ -16,10 +14,11 @@ public class WebRecipe {
     private List<WebTag> dietTypes;
     private List<WebTag> cookingLevels;
     private List<WebTag> cookingStyles;
+    private List<WebLink> links;
 
     public WebRecipe(){}
 
-    public WebRecipe(WebInfo info, List<WebIngredient> ingredients, List<WebDirection> directions, WebNote note, List<WebTag> holidays, List<WebTag> mealTypes, List<WebTag> cuisines, List<WebTag> allergens, List<WebTag> dietTypes, List<WebTag> cookingLevels, List<WebTag> cookingStyles) {
+    public WebRecipe(WebInfo info, List<WebIngredient> ingredients, List<WebDirection> directions, WebNote note, List<WebTag> holidays, List<WebTag> mealTypes, List<WebTag> cuisines, List<WebTag> allergens, List<WebTag> dietTypes, List<WebTag> cookingLevels, List<WebTag> cookingStyles, List<WebLink> links) {
         this.info = info;
         this.ingredients = ingredients;
         this.directions = directions;
@@ -31,6 +30,7 @@ public class WebRecipe {
         this.dietTypes = dietTypes;
         this.cookingLevels = cookingLevels;
         this.cookingStyles = cookingStyles;
+        this.links = links;
     }
 
     public WebInfo getInfo() {
@@ -119,5 +119,13 @@ public class WebRecipe {
 
     public void setCookingStyles(List<WebTag> cookingStyles) {
         this.cookingStyles = cookingStyles;
+    }
+
+    public List<WebLink> getLinks() {
+        return links;
+    }
+
+    public void setLinks(List<WebLink> links) {
+        this.links = links;
     }
 }

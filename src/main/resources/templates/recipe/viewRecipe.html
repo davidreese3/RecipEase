@@ -148,6 +148,13 @@
         <h3>Notes</h3>
         <span th:text="${recipe.recipeNote.note}"></span>
     </div>
+    <div th:if="${recipe.recipeLink.size != 0}">
+        <h3>Links</h3>
+        <p>Links below are added by users to external sites</p>
+        <li th:each="link : ${recipe.recipeLink}">
+            <a th:href="${link.link}" th:text="${link.link}"></a>
+        </li>
+    </div>
     <div th:if="${tagsExist}">
         <h3>Recipe Tags</h3>
         <ul>

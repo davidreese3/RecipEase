@@ -1,10 +1,6 @@
 package com.thesis.recipease.util.sanitizer;
 
-import com.thesis.recipease.model.web.recipe.WebDirection;
-import com.thesis.recipease.model.web.recipe.WebInfo;
-import com.thesis.recipease.model.web.recipe.WebIngredient;
-import com.thesis.recipease.model.web.recipe.WebRecipe;
-import com.thesis.recipease.model.web.recipe.tag.WebTag;
+import com.thesis.recipease.model.web.recipe.*;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -59,6 +55,19 @@ public class RecipeSanitizer {
             }
         }
         webRecipe.setDirections(webDirections);
+
+        //SANITIZE LINKS
+
+        List<WebLink> webLinks = webRecipe.getLinks();
+        Iterator<WebLink> linkIterator = webLinks.iterator();
+        WebLink webLink;
+        while(linkIterator.hasNext()){
+            webLink = linkIterator.next();
+            if(webLink.getLink() == null || webLink.getLink().trim().equals("")){
+                linkIterator.remove();
+            }
+        }
+        webRecipe.setLinks(webLinks);
 
         //tags
         webRecipe = setTags(webRecipe);
