@@ -7,6 +7,8 @@ public class WebRecipe {
     private List<WebIngredient> ingredients;
     private List<WebDirection> directions;
     private WebNote note;
+    private List<WebLink> links;
+    private List<WebUserSubstitutionEntry> userSubstitutionEntries;
     private List<WebTag> holidays;
     private List<WebTag> mealTypes;
     private List<WebTag> cuisines;
@@ -14,15 +16,16 @@ public class WebRecipe {
     private List<WebTag> dietTypes;
     private List<WebTag> cookingLevels;
     private List<WebTag> cookingStyles;
-    private List<WebLink> links;
 
     public WebRecipe(){}
 
-    public WebRecipe(WebInfo info, List<WebIngredient> ingredients, List<WebDirection> directions, WebNote note, List<WebTag> holidays, List<WebTag> mealTypes, List<WebTag> cuisines, List<WebTag> allergens, List<WebTag> dietTypes, List<WebTag> cookingLevels, List<WebTag> cookingStyles, List<WebLink> links) {
+    public WebRecipe(WebInfo info, List<WebIngredient> ingredients, List<WebDirection> directions, WebNote note, List<WebLink> links, List<WebUserSubstitutionEntry> userSubstitutionEntries, List<WebTag> holidays, List<WebTag> mealTypes, List<WebTag> cuisines, List<WebTag> allergens, List<WebTag> dietTypes, List<WebTag> cookingLevels, List<WebTag> cookingStyles) {
         this.info = info;
         this.ingredients = ingredients;
         this.directions = directions;
         this.note = note;
+        this.links = links;
+        this.userSubstitutionEntries = userSubstitutionEntries;
         this.holidays = holidays;
         this.mealTypes = mealTypes;
         this.cuisines = cuisines;
@@ -30,7 +33,6 @@ public class WebRecipe {
         this.dietTypes = dietTypes;
         this.cookingLevels = cookingLevels;
         this.cookingStyles = cookingStyles;
-        this.links = links;
     }
 
     public WebInfo getInfo() {
@@ -63,6 +65,22 @@ public class WebRecipe {
 
     public void setNote(WebNote note) {
         this.note = note;
+    }
+
+    public List<WebLink> getLinks() {
+        return links;
+    }
+
+    public void setLinks(List<WebLink> links) {
+        this.links = links;
+    }
+
+    public List<WebUserSubstitutionEntry> getUserSubstitutionEntries() {
+        return userSubstitutionEntries;
+    }
+
+    public void setUserSubstitutionEntries(List<WebUserSubstitutionEntry> userSubstitutionEntries) {
+        this.userSubstitutionEntries = userSubstitutionEntries;
     }
 
     public List<WebTag> getHolidays() {
@@ -121,11 +139,5 @@ public class WebRecipe {
         this.cookingStyles = cookingStyles;
     }
 
-    public List<WebLink> getLinks() {
-        return links;
-    }
 
-    public void setLinks(List<WebLink> links) {
-        this.links = links;
-    }
 }

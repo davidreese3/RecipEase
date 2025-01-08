@@ -21,7 +21,7 @@ public class SubstitutionController {
     @RequestMapping(value = "/substitution/view" , method = RequestMethod.GET)
     public String displayKnownSubstitition(Model model){
         List<SubstitutionEntry> substitutions = appService.getAllSubstitutionEntries();
-        substitutions = substitutionNormalizer.normalize(substitutions);
+        substitutions = substitutionNormalizer.normalizeSubs(substitutions);
         model.addAttribute("substitutions",substitutions);
         return "substitution/knownSubstitutions";
     }

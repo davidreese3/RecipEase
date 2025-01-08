@@ -30,13 +30,14 @@ public class RecipeSanitizer {
 
             if (isIngredientNull(webIngredient)) {
                 ingredientIterator.remove();
-                break;
             }
-            if(webIngredient.getWholeNumberQuantity() == null) {
-                webIngredient.setWholeNumberQuantity(0);
-            }
-            if(isIngredientZero(webIngredient)){
-                ingredientIterator.remove();
+            else {
+                if (webIngredient.getWholeNumberQuantity() == null) {
+                    webIngredient.setWholeNumberQuantity(0);
+                }
+                if (isIngredientZero(webIngredient)) {
+                    ingredientIterator.remove();
+                }
             }
         }
         webRecipe.setIngredients(webIngredients);
@@ -59,15 +60,50 @@ public class RecipeSanitizer {
         //SANITIZE LINKS
 
         List<WebLink> webLinks = webRecipe.getLinks();
-        Iterator<WebLink> linkIterator = webLinks.iterator();
-        WebLink webLink;
-        while(linkIterator.hasNext()){
-            webLink = linkIterator.next();
-            if(webLink.getLink() == null || webLink.getLink().trim().equals("")){
-                linkIterator.remove();
+        if (webLinks != null){
+            Iterator<WebLink> linkIterator = webLinks.iterator();
+            WebLink webLink;
+            while(linkIterator.hasNext()){
+                webLink = linkIterator.next();
+                if(webLink.getLink() == null || webLink.getLink().trim().equals("")){
+                    linkIterator.remove();
+                }
             }
         }
         webRecipe.setLinks(webLinks);
+
+
+        List<WebUserSubstitutionEntry> webUserSubstitutionEntries = webRecipe.getUserSubstitutionEntries();
+        if(webUserSubstitutionEntries != null) {
+            Iterator<WebUserSubstitutionEntry> userSubstitutionEntryIterator = webUserSubstitutionEntries.iterator();
+            WebUserSubstitutionEntry webUserSubstitutionEntry;
+            while (userSubstitutionEntryIterator.hasNext()) {
+                System.out.println("??? INSIDE WHILE LOOP");
+                webUserSubstitutionEntry = userSubstitutionEntryIterator.next();
+                System.out.println("||TO STRING: "+ webUserSubstitutionEntry.toString());
+                System.out.println("{{ " + webUserSubstitutionEntry.getSubstitutedWholeNumberQuantity());
+                if (isUserSubNull(webUserSubstitutionEntry)) {
+                    System.out.println("WHOLE THING NULL");
+                    userSubstitutionEntryIterator.remove();
+                }
+                else {
+                    if (webUserSubstitutionEntry.getOriginalWholeNumberQuantity() == null) {
+                        webUserSubstitutionEntry.setOriginalWholeNumberQuantity(0);
+                    }
+                    if (webUserSubstitutionEntry.getSubstitutedWholeNumberQuantity() == null) {
+                        System.out.println("SUB WHOLE IS NULL {{}}");
+                        webUserSubstitutionEntry.setSubstitutedWholeNumberQuantity(0);
+                    } else {
+                        System.out.println("SUB WHOLE IS NOT NULL {{}}" + webUserSubstitutionEntry.getSubstitutedWholeNumberQuantity());
+
+                    }
+                    if (isUserSubZero(webUserSubstitutionEntry)) {
+                        userSubstitutionEntryIterator.remove();
+                    }
+                }
+            }
+            webRecipe.setUserSubstitutionEntries(webUserSubstitutionEntries);
+        }
 
         //tags
         webRecipe = setTags(webRecipe);
@@ -108,27 +144,61 @@ public class RecipeSanitizer {
         return sortedTags;
     }
 
+    public static boolean isUserSubNull(WebUserSubstitutionEntry webUserSubstitutionEntry){
+        return webUserSubstitutionEntry.getOriginalComponent() == null &&
+                webUserSubstitutionEntry.getOriginalWholeNumberQuantity() == null &&
+                webUserSubstitutionEntry.getOriginalFractionQuantity() == null &&
+                webUserSubstitutionEntry.getOriginalMeasurement() == null &&
+                webUserSubstitutionEntry.getOriginalPreparation() == null &&
+                webUserSubstitutionEntry.getSubstitutedComponent() == null &&
+                webUserSubstitutionEntry.getSubstitutedWholeNumberQuantity() == null &&
+                webUserSubstitutionEntry.getSubstitutedFractionQuantity() == null &&
+                webUserSubstitutionEntry.getSubstitutedMeasurement() == null &&
+                webUserSubstitutionEntry.getSubstitutedPreparation() == null;
+    }
+
+    public static boolean isUserSubZero(WebUserSubstitutionEntry webUserSubstitutionEntry){
+        return webUserSubstitutionEntry.getOriginalWholeNumberQuantity() == 0 &&
+                webUserSubstitutionEntry.getOriginalFractionQuantity().equals("0") &&
+                webUserSubstitutionEntry.getSubstitutedWholeNumberQuantity() == 0 &&
+                webUserSubstitutionEntry.getSubstitutedFractionQuantity().equals("0");
+    }
+
     public static WebRecipe setTags(WebRecipe webRecipe){
         List<WebTag> holidays = webRecipe.getHolidays();
-        webRecipe.setHolidays(processTag(holidays));
+        if(holidays != null) {
+            webRecipe.setHolidays(processTag(holidays));
+        }
 
         List<WebTag> mealTypes = webRecipe.getMealTypes();
-        webRecipe.setMealTypes(processTag(mealTypes));
+        if(mealTypes != null) {
+            webRecipe.setMealTypes(processTag(mealTypes));
+        }
 
         List<WebTag> cuisines = webRecipe.getCuisines();
-        webRecipe.setCuisines(processTag(cuisines));
+        if(cuisines != null) {
+            webRecipe.setCuisines(processTag(cuisines));
+        }
 
         List<WebTag> allergens = webRecipe.getAllergens();
-        webRecipe.setAllergens(processTag(allergens));
+        if(allergens != null) {
+            webRecipe.setAllergens(processTag(allergens));
+        }
 
-        List<WebTag> dietType = webRecipe.getDietTypes();
-        webRecipe.setDietTypes(processTag(dietType));
+        List<WebTag> dietTypes = webRecipe.getDietTypes();
+        if(dietTypes != null) {
+            webRecipe.setDietTypes(processTag(dietTypes));
+        }
 
         List<WebTag> cookingLevels = webRecipe.getCookingLevels();
-        webRecipe.setCookingLevels(processTag(cookingLevels));
+        if(cookingLevels != null) {
+            webRecipe.setCookingLevels(processTag(cookingLevels));
+        }
 
         List<WebTag> cookingStyles = webRecipe.getCookingStyles();
-        webRecipe.setCookingStyles(processTag(cookingStyles));
+        if(cookingStyles != null) {
+            webRecipe.setCookingStyles(processTag(cookingStyles));
+        }
         return webRecipe;
     }
 

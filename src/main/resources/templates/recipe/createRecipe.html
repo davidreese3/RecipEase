@@ -8,6 +8,7 @@
     <script src="/js/addIngredient.js" defer></script>
     <script src="/js/addDirection.js" defer></script>
     <script src="/js/addLink.js" defer></script>
+    <script src="/js/addUserSubstitutionEntry.js" defer></script>
     <script src="/js/addTags.js" defer></script>
 </head>
 
@@ -193,7 +194,127 @@
                     <button type="button" id="addLinkBtn">Add Link</button>
                     <div id="linkList">
                         <div id="link-entry">
-                            <input type="text" th:field =*{links[0].link} placeholder="Link" maxlength="125"/>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td><h4>User Substitutions</h4></td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="button" id="addUserSubBtn">Add Substitution</button>
+                    <div id="userSubList">
+                        <div id="userSub-entry">
+<!--                            <input type="text" name="userSubstitutionEntries[0].originalComponent" placeholder="Original Ingredient Name" maxlength="45" required>-->
+<!--                            <input type="number" min = "0" name="userSubstitutionEntries[0].originalWholeNumberQuantity" placeholder="Original Whole Number Quantity">-->
+<!--                            <select name="userSubstitutionEntries[0].originalFractionQuantity">-->
+<!--                                <option value="0">Original Fractional Quantity (if needed)</option>-->
+<!--                                <option value="0">No fraction</option>-->
+<!--                                <option value="1/8">1/8</option>-->
+<!--                                <option value="1/4">1/4</option>-->
+<!--                                <option value="3/8">3/8</option>-->
+<!--                                <option value="1/3">1/3</option>-->
+<!--                                <option value="1/2">1/2</option>-->
+<!--                                <option value="5/8">5/8</option>-->
+<!--                                <option value="2/3">2/3</option>-->
+<!--                                <option value="3/4">3/4</option>-->
+<!--                            </select>-->
+<!--                            <select name="userSubstitutionEntries[0].originalMeasurement" required>-->
+<!--                                <option value="">Original Measurement</option>-->
+<!--                                <option value="Cups">Cups</option>-->
+<!--                                <option value="Dashes">Dashes</option>-->
+<!--                                <option value="Fluid Ounces">Fluid Ounces (fl oz)</option>-->
+<!--                                <option value="Grams">Grams (g)</option>-->
+<!--                                <option value="Kilograms">Kilograms (kg)</option>-->
+<!--                                <option value="Liters">Liters (L)</option>-->
+<!--                                <option value="Milliliters">Milliliters (ml)</option>-->
+<!--                                <option value="Ounces">Ounces (oz)</option>-->
+<!--                                <option value="Pinches">Pinches</option>-->
+<!--                                <option value="Pounds">Pounds (lb)</option>-->
+<!--                                <option value="Tablespoons">Tablespoons (tbsp)</option>-->
+<!--                                <option value="Teaspoons">Teaspoons (tsp)</option>-->
+<!--                                <option value="Whole">Whole Ingredient</option>-->
+<!--                            </select>-->
+<!--                            <select name="userSubstitutionEntries[0].originalPreparation" required>-->
+<!--                                <option value="">Original Preparation</option>-->
+<!--                                <option value="Beaten">Beaten</option>-->
+<!--                                <option value="Boiled">Boiled</option>-->
+<!--                                <option value="Chopped">Chopped</option>-->
+<!--                                <option value="Crushed">Crushed</option>-->
+<!--                                <option value="Cubed">Cubed</option>-->
+<!--                                <option value="Diced">Diced</option>-->
+<!--                                <option value="Grated">Grated</option>-->
+<!--                                <option value="Ground">Ground</option>-->
+<!--                                <option value="Julienned">Julienned</option>-->
+<!--                                <option value="Mashed">Mashed</option>-->
+<!--                                <option value="Melted">Melted</option>-->
+<!--                                <option value="Minced">Minced</option>-->
+<!--                                <option value="Peeled">Peeled</option>-->
+<!--                                <option value="Roasted">Roasted</option>-->
+<!--                                <option value="Shaken">Shaken</option>-->
+<!--                                <option value="Sliced">Sliced</option>-->
+<!--                                <option value="Stirred">Stirred</option>-->
+<!--                                <option value="Toasted">Toasted</option>-->
+<!--                                <option value="Unprepared">Unprepared</option>-->
+<!--                                <option value="Whisked">Whisked</option>-->
+<!--                                <option value="Zested">Zested</option>-->
+<!--                            </select>-->
+<!--                            <br>-->
+<!--                            <input type="text" name="userSubstitutionEntries[0].substitutedComponent" placeholder="Substituted Ingredient Name" maxlength="45" required>-->
+<!--                            <input type="number" min = "0" name="userSubstitutionEntries[0].substitutedWholeNumberQuantity" placeholder="Substituted Whole Number Quantity">-->
+<!--                            <select name="userSubstitutionEntries[0].substitutedFractionQuantity">-->
+<!--                                <option value="0">Substituted Fractional Quantity (if needed)</option>-->
+<!--                                <option value="0">No fraction</option>-->
+<!--                                <option value="1/8">1/8</option>-->
+<!--                                <option value="1/4">1/4</option>-->
+<!--                                <option value="3/8">3/8</option>-->
+<!--                                <option value="1/3">1/3</option>-->
+<!--                                <option value="1/2">1/2</option>-->
+<!--                                <option value="5/8">5/8</option>-->
+<!--                                <option value="2/3">2/3</option>-->
+<!--                                <option value="3/4">3/4</option>-->
+<!--                            </select>-->
+<!--                            <select name="userSubstitutionEntries[0].substitutedMeasurement" required>-->
+<!--                                <option value="">Substituted Measurement</option>-->
+<!--                                <option value="Cups">Cups</option>-->
+<!--                                <option value="Dashes">Dashes</option>-->
+<!--                                <option value="Fluid Ounces">Fluid Ounces (fl oz)</option>-->
+<!--                                <option value="Grams">Grams (g)</option>-->
+<!--                                <option value="Kilograms">Kilograms (kg)</option>-->
+<!--                                <option value="Liters">Liters (L)</option>-->
+<!--                                <option value="Milliliters">Milliliters (ml)</option>-->
+<!--                                <option value="Ounces">Ounces (oz)</option>-->
+<!--                                <option value="Pinches">Pinches</option>-->
+<!--                                <option value="Pounds">Pounds (lb)</option>-->
+<!--                                <option value="Tablespoons">Tablespoons (tbsp)</option>-->
+<!--                                <option value="Teaspoons">Teaspoons (tsp)</option>-->
+<!--                                <option value="Whole">Whole Ingredient</option>-->
+<!--                            </select>-->
+<!--                            <select name="userSubstitutionEntries[0].substitutedPreparation" required>-->
+<!--                                <option value="">Substituted Preparation</option>-->
+<!--                                <option value="Beaten">Beaten</option>-->
+<!--                                <option value="Boiled">Boiled</option>-->
+<!--                                <option value="Chopped">Chopped</option>-->
+<!--                                <option value="Crushed">Crushed</option>-->
+<!--                                <option value="Cubed">Cubed</option>-->
+<!--                                <option value="Diced">Diced</option>-->
+<!--                                <option value="Grated">Grated</option>-->
+<!--                                <option value="Ground">Ground</option>-->
+<!--                                <option value="Julienned">Julienned</option>-->
+<!--                                <option value="Mashed">Mashed</option>-->
+<!--                                <option value="Melted">Melted</option>-->
+<!--                                <option value="Minced">Minced</option>-->
+<!--                                <option value="Peeled">Peeled</option>-->
+<!--                                <option value="Roasted">Roasted</option>-->
+<!--                                <option value="Shaken">Shaken</option>-->
+<!--                                <option value="Sliced">Sliced</option>-->
+<!--                                <option value="Stirred">Stirred</option>-->
+<!--                                <option value="Toasted">Toasted</option>-->
+<!--                                <option value="Unprepared">Unprepared</option>-->
+<!--                                <option value="Whisked">Whisked</option>-->
+<!--                                <option value="Zested">Zested</option>-->
+<!--                            </select>-->
                         </div>
                     </div>
                 </td>
@@ -206,25 +327,6 @@
                     <button type="button" id="addHolidayBtn">Add Holiday</button>
                     <div id="holidayList">
                         <div class="holiday-entry">
-                            <select name="holidays[0].field">
-                                <option value="">Holiday</option>
-                                <option value="Christmas">Christmas</option>
-                                <option value="Diwali">Diwali</option>
-                                <option value="Easter">Easter</option>
-                                <option value="Father’s Day">Father’s Day</option>
-                                <option value="Halloween">Halloween</option>
-                                <option value="Hanukkah">Hanukkah</option>
-                                <option value="Independence Day">Independence Day</option>
-                                <option value="Kwanzaa">Kwanzaa</option>
-                                <option value="Lunar New Year">Lunar New Year</option>
-                                <option value="Mother’s Day">Mother’s Day</option>
-                                <option value="New Year’s Day">New Year’s Day</option>
-                                <option value="Ramadan">Ramadan</option>
-                                <option value="St. Patrick’s Day">St. Patrick’s Day</option>
-                                <option value="Thanksgiving">Thanksgiving</option>
-                                <option value="Valentine’s Day">Valentine’s Day</option>
-                                <option value="Other">Other</option>
-                            </select>
                         </div>
                     </div>
                 </td>
@@ -234,17 +336,6 @@
                     <button type="button" id="addMealTypeBtn">Add Meal Type</button>
                     <div id="mealTypeList">
                         <div class="meal-type-entry">
-                            <select name="mealTypes[0].field">
-                                <option value="">Meal type</option>
-                                <option value="Appetizer">Appetizer</option>
-                                <option value="Breakfast">Breakfast</option>
-                                <option value="Brunch">Brunch</option>
-                                <option value="Dessert">Dessert</option>
-                                <option value="Dinner">Dinner</option>
-                                <option value="Lunch">Lunch</option>
-                                <option value="Snack">Snack</option>
-                                <option value="Other">Other</option>
-                            </select>
                         </div>
                     </div>
                 </td>
@@ -254,25 +345,6 @@
                     <button type="button" id="addCuisineBtn">Add Cuisine</button>
                     <div id="cuisineList">
                         <div class="cuisine-entry">
-                            <select name="cuisines[0].field">
-                                <option value="">Select a cuisine</option>
-                                <option value="African">African</option>
-                                <option value="American">American</option>
-                                <option value="Caribbean">Caribbean</option>
-                                <option value="Chinese">Chinese</option>
-                                <option value="French">French</option>
-                                <option value="Greek">Greek</option>
-                                <option value="Indian">Indian</option>
-                                <option value="Italian">Italian</option>
-                                <option value="Japanese">Japanese</option>
-                                <option value="Mediterranean">Mediterranean</option>
-                                <option value="Mexican">Mexican</option>
-                                <option value="Middle Eastern">Middle Eastern</option>
-                                <option value="Spanish">Spanish</option>
-                                <option value="Thai">Thai</option>
-                                <option value="Vietnamese">Vietnamese</option>
-                                <option value="Other">Other</option>
-                            </select>
                         </div>
                     </div>
                 </td>
@@ -282,19 +354,6 @@
                     <button type="button" id="addAllergenBtn">Add Allergen</button>
                     <div id="allergenList">
                         <div class="allergen-entry">
-                            <select name="allergens[0].field">
-                                <option value="">Select an allergy</option>
-                                <option value="Dairy-Free">Dairy-Free</option>
-                                <option value="Egg-Free">Egg-Free</option>
-                                <option value="Fish-Free">Fish-Free</option>
-                                <option value="Gluten-Free">Gluten-Free</option>
-                                <option value="Peanut-Free">Peanut-Free</option>
-                                <option value="Sesame-Free">Sesame-Free</option>
-                                <option value="Shellfish-Free">Shellfish-Free</option>
-                                <option value="Soy-Free">Soy-Free</option>
-                                <option value="Tree Nut-Free">Tree Nut-Free</option>
-                                <option value="Other">Other</option>
-                            </select>
                         </div>
                     </div>
                 </td>
@@ -304,17 +363,6 @@
                     <button type="button" id="addDietTypeBtn">Add Diet Type</button>
                     <div id="dietTypeList">
                         <div class="diet-type-entry">
-                            <select name="dietTypes[0].field">
-                                <option value="">Select a diet type</option>
-                                <option value="Keto">Keto</option>
-                                <option value="Low-Carb">Low-Carb</option>
-                                <option value="Low-Fat">Low-Fat</option>
-                                <option value="Paleo">Paleo</option>
-                                <option value="Pescatarian">Pescatarian</option>
-                                <option value="Vegetarian">Vegetarian</option>
-                                <option value="Vegan">Vegan</option>
-                                <option value="Other">Other</option>
-                            </select>
                         </div>
                     </div>
                 </td>
@@ -324,16 +372,6 @@
                     <button type="button" id="addCookingLevelBtn">Add Cooking Level</button>
                     <div id="cookingLevelList">
                         <div class="cooking-level-entry">
-                            <select name="cookingLevels[0].field">
-                                <option value="">Select a cooking level</option>
-                                <option value="Novice">Novice</option>
-                                <option value="Beginner">Beginner</option>
-                                <option value="Intermediate">Intermediate</option>
-                                <option value="Advanced">Advanced</option>
-                                <option value="Expert">Expert</option>
-                                <option value="Chef-Level">Chef-Level</option>
-                                <option value="Other">Other</option>
-                            </select>
                         </div>
                     </div>
                 </td>
@@ -343,26 +381,6 @@
                     <button type="button" id="addCookingStyleBtn">Add Cooking Style</button>
                     <div id="cookingStyleList">
                         <div class="cooking-style-entry">
-                            <select name="cookingStyles[0].field">
-                                <option value="">Select a cooking style</option>
-                                <option value="30-Minute Meals">30-Minute Meals</option>
-                                <option value="Air Fryer Recipes">Air Fryer Recipes</option>
-                                <option value="Baking">Baking</option>
-                                <option value="Comfort Food">Comfort Food</option>
-                                <option value="Freezer-Friendly">Freezer-Friendly</option>
-                                <option value="Grilled Recipes">Grilled Recipes</option>
-                                <option value="Healthy">Healthy</option>
-                                <option value="Kid-Friendly">Kid-Friendly</option>
-                                <option value="Make-Ahead Recipes">Make-Ahead Recipes</option>
-                                <option value="Meal Prep Friendly">Meal Prep Friendly</option>
-                                <option value="No-Bake Recipes">No-Bake Recipes</option>
-                                <option value="One-Pot Recipes">One-Pot Recipes</option>
-                                <option value="Party Food">Party Food</option>
-                                <option value="Quick & Easy">Quick & Easy</option>
-                                <option value="Sheet Pan Meals">Sheet Pan Meals</option>
-                                <option value="Slow Cooker Recipes">Slow Cooker Recipes</option>
-                                <option value="Other">Other</option>
-                            </select>
                         </div>
                     </div>
                 </td>

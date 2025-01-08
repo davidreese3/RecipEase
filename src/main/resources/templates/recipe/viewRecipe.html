@@ -148,12 +148,48 @@
         <h3>Notes</h3>
         <span th:text="${recipe.recipeNote.note}"></span>
     </div>
-    <div th:if="${recipe.recipeLink.size != 0}">
+    <div th:if="${recipe.recipeLinks.size != 0}">
         <h3>Links</h3>
         <p>Links below are added by users to external sites</p>
-        <li th:each="link : ${recipe.recipeLink}">
+        <li th:each="link : ${recipe.recipeLinks}">
             <a th:href="${link.link}" th:text="${link.link}"></a>
         </li>
+    </div>
+    <div th:if="${recipe.userSubstitutionEntries != null}">
+        <h3>User Substitutions</h3>
+        <table>
+            <thead>
+            <tr>
+                <th>Original</th>
+                <th>Amount and Preparation</th>
+                <th>Substituted</th>
+                <th>Amount and Preparation</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr th:each="userSub : ${recipe.userSubstitutionEntries}">
+
+                    <td th:text="${userSub.originalComponent}"></td>
+                    <td>
+                        <span th:text="
+                            ${userSub.originalWholeNumberQuantity != 0 ? userSub.originalWholeNumberQuantity + ' ' : ''} +
+                            ${userSub.originalFractionQuantity != '0' ? userSub.originalFractionQuantity + ' ' : ''} +
+                            ${userSub.originalMeasurement} + ' ' +
+                            ${userSub.originalPreparation != null ? userSub.originalPreparation : ''}
+                        "></span>
+                    </td>
+                    <td th:text="${userSub.substitutedComponent}"></td>
+                    <td>
+                        <span th:text="
+                            ${userSub.substitutedWholeNumberQuantity != 0 ? userSub.substitutedWholeNumberQuantity + ' ' : ''} +
+                            ${userSub.substitutedFractionQuantity != '0' ? userSub.substitutedFractionQuantity + ' ' : ''} +
+                            ${userSub.substitutedMeasurement} + ' ' +
+                            ${userSub.substitutedPreparation != null ? userSub.substitutedPreparation : ''}
+                        "></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
     <div th:if="${tagsExist}">
         <h3>Recipe Tags</h3>

@@ -4,7 +4,9 @@ import com.thesis.recipease.db.AppService;
 import com.thesis.recipease.model.GlossaryEntry;
 import com.thesis.recipease.model.SubstitutionEntry;
 import com.thesis.recipease.model.recipe.Recipe;
+import com.thesis.recipease.model.recipe.RecipeUserSubstitutionEntry;
 import com.thesis.recipease.model.web.recipe.WebRecipe;
+import com.thesis.recipease.model.web.recipe.WebUserSubstitutionEntry;
 import com.thesis.recipease.util.normalizer.RecipeNormalizer;
 import com.thesis.recipease.util.normalizer.SubstitutionNormalizer;
 import com.thesis.recipease.util.processer.PrepopulatedEntryProcessor;
@@ -65,15 +67,17 @@ public class RecipeController {
         model.addAttribute("glossaryList", glossaryList);
 
         List<SubstitutionEntry> substitutionList = prepopulatedEntryProcessor.ProcessSubstitutionEntries(recipe);
-        substitutionList = substitutionNormalizer.normalize(substitutionList);
+        substitutionList = substitutionNormalizer.normalizeSubs(substitutionList);
         model.addAttribute("substitutionList", substitutionList);
+
+        List<RecipeUserSubstitutionEntry> userSubs = recipe.getUserSubstitutionEntries();
+        userSubs = substitutionNormalizer.normalizeUserSubs(userSubs);
+        recipe.setUserSubstitutionEntries(userSubs);
 
         int userId = recipe.getRecipeInfo().getUserId();
         String authorName = appService.getNameById(userId);
         model.addAttribute("authorName", authorName);
         model.addAttribute("profileLink", "http://localhost:8080/profile/view?id=" + userId);
-
-        System.out.println("[[" + recipe.getRecipeLink().size() + "]]");
 
         return "recipe/viewRecipe";
     }

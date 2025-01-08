@@ -1,14 +1,33 @@
 package com.thesis.recipease.util.normalizer;
 
 import com.thesis.recipease.model.SubstitutionEntry;
+import com.thesis.recipease.model.recipe.RecipeUserSubstitutionEntry;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class SubstitutionNormalizer {
-    public List<SubstitutionEntry> normalize(List<SubstitutionEntry> substitutionList){
+    public List<SubstitutionEntry> normalizeSubs(List<SubstitutionEntry> substitutionList){
         for (SubstitutionEntry substitution : substitutionList) {
+            String fixedOriginal = normalizeMeasurement(
+                    substitution.getOriginalMeasurement(),
+                    substitution.getOriginalWholeNumberQuantity(),
+                    substitution.getOriginalFractionQuantity()
+            );
+            String fixedSubstituted = normalizeMeasurement(
+                    substitution.getSubstitutedMeasurement(),
+                    substitution.getSubstitutedWholeNumberQuantity(),
+                    substitution.getSubstitutedFractionQuantity()
+            );
+            substitution.setOriginalMeasurement(fixedOriginal);
+            substitution.setSubstitutedMeasurement(fixedSubstituted);
+        }
+        return substitutionList;
+    }
+
+    public List<RecipeUserSubstitutionEntry> normalizeUserSubs(List<RecipeUserSubstitutionEntry> substitutionList){
+        for (RecipeUserSubstitutionEntry substitution : substitutionList) {
             String fixedOriginal = normalizeMeasurement(
                     substitution.getOriginalMeasurement(),
                     substitution.getOriginalWholeNumberQuantity(),

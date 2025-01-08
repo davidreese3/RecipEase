@@ -8,32 +8,22 @@ public class Recipe {
     private List<RecipeIngredient> recipeIngredients;
     private List<RecipeDirection> recipeDirections;
     private RecipeNote recipeNote;
-    private List<RecipeLink> recipeLink;
+    private List<RecipeLink> recipeLinks;
+    private List<RecipeUserSubstitutionEntry> userSubstitutionEntries;
     private LinkedHashMap<String, String> recipeTags;
 
 
     public Recipe(){}
 
-    public Recipe(RecipeInfo recipeInfo, List<RecipeIngredient> recipeIngredients, List<RecipeDirection> recipeDirections, RecipeNote recipeNote, List<RecipeLink> recipeLink, LinkedHashMap<String, String> recipeTags) {
+    public Recipe(RecipeInfo recipeInfo, List<RecipeIngredient> recipeIngredients, List<RecipeDirection> recipeDirections, RecipeNote recipeNote, List<RecipeLink> recipeLinks, List<RecipeUserSubstitutionEntry> userSubstitutionEntries, LinkedHashMap<String, String> recipeTags) {
         this.recipeInfo = recipeInfo;
         this.recipeIngredients = recipeIngredients;
         this.recipeDirections = recipeDirections;
         this.recipeNote = recipeNote;
-        this.recipeLink = recipeLink;
+        this.recipeLinks = recipeLinks;
+        this.userSubstitutionEntries = userSubstitutionEntries;
         this.recipeTags = recipeTags;
     }
-
-    //    public Recipe(RecipeInfo recipeInfo, List<RecipeIngredient> recipeIngredients, List<RecipeDirection> recipeDirections, List<RecipeTag> recipeHolidays, List<RecipeTag> recipeMealTypes, List<RecipeTag> recipeCuisines, List<RecipeTag> recipeAllergens, List<RecipeTag> recipeDietTypes, List<RecipeTag> recipeCookingLevels) {
-//        this.recipeInfo = recipeInfo;
-//        this.recipeIngredients = recipeIngredients;
-//        this.recipeDirections = recipeDirections;
-//        this.recipeHolidays = recipeHolidays;
-//        this.recipeMealTypes = recipeMealTypes;
-//        this.recipeCuisines = recipeCuisines;
-//        this.recipeAllergens = recipeAllergens;
-//        this.recipeDietTypes = recipeDietTypes;
-//        this.recipeCookingLevels = recipeCookingLevels;
-//    }
 
     public RecipeInfo getRecipeInfo() {
         return recipeInfo;
@@ -59,14 +49,6 @@ public class Recipe {
         this.recipeDirections = recipeDirections;
     }
 
-    public LinkedHashMap<String, String> getRecipeTags() {
-        return recipeTags;
-    }
-
-    public void setRecipeTags(LinkedHashMap<String, String> recipeTags) {
-        this.recipeTags = recipeTags;
-    }
-
     public RecipeNote getRecipeNote() {
         return recipeNote;
     }
@@ -75,12 +57,28 @@ public class Recipe {
         this.recipeNote = recipeNote;
     }
 
-    public List<RecipeLink> getRecipeLink() {
-        return recipeLink;
+    public List<RecipeLink> getRecipeLinks() {
+        return recipeLinks;
     }
 
-    public void setRecipeLink(List<RecipeLink> recipeLink) {
-        this.recipeLink = recipeLink;
+    public void setRecipeLinks(List<RecipeLink> recipeLinks) {
+        this.recipeLinks = recipeLinks;
+    }
+
+    public List<RecipeUserSubstitutionEntry> getUserSubstitutionEntries() {
+        return userSubstitutionEntries;
+    }
+
+    public void setUserSubstitutionEntries(List<RecipeUserSubstitutionEntry> userSubstitutionEntries) {
+        this.userSubstitutionEntries = userSubstitutionEntries;
+    }
+
+    public LinkedHashMap<String, String> getRecipeTags() {
+        return recipeTags;
+    }
+
+    public void setRecipeTags(LinkedHashMap<String, String> recipeTags) {
+        this.recipeTags = recipeTags;
     }
 }
 

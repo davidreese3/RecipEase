@@ -1,5 +1,6 @@
 package com.thesis.recipease.db.recipe;
 
+import com.thesis.recipease.model.SubstitutionEntry;
 import com.thesis.recipease.model.recipe.*;
 import com.thesis.recipease.model.recipe.RecipeTag;
 import com.thesis.recipease.model.web.recipe.*;
@@ -59,6 +60,7 @@ public class RecipeDaoImpl implements RecipeDao{
             insertRecipeDirections(webRecipe.getDirections(), recipeId);
             insertNote(webRecipe.getNote(), recipeId);
             insertLinks(webRecipe.getLinks(), recipeId);
+            insertUserSubstitutionEntries(webRecipe.getUserSubstitutionEntries(), recipeId);
             insertTags(webRecipe.getHolidays(), recipeId, "holiday");
             insertTags(webRecipe.getMealTypes(), recipeId, "mealType");
             insertTags(webRecipe.getCuisines(), recipeId, "cuisine");
@@ -157,26 +159,59 @@ public class RecipeDaoImpl implements RecipeDao{
     }
 
     private void insertLinks(List<WebLink> webLinks, int recipeId){
-        final String SQL = "insert into link (recipeid, link) values (?, ?)";
-        for(WebLink webLink : webLinks){
-            jdbcTemplate.update(dataSource -> {
-                PreparedStatement ps = dataSource.prepareStatement(SQL);
-                ps.setInt(1, recipeId);
-                ps.setString(2, webLink.getLink());
-                return ps;
-            });
+        if(webLinks != null){
+            final String SQL = "insert into link (recipeid, link) values (?, ?)";
+            for(WebLink webLink : webLinks) {
+                jdbcTemplate.update(dataSource -> {
+                    PreparedStatement ps = dataSource.prepareStatement(SQL);
+                    ps.setInt(1, recipeId);
+                    ps.setString(2, webLink.getLink());
+                    return ps;
+                });
+            }
+        }
+    }
+
+    private void insertUserSubstitutionEntries(List<WebUserSubstitutionEntry> webUserSubstitutionEntries, int recipeId){
+        if(webUserSubstitutionEntries != null) {
+            final String SQL = "insert into userSubs " +
+                    "(recipeId, originalComponent, originalWholeNumberQuantity, " +
+                    "originalFractionQuantity, originalMeasurement, " +
+                    "originalPreparation, substitutedComponent, " +
+                    "substitutedWholeNumberQuantity, substitutedFractionQuantity, " +
+                    "substitutedMeasurement, substitutedPreparation) " +
+                    "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            for (WebUserSubstitutionEntry webUserSubstitutionEntry : webUserSubstitutionEntries) {
+                jdbcTemplate.update(dataSource -> {
+                    PreparedStatement ps = dataSource.prepareStatement(SQL);
+                    ps.setInt(1, recipeId);
+                    ps.setString(2, webUserSubstitutionEntry.getOriginalComponent());
+                    ps.setInt(3, webUserSubstitutionEntry.getOriginalWholeNumberQuantity());
+                    ps.setString(4, webUserSubstitutionEntry.getOriginalFractionQuantity());
+                    ps.setString(5, webUserSubstitutionEntry.getOriginalMeasurement());
+                    ps.setString(6, webUserSubstitutionEntry.getOriginalPreparation());
+                    ps.setString(7, webUserSubstitutionEntry.getSubstitutedComponent());
+                    ps.setInt(8, webUserSubstitutionEntry.getSubstitutedWholeNumberQuantity());
+                    ps.setString(9, webUserSubstitutionEntry.getSubstitutedFractionQuantity());
+                    ps.setString(10, webUserSubstitutionEntry.getSubstitutedMeasurement());
+                    ps.setString(11, webUserSubstitutionEntry.getSubstitutedPreparation());
+                    return ps;
+                });
+            }
         }
     }
 
     private void insertTags(List<WebTag> webTags, int recipeId, String field){
-        final String SQL = "insert into "+field+" (recipeid, "+field+") values (?, ?)";
-        for(WebTag webTag : webTags){
-            jdbcTemplate.update(dataSource -> {
-                PreparedStatement ps = dataSource.prepareStatement(SQL);
-                ps.setInt(1, recipeId);
-                ps.setString(2, webTag.getField());
-                return ps;
-            });
+        if(webTags != null) {
+            final String SQL = "insert into " + field + " (recipeid, " + field + ") values (?, ?)";
+            for (WebTag webTag : webTags) {
+                jdbcTemplate.update(dataSource -> {
+                    PreparedStatement ps = dataSource.prepareStatement(SQL);
+                    ps.setInt(1, recipeId);
+                    ps.setString(2, webTag.getField());
+                    return ps;
+                });
+            }
         }
     }
 
@@ -193,6 +228,7 @@ public class RecipeDaoImpl implements RecipeDao{
 
         RecipeNote recipeNote = getNote(recipeId);
         List<RecipeLink> recipeLinks = getLinks(recipeId);
+        List<RecipeUserSubstitutionEntry> recipeUserSubs = getUserSubs(recipeId);
 
         List<RecipeTag> recipeHolidays = getTags(recipeId, "holiday");
         recipeTags.put("Holiday", getTagString(recipeHolidays));
@@ -209,7 +245,7 @@ public class RecipeDaoImpl implements RecipeDao{
         List<RecipeTag> recipeCookingStyles = getTags(recipeId, "cookingStyle");
         recipeTags.put("Cooking Style", getTagString(recipeCookingStyles));
 
-        return new Recipe(recipeInfo, recipeIngredients, recipeDirections, recipeNote, recipeLinks, recipeTags);
+        return new Recipe(recipeInfo, recipeIngredients, recipeDirections, recipeNote, recipeLinks, recipeUserSubs, recipeTags);
     }
     //HELPER OPS
 
@@ -254,6 +290,15 @@ public class RecipeDaoImpl implements RecipeDao{
         final String SQL = "select * from link where recipeid = ?";
         try{
             return jdbcTemplate.query(SQL, new RecipeDaoImpl.RecipeLinkMapper(), recipeId);
+        }catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
+    private List<RecipeUserSubstitutionEntry> getUserSubs(int recipeId){
+        final String SQL = "select * from userSubs where recipeid = ?";
+        try{
+            return jdbcTemplate.query(SQL, new RecipeDaoImpl.UserSubstitutionEntryMapper(), recipeId);
         }catch (EmptyResultDataAccessException e) {
             return null;
         }
@@ -352,6 +397,25 @@ public class RecipeDaoImpl implements RecipeDao{
             recipeLink.setRecipeId(rs.getInt("recipeId"));
             recipeLink.setLink(rs.getString("link"));
             return recipeLink;
+        }
+    }
+
+    class UserSubstitutionEntryMapper implements RowMapper<RecipeUserSubstitutionEntry> {
+        @Override
+        public RecipeUserSubstitutionEntry mapRow(ResultSet rs, int rowNum) throws SQLException {
+            RecipeUserSubstitutionEntry recipeUserSubstitutionEntry = new RecipeUserSubstitutionEntry();
+            recipeUserSubstitutionEntry.setRecipeId(rs.getInt("recipeId"));
+            recipeUserSubstitutionEntry.setOriginalComponent(rs.getString("originalComponent"));
+            recipeUserSubstitutionEntry.setOriginalWholeNumberQuantity(rs.getInt("originalWholeNumberQuantity"));
+            recipeUserSubstitutionEntry.setOriginalFractionQuantity(rs.getString("originalFractionQuantity"));
+            recipeUserSubstitutionEntry.setOriginalMeasurement(rs.getString("originalMeasurement"));
+            recipeUserSubstitutionEntry.setOriginalPreparation(rs.getString("originalPreparation"));
+            recipeUserSubstitutionEntry.setSubstitutedComponent(rs.getString("substitutedComponent"));
+            recipeUserSubstitutionEntry.setSubstitutedWholeNumberQuantity(rs.getInt("substitutedWholeNumberQuantity"));
+            recipeUserSubstitutionEntry.setSubstitutedFractionQuantity(rs.getString("substitutedFractionQuantity"));
+            recipeUserSubstitutionEntry.setSubstitutedMeasurement(rs.getString("substitutedMeasurement"));
+            recipeUserSubstitutionEntry.setSubstitutedPreparation(rs.getString("substitutedPreparation"));
+            return recipeUserSubstitutionEntry;
         }
     }
 }
