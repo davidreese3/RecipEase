@@ -33,7 +33,6 @@ public class LemmaProcessor {
 
             // Load lemmatizer model
             InputStream lemmatizerModelIn = getClass().getResourceAsStream("/models/en-lemmatizer.bin");
-            //InputStream lemmatizerModelIn = getClass().getResourceAsStream("/models/en-lemmatizer.bin");
 
             LemmatizerModel lemmatizerModel = new LemmatizerModel(lemmatizerModelIn);
             LemmatizerME lemmatizer = new LemmatizerME(lemmatizerModel);

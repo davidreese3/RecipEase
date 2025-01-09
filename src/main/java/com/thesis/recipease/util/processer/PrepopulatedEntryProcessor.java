@@ -48,8 +48,6 @@ public class PrepopulatedEntryProcessor {
                 }
             }
         }
-        System.out.println(lemmaProcessor.processText("Stirred, stir, stirs"));
-        System.out.println("[Glossary Terms: "+glossaryLemmasFinal+"]");
         return glossaryList;
     }
 
