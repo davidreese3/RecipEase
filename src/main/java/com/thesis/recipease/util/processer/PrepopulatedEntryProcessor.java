@@ -7,12 +7,10 @@ import com.thesis.recipease.model.recipe.Recipe;
 import com.thesis.recipease.model.recipe.RecipeDirection;
 import com.thesis.recipease.model.recipe.RecipeIngredient;
 import com.thesis.recipease.util.normalizer.GlossaryNormalizer;
-import com.thesis.recipease.util.security.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Service
