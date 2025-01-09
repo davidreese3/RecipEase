@@ -27,6 +27,8 @@ services:
       - DB_URL=jdbc:postgresql://RecipEaseDB:5432/docker  # Connect to the docker database
       - DB_USER=docker  # Use the docker user
       - DB_PASSWORD=pswd-docker  # Password for docker user
+    volumes:
+      - ./recipePictures:/app/recipePictures  # Maps the host directory to the container
     depends_on:
       - RecipEaseDB
     restart: always

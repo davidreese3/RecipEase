@@ -10,18 +10,20 @@ public class Recipe {
     private RecipeNote recipeNote;
     private List<RecipeLink> recipeLinks;
     private List<RecipeUserSubstitutionEntry> userSubstitutionEntries;
+    private RecipePhoto recipePhoto;
     private LinkedHashMap<String, String> recipeTags;
 
 
     public Recipe(){}
 
-    public Recipe(RecipeInfo recipeInfo, List<RecipeIngredient> recipeIngredients, List<RecipeDirection> recipeDirections, RecipeNote recipeNote, List<RecipeLink> recipeLinks, List<RecipeUserSubstitutionEntry> userSubstitutionEntries, LinkedHashMap<String, String> recipeTags) {
+    public Recipe(RecipeInfo recipeInfo, List<RecipeIngredient> recipeIngredients, List<RecipeDirection> recipeDirections, RecipeNote recipeNote, List<RecipeLink> recipeLinks, List<RecipeUserSubstitutionEntry> userSubstitutionEntries, RecipePhoto recipePhoto, LinkedHashMap<String, String> recipeTags) {
         this.recipeInfo = recipeInfo;
         this.recipeIngredients = recipeIngredients;
         this.recipeDirections = recipeDirections;
         this.recipeNote = recipeNote;
         this.recipeLinks = recipeLinks;
         this.userSubstitutionEntries = userSubstitutionEntries;
+        this.recipePhoto = recipePhoto;
         this.recipeTags = recipeTags;
     }
 
@@ -71,6 +73,14 @@ public class Recipe {
 
     public void setUserSubstitutionEntries(List<RecipeUserSubstitutionEntry> userSubstitutionEntries) {
         this.userSubstitutionEntries = userSubstitutionEntries;
+    }
+
+    public RecipePhoto getRecipePhoto() {
+        return recipePhoto;
+    }
+
+    public void setRecipePhoto(RecipePhoto recipePhoto) {
+        this.recipePhoto = recipePhoto;
     }
 
     public LinkedHashMap<String, String> getRecipeTags() {

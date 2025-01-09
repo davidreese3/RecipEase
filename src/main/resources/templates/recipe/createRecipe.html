@@ -20,7 +20,7 @@
 
 <main>
     <div th:if="${error}" th:text="${error}" style="color: red;"></div>
-    <form id= "recipeForm" action="#" th:action="@{/recipe/create}" th:object="${webRecipe}" method="post">
+    <form id= "recipeForm" action="#" th:action="@{/recipe/create}" th:object="${webRecipe}" method="post" enctype="multipart/form-data">
         <table>
             <tr>
                 <td><h3>Required Fields</h3></td>
@@ -209,6 +209,13 @@
                         </div>
                     </div>
                 </td>
+            </tr>
+            <tr>
+                <td><h4>Upload Recipe Image</h4></td>
+            </tr>
+            <tr>
+                <td>File to upload:</td>
+                <td><input type="file" name="file" /></td>
             </tr>
             <tr>
                 <td><h4>Recipe Tags</h4></td>

@@ -61,6 +61,7 @@ public class RecipeDaoImpl implements RecipeDao{
             insertNote(webRecipe.getNote(), recipeId);
             insertLinks(webRecipe.getLinks(), recipeId);
             insertUserSubstitutionEntries(webRecipe.getUserSubstitutionEntries(), recipeId);
+            insertPhoto(webRecipe.getPhoto(), recipeId);
             insertTags(webRecipe.getHolidays(), recipeId, "holiday");
             insertTags(webRecipe.getMealTypes(), recipeId, "mealType");
             insertTags(webRecipe.getCuisines(), recipeId, "cuisine");
@@ -112,7 +113,6 @@ public class RecipeDaoImpl implements RecipeDao{
     private void insertRecipeIngredients(List<WebIngredient> webIngredients, int recipeId){
         final String SQL = "insert into ingredient (recipeid, component, wholeNumberQuantity, fractionQuantity, measurement, preparation) values (?, ?, ?, ?, ?, ?)";
         for(WebIngredient webIngredient : webIngredients){
-            System.out.println("inserting ingredient");
             jdbcTemplate.update(dataSource -> {
                 PreparedStatement ps = dataSource.prepareStatement(SQL);
                 ps.setInt(1, recipeId);
@@ -130,7 +130,6 @@ public class RecipeDaoImpl implements RecipeDao{
         int stepNum = 1;
         final String SQL = "insert into direction (recipeid, stepNum, direction, method, temp, level) values (?, ?, ?, ?, ?, ?)";
         for(WebDirection webDirection : webDirections){
-            System.out.println("inserting direction");
             int finalStepNum = stepNum;
             jdbcTemplate.update(dataSource -> {
                 PreparedStatement ps = dataSource.prepareStatement(SQL);
@@ -201,6 +200,19 @@ public class RecipeDaoImpl implements RecipeDao{
         }
     }
 
+    private void insertPhoto(WebPhoto webPhoto, int recipeId){
+        if(webPhoto != null){
+            webPhoto.setFileName(webPhoto.getFileName().replace("|",""+recipeId));
+            final String SQL = "insert into photo (recipeid, fileName) values (?, ?)";
+            jdbcTemplate.update(dataSource -> {
+                PreparedStatement ps = dataSource.prepareStatement(SQL);
+                ps.setInt(1, recipeId);
+                ps.setString(2, webPhoto.getFileName());
+                return ps;
+            });
+        }
+    }
+
     private void insertTags(List<WebTag> webTags, int recipeId, String field){
         if(webTags != null) {
             final String SQL = "insert into " + field + " (recipeid, " + field + ") values (?, ?)";
@@ -229,7 +241,7 @@ public class RecipeDaoImpl implements RecipeDao{
         RecipeNote recipeNote = getNote(recipeId);
         List<RecipeLink> recipeLinks = getLinks(recipeId);
         List<RecipeUserSubstitutionEntry> recipeUserSubs = getUserSubs(recipeId);
-
+        RecipePhoto recipePhoto = getPhoto(recipeId);
         List<RecipeTag> recipeHolidays = getTags(recipeId, "holiday");
         recipeTags.put("Holiday", getTagString(recipeHolidays));
         List<RecipeTag> recipeMealTypes = getTags(recipeId, "mealType");
@@ -245,7 +257,7 @@ public class RecipeDaoImpl implements RecipeDao{
         List<RecipeTag> recipeCookingStyles = getTags(recipeId, "cookingStyle");
         recipeTags.put("Cooking Style", getTagString(recipeCookingStyles));
 
-        return new Recipe(recipeInfo, recipeIngredients, recipeDirections, recipeNote, recipeLinks, recipeUserSubs, recipeTags);
+        return new Recipe(recipeInfo, recipeIngredients, recipeDirections, recipeNote, recipeLinks, recipeUserSubs, recipePhoto, recipeTags);
     }
     //HELPER OPS
 
@@ -299,6 +311,15 @@ public class RecipeDaoImpl implements RecipeDao{
         final String SQL = "select * from userSubs where recipeid = ?";
         try{
             return jdbcTemplate.query(SQL, new RecipeDaoImpl.UserSubstitutionEntryMapper(), recipeId);
+        }catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
+    private RecipePhoto getPhoto(int recipeId){
+        final String SQL = "select * from photo where recipeid = ?";
+        try{
+            return jdbcTemplate.queryForObject(SQL, new RecipeDaoImpl.RecipePhotoMapper(), recipeId);
         }catch (EmptyResultDataAccessException e) {
             return null;
         }
@@ -418,4 +439,16 @@ public class RecipeDaoImpl implements RecipeDao{
             return recipeUserSubstitutionEntry;
         }
     }
+
+    class RecipePhotoMapper implements RowMapper<RecipePhoto> {
+        @Override
+        public RecipePhoto mapRow(ResultSet rs, int rowNum) throws SQLException {
+            RecipePhoto recipePhoto = new RecipePhoto();
+            recipePhoto.setRecipeId(rs.getInt("recipeId"));
+            recipePhoto.setFileName(rs.getString("fileName"));
+            recipePhoto.setFileLocation("");
+            return recipePhoto;
+        }
+    }
 }
+

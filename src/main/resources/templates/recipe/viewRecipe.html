@@ -191,6 +191,9 @@
             </tbody>
         </table>
     </div>
+    <div th:if="${recipe.recipePhoto != null}">
+        <img th:src="${recipe.recipePhoto.fileLocation}" alt="Recipe Photo" height="200px">
+    </div>
     <div th:if="${tagsExist}">
         <h3>Recipe Tags</h3>
         <ul>

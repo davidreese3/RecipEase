@@ -1,7 +1,7 @@
 package com.thesis.recipease.model.web.recipe;
 
 public class WebTag {
-    String field;
+    private String field;
 
     public WebTag(){}
     public WebTag(String field) {

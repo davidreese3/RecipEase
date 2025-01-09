@@ -9,6 +9,7 @@ public class WebRecipe {
     private WebNote note;
     private List<WebLink> links;
     private List<WebUserSubstitutionEntry> userSubstitutionEntries;
+    private WebPhoto photo;
     private List<WebTag> holidays;
     private List<WebTag> mealTypes;
     private List<WebTag> cuisines;
@@ -81,6 +82,14 @@ public class WebRecipe {
 
     public void setUserSubstitutionEntries(List<WebUserSubstitutionEntry> userSubstitutionEntries) {
         this.userSubstitutionEntries = userSubstitutionEntries;
+    }
+
+    public WebPhoto getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(WebPhoto photo) {
+        this.photo = photo;
     }
 
     public List<WebTag> getHolidays() {

@@ -169,7 +169,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
     -- photo
     create table if not exists photo (
         recipeId int references info(recipeId) on delete cascade,
-        fileLocation varchar(125),
+        fileName varchar(125),
         primary key (recipeId)
     );
 
