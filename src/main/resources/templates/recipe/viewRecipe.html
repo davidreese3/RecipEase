@@ -155,7 +155,7 @@
             <a th:href="${link.link}" th:text="${link.link}"></a>
         </li>
     </div>
-    <div th:if="${recipe.userSubstitutionEntries != null}">
+    <div th:if="${recipe.userSubstitutionEntries.size != 0}">
         <h3>User Substitutions</h3>
         <table>
             <thead>

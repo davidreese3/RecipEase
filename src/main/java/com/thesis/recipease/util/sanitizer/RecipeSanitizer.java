@@ -1,5 +1,6 @@
 package com.thesis.recipease.util.sanitizer;
 
+import com.thesis.recipease.model.recipe.RecipeNote;
 import com.thesis.recipease.model.web.recipe.*;
 import org.springframework.stereotype.Service;
 
@@ -7,9 +8,20 @@ import java.util.*;
 
 @Service
 public class RecipeSanitizer {
+    WebRecipe webRecipe;
     public WebRecipe sanitizeRecipe(WebRecipe webRecipe) {
-        // == required fields
-        //info
+        this.webRecipe = webRecipe;
+        sanitizeInfo();
+        sanitizeIngredients();
+        sanitizeDirections();
+        sanitizeNote();
+        sanitizeLinks();
+        sanitizeUserSubs();
+        sanitizeTags();
+        return webRecipe;
+    }
+
+    public void sanitizeInfo(){
         WebInfo webInfo = webRecipe.getInfo();
         if (webInfo.getPrepMin() == null) webInfo.setPrepMin(0);
         if (webInfo.getPrepHr() == null) webInfo.setPrepHr(0);
@@ -19,8 +31,9 @@ public class RecipeSanitizer {
         webInfo.setTotalMin((webInfo.getPrepMin() + webInfo.getProcessMin()) % 60);
         webInfo.setTotalHr(webInfo.getPrepHr() + webInfo.getProcessHr() + ((webInfo.getPrepMin() + webInfo.getProcessMin()) / 60));
         webRecipe.setInfo(webInfo);
+    }
 
-        //ingredients
+    public void sanitizeIngredients(){
         List<WebIngredient> webIngredients = webRecipe.getIngredients();
         Iterator<WebIngredient> ingredientIterator = webIngredients.iterator();
         WebIngredient webIngredient;
@@ -41,8 +54,9 @@ public class RecipeSanitizer {
             }
         }
         webRecipe.setIngredients(webIngredients);
+    }
 
-        //directions
+    public void sanitizeDirections(){
         List<WebDirection> webDirections = webRecipe.getDirections();
         Iterator<WebDirection> directionIterator = webDirections.iterator();
         WebDirection webDirection;
@@ -56,9 +70,16 @@ public class RecipeSanitizer {
             }
         }
         webRecipe.setDirections(webDirections);
+    }
 
-        //SANITIZE LINKS
+    public void sanitizeNote(){
+        WebNote webNote = webRecipe.getNote();
+        if(webNote.getNote().trim().equals("")){
+            webNote.setNote("");
+        }
+    }
 
+    public void sanitizeLinks(){
         List<WebLink> webLinks = webRecipe.getLinks();
         if (webLinks != null){
             Iterator<WebLink> linkIterator = webLinks.iterator();
@@ -71,8 +92,9 @@ public class RecipeSanitizer {
             }
         }
         webRecipe.setLinks(webLinks);
+    }
 
-
+    public void sanitizeUserSubs(){
         List<WebUserSubstitutionEntry> webUserSubstitutionEntries = webRecipe.getUserSubstitutionEntries();
         if(webUserSubstitutionEntries != null) {
             Iterator<WebUserSubstitutionEntry> userSubstitutionEntryIterator = webUserSubstitutionEntries.iterator();
@@ -102,69 +124,11 @@ public class RecipeSanitizer {
                     }
                 }
             }
-            webRecipe.setUserSubstitutionEntries(webUserSubstitutionEntries);
         }
-
-        //tags
-        webRecipe = setTags(webRecipe);
-
-        return webRecipe;
+        webRecipe.setUserSubstitutionEntries(webUserSubstitutionEntries);
     }
 
-    public static boolean isIngredientNull(WebIngredient webIngredient){
-        return webIngredient.getComponent() == null &&
-                webIngredient.getWholeNumberQuantity() == null &&
-                webIngredient.getFractionQuantity() == null &&
-                webIngredient.getMeasurement() == null &&
-                webIngredient.getPreparation() == null;
-    }
-
-    public static boolean isIngredientZero(WebIngredient webIngredient){
-        return webIngredient.getWholeNumberQuantity() == 0 && webIngredient.getFractionQuantity().equals("0");
-    }
-
-    public static boolean isDirectionNull(WebDirection webDirection){
-        return webDirection.getDirection() == null &&
-                webDirection.getMethod() == null &&
-                webDirection.getTemp() == null &&
-                webDirection.getLevel() == null;
-    }
-
-    public static List<WebTag> processTag(List<WebTag> listOfTags) {
-        // Remove null or empty fields
-        listOfTags.removeIf(tag -> tag.getField() == null || tag.getField().trim().isEmpty());
-
-        // Sort alphabetically by field
-        listOfTags.sort(Comparator.comparing(WebTag::getField, String.CASE_INSENSITIVE_ORDER));
-
-        List<WebTag> sortedTags = listOfTags.stream()
-                .distinct()
-                .toList();
-
-        return sortedTags;
-    }
-
-    public static boolean isUserSubNull(WebUserSubstitutionEntry webUserSubstitutionEntry){
-        return webUserSubstitutionEntry.getOriginalComponent() == null &&
-                webUserSubstitutionEntry.getOriginalWholeNumberQuantity() == null &&
-                webUserSubstitutionEntry.getOriginalFractionQuantity() == null &&
-                webUserSubstitutionEntry.getOriginalMeasurement() == null &&
-                webUserSubstitutionEntry.getOriginalPreparation() == null &&
-                webUserSubstitutionEntry.getSubstitutedComponent() == null &&
-                webUserSubstitutionEntry.getSubstitutedWholeNumberQuantity() == null &&
-                webUserSubstitutionEntry.getSubstitutedFractionQuantity() == null &&
-                webUserSubstitutionEntry.getSubstitutedMeasurement() == null &&
-                webUserSubstitutionEntry.getSubstitutedPreparation() == null;
-    }
-
-    public static boolean isUserSubZero(WebUserSubstitutionEntry webUserSubstitutionEntry){
-        return webUserSubstitutionEntry.getOriginalWholeNumberQuantity() == 0 &&
-                webUserSubstitutionEntry.getOriginalFractionQuantity().equals("0") &&
-                webUserSubstitutionEntry.getSubstitutedWholeNumberQuantity() == 0 &&
-                webUserSubstitutionEntry.getSubstitutedFractionQuantity().equals("0");
-    }
-
-    public static WebRecipe setTags(WebRecipe webRecipe){
+    public void sanitizeTags(){
         List<WebTag> holidays = webRecipe.getHolidays();
         if(holidays != null) {
             webRecipe.setHolidays(processTag(holidays));
@@ -199,7 +163,58 @@ public class RecipeSanitizer {
         if(cookingStyles != null) {
             webRecipe.setCookingStyles(processTag(cookingStyles));
         }
-        return webRecipe;
     }
 
+    private boolean isIngredientNull(WebIngredient webIngredient){
+        return webIngredient.getComponent() == null &&
+                webIngredient.getWholeNumberQuantity() == null &&
+                webIngredient.getFractionQuantity() == null &&
+                webIngredient.getMeasurement() == null &&
+                webIngredient.getPreparation() == null;
+    }
+
+    private boolean isIngredientZero(WebIngredient webIngredient){
+        return webIngredient.getWholeNumberQuantity() == 0 && webIngredient.getFractionQuantity().equals("0");
+    }
+
+    private boolean isDirectionNull(WebDirection webDirection){
+        return webDirection.getDirection() == null &&
+                webDirection.getMethod() == null &&
+                webDirection.getTemp() == null &&
+                webDirection.getLevel() == null;
+    }
+
+    private boolean isUserSubNull(WebUserSubstitutionEntry webUserSubstitutionEntry){
+        return webUserSubstitutionEntry.getOriginalComponent() == null &&
+                webUserSubstitutionEntry.getOriginalWholeNumberQuantity() == null &&
+                webUserSubstitutionEntry.getOriginalFractionQuantity() == null &&
+                webUserSubstitutionEntry.getOriginalMeasurement() == null &&
+                webUserSubstitutionEntry.getOriginalPreparation() == null &&
+                webUserSubstitutionEntry.getSubstitutedComponent() == null &&
+                webUserSubstitutionEntry.getSubstitutedWholeNumberQuantity() == null &&
+                webUserSubstitutionEntry.getSubstitutedFractionQuantity() == null &&
+                webUserSubstitutionEntry.getSubstitutedMeasurement() == null &&
+                webUserSubstitutionEntry.getSubstitutedPreparation() == null;
+    }
+
+    private boolean isUserSubZero(WebUserSubstitutionEntry webUserSubstitutionEntry){
+        return webUserSubstitutionEntry.getOriginalWholeNumberQuantity() == 0 &&
+                webUserSubstitutionEntry.getOriginalFractionQuantity().equals("0") &&
+                webUserSubstitutionEntry.getSubstitutedWholeNumberQuantity() == 0 &&
+                webUserSubstitutionEntry.getSubstitutedFractionQuantity().equals("0");
+    }
+
+    private List<WebTag> processTag(List<WebTag> listOfTags) {
+        // Remove null or empty fields
+        listOfTags.removeIf(tag -> tag.getField() == null || tag.getField().trim().isEmpty());
+
+        // Sort alphabetically by field
+        listOfTags.sort(Comparator.comparing(WebTag::getField, String.CASE_INSENSITIVE_ORDER));
+
+        List<WebTag> sortedTags = listOfTags.stream()
+                .distinct()
+                .toList();
+
+        return sortedTags;
+    }
 }
