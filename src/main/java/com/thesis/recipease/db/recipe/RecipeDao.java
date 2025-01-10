@@ -1,10 +1,10 @@
 package com.thesis.recipease.db.recipe;
 
-import com.thesis.recipease.model.recipe.component.Recipe;
-import com.thesis.recipease.model.recipe.component.RecipeInfo;
-import com.thesis.recipease.model.recipe.engagement.RecipeComment;
-import com.thesis.recipease.model.web.recipe.component.WebRecipe;
-import com.thesis.recipease.model.web.recipe.engagement.WebComment;
+import com.thesis.recipease.model.domain.recipe.Recipe;
+import com.thesis.recipease.model.domain.recipe.RecipeInfo;
+import com.thesis.recipease.model.domain.recipe.RecipeComment;
+import com.thesis.recipease.model.web.recipe.WebRecipe;
+import com.thesis.recipease.model.web.recipe.WebComment;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;

@@ -1,11 +1,11 @@
 package com.thesis.recipease.util.processer;
 
 import com.thesis.recipease.db.AppService;
-import com.thesis.recipease.model.GlossaryEntry;
-import com.thesis.recipease.model.SubstitutionEntry;
-import com.thesis.recipease.model.recipe.component.Recipe;
-import com.thesis.recipease.model.recipe.component.RecipeDirection;
-import com.thesis.recipease.model.recipe.component.RecipeIngredient;
+import com.thesis.recipease.model.domain.glossary.GlossaryEntry;
+import com.thesis.recipease.model.domain.substitution.SubstitutionEntry;
+import com.thesis.recipease.model.domain.recipe.Recipe;
+import com.thesis.recipease.model.domain.recipe.RecipeDirection;
+import com.thesis.recipease.model.domain.recipe.RecipeIngredient;
 import com.thesis.recipease.util.normalizer.GlossaryNormalizer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

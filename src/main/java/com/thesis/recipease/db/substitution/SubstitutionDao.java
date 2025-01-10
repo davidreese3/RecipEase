@@ -1,6 +1,6 @@
 package com.thesis.recipease.db.substitution;
 
-import com.thesis.recipease.model.SubstitutionEntry;
+import com.thesis.recipease.model.domain.substitution.SubstitutionEntry;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;

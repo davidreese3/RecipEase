@@ -1,7 +1,7 @@
 package com.thesis.recipease.db.profile;
 
-import com.thesis.recipease.model.Profile;
-import com.thesis.recipease.model.web.WebProfile;
+import com.thesis.recipease.model.domain.profile.Profile;
+import com.thesis.recipease.model.web.profile.WebProfile;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;

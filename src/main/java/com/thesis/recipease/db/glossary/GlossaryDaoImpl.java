@@ -1,11 +1,9 @@
 package com.thesis.recipease.db.glossary;
 
-import com.thesis.recipease.model.GlossaryEntry;
-import com.thesis.recipease.model.Profile;
+import com.thesis.recipease.model.domain.glossary.GlossaryEntry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;

@@ -1,15 +1,15 @@
 package com.thesis.recipease.controllers;
 
 import com.thesis.recipease.db.AppService;
-import com.thesis.recipease.model.GlossaryEntry;
-import com.thesis.recipease.model.SubstitutionEntry;
-import com.thesis.recipease.model.recipe.component.Recipe;
-import com.thesis.recipease.model.recipe.component.RecipePhoto;
-import com.thesis.recipease.model.recipe.component.RecipeUserSubstitutionEntry;
-import com.thesis.recipease.model.recipe.engagement.RecipeComment;
-import com.thesis.recipease.model.web.recipe.component.WebPhoto;
-import com.thesis.recipease.model.web.recipe.component.WebRecipe;
-import com.thesis.recipease.model.web.recipe.engagement.WebComment;
+import com.thesis.recipease.model.domain.glossary.GlossaryEntry;
+import com.thesis.recipease.model.domain.substitution.SubstitutionEntry;
+import com.thesis.recipease.model.domain.recipe.Recipe;
+import com.thesis.recipease.model.domain.recipe.RecipePhoto;
+import com.thesis.recipease.model.domain.recipe.RecipeUserSubstitutionEntry;
+import com.thesis.recipease.model.domain.recipe.RecipeComment;
+import com.thesis.recipease.model.web.recipe.WebPhoto;
+import com.thesis.recipease.model.web.recipe.WebRecipe;
+import com.thesis.recipease.model.web.recipe.WebComment;
 import com.thesis.recipease.util.normalizer.RecipeNormalizer;
 import com.thesis.recipease.util.normalizer.SubstitutionNormalizer;
 import com.thesis.recipease.util.processer.PrepopulatedEntryProcessor;
@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.xml.stream.events.Comment;
 import java.nio.file.Path;
 import java.security.Principal;
 import java.util.*;

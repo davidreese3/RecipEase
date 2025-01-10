@@ -1,8 +1,8 @@
 package com.thesis.recipease.util.normalizer;
 
-import com.thesis.recipease.model.recipe.component.Recipe;
-import com.thesis.recipease.model.recipe.component.RecipeInfo;
-import com.thesis.recipease.model.recipe.component.RecipeIngredient;
+import com.thesis.recipease.model.domain.recipe.Recipe;
+import com.thesis.recipease.model.domain.recipe.RecipeInfo;
+import com.thesis.recipease.model.domain.recipe.RecipeIngredient;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

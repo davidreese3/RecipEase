@@ -1,7 +1,6 @@
 package com.thesis.recipease.db.substitution;
 
-import com.thesis.recipease.model.GlossaryEntry;
-import com.thesis.recipease.model.SubstitutionEntry;
+import com.thesis.recipease.model.domain.substitution.SubstitutionEntry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;

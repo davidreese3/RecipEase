@@ -1,20 +1,17 @@
 package com.thesis.recipease.controllers;
 
 import com.thesis.recipease.db.AppService;
-import com.thesis.recipease.model.Account;
-import com.thesis.recipease.model.RegistrationForm;
-import com.thesis.recipease.model.web.WebAccount;
-import com.thesis.recipease.model.web.WebProfile;
+import com.thesis.recipease.model.domain.account.Account;
+import com.thesis.recipease.model.domain.form.RegistrationForm;
+import com.thesis.recipease.model.web.account.WebAccount;
+import com.thesis.recipease.model.web.profile.WebProfile;
 import com.thesis.recipease.util.mail.service.MailService;
-import com.thesis.recipease.util.security.CustomUserDetails;
 import com.thesis.recipease.util.security.SecurityService;
 import com.thesis.recipease.util.validator.AccountValidator;
 import com.thesis.recipease.util.validator.ProfileValidator;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.CookieClearingLogoutHandler;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.security.web.authentication.rememberme.AbstractRememberMeServices;

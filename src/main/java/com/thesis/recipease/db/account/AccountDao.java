@@ -1,9 +1,9 @@
 package com.thesis.recipease.db.account;
 
 
-import com.thesis.recipease.model.Account;
-import com.thesis.recipease.model.web.WebAccount;
-import com.thesis.recipease.model.web.WebProfile;
+import com.thesis.recipease.model.domain.account.Account;
+import com.thesis.recipease.model.web.account.WebAccount;
+import com.thesis.recipease.model.web.profile.WebProfile;
 import org.springframework.stereotype.Repository;
 import javax.sql.DataSource;
 

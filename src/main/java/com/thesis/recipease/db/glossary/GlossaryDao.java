@@ -1,6 +1,6 @@
 package com.thesis.recipease.db.glossary;
 
-import com.thesis.recipease.model.GlossaryEntry;
+import com.thesis.recipease.model.domain.glossary.GlossaryEntry;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;

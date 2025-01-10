@@ -1,7 +1,7 @@
 package com.thesis.recipease.db.profile;
 
-import com.thesis.recipease.model.Profile;
-import com.thesis.recipease.model.web.WebProfile;
+import com.thesis.recipease.model.domain.profile.Profile;
+import com.thesis.recipease.model.web.profile.WebProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;

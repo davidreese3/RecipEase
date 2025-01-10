@@ -1,7 +1,7 @@
 package com.thesis.recipease.util.normalizer;
 
-import com.thesis.recipease.model.SubstitutionEntry;
-import com.thesis.recipease.model.recipe.component.RecipeUserSubstitutionEntry;
+import com.thesis.recipease.model.domain.substitution.SubstitutionEntry;
+import com.thesis.recipease.model.domain.recipe.RecipeUserSubstitutionEntry;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
