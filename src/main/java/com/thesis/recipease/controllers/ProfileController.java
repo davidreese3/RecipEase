@@ -38,7 +38,7 @@ public class ProfileController {
         }
         else{
             model.addAttribute("profile", profile);
-            List<RecipeInfo> recipes = appService.getRecipeByUserId(userId);
+            List<RecipeInfo> recipes = appService.getRecipesByUserId(userId);
             model.addAttribute("recipes", recipes);
             for(RecipeInfo recipeInfo : recipes) {
                 recipeInfo = recipeNormalizer.normalizeRecipeInfo(recipeInfo);
@@ -59,7 +59,7 @@ public class ProfileController {
                 model.addAttribute("error", "There is no profile associated with this user");
             } else {
                 model.addAttribute("profile", profile);
-                List<RecipeInfo> recipes = appService.getRecipeByUserId(id);
+                List<RecipeInfo> recipes = appService.getRecipesByUserId(id);
                 for (RecipeInfo recipeInfo : recipes) {
                     recipeInfo = recipeNormalizer.normalizeRecipeInfo(recipeInfo);
                 }
