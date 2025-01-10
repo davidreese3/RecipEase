@@ -111,16 +111,12 @@ public class RecipeController {
 
         WebComment webComment = new WebComment();
         webComment.setRecipeId(recipeId);
-        System.out.println("REAL RID: " +recipeId);
-        System.out.println("WC RID: " +webComment.getRecipeId());
         model.addAttribute("webComment", webComment);
         return "recipe/viewRecipe";
     }
 
     @RequestMapping(value = "/recipe/comment/add", method= RequestMethod.POST)
     public String processCommentForm(Model model, WebComment webComment, RedirectAttributes redirectAttributes){
-        System.out.println("In Process Form (ID): " + webComment.getRecipeId());
-        System.out.println("In Process Form (Text): " + webComment.getCommentText());
 
         RecipeComment recipeComment = appService.addComment(securityService.getLoggedInUserId(), webComment.getRecipeId(), webComment);
         if(recipeComment != null){
