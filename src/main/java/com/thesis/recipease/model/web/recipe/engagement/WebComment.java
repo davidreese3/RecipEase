@@ -1,12 +1,22 @@
 package com.thesis.recipease.model.web.recipe.engagement;
 
 public class WebComment {
+    private int recipeId;
     private String commentText;
 
     public WebComment(){}
 
-    public WebComment(String commentText) {
+    public WebComment(int recipeId, String commentText) {
+        this.recipeId = recipeId;
         this.commentText = commentText;
+    }
+
+    public int getRecipeId() {
+        return recipeId;
+    }
+
+    public void setRecipeId(int recipeId) {
+        this.recipeId = recipeId;
     }
 
     public String getCommentText() {

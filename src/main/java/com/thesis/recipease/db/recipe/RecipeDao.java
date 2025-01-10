@@ -19,7 +19,6 @@ public interface RecipeDao {
     // READ OPS
     public Recipe getRecipeById(int recipeId);
     public List<RecipeInfo> getRecipesByUserId(int userId);
-    public List<RecipeComment> getCommentsByRecipeId(int recipeId);
     // UPDATE OPS
     // DELETE OPS
 }

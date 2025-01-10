@@ -228,7 +228,7 @@ public class RecipeDaoImpl implements RecipeDao{
 
     public RecipeComment addComment(int userId, int recipeId, WebComment webComment){
         int commentId;
-        final String SQL = "insert into comment (recipeid, commentUserId, commentText)";
+        final String SQL = "insert into comment (recipeid, commentUserId, commentText) values (?, ?, ?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(dataSource -> {
             PreparedStatement ps = dataSource.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
@@ -241,7 +241,7 @@ public class RecipeDaoImpl implements RecipeDao{
         if (!keyHolder.getKeyList().isEmpty()) {
             Map<String, Object> keyMap = keyHolder.getKeyList().get(0); // Get the first key map
             commentId = (int) keyMap.get("commentid"); // Fetch the 'recipeid' field
-            return new RecipeComment(recipeId, commentId, userId, webComment.getCommentText());
+            return new RecipeComment(recipeId, commentId, userId, webComment.getCommentText(), null);
         } else {
             throw new IllegalStateException("Failed to retrieve the generated comment ID.");
         }
@@ -279,7 +279,9 @@ public class RecipeDaoImpl implements RecipeDao{
         List<RecipeTag> recipeCookingStyles = getTags(recipeId, "cookingStyle");
         recipeTags.put("Cooking Style", getTagString(recipeCookingStyles));
 
-        return new Recipe(recipeInfo, recipeIngredients, recipeDirections, recipeNote, recipeLinks, recipeUserSubs, recipePhoto, recipeTags);
+        List<RecipeComment> recipeComments= getComments(recipeId);
+
+        return new Recipe(recipeInfo, recipeIngredients, recipeDirections, recipeNote, recipeLinks, recipeUserSubs, recipePhoto, recipeTags, recipeComments);
     }
     //HELPER OPS
 
@@ -364,21 +366,20 @@ public class RecipeDaoImpl implements RecipeDao{
         return joiner.toString();
     }
 
-    @Override
-    public List<RecipeInfo> getRecipesByUserId(int userId){
-        final String SQL = "select * from info where userid = ?";
+    private List<RecipeComment> getComments(int recipeId){
+        final String SQL = "select c.recipeId, c.commentId, c.commentUserId, c.commentText, concat(p.firstname, ' ' ,p.lastname) as name  from comment c join profile p on c.commentUserId = p.id where c.recipeid = ?";
         try{
-            return jdbcTemplate.query(SQL, new RecipeDaoImpl.RecipeInfoMapper(), userId);
+            return jdbcTemplate.query(SQL, new RecipeDaoImpl.CommentMapper(), recipeId);
         }catch (EmptyResultDataAccessException e) {
             return null;
         }
     }
 
     @Override
-    public List<RecipeComment> getCommentsByRecipeId(int recipeId){
-        final String SQL = "select * from comments where recipeid = ?";
+    public List<RecipeInfo> getRecipesByUserId(int userId){
+        final String SQL = "select * from info where userid = ?";
         try{
-            return jdbcTemplate.query(SQL, new RecipeDaoImpl.CommentMapper(), recipeId);
+            return jdbcTemplate.query(SQL, new RecipeDaoImpl.RecipeInfoMapper(), userId);
         }catch (EmptyResultDataAccessException e) {
             return null;
         }
@@ -501,6 +502,7 @@ public class RecipeDaoImpl implements RecipeDao{
             recipeComment.setCommentId(rs.getInt("commentId"));
             recipeComment.setCommentUserId(rs.getInt("commentUserId"));
             recipeComment.setCommentText(rs.getString("commentText"));
+            recipeComment.setCommentUserName(rs.getString("name"));
             return recipeComment;
         }
     }

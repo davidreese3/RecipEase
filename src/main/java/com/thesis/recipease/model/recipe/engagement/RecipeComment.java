@@ -5,14 +5,16 @@ public class RecipeComment {
     private int commentId;
     private int commentUserId;
     private String commentText;
+    private String commentUserName;
 
     public RecipeComment(){}
 
-    public RecipeComment(int recipeId, int commentId, int commentUserId, String commentText) {
+    public RecipeComment(int recipeId, int commentId, int commentUserId, String commentText, String commentUserName) {
         this.recipeId = recipeId;
         this.commentId = commentId;
         this.commentUserId = commentUserId;
         this.commentText = commentText;
+        this.commentUserName = commentUserName;
     }
 
     public int getRecipeId() {
@@ -45,5 +47,13 @@ public class RecipeComment {
 
     public void setCommentText(String commentText) {
         this.commentText = commentText;
+    }
+
+    public String getCommentUserName() {
+        return commentUserName;
+    }
+
+    public void setCommentUserName(String commentUserName) {
+        this.commentUserName = commentUserName;
     }
 }

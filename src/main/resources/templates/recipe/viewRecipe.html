@@ -204,6 +204,28 @@
         </ul>
     </div>
 
+    <div >
+        <h3>Comments</h3>
+        <table th:if="${recipe.recipeComments.size != 0}">
+            <div th:each="comment : ${recipe.recipeComments}">
+                <tr><td th:text="${comment.commentUserName}"></td></tr>
+                <tr><td th:text="${comment.commentText}"></td>
+
+                </tr>
+            </div>
+        </table>
+        <span th:if="${recipe.recipeComments.size == 0}" th:text="There are no comments on this recipe."></span>
+    </div>
+    <div>
+        <h4>Add your own comment:</h4>
+        <form id= "commentForm" action="#" th:action="@{/recipe/comment/add}" th:object="${webComment}" method="post">
+            <input type="hidden" th:field="*{recipeId}" />
+            <textarea th:field="*{commentText}" placeholder="Add your comment here..." maxlength="500"></textarea>
+            <button type="submit">Add Comment</button>
+        </form>
+
+    </div>
+
 </main>
 
 <footer>

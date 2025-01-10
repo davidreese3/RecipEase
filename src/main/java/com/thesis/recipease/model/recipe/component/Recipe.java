@@ -1,5 +1,7 @@
 package com.thesis.recipease.model.recipe.component;
 
+import com.thesis.recipease.model.recipe.engagement.RecipeComment;
+
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -12,11 +14,12 @@ public class Recipe {
     private List<RecipeUserSubstitutionEntry> userSubstitutionEntries;
     private RecipePhoto recipePhoto;
     private LinkedHashMap<String, String> recipeTags;
+    private List<RecipeComment> recipeComments;
 
 
     public Recipe(){}
 
-    public Recipe(RecipeInfo recipeInfo, List<RecipeIngredient> recipeIngredients, List<RecipeDirection> recipeDirections, RecipeNote recipeNote, List<RecipeLink> recipeLinks, List<RecipeUserSubstitutionEntry> userSubstitutionEntries, RecipePhoto recipePhoto, LinkedHashMap<String, String> recipeTags) {
+    public Recipe(RecipeInfo recipeInfo, List<RecipeIngredient> recipeIngredients, List<RecipeDirection> recipeDirections, RecipeNote recipeNote, List<RecipeLink> recipeLinks, List<RecipeUserSubstitutionEntry> userSubstitutionEntries, RecipePhoto recipePhoto, LinkedHashMap<String, String> recipeTags, List<RecipeComment> recipeComments) {
         this.recipeInfo = recipeInfo;
         this.recipeIngredients = recipeIngredients;
         this.recipeDirections = recipeDirections;
@@ -25,6 +28,7 @@ public class Recipe {
         this.userSubstitutionEntries = userSubstitutionEntries;
         this.recipePhoto = recipePhoto;
         this.recipeTags = recipeTags;
+        this.recipeComments = recipeComments;
     }
 
     public RecipeInfo getRecipeInfo() {
@@ -89,6 +93,14 @@ public class Recipe {
 
     public void setRecipeTags(LinkedHashMap<String, String> recipeTags) {
         this.recipeTags = recipeTags;
+    }
+
+    public List<RecipeComment> getRecipeComments() {
+        return recipeComments;
+    }
+
+    public void setRecipeComments(List<RecipeComment> recipeComments) {
+        this.recipeComments = recipeComments;
     }
 }
 

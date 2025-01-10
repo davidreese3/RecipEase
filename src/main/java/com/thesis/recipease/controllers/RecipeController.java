@@ -6,8 +6,10 @@ import com.thesis.recipease.model.SubstitutionEntry;
 import com.thesis.recipease.model.recipe.component.Recipe;
 import com.thesis.recipease.model.recipe.component.RecipePhoto;
 import com.thesis.recipease.model.recipe.component.RecipeUserSubstitutionEntry;
+import com.thesis.recipease.model.recipe.engagement.RecipeComment;
 import com.thesis.recipease.model.web.recipe.component.WebPhoto;
 import com.thesis.recipease.model.web.recipe.component.WebRecipe;
+import com.thesis.recipease.model.web.recipe.engagement.WebComment;
 import com.thesis.recipease.util.normalizer.RecipeNormalizer;
 import com.thesis.recipease.util.normalizer.SubstitutionNormalizer;
 import com.thesis.recipease.util.processer.PrepopulatedEntryProcessor;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.xml.stream.events.Comment;
 import java.nio.file.Path;
 import java.security.Principal;
 import java.util.*;
@@ -50,24 +53,23 @@ public class RecipeController {
     }
 
     @RequestMapping(value = "/recipe/create", method = RequestMethod.GET)
-    public String displayRecipeCreationForm(Model model){
+    public String displayRecipeCreationForm(Model model) {
         WebRecipe webRecipe = new WebRecipe();
         model.addAttribute("webRecipe", webRecipe);
         return "recipe/createRecipe";
     }
 
     @RequestMapping(value = "/recipe/create", method = RequestMethod.POST)
-    public String processRecipeCreationForm(Model model, Principal principal, WebRecipe webRecipe, @RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes){
+    public String processRecipeCreationForm(Model model, Principal principal, WebRecipe webRecipe, @RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
         webRecipe = recipeSanitizer.sanitizeRecipe(webRecipe);
-        if(!file.isEmpty()) {
+        if (!file.isEmpty()) {
             String extension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf('.')); // Get file extension
-            webRecipe.setPhoto(new WebPhoto("recipe|"+extension));
-        }
-        else{
+            webRecipe.setPhoto(new WebPhoto("recipe|" + extension));
+        } else {
             webRecipe.setPhoto(null);
         }
         Recipe recipe = appService.addRecipe(securityService.getLoggedInUserId(), webRecipe);
-        if(!file.isEmpty()) {
+        if (!file.isEmpty()) {
             storageService.store(file, recipe.getRecipeInfo().getRecipeId());
         }
         redirectAttributes.addFlashAttribute("message", "Your recipe has been posted!");
@@ -75,7 +77,7 @@ public class RecipeController {
     }
 
     @RequestMapping(value = "/recipe/view", method = RequestMethod.GET)
-    public String displayRecipe(Model model, @RequestParam("recipeId") int recipeId){
+    public String displayRecipe(Model model, @RequestParam("recipeId") int recipeId) {
         Recipe recipe = appService.getRecipeById(recipeId);
         // reason for this is so that when versioning it can select the correct type from db
         recipe = recipeNormalizer.normalizeRecipe(recipe);
@@ -108,6 +110,23 @@ public class RecipeController {
         model.addAttribute("authorName", authorName);
         model.addAttribute("profileLink", "http://localhost:8080/profile/view?id=" + userId);
 
+        WebComment webComment = new WebComment();
+        webComment.setRecipeId(recipeId);
+        System.out.println("REAL RID: " +recipeId);
+        System.out.println("WC RID: " +webComment.getRecipeId());
+        model.addAttribute("webComment", webComment);
         return "recipe/viewRecipe";
+    }
+
+    @RequestMapping(value = "/recipe/comment/add", method= RequestMethod.POST)
+    public String processCommentForm(Model model, WebComment webComment, RedirectAttributes redirectAttributes){
+        System.out.println("In Process Form (ID): " + webComment.getRecipeId());
+        System.out.println("In Process Form (Text): " + webComment.getCommentText());
+
+        RecipeComment recipeComment = appService.addComment(securityService.getLoggedInUserId(), webComment.getRecipeId(), webComment);
+        if(recipeComment != null){
+            redirectAttributes.addFlashAttribute("message", "Your comment has be posted");
+        }
+        return "redirect:/recipe/view?recipeId=" + webComment.getRecipeId();
     }
 }
