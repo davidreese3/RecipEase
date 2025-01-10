@@ -7,6 +7,7 @@ import com.thesis.recipease.db.recipe.RecipeDao;
 import com.thesis.recipease.db.substitution.SubstitutionDao;
 import com.thesis.recipease.model.*;
 import com.thesis.recipease.model.recipe.Recipe;
+import com.thesis.recipease.model.recipe.RecipeInfo;
 import com.thesis.recipease.model.web.WebAccount;
 import com.thesis.recipease.model.web.WebProfile;
 import com.thesis.recipease.model.web.recipe.WebRecipe;
@@ -86,6 +87,7 @@ public class AppService {
     public Recipe addRecipe(int userId, WebRecipe webRecipe){ return recipeDao.addRecipe(userId, webRecipe); }
     // READ OPS
     public Recipe getRecipeById(int recipeId) { return recipeDao.getRecipeById(recipeId); }
+    public List<RecipeInfo> getRecipeByUserId(int userId) { return recipeDao.getRecipeByUserId(userId); }
     // UPDATE OPS
     // DELETE OPS
 

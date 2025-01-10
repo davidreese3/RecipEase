@@ -38,7 +38,7 @@
                 th:text="'Preparation Time: ' + ${recipe.recipeInfo.prepHr} + ' Hour' + (${recipe.recipeInfo.prepHr > 1 ? 's' : ''}) + ' ' + ${recipe.recipeInfo.prepMin} + ' Minute' + (${recipe.recipeInfo.prepMin > 1 ? 's' : ''})">
             </td>
             <td th:if="${recipe.recipeInfo.prepHr == 0}"
-                th:text="'Process Time: ' + ${recipe.recipeInfo.prepMin} + ' Minute' + (${recipe.recipeInfo.prepMin != 1 ? 's' : ''})">
+                th:text="'Preparation Time: ' + ${recipe.recipeInfo.prepMin} + ' Minute' + (${recipe.recipeInfo.prepMin != 1 ? 's' : ''})">
             </td>
         </tr>
         <tr>

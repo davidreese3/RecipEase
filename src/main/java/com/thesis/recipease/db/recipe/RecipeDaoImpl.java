@@ -342,6 +342,15 @@ public class RecipeDaoImpl implements RecipeDao{
         return joiner.toString();
     }
 
+    public List<RecipeInfo> getRecipeByUserId(int userId){
+        final String SQL = "select * from info where userid = ?";
+        try{
+            return jdbcTemplate.query(SQL, new RecipeDaoImpl.RecipeInfoMapper(), userId);
+        }catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
     // ------------------------------------------------
     // UPDATE OPS
     // ------------------------------------------------

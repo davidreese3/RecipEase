@@ -27,6 +27,12 @@ public class RecipeNormalizer {
         return recipe;
     }
 
+    public RecipeInfo normalizeRecipeInfo(RecipeInfo recipeInfo){
+        recipeInfo.setDescription(normalizeDescription(recipeInfo.getDescription()));
+        recipeInfo.setUnitOfYield(normalizeUnitOfYield(recipeInfo.getUnitOfYield(), recipeInfo.getYield()));
+        return recipeInfo;
+    }
+
     public String normalizeMeasurement(String measurement, Integer wholeNumberQuantity, String fractionQuantity, String preparation) {
         if (measurement != null && preparation != null
                 && measurement.equals("Whole") && preparation.equals("Unprepared")) {
@@ -65,5 +71,13 @@ public class RecipeNormalizer {
             }
             return unitOfYield;
         }
+    }
+
+    public String normalizeDescription(String description){
+        if (description.length() > 150) {
+            description = description.substring(0, 150);
+            description = description.substring(0, description.lastIndexOf(" ")) + "...";
+        }
+        return description;
     }
 }
