@@ -1,20 +1,29 @@
-package com.thesis.recipease.model.web.recipe;
+package com.thesis.recipease.model.recipe.component;
 
-public class WebIngredient {
+public class RecipeIngredient {
+    private int recipeId;
     private String component;
     private Integer wholeNumberQuantity;
     private String fractionQuantity;
     private String measurement;
     private String preparation;
 
-    public WebIngredient(){}
-
-    public WebIngredient(String component, int wholeNumberQuantity, String fractionQuantity, String measurement, String preparation) {
+    public RecipeIngredient(){}
+    public RecipeIngredient(int recipeId, String component, Integer wholeNumberQuantity, String fractionQuantity, String measurement, String preparation) {
+        this.recipeId = recipeId;
         this.component = component;
         this.wholeNumberQuantity = wholeNumberQuantity;
         this.fractionQuantity = fractionQuantity;
         this.measurement = measurement;
         this.preparation = preparation;
+    }
+
+    public int getRecipeId() {
+        return recipeId;
+    }
+
+    public void setRecipeId(int recipeId) {
+        this.recipeId = recipeId;
     }
 
     public String getComponent() {
@@ -41,7 +50,6 @@ public class WebIngredient {
         this.fractionQuantity = fractionQuantity;
     }
 
-
     public String getMeasurement() {
         return measurement;
     }
@@ -60,8 +68,9 @@ public class WebIngredient {
 
     @Override
     public String toString() {
-        return "WebIngredient{" +
-                "component='" + component + '\'' +
+        return "RecipeIngredient{" +
+                "recipeId=" + recipeId +
+                ", component='" + component + '\'' +
                 ", wholeNumberQuantity=" + wholeNumberQuantity +
                 ", fractionQuantity='" + fractionQuantity + '\'' +
                 ", measurement='" + measurement + '\'' +

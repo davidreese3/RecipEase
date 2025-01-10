@@ -1,4 +1,4 @@
-package com.thesis.recipease.model.web.recipe;
+package com.thesis.recipease.model.web.recipe.component;
 
 import java.util.List;
 

@@ -1,7 +1,6 @@
 package com.thesis.recipease.util.sanitizer;
 
-import com.thesis.recipease.model.recipe.RecipeNote;
-import com.thesis.recipease.model.web.recipe.*;
+import com.thesis.recipease.model.web.recipe.component.*;
 import org.springframework.stereotype.Service;
 
 import java.util.*;

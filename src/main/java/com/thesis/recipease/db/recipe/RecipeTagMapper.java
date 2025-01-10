@@ -1,6 +1,6 @@
 package com.thesis.recipease.db.recipe;
 
-import com.thesis.recipease.model.recipe.RecipeTag;
+import com.thesis.recipease.model.recipe.component.RecipeTag;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

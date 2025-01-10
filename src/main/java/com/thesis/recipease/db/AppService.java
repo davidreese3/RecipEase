@@ -6,17 +6,14 @@ import com.thesis.recipease.db.glossary.GlossaryDao;
 import com.thesis.recipease.db.recipe.RecipeDao;
 import com.thesis.recipease.db.substitution.SubstitutionDao;
 import com.thesis.recipease.model.*;
-import com.thesis.recipease.model.recipe.Recipe;
-import com.thesis.recipease.model.recipe.RecipeInfo;
-import com.thesis.recipease.model.recipe.engagement.Comment;
+import com.thesis.recipease.model.recipe.component.Recipe;
+import com.thesis.recipease.model.recipe.component.RecipeInfo;
+import com.thesis.recipease.model.recipe.engagement.RecipeComment;
 import com.thesis.recipease.model.web.WebAccount;
 import com.thesis.recipease.model.web.WebProfile;
-import com.thesis.recipease.model.web.recipe.WebRecipe;
+import com.thesis.recipease.model.web.recipe.component.WebRecipe;
 import com.thesis.recipease.model.web.recipe.engagement.WebComment;
-import com.thesis.recipease.util.security.CustomUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -87,7 +84,7 @@ public class AppService {
 
     // CREATE OPS
     public Recipe addRecipe(int userId, WebRecipe webRecipe){ return recipeDao.addRecipe(userId, webRecipe); }
-    public Comment addComment(int userId, int recipeId, WebComment webComment){ return recipeDao.addComment(userId, recipeId, webComment); }
+    public RecipeComment addComment(int userId, int recipeId, WebComment webComment){ return recipeDao.addComment(userId, recipeId, webComment); }
     // READ OPS
     public Recipe getRecipeById(int recipeId) { return recipeDao.getRecipeById(recipeId); }
     public List<RecipeInfo> getRecipesByUserId(int userId) { return recipeDao.getRecipesByUserId(userId); }

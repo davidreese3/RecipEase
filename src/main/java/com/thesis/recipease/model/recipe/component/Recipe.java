@@ -1,4 +1,4 @@
-package com.thesis.recipease.model.recipe;
+package com.thesis.recipease.model.recipe.component;
 
 import java.util.LinkedHashMap;
 import java.util.List;

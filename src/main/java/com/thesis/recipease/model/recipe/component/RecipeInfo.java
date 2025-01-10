@@ -1,4 +1,4 @@
-package com.thesis.recipease.model.recipe;
+package com.thesis.recipease.model.recipe.component;
 
 public class RecipeInfo {
     private int recipeId;

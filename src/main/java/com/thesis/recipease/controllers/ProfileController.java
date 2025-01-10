@@ -2,7 +2,7 @@ package com.thesis.recipease.controllers;
 
 import com.thesis.recipease.db.AppService;
 import com.thesis.recipease.model.Profile;
-import com.thesis.recipease.model.recipe.RecipeInfo;
+import com.thesis.recipease.model.recipe.component.RecipeInfo;
 import com.thesis.recipease.model.web.WebProfile;
 import com.thesis.recipease.util.normalizer.RecipeNormalizer;
 import com.thesis.recipease.util.security.SecurityService;

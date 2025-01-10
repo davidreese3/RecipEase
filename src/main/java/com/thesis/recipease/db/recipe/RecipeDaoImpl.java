@@ -1,11 +1,8 @@
 package com.thesis.recipease.db.recipe;
 
-import com.thesis.recipease.model.SubstitutionEntry;
-import com.thesis.recipease.model.recipe.*;
-import com.thesis.recipease.model.recipe.RecipeTag;
-import com.thesis.recipease.model.recipe.engagement.Comment;
-import com.thesis.recipease.model.web.recipe.*;
-import com.thesis.recipease.model.web.recipe.WebTag;
+import com.thesis.recipease.model.recipe.component.*;
+import com.thesis.recipease.model.recipe.engagement.RecipeComment;
+import com.thesis.recipease.model.web.recipe.component.*;
 import com.thesis.recipease.model.web.recipe.engagement.WebComment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -229,7 +226,7 @@ public class RecipeDaoImpl implements RecipeDao{
         }
     }
 
-    public Comment addComment(int userId, int recipeId, WebComment webComment){
+    public RecipeComment addComment(int userId, int recipeId, WebComment webComment){
         int commentId;
         final String SQL = "insert into comment (recipeid, commentUserId, commentText)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -244,7 +241,7 @@ public class RecipeDaoImpl implements RecipeDao{
         if (!keyHolder.getKeyList().isEmpty()) {
             Map<String, Object> keyMap = keyHolder.getKeyList().get(0); // Get the first key map
             commentId = (int) keyMap.get("commentid"); // Fetch the 'recipeid' field
-            return new Comment(recipeId, commentId, userId, webComment.getCommentText());
+            return new RecipeComment(recipeId, commentId, userId, webComment.getCommentText());
         } else {
             throw new IllegalStateException("Failed to retrieve the generated comment ID.");
         }
@@ -378,7 +375,7 @@ public class RecipeDaoImpl implements RecipeDao{
     }
 
     @Override
-    public List<Comment> getCommentsByRecipeId(int recipeId){
+    public List<RecipeComment> getCommentsByRecipeId(int recipeId){
         final String SQL = "select * from comments where recipeid = ?";
         try{
             return jdbcTemplate.query(SQL, new RecipeDaoImpl.CommentMapper(), recipeId);
@@ -496,15 +493,15 @@ public class RecipeDaoImpl implements RecipeDao{
         }
     }
 
-    class CommentMapper implements RowMapper<Comment> {
+    class CommentMapper implements RowMapper<RecipeComment> {
         @Override
-        public Comment mapRow(ResultSet rs, int rowNum) throws SQLException {
-            Comment comment = new Comment();
-            comment.setRecipeId(rs.getInt("recipeId"));
-            comment.setCommentId(rs.getInt("commentId"));
-            comment.setCommentUserId(rs.getInt("commentUserId"));
-            comment.setCommentText(rs.getString("commentText"));
-            return comment;
+        public RecipeComment mapRow(ResultSet rs, int rowNum) throws SQLException {
+            RecipeComment recipeComment = new RecipeComment();
+            recipeComment.setRecipeId(rs.getInt("recipeId"));
+            recipeComment.setCommentId(rs.getInt("commentId"));
+            recipeComment.setCommentUserId(rs.getInt("commentUserId"));
+            recipeComment.setCommentText(rs.getString("commentText"));
+            return recipeComment;
         }
     }
 }

@@ -1,14 +1,14 @@
 package com.thesis.recipease.model.recipe.engagement;
 
-public class Comment {
+public class RecipeComment {
     private int recipeId;
     private int commentId;
     private int commentUserId;
     private String commentText;
 
-    public Comment(){}
+    public RecipeComment(){}
 
-    public Comment(int recipeId, int commentId, int commentUserId, String commentText) {
+    public RecipeComment(int recipeId, int commentId, int commentUserId, String commentText) {
         this.recipeId = recipeId;
         this.commentId = commentId;
         this.commentUserId = commentUserId;
