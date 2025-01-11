@@ -51,7 +51,7 @@ public class ProfileController {
     @RequestMapping(value = "/profile/view", method = RequestMethod.GET)
     public String displayOtherProfile(Model model, @RequestParam("id") int id){
         if(id == securityService.getLoggedInUserId()){
-            displayPersonalProfile(model);
+            return "redirect:/profile/view/personal";
         }
         else {
             Profile profile = appService.getProfileById(id);
