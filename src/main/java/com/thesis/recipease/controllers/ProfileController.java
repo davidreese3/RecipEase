@@ -39,10 +39,10 @@ public class ProfileController {
         else{
             model.addAttribute("profile", profile);
             List<RecipeInfo> recipes = appService.getRecipesByUserId(userId);
-            model.addAttribute("recipes", recipes);
             for(RecipeInfo recipeInfo : recipes) {
                 recipeInfo = recipeNormalizer.normalizeRecipeInfo(recipeInfo);
             }
+            model.addAttribute("recipes", recipes);
         }
         model.addAttribute("isPersonal",true);
         return "profile/viewProfile";

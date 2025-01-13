@@ -2,12 +2,10 @@ package com.thesis.recipease.controllers;
 
 import com.thesis.recipease.db.AppService;
 import com.thesis.recipease.model.domain.glossary.GlossaryEntry;
+import com.thesis.recipease.model.domain.recipe.*;
 import com.thesis.recipease.model.domain.substitution.SubstitutionEntry;
-import com.thesis.recipease.model.domain.recipe.Recipe;
-import com.thesis.recipease.model.domain.recipe.RecipePhoto;
-import com.thesis.recipease.model.domain.recipe.RecipeUserSubstitutionEntry;
-import com.thesis.recipease.model.domain.recipe.RecipeComment;
 import com.thesis.recipease.model.web.recipe.WebPhoto;
+import com.thesis.recipease.model.web.recipe.WebRating;
 import com.thesis.recipease.model.web.recipe.WebRecipe;
 import com.thesis.recipease.model.web.recipe.WebComment;
 import com.thesis.recipease.util.normalizer.RecipeNormalizer;
@@ -112,16 +110,29 @@ public class RecipeController {
         WebComment webComment = new WebComment();
         webComment.setRecipeId(recipeId);
         model.addAttribute("webComment", webComment);
+        WebRating webRating = new WebRating();
+        webRating.setRecipeId(recipeId);
+        model.addAttribute("webRating", webRating);
+        System.out.println("RATING: " + recipe.getRecipeInfo().getRatingInfo().getAverageRating());
         return "recipe/viewRecipe";
     }
 
-    @RequestMapping(value = "/recipe/comment/add", method= RequestMethod.POST)
+    @RequestMapping(value = "/recipe/comment/add", method = RequestMethod.POST)
     public String processCommentForm(Model model, WebComment webComment, RedirectAttributes redirectAttributes){
-
         RecipeComment recipeComment = appService.addComment(securityService.getLoggedInUserId(), webComment.getRecipeId(), webComment);
         if(recipeComment != null){
-            redirectAttributes.addFlashAttribute("message", "Your comment has be posted");
+            redirectAttributes.addFlashAttribute("message", "Your comment (\'"+webComment.getCommentText()+"\') has be posted");
         }
         return "redirect:/recipe/view?recipeId=" + webComment.getRecipeId();
+    }
+
+    @RequestMapping(value = "/recipe/rating/add", method = RequestMethod.POST)
+    public String processRatingForm(Model model, WebRating webRating, RedirectAttributes redirectAttributes){
+        System.out.println("}}" + webRating.getRatingValue());
+        RecipeRating recipeRating = appService.addRating(securityService.getLoggedInUserId(), webRating.getRecipeId(), webRating);
+        if (recipeRating != null) {
+            redirectAttributes.addFlashAttribute("message", "Your rating ("+webRating.getRatingValue()+") has be added");
+        }
+        return "redirect:/recipe/view?recipeId=" + webRating.getRecipeId();
     }
 }

@@ -13,9 +13,11 @@ public class RecipeInfo {
     private int processHr;
     private int totalMin;
     private int totalHr;
+    private RatingInfo ratingInfo;
 
     public RecipeInfo(){}
-    public RecipeInfo(int recipeId, int userId, String name, String description, double yield, String unitOfYield, int prepMin, int prepHr, int processMin, int processHr, int totalMin, int totalHr) {
+
+    public RecipeInfo(int recipeId, int userId, String name, String description, double yield, String unitOfYield, int prepMin, int prepHr, int processMin, int processHr, int totalMin, int totalHr, RatingInfo ratingInfo) {
         this.recipeId = recipeId;
         this.userId = userId;
         this.name = name;
@@ -28,6 +30,7 @@ public class RecipeInfo {
         this.processHr = processHr;
         this.totalMin = totalMin;
         this.totalHr = totalHr;
+        this.ratingInfo = ratingInfo;
     }
 
     public int getRecipeId() {
@@ -111,6 +114,14 @@ public class RecipeInfo {
     public int getTotalHr() { return totalHr; }
 
     public void setTotalHr(int totalHr) { this.totalHr = totalHr; }
+
+    public RatingInfo getRatingInfo() {
+        return ratingInfo;
+    }
+
+    public void setRatingInfo(RatingInfo ratingInfo) {
+        this.ratingInfo = ratingInfo;
+    }
 
     @Override
     public String toString() {

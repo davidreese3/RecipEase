@@ -11,9 +11,11 @@ import com.thesis.recipease.model.domain.account.Account;
 import com.thesis.recipease.model.domain.profile.Profile;
 import com.thesis.recipease.model.domain.recipe.RecipeInfo;
 import com.thesis.recipease.model.domain.recipe.RecipeComment;
+import com.thesis.recipease.model.domain.recipe.RecipeRating;
 import com.thesis.recipease.model.domain.substitution.SubstitutionEntry;
 import com.thesis.recipease.model.web.account.WebAccount;
 import com.thesis.recipease.model.web.profile.WebProfile;
+import com.thesis.recipease.model.web.recipe.WebRating;
 import com.thesis.recipease.model.web.recipe.WebRecipe;
 import com.thesis.recipease.model.web.recipe.WebComment;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,6 +90,7 @@ public class AppService {
     // CREATE OPS
     public Recipe addRecipe(int userId, WebRecipe webRecipe){ return recipeDao.addRecipe(userId, webRecipe); }
     public RecipeComment addComment(int userId, int recipeId, WebComment webComment){ return recipeDao.addComment(userId, recipeId, webComment); }
+    public RecipeRating addRating(int userId, int recipeId, WebRating webRating) {return recipeDao.addRating(userId, recipeId, webRating); }
     // READ OPS
     public Recipe getRecipeById(int recipeId) { return recipeDao.getRecipeById(recipeId); }
     public List<RecipeInfo> getRecipesByUserId(int userId) { return recipeDao.getRecipesByUserId(userId); }

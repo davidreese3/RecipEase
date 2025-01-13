@@ -54,6 +54,7 @@
             <th>Prep Time</th>
             <th>Make Time</th>
             <th>Total Time</th>
+            <th>Rating</th>
         </thead>
 
         <tbody>
@@ -84,6 +85,9 @@
                 <td th:if="${recipe.totalHr == 0}"
                     th:text="${recipe.totalMin} + ' Minute' + (${recipe.totalMin != 1 ? 's' : ''})">
                 </td>
+                <td th:if="${recipe.ratingInfo.averageRating > 0}"
+                    th:text="${#numbers.formatDecimal(recipe.ratingInfo.averageRating, 0, recipe.ratingInfo.averageRating % 1 == 0 ? 0 : 1)} + ' (' + ${recipe.ratingInfo.numberOfRaters} + ')'"></td>
+                <td th:if="${recipe.ratingInfo.averageRating == 0}" th:text="'0 (0)'"></td>
             </tr>
         </tbody>
     </table>

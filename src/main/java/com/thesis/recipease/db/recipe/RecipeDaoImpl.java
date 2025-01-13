@@ -227,7 +227,7 @@ public class RecipeDaoImpl implements RecipeDao{
 
     public RecipeComment addComment(int userId, int recipeId, WebComment webComment){
         int commentId;
-        final String SQL = "insert into comment (recipeid, commentUserId, commentText) values (?, ?, ?)";
+        final String SQL = "insert into comment (recipeid, commentuserid, commenttext) values (?, ?, ?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(dataSource -> {
             PreparedStatement ps = dataSource.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
@@ -244,8 +244,20 @@ public class RecipeDaoImpl implements RecipeDao{
         } else {
             throw new IllegalStateException("Failed to retrieve the generated comment ID.");
         }
+    }
 
-
+    @Override
+    public RecipeRating addRating(int userId, int recipeId, WebRating webRating){
+        final String SQL = "insert into rating (recipeid, ratinguserid, ratingvalue) values (?, ?, ?)" +
+                "on conflict (recipeid, ratinguserid) do update set ratingvalue = excluded.ratingvalue";
+        jdbcTemplate.update(dataSource -> {
+            PreparedStatement ps = dataSource.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, recipeId);
+            ps.setInt(2, userId);
+            ps.setInt(3, webRating.getRatingValue());
+            return ps;
+        });
+        return new RecipeRating(recipeId, userId, webRating.getRatingValue());
     }
 
     // ------------------------------------------------
@@ -253,7 +265,7 @@ public class RecipeDaoImpl implements RecipeDao{
     // ------------------------------------------------
     @Override
     public Recipe getRecipeById(int recipeId){
-        RecipeInfo recipeInfo = getRecipeInfo(recipeId);
+        RecipeInfo recipeInfo = getRecipeAndRatingInfo(recipeId);
         List<RecipeIngredient> recipeIngredients = getRecipeIngredients(recipeId);
         List<RecipeDirection> recipeDirections = getRecipeDirections(recipeId);
 
@@ -283,12 +295,26 @@ public class RecipeDaoImpl implements RecipeDao{
         return new Recipe(recipeInfo, recipeIngredients, recipeDirections, recipeNote, recipeLinks, recipeUserSubs, recipePhoto, recipeTags, recipeComments);
     }
     //HELPER OPS
+    private RecipeInfo getRecipeAndRatingInfo(int recipeId){
+        RecipeInfo recipeInfo = getRecipeInfo(recipeId);
+        recipeInfo.setRatingInfo(getRatingInfo(recipeId));
+        return recipeInfo;
+    }
 
     private RecipeInfo getRecipeInfo(int recipeId){
-        final String infoSQL = "select * from info where recipeid = ?";
-        RecipeInfo recipeInfo = new RecipeInfo();
+        final String SQL = "select * from info where recipeid = ?";
         try {
-            return jdbcTemplate.queryForObject(infoSQL, new RecipeDaoImpl.RecipeInfoMapper(), recipeId);
+            return jdbcTemplate.queryForObject(SQL, new RecipeDaoImpl.RecipeInfoMapper(), recipeId);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
+    private RatingInfo getRatingInfo(int recipeId){
+        final String SQL = "select coalesce(avg(ratingvalue), 0) as avgRating, count(ratingValue) as numRaters from rating where recipeid = ?";
+        try {
+            return jdbcTemplate.queryForObject(SQL, new RecipeDaoImpl.RatingInfoMapper(), recipeId);
+
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
@@ -376,9 +402,11 @@ public class RecipeDaoImpl implements RecipeDao{
 
     @Override
     public List<RecipeInfo> getRecipesByUserId(int userId){
-        final String SQL = "select * from info where userid = ?";
+        final String SQL = "select info.*, coalesce(avg(rating.ratingvalue), 0) as avgRating, count(rating.ratingvalue) as numRaters " +
+                "from info left join rating on info.recipeid = rating.recipeid " +
+                "where info.userid = ? group BY info.userid, info.recipeid";
         try{
-            return jdbcTemplate.query(SQL, new RecipeDaoImpl.RecipeInfoMapper(), userId);
+            return jdbcTemplate.query(SQL, new RecipeDaoImpl.RecipeInfoWithRatingMapper(), userId);
         }catch (EmptyResultDataAccessException e) {
             return null;
         }
@@ -411,6 +439,27 @@ public class RecipeDaoImpl implements RecipeDao{
             recipeInfo.setProcessHr(rs.getInt("processHr"));
             recipeInfo.setTotalMin(rs.getInt("totalMin"));
             recipeInfo.setTotalHr(rs.getInt("totalHr"));
+            return recipeInfo;
+        }
+    }
+
+    class RecipeInfoWithRatingMapper implements RowMapper<RecipeInfo> {
+        @Override
+        public RecipeInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
+            RecipeInfo recipeInfo = new RecipeInfo();
+            recipeInfo.setRecipeId(rs.getInt("recipeId"));
+            recipeInfo.setUserId(rs.getInt("userId"));
+            recipeInfo.setName(rs.getString("name"));
+            recipeInfo.setDescription(rs.getString("description"));
+            recipeInfo.setYield(rs.getDouble("yield"));
+            recipeInfo.setUnitOfYield(rs.getString("unitofyield"));
+            recipeInfo.setPrepMin(rs.getInt("prepMin"));
+            recipeInfo.setPrepHr(rs.getInt("prepHr"));
+            recipeInfo.setProcessMin(rs.getInt("processMin"));
+            recipeInfo.setProcessHr(rs.getInt("processHr"));
+            recipeInfo.setTotalMin(rs.getInt("totalMin"));
+            recipeInfo.setTotalHr(rs.getInt("totalHr"));
+            recipeInfo.setRatingInfo(new RatingInfo(rs.getDouble("avgRating"), rs.getInt("numRaters")));
             return recipeInfo;
         }
     }
@@ -503,6 +552,16 @@ public class RecipeDaoImpl implements RecipeDao{
             recipeComment.setCommentText(rs.getString("commentText"));
             recipeComment.setCommentUserName(rs.getString("name"));
             return recipeComment;
+        }
+    }
+
+    class RatingInfoMapper implements RowMapper<RatingInfo> {
+        @Override
+        public RatingInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
+            RatingInfo ratingInfo = new RatingInfo();
+            ratingInfo.setAverageRating(rs.getDouble("avgRating"));
+            ratingInfo.setNumberOfRaters(rs.getInt("numRaters"));
+            return ratingInfo;
         }
     }
 }

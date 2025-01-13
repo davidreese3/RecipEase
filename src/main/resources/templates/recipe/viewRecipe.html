@@ -27,6 +27,12 @@
                 <a th:href="${profileLink}" th:text="${authorName}"></a>
             </td>
         </tr>
+        <tr th:if="${recipe.recipeInfo.ratingInfo.averageRating > 0}" th:with="rating=${recipe.recipeInfo.ratingInfo.averageRating}">
+            <td th:text="'Average Rating: ' + ${#numbers.formatDecimal(rating, 0, rating % 1 == 0 ? 0 : 1)} + ' (' + ${recipe.recipeInfo.ratingInfo.numberOfRaters} + ')'"></td>
+        </tr>
+        <tr th:if="${recipe.recipeInfo.ratingInfo.averageRating == 0}">
+            <td>There are no rating for this recipe</td>
+        </tr>
         <tr>
             <td th:text = ${recipe.recipeInfo.description}></td>
         </tr>
@@ -214,16 +220,27 @@
                 </tr>
             </div>
         </table>
-        <span th:if="${recipe.recipeComments.size == 0}" th:text="There are no comments on this recipe."></span>
+        <span th:if="${recipe.recipeComments.size == 0}">There are no comments on this recipe.</span>
     </div>
     <div>
         <h4>Add your own comment:</h4>
-        <form id= "commentForm" action="#" th:action="@{/recipe/comment/add}" th:object="${webComment}" method="post">
+        <form id="commentForm" action="#" th:action="@{/recipe/comment/add}" th:object="${webComment}" method="post">
             <input type="hidden" th:field="*{recipeId}" />
             <textarea th:field="*{commentText}" placeholder="Add your comment here..." maxlength="500"></textarea>
             <button type="submit">Add Comment</button>
         </form>
+    </div>
+    <div>
+        <h4>Add your rating:</h4>
+        <form id="ratingForm" th:action="@{/recipe/rating/add}" th:object="${webRating}" method="post">
+            <input type="hidden" th:field="*{recipeId}" />
 
+            <button type="submit" name="ratingValue" value="1">1</button>
+            <button type="submit" name="ratingValue" value="2">2</button>
+            <button type="submit" name="ratingValue" value="3">3</button>
+            <button type="submit" name="ratingValue" value="4">4</button>
+            <button type="submit" name="ratingValue" value="5">5</button>
+        </form>
     </div>
 
 </main>
