@@ -113,7 +113,6 @@ public class RecipeController {
         WebRating webRating = new WebRating();
         webRating.setRecipeId(recipeId);
         model.addAttribute("webRating", webRating);
-        System.out.println("RATING: " + recipe.getRecipeInfo().getRatingInfo().getAverageRating());
         return "recipe/viewRecipe";
     }
 
