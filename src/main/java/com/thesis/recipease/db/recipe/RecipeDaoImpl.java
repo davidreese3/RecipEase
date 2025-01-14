@@ -266,8 +266,6 @@ public class RecipeDaoImpl implements RecipeDao{
     @Override
     public Recipe getRecipeById(int recipeId){
         RecipeInfo recipeInfo = getRecipeInfo(recipeId);
-        //RatingInfo ratingInfo = getRatingInfo(recipeId);
-        //recipeInfo.setRatingInfo(ratingInfo);
 
         List<RecipeIngredient> recipeIngredients = getRecipeIngredients(recipeId);
         List<RecipeDirection> recipeDirections = getRecipeDirections(recipeId);
@@ -415,26 +413,6 @@ public class RecipeDaoImpl implements RecipeDao{
     // ------------------------------------------------
     // MAPPERS
     // ------------------------------------------------
-//    class RecipeInfoMapper implements RowMapper<RecipeInfo> {
-//        @Override
-//        public RecipeInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
-//            RecipeInfo recipeInfo = new RecipeInfo();
-//            recipeInfo.setRecipeId(rs.getInt("recipeId"));
-//            recipeInfo.setUserId(rs.getInt("userId"));
-//            recipeInfo.setName(rs.getString("name"));
-//            recipeInfo.setDescription(rs.getString("description"));
-//            recipeInfo.setYield(rs.getDouble("yield"));
-//            recipeInfo.setUnitOfYield(rs.getString("unitofyield"));
-//            recipeInfo.setPrepMin(rs.getInt("prepMin"));
-//            recipeInfo.setPrepHr(rs.getInt("prepHr"));
-//            recipeInfo.setProcessMin(rs.getInt("processMin"));
-//            recipeInfo.setProcessHr(rs.getInt("processHr"));
-//            recipeInfo.setTotalMin(rs.getInt("totalMin"));
-//            recipeInfo.setTotalHr(rs.getInt("totalHr"));
-//            return recipeInfo;
-//        }
-//    }
-
     class RecipeInfoMapper implements RowMapper<RecipeInfo> {
         @Override
         public RecipeInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
