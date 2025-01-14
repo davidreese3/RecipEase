@@ -15,10 +15,8 @@
 </header>
 
 <main>
+    <h3>Recipe Info</h3>
     <table>
-        <tr>
-            <td><h3>Recipe Info</h3></td>
-        </tr>
         <tr>
             <td th:text="${recipe.recipeInfo.name}"></td>
         </tr>
@@ -64,9 +62,9 @@
                 th:text="'Total Time: ' + ${recipe.recipeInfo.totalMin} + ' Minute' + (${recipe.recipeInfo.totalMin != 1 ? 's' : ''})">
             </td>
         </tr>
-        <tr>
-            <td><h3>Ingredients</h3></td>
-        </tr>
+    </table>
+    <h3>Ingredients</h3>
+    <table>
         <tr th:each="ingredient : ${recipe.recipeIngredients}">
             <td>
                 <input type="checkbox">
@@ -78,11 +76,14 @@
                 </span>
             </td>
         </tr>
+    </table>
+    <table>
         <tr>
             <td><h3>Directions</h3></td>
             <td>Simplified Directions</td>
         </tr>
-
+    </table>
+    <table>
         <tr th:each="direction : ${recipe.recipeDirections}">
             <td th:text="'Step ' + ${direction.stepNum} + ': ' + ${direction.direction}"></td>
             <td th:if="${!#strings.isEmpty(direction.method) and #strings.isEmpty(direction.level) and direction.temp > 0}"

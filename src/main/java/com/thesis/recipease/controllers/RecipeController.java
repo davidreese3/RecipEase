@@ -78,13 +78,15 @@ public class RecipeController {
         Recipe recipe = appService.getRecipeById(recipeId);
         // reason for this is so that when versioning it can select the correct type from db
         recipe = recipeNormalizer.normalizeRecipe(recipe);
-        boolean tagsExist = !(recipe.getRecipeTags().values().stream().allMatch(String::isEmpty));
         model.addAttribute("recipe", recipe);
-        model.addAttribute("tagsExist", tagsExist);
+
+        int userId = recipe.getRecipeInfo().getUserId();
+        String authorName = appService.getNameById(userId);
+        model.addAttribute("authorName", authorName);
+        model.addAttribute("profileLink", "http://localhost:8080/profile/view?id=" + userId);
 
         prepopulatedEntryProcessor.gatherStartingStrings(recipe);
         List<GlossaryEntry> glossaryList = prepopulatedEntryProcessor.ProcessGlossaryEntries(recipe);
-
         model.addAttribute("glossaryList", glossaryList);
 
         List<SubstitutionEntry> substitutionList = prepopulatedEntryProcessor.ProcessSubstitutionEntries(recipe);
@@ -102,10 +104,8 @@ public class RecipeController {
             recipePhoto.setFileLocation(fileLocation); // Use public URL for display
         }
 
-        int userId = recipe.getRecipeInfo().getUserId();
-        String authorName = appService.getNameById(userId);
-        model.addAttribute("authorName", authorName);
-        model.addAttribute("profileLink", "http://localhost:8080/profile/view?id=" + userId);
+        boolean tagsExist = !(recipe.getRecipeTags().values().stream().allMatch(String::isEmpty));
+        model.addAttribute("tagsExist", tagsExist);
 
         WebComment webComment = new WebComment();
         webComment.setRecipeId(recipeId);
