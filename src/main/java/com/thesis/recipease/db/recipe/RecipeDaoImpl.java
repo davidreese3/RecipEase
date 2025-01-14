@@ -265,7 +265,10 @@ public class RecipeDaoImpl implements RecipeDao{
     // ------------------------------------------------
     @Override
     public Recipe getRecipeById(int recipeId){
-        RecipeInfo recipeInfo = getRecipeAndRatingInfo(recipeId);
+        RecipeInfo recipeInfo = getRecipeInfo(recipeId);
+        //RatingInfo ratingInfo = getRatingInfo(recipeId);
+        //recipeInfo.setRatingInfo(ratingInfo);
+
         List<RecipeIngredient> recipeIngredients = getRecipeIngredients(recipeId);
         List<RecipeDirection> recipeDirections = getRecipeDirections(recipeId);
 
@@ -294,27 +297,15 @@ public class RecipeDaoImpl implements RecipeDao{
 
         return new Recipe(recipeInfo, recipeIngredients, recipeDirections, recipeNote, recipeLinks, recipeUserSubs, recipePhoto, recipeTags, recipeComments);
     }
-    //HELPER OPS
-    private RecipeInfo getRecipeAndRatingInfo(int recipeId){
-        RecipeInfo recipeInfo = getRecipeInfo(recipeId);
-        recipeInfo.setRatingInfo(getRatingInfo(recipeId));
-        return recipeInfo;
-    }
 
+    //HELPER OPS
     private RecipeInfo getRecipeInfo(int recipeId){
-        final String SQL = "select * from info where recipeid = ?";
+        final String SQL = "select i.*, coalesce(avg(r.ratingvalue), 0) as avgRating, count(r.ratingvalue) as numRaters " +
+                "from info i left join rating r on i.recipeid = r.recipeid " +
+                "where i.recipeid = ? group BY i.userid, i.recipeid " +
+                "order by i.recipeid asc";
         try {
             return jdbcTemplate.queryForObject(SQL, new RecipeDaoImpl.RecipeInfoMapper(), recipeId);
-        } catch (EmptyResultDataAccessException e) {
-            return null;
-        }
-    }
-
-    private RatingInfo getRatingInfo(int recipeId){
-        final String SQL = "select coalesce(avg(ratingvalue), 0) as avgRating, count(ratingValue) as numRaters from rating where recipeid = ?";
-        try {
-            return jdbcTemplate.queryForObject(SQL, new RecipeDaoImpl.RatingInfoMapper(), recipeId);
-
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
@@ -392,7 +383,7 @@ public class RecipeDaoImpl implements RecipeDao{
     }
 
     private List<RecipeComment> getComments(int recipeId){
-        final String SQL = "select c.recipeId, c.commentId, c.commentUserId, c.commentText, concat(p.firstname, ' ' ,p.lastname) as name  from comment c join profile p on c.commentUserId = p.id where c.recipeid = ?";
+        final String SQL = "select c.recipeId, c.commentId, c.commentUserId, c.commentText, concat(p.firstname, ' ' ,p.lastname) as name from comment c join profile p on c.commentUserId = p.id where c.recipeid = ?";
         try{
             return jdbcTemplate.query(SQL, new RecipeDaoImpl.CommentMapper(), recipeId);
         }catch (EmptyResultDataAccessException e) {
@@ -402,11 +393,12 @@ public class RecipeDaoImpl implements RecipeDao{
 
     @Override
     public List<RecipeInfo> getRecipesByUserId(int userId){
-        final String SQL = "select info.*, coalesce(avg(rating.ratingvalue), 0) as avgRating, count(rating.ratingvalue) as numRaters " +
-                "from info left join rating on info.recipeid = rating.recipeid " +
-                "where info.userid = ? group BY info.userid, info.recipeid";
+        final String SQL = "select i.*, coalesce(avg(r.ratingvalue), 0) as avgRating, count(r.ratingvalue) as numRaters " +
+                "from info i left join rating r on i.recipeid = r.recipeid " +
+                "where i.userid = ? group BY i.userid, i.recipeid " +
+                "order by i.recipeid asc";
         try{
-            return jdbcTemplate.query(SQL, new RecipeDaoImpl.RecipeInfoWithRatingMapper(), userId);
+            return jdbcTemplate.query(SQL, new RecipeDaoImpl.RecipeInfoMapper(), userId);
         }catch (EmptyResultDataAccessException e) {
             return null;
         }
@@ -423,27 +415,27 @@ public class RecipeDaoImpl implements RecipeDao{
     // ------------------------------------------------
     // MAPPERS
     // ------------------------------------------------
-    class RecipeInfoMapper implements RowMapper<RecipeInfo> {
-        @Override
-        public RecipeInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
-            RecipeInfo recipeInfo = new RecipeInfo();
-            recipeInfo.setRecipeId(rs.getInt("recipeId"));
-            recipeInfo.setUserId(rs.getInt("userId"));
-            recipeInfo.setName(rs.getString("name"));
-            recipeInfo.setDescription(rs.getString("description"));
-            recipeInfo.setYield(rs.getDouble("yield"));
-            recipeInfo.setUnitOfYield(rs.getString("unitofyield"));
-            recipeInfo.setPrepMin(rs.getInt("prepMin"));
-            recipeInfo.setPrepHr(rs.getInt("prepHr"));
-            recipeInfo.setProcessMin(rs.getInt("processMin"));
-            recipeInfo.setProcessHr(rs.getInt("processHr"));
-            recipeInfo.setTotalMin(rs.getInt("totalMin"));
-            recipeInfo.setTotalHr(rs.getInt("totalHr"));
-            return recipeInfo;
-        }
-    }
+//    class RecipeInfoMapper implements RowMapper<RecipeInfo> {
+//        @Override
+//        public RecipeInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
+//            RecipeInfo recipeInfo = new RecipeInfo();
+//            recipeInfo.setRecipeId(rs.getInt("recipeId"));
+//            recipeInfo.setUserId(rs.getInt("userId"));
+//            recipeInfo.setName(rs.getString("name"));
+//            recipeInfo.setDescription(rs.getString("description"));
+//            recipeInfo.setYield(rs.getDouble("yield"));
+//            recipeInfo.setUnitOfYield(rs.getString("unitofyield"));
+//            recipeInfo.setPrepMin(rs.getInt("prepMin"));
+//            recipeInfo.setPrepHr(rs.getInt("prepHr"));
+//            recipeInfo.setProcessMin(rs.getInt("processMin"));
+//            recipeInfo.setProcessHr(rs.getInt("processHr"));
+//            recipeInfo.setTotalMin(rs.getInt("totalMin"));
+//            recipeInfo.setTotalHr(rs.getInt("totalHr"));
+//            return recipeInfo;
+//        }
+//    }
 
-    class RecipeInfoWithRatingMapper implements RowMapper<RecipeInfo> {
+    class RecipeInfoMapper implements RowMapper<RecipeInfo> {
         @Override
         public RecipeInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
             RecipeInfo recipeInfo = new RecipeInfo();
