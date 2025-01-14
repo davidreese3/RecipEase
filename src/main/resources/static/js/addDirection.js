@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function addDirectionFields() {
         // Create a container for this direction's inputs
         const directionDiv = document.createElement('div');
-        directionDiv.classList.add('direction-entry');
+        directionDiv.classList.add('directionEntry');
 
         // Textarea for direction step description
         const directionTextarea = document.createElement('textarea');

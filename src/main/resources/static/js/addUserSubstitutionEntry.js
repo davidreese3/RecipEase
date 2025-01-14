@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function addSubstitutionFields() {
         // Create a container for this substitution's inputs
         const subDiv = document.createElement('div');
-        subDiv.classList.add('substitution-entry');
+        subDiv.classList.add('substitutionEntry');
 
         // Inputs and select elements for original ingredient
         const originalComponentInput = createInput('text', `userSubstitutionEntries[${userSubList.children.length}].originalComponent`, 'Original Ingredient Name', 45, true);

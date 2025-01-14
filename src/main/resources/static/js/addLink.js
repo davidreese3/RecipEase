@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function addLinkField() {
         const linkDiv = document.createElement('div');
-        linkDiv.classList.add('link-entry');
+        linkDiv.classList.add('linkEntry');
 
         const linkInput = document.createElement('input');
         linkInput.setAttribute('type', 'text');

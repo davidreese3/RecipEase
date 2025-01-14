@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function addIngredientFields() {
         // Create a container for this ingredient's inputs
         const ingredientDiv = document.createElement('div');
-        ingredientDiv.classList.add('ingredient-entry');
+        ingredientDiv.classList.add('ingredientEntry');
 
         // Input for component (ingredient name)
         const componentInput = document.createElement('input');

@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function addHolidayField() {
         const holidayDiv = document.createElement('div');
-        holidayDiv.classList.add('holiday-entry');
+        holidayDiv.classList.add('holidayEntry');
 
         const holidaySelect = document.createElement('select');
         holidaySelect.setAttribute('name', `holidays[${holidayList.children.length}].field`);
@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function addMealTypeField() {
         const mealTypeDiv = document.createElement('div');
-        mealTypeDiv.classList.add('meal-type-entry');
+        mealTypeDiv.classList.add('mealTypeEntry');
 
         const mealTypeSelect = document.createElement('select');
         mealTypeSelect.setAttribute('name', `mealTypes[${mealTypeList.children.length}].field`);
@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function addCuisineField() {
         const cuisineDiv = document.createElement('div');
-        cuisineDiv.classList.add('cuisine-entry');
+        cuisineDiv.classList.add('cuisineEntry');
 
         const cuisineSelect = document.createElement('select');
         cuisineSelect.setAttribute('name', `cuisines[${cuisineList.children.length}].field`);
@@ -165,7 +165,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function addAllergenField() {
         const allergenDiv = document.createElement('div');
-        allergenDiv.classList.add('allergen-entry');
+        allergenDiv.classList.add('allergenEntry');
 
         const allergenSelect = document.createElement('select');
         allergenSelect.setAttribute('name', `allergens[${allergenList.children.length}].field`);
@@ -214,7 +214,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function addDietTypeField() {
         const dietTypeDiv = document.createElement('div');
-        dietTypeDiv.classList.add('diet-type-entry');
+        dietTypeDiv.classList.add('dietTypeEntry');
 
         const dietTypeSelect = document.createElement('select');
         dietTypeSelect.setAttribute('name', `dietTypes[${dietTypeList.children.length}].field`);
@@ -261,7 +261,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function addCookingLevelField() {
         const cookingLevelDiv = document.createElement('div');
-        cookingLevelDiv.classList.add('cooking-level-entry');
+        cookingLevelDiv.classList.add('cookingLevelEntry');
 
         const cookingLevelSelect = document.createElement('select');
         cookingLevelSelect.setAttribute('name', `cookingLevels[${cookingLevelList.children.length}].field`);
@@ -307,7 +307,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function addCookingStyleField() {
         const cookingStyleDiv = document.createElement('div');
-        cookingStyleDiv.classList.add('cooking-style-entry');
+        cookingStyleDiv.classList.add('cookingStyleEntry');
 
         const cookingStyleSelect = document.createElement('select');
         cookingStyleSelect.setAttribute('name', `cookingStyles[${cookingStyleList.children.length}].field`);
