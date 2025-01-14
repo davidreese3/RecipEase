@@ -128,7 +128,6 @@ public class RecipeController {
 
     @RequestMapping(value = "/recipe/rating/add", method = RequestMethod.POST)
     public String processRatingForm(Model model, WebRating webRating, RedirectAttributes redirectAttributes){
-        System.out.println("}}" + webRating.getRatingValue());
         RecipeRating recipeRating = appService.addRating(securityService.getLoggedInUserId(), webRating.getRecipeId(), webRating);
         if (recipeRating != null) {
             redirectAttributes.addFlashAttribute("message", "Your rating ("+webRating.getRatingValue()+") has be added");
