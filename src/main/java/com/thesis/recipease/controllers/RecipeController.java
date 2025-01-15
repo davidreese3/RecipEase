@@ -80,10 +80,9 @@ public class RecipeController {
         recipe = recipeNormalizer.normalizeRecipe(recipe);
         model.addAttribute("recipe", recipe);
 
-        int userId = recipe.getRecipeInfo().getUserId();
-        String authorName = appService.getNameById(userId);
+
+        String authorName = appService.getNameById(recipe.getRecipeInfo().getUserId());
         model.addAttribute("authorName", authorName);
-        model.addAttribute("profileLink", "http://localhost:8080/profile/view?id=" + userId);
 
         prepopulatedEntryProcessor.gatherStartingStrings(recipe);
         List<GlossaryEntry> glossaryList = prepopulatedEntryProcessor.ProcessGlossaryEntries(recipe);

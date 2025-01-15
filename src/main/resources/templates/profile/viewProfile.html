@@ -65,29 +65,11 @@
                 <td th:text="${recipe.description}"></td>
                 <td th:text="${#numbers.formatDecimal(recipe.yield, 0, recipe.yield % 1 == 0 ? 0 : 1)} + ' ' + ${recipe.unitOfYield}"></td>
 
-                <td th:if="${recipe.prepHr > 0}"
-                    th:text="${recipe.prepHr} + ' Hour' + (${recipe.prepHr > 1 ? 's' : ''}) + ' ' + ${recipe.prepMin} + ' Minute' + (${recipe.prepMin > 1 ? 's' : ''})">
-                </td>
-                <td th:if="${recipe.prepHr == 0}"
-                    th:text="${recipe.prepMin} + ' Minute' + (${recipe.prepMin != 1 ? 's' : ''})">
-                </td>
+                <td th:text="${@recipeUtils.formatTimeShort(recipe.prepHr, recipe.prepMin)}"></td>
+                <td th:text="${@recipeUtils.formatTimeShort(recipe.processHr, recipe.processMin)}"></td>
+                <td th:text="${@recipeUtils.formatTimeShort(recipe.totalHr, recipe.totalMin)}"></td>
 
-                <td th:if="${recipe.processHr > 0}"
-                    th:text="${recipe.processHr} + ' Hour' + (${recipe.processHr > 1 ? 's' : ''}) + ' ' + ${recipe.processMin} + ' Minute' + (${recipe.processMin > 1 ? 's' : ''})">
-                </td>
-                <td th:if="${recipe.processHr == 0}"
-                    th:text="${recipe.processMin} + ' Minute' + (${recipe.processMin != 1 ? 's' : ''})">
-                </td>
-
-                <td th:if="${recipe.totalHr > 0}"
-                    th:text="${recipe.totalHr} + ' Hour' + (${recipe.totalHr > 1 ? 's' : ''}) + ' ' + ${recipe.totalMin} + ' Minute' + (${recipe.totalMin > 1 ? 's' : ''})">
-                </td>
-                <td th:if="${recipe.totalHr == 0}"
-                    th:text="${recipe.totalMin} + ' Minute' + (${recipe.totalMin != 1 ? 's' : ''})">
-                </td>
-                <td th:if="${recipe.ratingInfo.averageRating > 0}"
-                    th:text="${#numbers.formatDecimal(recipe.ratingInfo.averageRating, 0, recipe.ratingInfo.averageRating % 1 == 0 ? 0 : 1)} + ' (' + ${recipe.ratingInfo.numberOfRaters} + ')'"></td>
-                <td th:if="${recipe.ratingInfo.averageRating == 0}" th:text="'0 (0)'"></td>
+                <td th:text="${@recipeUtils.formatRatingShort(recipe.ratingInfo.averageRating, recipe.ratingInfo.numberOfRaters)}"></td>
             </tr>
         </tbody>
     </table>
