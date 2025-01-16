@@ -37,7 +37,7 @@ public class ProfileDaoImpl implements ProfileDao{
     // ------------------------------------------------
     @Override
     public Profile getProfileById(int id) {
-        final String SQL = "select * from profile where id = ?";
+        final String SQL = "select p.*, a.active from profile p left join account a on p.id = a.id where p.id = ?";
         try {
             return jdbcTemplate.queryForObject(SQL, new ProfileDaoImpl.ProfileMapper(), id);
         } catch (EmptyResultDataAccessException e) {
@@ -82,6 +82,7 @@ public class ProfileDaoImpl implements ProfileDao{
             profile.setCookingLevel(rs.getString("cookingLevel"));
             profile.setFavoriteDish(rs.getString("favoriteDish"));
             profile.setFavoriteCuisine(rs.getString("favoriteCuisine"));
+            profile.setActive(rs.getBoolean("active"));
             return profile;
         }
     }

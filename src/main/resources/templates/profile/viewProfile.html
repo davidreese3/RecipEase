@@ -64,17 +64,16 @@
                     </td>
                     <td th:text="${recipe.description}"></td>
                     <td th:text="${#numbers.formatDecimal(recipe.yield, 0, recipe.yield % 1 == 0 ? 0 : 1)} + ' ' + ${recipe.unitOfYield}"></td>
-
                     <td th:text="${@recipeUtils.formatTimeShort(recipe.prepHr, recipe.prepMin)}"></td>
                     <td th:text="${@recipeUtils.formatTimeShort(recipe.processHr, recipe.processMin)}"></td>
                     <td th:text="${@recipeUtils.formatTimeShort(recipe.totalHr, recipe.totalMin)}"></td>
-
                     <td th:text="${@recipeUtils.formatRatingShort(recipe.ratingInfo.averageRating, recipe.ratingInfo.numberOfRaters)}"></td>
                 </tr>
             </tbody>
         </table>
 
-        <span th:if="${recipes.size == 0}">This user has no published recipes.</span>
+        <span th:if="${recipes.size == 0 && isPersonal}">You have no published recipes.</span>
+        <span th:if="${recipes.size == 0 && !isPersonal}">This user has no published recipes.</span>
     </main>
 
     <footer>

@@ -23,6 +23,7 @@ public interface AccountDao {
     public Account updatePasswordById(int id, String password);
     public boolean verifyActivationCodeAndActivate(int id, int code, int activationCode);
     public Account updateEmailById(int id, String newEmail);
+    public Account deactivateAccountById(int id);
     // DELETE OPS
     public Account deleteAccountById(int id);
 

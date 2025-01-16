@@ -62,15 +62,20 @@ public class ProfileController {
             if(profile == null){
                 model.addAttribute("message",profileErrorMessageGenerator.getProfileError());
                 return "profile/viewProfileDNE";
-            } else {
+            }
+            else {
                 model.addAttribute("profile", profile);
                 List<RecipeInfo> recipes = appService.getRecipesByUserId(id);
                 for (RecipeInfo recipeInfo : recipes) {
                     recipeInfo = recipeNormalizer.normalizeRecipeInfo(recipeInfo);
                 }
                 model.addAttribute("recipes", recipes);
+
+                model.addAttribute("isPersonal", false);
+                if (!profile.isActive()){
+                    model.addAttribute("error", profileErrorMessageGenerator.getDeactivatedProfileError());
+                }
             }
-            model.addAttribute("isPersonal", false);
         }
         return "profile/viewProfile";
     }

@@ -25,7 +25,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
 
     -- profile
     create table if not exists profile (
-        id int references account(id) on delete cascade on update cascade,
+        id int references account(id),
         firstName varchar(20),
         lastName varchar(20),
         cookingLevel varchar(20),
@@ -92,7 +92,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
     create table if not exists comment (
         recipeId int references info(recipeId) on delete cascade,
         commentId serial, --used for PK
-        commentUserId int references account(id) on delete cascade on update cascade, --technically do they link?
+        commentUserId int references account(id), --technically do they link?
         commentText varchar(500),
         primary key(recipeId, commentID)
     );
@@ -100,7 +100,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
     --rating
     create table if not exists rating (
         recipeId int references info(recipeId) on delete cascade,
-        ratingUserId int references account(id) on delete cascade on update cascade, --technically do they link?
+        ratingUserId int references account(id), --technically do they link?
         ratingValue int,
         primary key (recipeId, ratingUserId)
     );

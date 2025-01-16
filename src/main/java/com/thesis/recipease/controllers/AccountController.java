@@ -158,21 +158,21 @@ public class AccountController {
     public String displayDeactivateForm(Model model){
         WebAccount webAccount = new WebAccount();
         model.addAttribute("webAccount",webAccount);
-        return "account/deleteAccount";
+        return "account/deactivateAccount";
     }
 
     @RequestMapping(value = "/account/deactivate", method = RequestMethod.POST)
-    public String ProcessDeactivateForm(Model model, HttpServletRequest request, Principal principal, HttpServletResponse response, WebAccount webAccount){
+    public String ProcessDeactivateForm(Model model, HttpServletRequest request, Principal principal, HttpServletResponse response, WebAccount webAccount, RedirectAttributes redirectAttributes){
         int id = securityService.getLoggedInUserId();
         if(!passwordEncoder.matches(webAccount.getPassword(),appService.getPasswordById(id))){
             model.addAttribute("error","The password you entered is incorrect.");
-            return "account/deleteAccount";
+            return "account/deactivateAccount";
         }
-        appService.deleteAccountById(id);
+        appService.deactivateAccountById(id);
         mailService.sendAccountDeletionEmail(principal.getName());
         invalidateSession(request, response);
-        model.addAttribute("success","Your account has been deactivated.");
-        return "login";
+        redirectAttributes.addFlashAttribute("success","Your account has been deactivated.");
+        return "redirect:/login";
     }
 
     // ------------------------------------------------

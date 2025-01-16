@@ -183,6 +183,18 @@ public class AccountDaoImpl implements AccountDao{
         });
         return getAccountById(id);
     }
+
+    @Override
+    public Account deactivateAccountById(int id) {
+        final String SQL = "update account set active = false where id = ?";
+        jdbcTemplate.update(dataSource -> {
+            PreparedStatement ps = dataSource.prepareStatement(SQL);
+            ps.setInt(1, id);
+            return ps;
+        });
+        return getAccountById(id);
+    }
+
     // ------------------------------------------------
     // DELETE OPS
     // ------------------------------------------------

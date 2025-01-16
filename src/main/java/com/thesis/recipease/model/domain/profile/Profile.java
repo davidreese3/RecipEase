@@ -7,15 +7,18 @@ public class Profile {
     String cookingLevel;
     String favoriteDish;
     String favoriteCuisine;
+    boolean active;
 
     public Profile(){}
-    public Profile(int id, String firstName, String lastName, String cookingLevel, String favoriteDish, String favoriteCuisine) {
+
+    public Profile(int id, String firstName, String lastName, String cookingLevel, String favoriteDish, String favoriteCuisine, boolean active) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.cookingLevel = cookingLevel;
         this.favoriteDish = favoriteDish;
         this.favoriteCuisine = favoriteCuisine;
+        this.active = active;
     }
 
     public int getId() {
@@ -64,5 +67,13 @@ public class Profile {
 
     public void setFavoriteCuisine(String favoriteCuisine) {
         this.favoriteCuisine = favoriteCuisine;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

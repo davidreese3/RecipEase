@@ -56,7 +56,7 @@ public class AppService {
     public boolean verifyActivationCodeAndActivate(int id, int code, int activationCode) { return accountDao.verifyActivationCodeAndActivate(id, code, activationCode); }
     public Account updateEmailById(int id, String newEmail){ return accountDao.updateEmailById(id, newEmail); }
     public Account updatePasswordById(int id, String password){ return accountDao.updatePasswordById(id, password); }
-
+    public Account deactivateAccountById(int id) { return accountDao.deactivateAccountById(id); }
 
     // DELETE OPS
     public Account deleteAccountById(int id){
