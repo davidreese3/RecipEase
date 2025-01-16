@@ -266,7 +266,9 @@ public class RecipeDaoImpl implements RecipeDao{
     @Override
     public Recipe getRecipeById(int recipeId){
         RecipeInfo recipeInfo = getRecipeInfo(recipeId);
-
+        if (recipeInfo == null) {
+            return null;
+        }
         List<RecipeIngredient> recipeIngredients = getRecipeIngredients(recipeId);
         List<RecipeDirection> recipeDirections = getRecipeDirections(recipeId);
 
@@ -291,7 +293,7 @@ public class RecipeDaoImpl implements RecipeDao{
         List<RecipeTag> recipeCookingStyles = getTags(recipeId, "cookingStyle");
         recipeTags.put("Cooking Style", getTagString(recipeCookingStyles));
 
-        List<RecipeComment> recipeComments= getComments(recipeId);
+        List<RecipeComment> recipeComments = getComments(recipeId);
 
         return new Recipe(recipeInfo, recipeIngredients, recipeDirections, recipeNote, recipeLinks, recipeUserSubs, recipePhoto, recipeTags, recipeComments);
     }

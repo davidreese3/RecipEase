@@ -10,7 +10,7 @@
 <body>
 <header>
     <div th:replace="~{fragments/headerAndNavbar}"></div>
-    <h2 th:text="'View ' + ${recipe.recipeInfo.name}"></h2>
+    <h1 th:text="'View ' + ${recipe.recipeInfo.name}"></h1>
     <div th:if="${message}" th:text="${message}" style="color: green;"></div>
 </header>
 

@@ -8,6 +8,7 @@ import com.thesis.recipease.model.web.recipe.WebPhoto;
 import com.thesis.recipease.model.web.recipe.WebRating;
 import com.thesis.recipease.model.web.recipe.WebRecipe;
 import com.thesis.recipease.model.web.recipe.WebComment;
+import com.thesis.recipease.util.error.RecipeErrorMessageGenerator;
 import com.thesis.recipease.util.normalizer.RecipeNormalizer;
 import com.thesis.recipease.util.normalizer.SubstitutionNormalizer;
 import com.thesis.recipease.util.processer.PrepopulatedEntryProcessor;
@@ -41,6 +42,8 @@ public class RecipeController {
     private SubstitutionNormalizer substitutionNormalizer;
     @Autowired
     private RecipeNormalizer recipeNormalizer;
+    @Autowired
+    private RecipeErrorMessageGenerator recipeErrorMessageGenerator;
 
     private final StorageService storageService;
 
@@ -76,6 +79,10 @@ public class RecipeController {
     @RequestMapping(value = "/recipe/view", method = RequestMethod.GET)
     public String displayRecipe(Model model, @RequestParam("recipeId") int recipeId) {
         Recipe recipe = appService.getRecipeById(recipeId);
+        if (recipe == null){
+            model.addAttribute("message", recipeErrorMessageGenerator.getRecipeError());
+            return "recipe/viewRecipeDNE";
+        }
         // reason for this is so that when versioning it can select the correct type from db
         recipe = recipeNormalizer.normalizeRecipe(recipe);
         model.addAttribute("recipe", recipe);

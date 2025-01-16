@@ -4,6 +4,7 @@ import com.thesis.recipease.db.AppService;
 import com.thesis.recipease.model.domain.profile.Profile;
 import com.thesis.recipease.model.domain.recipe.RecipeInfo;
 import com.thesis.recipease.model.web.profile.WebProfile;
+import com.thesis.recipease.util.error.ProfileErrorMessageGenerator;
 import com.thesis.recipease.util.normalizer.RecipeNormalizer;
 import com.thesis.recipease.util.security.SecurityService;
 import com.thesis.recipease.util.validator.ProfileValidator;
@@ -28,13 +29,16 @@ public class ProfileController {
     private SecurityService securityService;
     @Autowired
     private RecipeNormalizer recipeNormalizer;
+    @Autowired
+    ProfileErrorMessageGenerator profileErrorMessageGenerator;
 
     @RequestMapping(value = "/profile/view/personal", method = RequestMethod.GET)
     public String displayPersonalProfile(Model model){
         int userId = securityService.getLoggedInUserId();
         Profile profile = appService.getProfileById(userId);
         if(profile == null){
-            model.addAttribute("error","You do not have a profile created.");
+            model.addAttribute("message",profileErrorMessageGenerator.getPersonalProfileError());
+            return "profile/viewProfileDNE";
         }
         else{
             model.addAttribute("profile", profile);
@@ -55,8 +59,9 @@ public class ProfileController {
         }
         else {
             Profile profile = appService.getProfileById(id);
-            if (profile == null) {
-                model.addAttribute("error", "There is no profile associated with this user");
+            if(profile == null){
+                model.addAttribute("message",profileErrorMessageGenerator.getProfileError());
+                return "profile/viewProfileDNE";
             } else {
                 model.addAttribute("profile", profile);
                 List<RecipeInfo> recipes = appService.getRecipesByUserId(id);
