@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const holidayOptions = [
             { value: '', text: 'Holiday' },
+            { value: 'Birthday', text: 'Birthday' },
             { value: 'Christmas', text: 'Christmas' },
             { value: 'Diwali', text: 'Diwali' },
             { value: 'Easter', text: 'Easter' },
