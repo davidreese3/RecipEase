@@ -21,11 +21,11 @@
                 th:text="${criteria}"></li>
         </ul>
         <form action="#" th:action="@{/account/register}" th:object="${registrationForm}" method="post">
-            <h2>Account Information</h2>
+            <h3>Account Information</h3>
             <table>
                 <tr>
                     <td>Email:</td>
-                    <td><input type="text" th:field="*{webAccount.email}"/></td>
+                    <td><input type="text" th:field="*{webAccount.email}" maxlength="" required/></td>
                 </tr>
                 <tr>
                     <td>Password:</td>
@@ -37,7 +37,7 @@
                 </tr>
             </table>
 
-            <h2>Profile Information</h2>
+            <h3>Profile Information</h3>
             <table>
                 <tr>
                     <td>First Name:</td>

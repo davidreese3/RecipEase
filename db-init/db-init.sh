@@ -16,7 +16,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
     create table if not exists account (
         id serial unique,
         email varchar(50) unique not null,
-        password varchar(60) not null,
+        password varchar(97) not null,
         active boolean not null,
         activationCode int,
         primary key (id)
@@ -421,25 +421,21 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
         ('Tomato Sauce', 1, '0', 'Cups', '', 'Tomato Paste + Water', 0, '1/2', 'Cups', 'Mixed'),
         ('Cocoa Powder', 1, '0', 'Tablespoons', '', 'Carob Powder', 1, '0', 'Tablespoons', '');
 
-
-
     -- Insert into account table
-    INSERT INTO account (email, password, active, activationCode) VALUES
-    ('david33reese@gmail.com', '\$2b\$12\$FaFSKjH6oBrIk3JxHimLfuK2Q.QCqEczCn92.bX3pN/cly71SCNv6', TRUE, 123456),
-    ('frank_reese@yahoo.com', '\$2b\$12\$FaFSKjH6oBrIk3JxHimLfuK2Q.QCqEczCn92.bX3pN/cly71SCNv6', TRUE, 123456);
+        INSERT INTO account (email, password, active, activationCode) VALUES
+        ('david33reese@gmail.com', '\$argon2id\$v=19\$m=65536,t=3,p=1\$2qnmXPBW7VUtoy4tPmGe3w\$CopbmJNKnWJ9DklYbSqgjPSYHfPTIvctvmSYidgmBBM', TRUE, 123456),
+        ('frank_reese@yahoo.com', '\$argon2id\$v=19\$m=65536,t=3,p=1\$2qnmXPBW7VUtoy4tPmGe3w\$CopbmJNKnWJ9DklYbSqgjPSYHfPTIvctvmSYidgmBBM', TRUE, 123456);
 
 
-    -- Insert into profile table
-    INSERT INTO profile (id, firstName, lastName, cookingLevel, favoriteDish, favoriteCuisine) VALUES
-      (1, 'David', 'Reese', 'Intermediate', 'Spaghetti Carbonara', 'Italian'),
-      (2, 'Frank', 'Reese', 'Intermediate', 'Enchiladas', 'Mexican');
+        -- Insert into profile table
+        INSERT INTO profile (id, firstName, lastName, cookingLevel, favoriteDish, favoriteCuisine) VALUES
+          (1, 'David', 'Reese', 'Intermediate', 'Spaghetti Carbonara', 'Italian'),
+          (2, 'Frank', 'Reese', 'Intermediate', 'Enchiladas', 'Mexican');
 
-    -- Insert into authority table
-    INSERT INTO authority (email, role) VALUES
-      ('david33reese@gmail.com', 'ROLE_USER'),
-      ('frank_reese@yahoo.com', 'ROLE_USER');
-
-
+        -- Insert into authority table
+        INSERT INTO authority (email, role) VALUES
+          ('david33reese@gmail.com', 'ROLE_USER'),
+          ('frank_reese@yahoo.com', 'ROLE_USER');
 
     alter table account owner to docker;
     alter table authority owner to docker;

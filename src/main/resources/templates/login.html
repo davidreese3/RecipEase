@@ -15,7 +15,7 @@
 
     <main>
         <div th:if="${param.inactive}" style="color: red;">Your account is not currently active. If you are a new users, please check your email to activate. If you have deactivated it, please wait until we allow you reactivate it.</div>
-        <div th:if="${param.authenticationError}" style="color: red;">Invalid username and password.</div>
+        <div th:if="${param.authenticationError}" style="color: red;">Invalid username and/or password.</div>
         <div th:if="${param.loginRequiredError}" style="color: red;">You need to be logged in to access that page.</div>
         <div th:if="${param.logout}" style="color: green;">You have logged out.</div>
         <div th:if="${success}" style="color: green;" th:text="${success}"></div>
