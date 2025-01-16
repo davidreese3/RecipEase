@@ -21,7 +21,7 @@
         <table>
             <tr>
                 <td>Email</td>
-                <td><input type="text" th:field="*{email}" th:placeholder="${webAccount.email}" /></td>
+                <td><input type="text" th:field="*{email}" th:placeholder="${webAccount.email}" maxlength="50" required/></td>
             </tr>
             <tr>
                 <td><button type="submit">Edit</button></td><td></td>

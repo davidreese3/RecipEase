@@ -25,15 +25,15 @@
             <table>
                 <tr>
                     <td>Email:</td>
-                    <td><input type="text" th:field="*{webAccount.email}" maxlength="" required/></td>
+                    <td><input type="text" th:field="*{webAccount.email}" maxlength="50" required/></td>
                 </tr>
                 <tr>
                     <td>Password:</td>
-                    <td><input type="password" th:field="*{webAccount.password}"/></td>
+                    <td><input type="password" th:field="*{webAccount.password}" required/></td>
                 </tr>
                 <tr>
                     <td>Confirm Password:</td>
-                    <td><input type="password" th:field="*{webAccount.confirmPassword}"/></td>
+                    <td><input type="password" th:field="*{webAccount.confirmPassword}" required/></td>
                 </tr>
             </table>
 
@@ -41,20 +41,16 @@
             <table>
                 <tr>
                     <td>First Name:</td>
-                    <td><input type="text" th:field="*{webProfile.firstName}"/></td>
+                    <td><input type="text" th:field="*{webProfile.firstName}" maxlength="20" required/></td>
                 </tr>
                 <tr>
                     <td>Last Name:</td>
-                    <td><input type="text" th:field="*{webProfile.lastName}"/></td>
-                </tr>
-                <tr>
-                    <td>Favorite Dish:</td>
-                    <td><input type="text" th:field="*{webProfile.favoriteDish}"/></td>
+                    <td><input type="text" th:field="*{webProfile.lastName}" maxlength="20" required/></td>
                 </tr>
                 <tr>
                     <td>Cooking Level:</td>
                     <td>
-                        <select th:field="*{webProfile.cookingLevel}">
+                        <select th:field="*{webProfile.cookingLevel}" required>
                             <option value="">Select a cooking level</option>
                             <option value="Novice">Novice</option>
                             <option value="Beginner">Beginner</option>
@@ -66,8 +62,12 @@
                     </td>
                 </tr>
                 <tr>
+                    <td>Favorite Dish:</td>
+                    <td><input type="text" th:field="*{webProfile.favoriteDish}" maxlength="40" required/></td>
+                </tr>
+                <tr>
                     <td>Favorite Cuisine:</td>
-                    <td><input type="text" th:field="*{webProfile.favoriteCuisine}"/></td>
+                    <td><input type="text" th:field="*{webProfile.favoriteCuisine}" maxlength="40" required/></td>
                 </tr>
             </table>
 

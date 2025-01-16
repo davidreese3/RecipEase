@@ -19,17 +19,18 @@
             <table>
                 <tr>
                     <td>First Name:</td>
-                    <td><input type="text" th:field="*{firstName}" th:placeholder="${webProfile.firstName}" /></td>
+                    <td><input type="text" th:field="*{firstName}" th:placeholder="${webProfile.firstName}" maxlength="20" required/></td>
                 </tr>
                 <tr>
                     <td>Last Name:</td>
-                    <td><input type="text" th:field="*{lastName}" th:placeholder="${webProfile.lastName}" /></td>
+                    <td><input type="text" th:field="*{lastName}" th:placeholder="${webProfile.lastName}" maxlength="20" required/></td>
                 </tr>
                 <tr>
                     <td>Cooking Level:</td>
                     <td>
-                        <select th:field="*{cookingLevel}">
-                            <option value="" th:if="${webProfile.cookingLevel == null}">Select a cooking level</option>                        <option value="Novice">Novice</option>
+                        <select th:field="*{cookingLevel}" required>
+                            <option value="" th:if="${webProfile.cookingLevel == null}">Select a cooking level</option>
+                            <option value="Novice">Novice</option>
                             <option value="Beginner">Beginner</option>
                             <option value="Intermediate">Intermediate</option>
                             <option value="Advanced">Advanced</option>
@@ -40,11 +41,11 @@
                 </tr>
                 <tr>
                     <td>Favorite Dish:</td>
-                    <td><input type="text" th:field="*{favoriteDish}" th:placeholder="${webProfile.favoriteDish}" /></td>
+                    <td><input type="text" th:field="*{favoriteDish}" th:placeholder="${webProfile.favoriteDish}" maxlength="40" required/></td>
                 </tr>
                 <tr>
                     <td>Cooking Level:</td>
-                    <td><input type="text" th:field="*{favoriteCuisine}" th:placeholder="${webProfile.favoriteCuisine}" /></td>
+                    <td><input type="text" th:field="*{favoriteCuisine}" th:placeholder="${webProfile.favoriteCuisine}" maxlength="40" required/></td>
                 </tr>
                 <tr>
                     <td><button type="submit">Edit</button></td><td></td>
