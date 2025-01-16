@@ -8,187 +8,186 @@
 </head>
 
 <body>
-    <header>
-        <div th:replace="~{fragments/headerAndNavbar}"></div>
-        <h2 th:text="'View ' + ${recipe.recipeInfo.name}"></h2>
-        <div th:if="${message}" th:text="${message}" style="color: green;"></div>
-    </header>
+<header>
+    <div th:replace="~{fragments/headerAndNavbar}"></div>
+    <h2 th:text="'View ' + ${recipe.recipeInfo.name}"></h2>
+    <div th:if="${message}" th:text="${message}" style="color: green;"></div>
+</header>
 
-    <main>
-        <h3>Recipe Info</h3>
-        <table>
-            <tbody>
-                <tr>
-                    <td th:text="${recipe.recipeInfo.name}"></td>
-                </tr>
-                <tr>
-                    <td>
-                        <a th:href="${'http://localhost:8080/profile/view?id=' + recipe.recipeInfo.userId}" th:text="${authorName}"></a>
+<main>
+    <h3>Recipe Info</h3>
+    <table>
+        <tbody>
+            <tr>
+                <td th:text="${recipe.recipeInfo.name}"></td>
+            </tr>
+            <tr>
+                <td>
+                    <a th:href="${'http://localhost:8080/profile/view?id=' + recipe.recipeInfo.userId}" th:text="${authorName}"></a>
 
-                    </td>
-                </tr>
-                <tr>
-                    <td th:text="${@recipeUtils.formatRatingLong(recipe.recipeInfo.ratingInfo.averageRating, recipe.recipeInfo.ratingInfo.numberOfRaters)}"></td>
-                </tr>
-                <tr>
-                    <td th:text = ${recipe.recipeInfo.description}></td>
-                </tr>
-                <tr>
-                    <td th:text="'Makes ' + ${#numbers.formatDecimal(recipe.recipeInfo.yield, 0, recipe.recipeInfo.yield % 1 == 0 ? 0 : 1)} + ' ' + ${recipe.recipeInfo.unitOfYield}"></td>
-                </tr>
-                <tr>
-                    <td th:text="${@recipeUtils.formatTimeLong('Preparation Time', recipe.recipeInfo.prepHr, recipe.recipeInfo.prepMin)}"></td>
-                </tr>
-                <tr>
-                    <td th:text="${@recipeUtils.formatTimeLong('Process Time', recipe.recipeInfo.processHr, recipe.recipeInfo.processMin)}"></td>
-                </tr>
-                <tr>
-                    <td th:text="${@recipeUtils.formatTimeLong('Total Time', recipe.recipeInfo.totalHr, recipe.recipeInfo.totalMin)}"></td>
-                </tr>
-            </tbody>
-        </table>
-        <h3>Ingredients</h3>
-        <table>
-            <tbody>
-                <tr th:each="ingredient : ${recipe.recipeIngredients}">
-                    <td>
-                        <input type="checkbox">
-                        <span th:text="${@recipeUtils.formatIngredient(ingredient.wholeNumberQuantity, ingredient.fractionQuantity,
-                            ingredient.measurement, ingredient.preparation, ingredient.component)}"></span>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <h3>Directions</h3>
-    <!--    Simplified Directions-->
-        <table>
-            <tbody>
-                <tr th:each="direction : ${recipe.recipeDirections}">
-                    <td th:text="'Step ' + ${direction.stepNum} + ': ' + ${direction.direction}"></td>
-                    <td th:text="${@recipeUtils.formatDirectionDetails(direction.method, direction.level, direction.temp)}"></td>
-                </tr>
-            </tbody>
-        </table>
-        <div th:if="${glossaryList.size != 0}">
-            <hr>
-            <h3>Glossary Terms</h3>
-            <table>
-                <tbody>
-                    <tr th:each="entry : ${glossaryList}">
-                        <td>
-                            <strong th:text="${entry.term}"></strong>
-                            <span th:text="': ' + ${entry.definition}"></span>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div th:if="${substitutionList.size != 0}">
-            <hr>
-            <h3>Known Substitution</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Original</th>
-                        <th>Amount and Preparation</th>
-                        <th>Substituted</th>
-                        <th>Amount and Preparation</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="entry : ${substitutionList}">
-                        <td th:text="${entry.originalComponent}"></td>
-                        <td th:text="${@recipeUtils.formatSubs(entry.originalWholeNumberQuantity, entry.originalFractionQuantity, entry.originalMeasurement, entry.originalPreparation)}"></td>
-                        <td th:text="${entry.substitutedComponent}"></td>
-                        <td th:text="${@recipeUtils.formatSubs(entry.substitutedWholeNumberQuantity, entry.substitutedFractionQuantity, entry.substitutedMeasurement, entry.substitutedPreparation)}"></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+                </td>
+            </tr>
+            <tr>
+                <td th:text="${@recipeUtils.formatRatingLong(recipe.recipeInfo.ratingInfo.averageRating, recipe.recipeInfo.ratingInfo.numberOfRaters)}"></td>
+            </tr>
+            <tr>
+                <td th:text = ${recipe.recipeInfo.description}></td>
+            </tr>
+            <tr>
+                <td th:text="'Makes ' + ${#numbers.formatDecimal(recipe.recipeInfo.yield, 0, recipe.recipeInfo.yield % 1 == 0 ? 0 : 1)} + ' ' + ${recipe.recipeInfo.unitOfYield}"></td>
+            </tr>
+            <tr>
+                <td th:text="${@recipeUtils.formatTimeLong('Preparation Time', recipe.recipeInfo.prepHr, recipe.recipeInfo.prepMin)}"></td>
+            </tr>
+            <tr>
+                <td th:text="${@recipeUtils.formatTimeLong('Process Time', recipe.recipeInfo.processHr, recipe.recipeInfo.processMin)}"></td>
+            </tr>
+            <tr>
+                <td th:text="${@recipeUtils.formatTimeLong('Total Time', recipe.recipeInfo.totalHr, recipe.recipeInfo.totalMin)}"></td>
+            </tr>
+        </tbody>
+    </table>
+    <h3>Ingredients</h3>
+    <table>
+        <tbody>
+            <tr th:each="ingredient : ${recipe.recipeIngredients}">
+                <td>
+                    <input type="checkbox">
+                    <span th:text="${@recipeUtils.formatIngredient(ingredient.wholeNumberQuantity, ingredient.fractionQuantity,
+                        ingredient.measurement, ingredient.preparation, ingredient.component)}"></span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <h3>Directions</h3>
+    <table>
+        <tbody>
+            <tr th:each="direction : ${recipe.recipeDirections}">
+                <td th:text="'Step ' + ${direction.stepNum} + ': ' + ${direction.direction}"></td>
+                <td th:text="${@recipeUtils.formatDirectionDetails(direction.method, direction.level, direction.temp)}"></td>
+            </tr>
+        </tbody>
+    </table>
+    <div th:if="${glossaryList.size != 0}">
         <hr>
-        <div th:if="${recipe.recipeNote != null}">
-            <h3>Notes</h3>
-            <span th:text="${recipe.recipeNote.note}"></span>
-        </div>
-        <div th:if="${recipe.recipeLinks.size != 0}">
-            <h3>Links</h3>
-            <p>Links below are added by users to external sites</p>
-            <li th:each="link : ${recipe.recipeLinks}">
-                <a th:href="${link.link}" th:text="${link.link}"></a>
-            </li>
-        </div>
-        <div th:if="${recipe.userSubstitutionEntries.size != 0}">
-            <h3>User Substitutions</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Original</th>
-                        <th>Amount and Preparation</th>
-                        <th>Substituted</th>
-                        <th>Amount and Preparation</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="entry : ${recipe.userSubstitutionEntries}">
-
-                        <td th:text="${entry.originalComponent}"></td>
-                        <td th:text="${@recipeUtils.formatSubs(entry.originalWholeNumberQuantity, entry.originalFractionQuantity, entry.originalMeasurement, entry.originalPreparation)}"></td>
-                        <td th:text="${entry.substitutedComponent}"></td>
-                        <td th:text="${@recipeUtils.formatSubs(entry.substitutedWholeNumberQuantity, entry.substitutedFractionQuantity, entry.substitutedMeasurement, entry.substitutedPreparation)}"></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div th:if="${recipe.recipePhoto != null}">
-            <img th:src="${recipe.recipePhoto.fileLocation}" alt="Recipe Photo" height="200px">
-        </div>
-        <div th:if="${tagsExist}">
-            <h3>Recipe Tags</h3>
-            <ul>
-                <li th:each="tag : ${recipe.recipeTags}" th:if="${tag.value != ''}">
-                    <span th:text="${tag.key}"></span>:
-                    <span th:text="${tag.value}"></span>
-                </li>
-            </ul>
-        </div>
-        <div>
-            <h3>Comments</h3>
-            <table th:if="${recipe.recipeComments.size != 0}">
-                <tbody>
-                <tr th:each="comment : ${recipe.recipeComments}">
-                    <td th:text="${comment.commentUserName} + ': '"></td>
-                    <td th:text="${comment.commentText}"></td>
+        <h3>Glossary Terms</h3>
+        <table>
+            <tbody>
+                <tr th:each="entry : ${glossaryList}">
+                    <td>
+                        <strong th:text="${entry.term}"></strong>
+                        <span th:text="': ' + ${entry.definition}"></span>
+                    </td>
                 </tr>
-                </tbody>
-            </table>
+            </tbody>
+        </table>
+    </div>
+    <div th:if="${substitutionList.size != 0}">
+        <hr>
+        <h3>Known Substitution</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Original</th>
+                    <th>Amount and Preparation</th>
+                    <th>Substituted</th>
+                    <th>Amount and Preparation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="entry : ${substitutionList}">
+                    <td th:text="${entry.originalComponent}"></td>
+                    <td th:text="${@recipeUtils.formatSubs(entry.originalWholeNumberQuantity, entry.originalFractionQuantity, entry.originalMeasurement, entry.originalPreparation)}"></td>
+                    <td th:text="${entry.substitutedComponent}"></td>
+                    <td th:text="${@recipeUtils.formatSubs(entry.substitutedWholeNumberQuantity, entry.substitutedFractionQuantity, entry.substitutedMeasurement, entry.substitutedPreparation)}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <hr>
+    <div th:if="${recipe.recipeNote != null}">
+        <h3>Notes</h3>
+        <span th:text="${recipe.recipeNote.note}"></span>
+    </div>
+    <div th:if="${recipe.recipeLinks.size != 0}">
+        <h3>Links</h3>
+        <p>Links below are added by users to external sites</p>
+        <li th:each="link : ${recipe.recipeLinks}">
+            <a th:href="${link.link}" th:text="${link.link}"></a>
+        </li>
+    </div>
+    <div th:if="${recipe.userSubstitutionEntries.size != 0}">
+        <h3>User Substitutions</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Original</th>
+                    <th>Amount and Preparation</th>
+                    <th>Substituted</th>
+                    <th>Amount and Preparation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="entry : ${recipe.userSubstitutionEntries}">
 
-            <span th:if="${recipe.recipeComments.size == 0}">There are no comments on this recipe.</span>
-        </div>
-        <div>
-            <h4>Add your own comment:</h4>
-            <form id="commentForm" action="#" th:action="@{/recipe/comment/add}" th:object="${webComment}" method="post">
-                <input type="hidden" th:field="*{recipeId}" />
-                <textarea th:field="*{commentText}" placeholder="Add your comment here..." maxlength="500"></textarea>
-                <button type="submit">Add Comment</button>
-            </form>
-        </div>
-        <div>
-            <h4>Add your rating:</h4>
-            <form id="ratingForm" th:action="@{/recipe/rating/add}" th:object="${webRating}" method="post">
-                <input type="hidden" th:field="*{recipeId}" />
-                <button type="submit" name="ratingValue" value="1">1</button>
-                <button type="submit" name="ratingValue" value="2">2</button>
-                <button type="submit" name="ratingValue" value="3">3</button>
-                <button type="submit" name="ratingValue" value="4">4</button>
-                <button type="submit" name="ratingValue" value="5">5</button>
-            </form>
-        </div>
+                    <td th:text="${entry.originalComponent}"></td>
+                    <td th:text="${@recipeUtils.formatSubs(entry.originalWholeNumberQuantity, entry.originalFractionQuantity, entry.originalMeasurement, entry.originalPreparation)}"></td>
+                    <td th:text="${entry.substitutedComponent}"></td>
+                    <td th:text="${@recipeUtils.formatSubs(entry.substitutedWholeNumberQuantity, entry.substitutedFractionQuantity, entry.substitutedMeasurement, entry.substitutedPreparation)}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:if="${recipe.recipePhoto != null}">
+        <img th:src="${recipe.recipePhoto.fileLocation}" alt="Recipe Photo" height="200px">
+    </div>
+    <div th:if="${tagsExist}">
+        <h3>Recipe Tags</h3>
+        <ul>
+            <li th:each="tag : ${recipe.recipeTags}" th:if="${tag.value != ''}">
+                <span th:text="${tag.key}"></span>:
+                <span th:text="${tag.value}"></span>
+            </li>
+        </ul>
+    </div>
+    <div>
+        <h3>Comments</h3>
+        <table th:if="${recipe.recipeComments.size != 0}">
+            <tbody>
+            <tr th:each="comment : ${recipe.recipeComments}">
+                <td th:text="${comment.commentUserName} + ': '"></td>
+                <td th:text="${comment.commentText}"></td>
+            </tr>
+            </tbody>
+        </table>
 
-    </main>
+        <span th:if="${recipe.recipeComments.size == 0}">There are no comments on this recipe.</span>
+    </div>
+    <div>
+        <h4>Add your own comment:</h4>
+        <form id="commentForm" action="#" th:action="@{/recipe/comment/add}" th:object="${webComment}" method="post">
+            <input type="hidden" th:field="*{recipeId}" />
+            <textarea th:field="*{commentText}" placeholder="Add your comment here..." maxlength="500"></textarea>
+            <button type="submit">Add Comment</button>
+        </form>
+    </div>
+    <div>
+        <h4>Add your rating:</h4>
+        <form id="ratingForm" th:action="@{/recipe/rating/add}" th:object="${webRating}" method="post">
+            <input type="hidden" th:field="*{recipeId}" />
+            <button type="submit" name="ratingValue" value="1">1</button>
+            <button type="submit" name="ratingValue" value="2">2</button>
+            <button type="submit" name="ratingValue" value="3">3</button>
+            <button type="submit" name="ratingValue" value="4">4</button>
+            <button type="submit" name="ratingValue" value="5">5</button>
+        </form>
+    </div>
 
-    <footer>
-        <p>footer</p>
-    </footer>
+</main>
+
+<footer>
+    <p>footer</p>
+</footer>
 </body>
 
 </html>
