@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class RecipeErrorMessageGenerator {
-    private String [] recipeErrors = {
+    private static final String [] RECIPE_ERRORS = {
             "Oops! Looks like this recipe took a vacation. Try cooking up a search for something else!",
             "Yikes! This recipe has gone missing. Maybe it’s hiding in the pantry?",
             "Well, butter my biscuit! This recipe doesn’t exist. Let’s whip up another search!",
@@ -16,6 +16,6 @@ public class RecipeErrorMessageGenerator {
     };
 
     public String getRecipeError(){
-        return recipeErrors[(int) Math.floor(Math.random() * 7)];
+        return RECIPE_ERRORS[(int) Math.floor(Math.random() * RECIPE_ERRORS.length)];
     }
 }

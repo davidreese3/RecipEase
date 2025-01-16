@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ProfileErrorMessageGenerator {
-    private String [] profileErrors = {
+    private static final String [] PROFILE_ERRORS = {
             "Profile Not Found! Did it go on vacation? Let’s find someone else!",
             "Oops! This profile is playing hide and seek. Try another chef.",
             "This chef must be undercover. Their profile is nowhere to be found!",
@@ -16,7 +16,7 @@ public class ProfileErrorMessageGenerator {
     };
 
     public String getProfileError(){
-        return profileErrors[(int) Math.floor(Math.random() * 7)];
+        return PROFILE_ERRORS[(int) Math.floor(Math.random() * PROFILE_ERRORS.length)];
     }
 
     public String getPersonalProfileError(){
