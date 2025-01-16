@@ -4,10 +4,7 @@ import com.thesis.recipease.db.AppService;
 import com.thesis.recipease.model.domain.glossary.GlossaryEntry;
 import com.thesis.recipease.model.domain.recipe.*;
 import com.thesis.recipease.model.domain.substitution.SubstitutionEntry;
-import com.thesis.recipease.model.web.recipe.WebPhoto;
-import com.thesis.recipease.model.web.recipe.WebRating;
-import com.thesis.recipease.model.web.recipe.WebRecipe;
-import com.thesis.recipease.model.web.recipe.WebComment;
+import com.thesis.recipease.model.web.recipe.*;
 import com.thesis.recipease.util.error.RecipeErrorMessageGenerator;
 import com.thesis.recipease.util.normalizer.RecipeNormalizer;
 import com.thesis.recipease.util.normalizer.SubstitutionNormalizer;
@@ -15,6 +12,7 @@ import com.thesis.recipease.util.processer.PrepopulatedEntryProcessor;
 import com.thesis.recipease.util.sanitizer.RecipeSanitizer;
 import com.thesis.recipease.util.security.SecurityService;
 import com.thesis.recipease.util.storage.StorageService;
+import com.thesis.recipease.util.validator.RecipeValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,6 +42,8 @@ public class RecipeController {
     private RecipeNormalizer recipeNormalizer;
     @Autowired
     private RecipeErrorMessageGenerator recipeErrorMessageGenerator;
+    @Autowired
+    private RecipeValidator recipeValidator;
 
     private final StorageService storageService;
 
@@ -67,6 +67,15 @@ public class RecipeController {
             webRecipe.setPhoto(new WebPhoto("recipe|" + extension));
         } else {
             webRecipe.setPhoto(null);
+        }
+        if (!recipeValidator.isRecipeValid(model, webRecipe)) {
+            model.addAttribute(webRecipe);
+            for(WebIngredient ingredient : webRecipe.getIngredients()){
+                if(ingredient != null) {
+                    System.out.println("WebIngredient || " + ingredient.getComponent());
+                }
+            }
+            return "recipe/createRecipe";
         }
         Recipe recipe = appService.addRecipe(securityService.getLoggedInUserId(), webRecipe);
         if (!file.isEmpty()) {
