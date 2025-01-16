@@ -8,18 +8,18 @@
 </head>
 
 <body>
-<header>
-    <div th:replace="~{fragments/headerAndNavbar}"></div>
-    <h1>Recipe Does Not Exist</h1>
-</header>
+    <header>
+        <div th:replace="~{fragments/headerAndNavbar}"></div>
+        <h2>Recipe Does Not Exist</h2>
+    </header>
 
-<main>
-    <div th:if="${message}" th:text="${message}"></div>
-</main>
+    <main>
+        <div th:if="${message}" th:text="${message}"></div>
+    </main>
 
-<footer>
-    <p>footer</p>
-</footer>
+    <footer>
+        <p>footer</p>
+    </footer>
 </body>
 
 </html>

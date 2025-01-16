@@ -8,22 +8,18 @@
 </head>
 
 <body>
-<header>
-    <nav></nav>
-    <h1>Your account has been activated!</h1>
-</header>
-
-<main>
-
-    <div>
-        <button onclick="location.href='/login'">Login</button>
-    </div>
-
-</main>
-
-<footer>
-    <p>footer</p>
-</footer>
+    <header>
+        <div th:replace="~{fragments/headerAndNavbar}"></div>
+        <h2>Your account has been activated!</h2>
+    </header>
+    <main>
+        <div>
+            <button onclick="location.href='/login'">Login</button>
+        </div>
+    </main>
+    <footer>
+        <p>footer</p>
+    </footer>
 </body>
 
 </html>

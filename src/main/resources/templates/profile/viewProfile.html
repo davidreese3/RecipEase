@@ -9,77 +9,77 @@
 </head>
 
 <body>
-<header>
-    <div th:replace="~{fragments/headerAndNavbar}"></div>
-    <h1 th:if="${isPersonal}">View Your Profile</h1>
-    <h1 th:if="${!isPersonal}" th:text="'View ' + ${profile.firstName} + ' ' + ${profile.lastName} + '\'s Profile'"></h1>
-</header>
+    <header>
+        <div th:replace="~{fragments/headerAndNavbar}"></div>
+        <h2 th:if="${isPersonal}">View Your Profile</h2>
+        <h2 th:if="${!isPersonal}" th:text="'View ' + ${profile.firstName} + ' ' + ${profile.lastName} + '\'s Profile'"></h2>
+    </header>
 
-<main>
-    <button onclick="location.href='/profile/edit'" th:if="${isPersonal}">Edit Profile</button>
-    <button onclick="location.href='/account/edit/email'" th:if="${isPersonal}">Edit Email</button>
-    <button onclick="location.href='/account/edit/password'" th:if="${isPersonal}">Edit Password</button>
-    <button onclick="location.href='/account/delete'" th:if="${isPersonal}">Delete Account</button>
-    <p>main</p>
-    <div th:if="${error}" th:text="${error}" style="color: red;"></div>
-    <div th:if="${message}" th:text="${message}" style="color: green;"></div>
-    <table th:if="${profile}">
-        <tr>
-            <td>First Name:</td>
-            <td th:text="${profile.firstName}"></td>
-        </tr>
-        <tr>
-            <td>Last Name:</td>
-            <td th:text="${profile.lastName}"></td>
-        </tr>
-        <tr>
-            <td>Cooking Level:</td>
-            <td th:text="${profile.cookingLevel}"></td>
-        </tr>
-        <tr>
-            <td>Favorite Dish:</td>
-            <td th:text="${profile.favoriteDish}"></td>
-        </tr>
-        <tr>
-            <td>Favorite Cuisine:</td>
-            <td th:text="${profile.favoriteCuisine}"></td>
-        </tr>
-    </table>
-    <br>
-    <table th:if="${recipes.size != 0}">
-        <thead>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Makes</th>
-            <th>Prep Time</th>
-            <th>Make Time</th>
-            <th>Total Time</th>
-            <th>Rating</th>
-        </thead>
-
-        <tbody>
-            <tr th:each="recipe : ${recipes}">
-                <td>
-                    <a th:href="${'http://localhost:8080/recipe/view?recipeId=' + recipe.recipeId}" th:text="${recipe.name}"></a>
-                </td>
-                <td th:text="${recipe.description}"></td>
-                <td th:text="${#numbers.formatDecimal(recipe.yield, 0, recipe.yield % 1 == 0 ? 0 : 1)} + ' ' + ${recipe.unitOfYield}"></td>
-
-                <td th:text="${@recipeUtils.formatTimeShort(recipe.prepHr, recipe.prepMin)}"></td>
-                <td th:text="${@recipeUtils.formatTimeShort(recipe.processHr, recipe.processMin)}"></td>
-                <td th:text="${@recipeUtils.formatTimeShort(recipe.totalHr, recipe.totalMin)}"></td>
-
-                <td th:text="${@recipeUtils.formatRatingShort(recipe.ratingInfo.averageRating, recipe.ratingInfo.numberOfRaters)}"></td>
+    <main>
+        <button onclick="location.href='/profile/edit'" th:if="${isPersonal}">Edit Profile</button>
+        <button onclick="location.href='/account/edit/email'" th:if="${isPersonal}">Edit Email</button>
+        <button onclick="location.href='/account/edit/password'" th:if="${isPersonal}">Edit Password</button>
+        <button onclick="location.href='/account/delete'" th:if="${isPersonal}">Deactivate Account</button>
+        <p>main</p>
+        <div th:if="${error}" th:text="${error}" style="color: red;"></div>
+        <div th:if="${message}" th:text="${message}" style="color: green;"></div>
+        <table th:if="${profile}">
+            <tr>
+                <td>First Name:</td>
+                <td th:text="${profile.firstName}"></td>
             </tr>
-        </tbody>
-    </table>
+            <tr>
+                <td>Last Name:</td>
+                <td th:text="${profile.lastName}"></td>
+            </tr>
+            <tr>
+                <td>Cooking Level:</td>
+                <td th:text="${profile.cookingLevel}"></td>
+            </tr>
+            <tr>
+                <td>Favorite Dish:</td>
+                <td th:text="${profile.favoriteDish}"></td>
+            </tr>
+            <tr>
+                <td>Favorite Cuisine:</td>
+                <td th:text="${profile.favoriteCuisine}"></td>
+            </tr>
+        </table>
+        <br>
+        <table th:if="${recipes.size != 0}">
+            <thead>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Makes</th>
+                <th>Prep Time</th>
+                <th>Make Time</th>
+                <th>Total Time</th>
+                <th>Rating</th>
+            </thead>
 
-    <span th:if="${recipes.size == 0}">This user has no published recipes.</span>
-</main>
+            <tbody>
+                <tr th:each="recipe : ${recipes}">
+                    <td>
+                        <a th:href="${'http://localhost:8080/recipe/view?recipeId=' + recipe.recipeId}" th:text="${recipe.name}"></a>
+                    </td>
+                    <td th:text="${recipe.description}"></td>
+                    <td th:text="${#numbers.formatDecimal(recipe.yield, 0, recipe.yield % 1 == 0 ? 0 : 1)} + ' ' + ${recipe.unitOfYield}"></td>
 
-<footer>
-    <p>footer</p>
-</footer>
+                    <td th:text="${@recipeUtils.formatTimeShort(recipe.prepHr, recipe.prepMin)}"></td>
+                    <td th:text="${@recipeUtils.formatTimeShort(recipe.processHr, recipe.processMin)}"></td>
+                    <td th:text="${@recipeUtils.formatTimeShort(recipe.totalHr, recipe.totalMin)}"></td>
+
+                    <td th:text="${@recipeUtils.formatRatingShort(recipe.ratingInfo.averageRating, recipe.ratingInfo.numberOfRaters)}"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <span th:if="${recipes.size == 0}">This user has no published recipes.</span>
+    </main>
+
+    <footer>
+        <p>footer</p>
+    </footer>
 </body>
 
 </html>

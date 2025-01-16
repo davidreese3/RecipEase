@@ -8,27 +8,27 @@
 </head>
 
 <body>
-<header>
-    <div th:replace="~{fragments/headerAndNavbar}"></div>
-    <h2>Welcome to RecipEase</h2>
-</header>
+    <header>
+        <div th:replace="~{fragments/headerAndNavbar}"></div>
+        <h2>Welcome to RecipEase</h2>
+    </header>
 
-<main>
-    <p>main</p>
-    <button onclick="location.href='/profile/view/personal'">View Personal Profile</button>
-    <button onclick="location.href='/profile/view?id=2'">View Other Profile</button>
-    <button onclick="location.href='/glossary/view'">View Glossary</button>
-    <button onclick="location.href='/substitution/view'">View Substitutions</button>
-    <div>
-        <form th:action="@{/logout}" method="post">
-            <button type="submit">Logout</button>
-        </form>
-    </div>
-</main>
+    <main>
+        <p>main</p>
+        <button onclick="location.href='/profile/view/personal'">View Personal Profile</button>
+        <button onclick="location.href='/profile/view?id=2'">View Other Profile</button>
+        <button onclick="location.href='/glossary/view'">View Glossary</button>
+        <button onclick="location.href='/substitution/view'">View Substitutions</button>
+        <div>
+            <form th:action="@{/logout}" method="post">
+                <button type="submit">Logout</button>
+            </form>
+        </div>
+    </main>
 
-<footer>
-    <p>footer</p>
-</footer>
+    <footer>
+        <p>footer</p>
+    </footer>
 </body>
 
 </html>

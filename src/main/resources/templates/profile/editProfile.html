@@ -8,54 +8,54 @@
 </head>
 
 <body>
-<header>
-    <nav></nav>
-    <h1>Edit your profile</h1>
-</header>
+    <header>
+        <div th:replace="~{fragments/headerAndNavbar}"></div>
+        <h2>Edit your profile</h2>
+    </header>
 
-<main>
-    <div th:if="${error}" th:text="${error}" style="color: red;"></div>
-    <form action="#" th:action="@{/profile/edit}" th:object="${webProfile}" method="post">
-        <table>
-            <tr>
-                <td>First Name:</td>
-                <td><input type="text" th:field="*{firstName}" th:placeholder="${webProfile.firstName}" /></td>
-            </tr>
-            <tr>
-                <td>Last Name:</td>
-                <td><input type="text" th:field="*{lastName}" th:placeholder="${webProfile.lastName}" /></td>
-            </tr>
-            <tr>
-                <td>Cooking Level:</td>
-                <td>
-                    <select th:field="*{cookingLevel}">
-                        <option value="" th:if="${webProfile.cookingLevel == null}">Select a cooking level</option>                        <option value="Novice">Novice</option>
-                        <option value="Beginner">Beginner</option>
-                        <option value="Intermediate">Intermediate</option>
-                        <option value="Advanced">Advanced</option>
-                        <option value="Expert">Expert</option>
-                        <option value="Chef-Level">Chef-Level</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>Favorite Dish:</td>
-                <td><input type="text" th:field="*{favoriteDish}" th:placeholder="${webProfile.favoriteDish}" /></td>
-            </tr>
-            <tr>
-                <td>Cooking Level:</td>
-                <td><input type="text" th:field="*{favoriteCuisine}" th:placeholder="${webProfile.favoriteCuisine}" /></td>
-            </tr>
-            <tr>
-                <td><button type="submit">Edit</button></td><td></td>
-            </tr>
-        </table>
-    </form>
-</main>
+    <main>
+        <div th:if="${error}" th:text="${error}" style="color: red;"></div>
+        <form action="#" th:action="@{/profile/edit}" th:object="${webProfile}" method="post">
+            <table>
+                <tr>
+                    <td>First Name:</td>
+                    <td><input type="text" th:field="*{firstName}" th:placeholder="${webProfile.firstName}" /></td>
+                </tr>
+                <tr>
+                    <td>Last Name:</td>
+                    <td><input type="text" th:field="*{lastName}" th:placeholder="${webProfile.lastName}" /></td>
+                </tr>
+                <tr>
+                    <td>Cooking Level:</td>
+                    <td>
+                        <select th:field="*{cookingLevel}">
+                            <option value="" th:if="${webProfile.cookingLevel == null}">Select a cooking level</option>                        <option value="Novice">Novice</option>
+                            <option value="Beginner">Beginner</option>
+                            <option value="Intermediate">Intermediate</option>
+                            <option value="Advanced">Advanced</option>
+                            <option value="Expert">Expert</option>
+                            <option value="Chef-Level">Chef-Level</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Favorite Dish:</td>
+                    <td><input type="text" th:field="*{favoriteDish}" th:placeholder="${webProfile.favoriteDish}" /></td>
+                </tr>
+                <tr>
+                    <td>Cooking Level:</td>
+                    <td><input type="text" th:field="*{favoriteCuisine}" th:placeholder="${webProfile.favoriteCuisine}" /></td>
+                </tr>
+                <tr>
+                    <td><button type="submit">Edit</button></td><td></td>
+                </tr>
+            </table>
+        </form>
+    </main>
 
-<footer>
-    <button onclick="location.href='/profile/view/personal'">Back to profile</button>
-</footer>
+    <footer>
+        <button onclick="location.href='/profile/view/personal'">Back to profile</button>
+    </footer>
 </body>
 
 </html>

@@ -8,40 +8,40 @@
 </head>
 
 <body>
-<header>
-    <nav></nav>
-    <h1>Welcome to RecipEase</h1>
-</header>
+    <header>
+        <div th:replace="~{fragments/headerAndNavbar}"></div>
+        <h2>Welcome to RecipEase</h2>
+    </header>
 
-<main>
-    <div th:if="${param.inactive}" style="color: red;">Your account is not active. Please check your email to activate it.</div>
-    <div th:if="${param.error}" style="color: red;">Invalid username and password.</div>
-    <div th:if="${param.logout}" style="color: green;">You have logged out.</div>
-    <div th:if="${success}" style="color: green;" th:text="${success}"></div>
-    <form name="f" th:action="@{/login}" method="post">
-        <table>
-            <tr>
-                <td><label for="username">Email:</label></td>
-                <td><input type="text" id="username" name="username" /></td>
-            </tr>
-            <tr>
-                <td><label for="password">Password:</label></td>
-                <td><input type="password" id="password" name="password" /></td>
-            </tr>
-            <tr>
-                <td><button type="submit">Log in</button></td>
-            </tr>
-        </table>
-        <a href="/">Cancel<br></a>
-    </form>
-    <div>
-        <button onclick="location.href='/account/register'">Register</button>
-    </div>
-</main>
+    <main>
+        <div th:if="${param.inactive}" style="color: red;">Your account is not active. Please check your email to activate it.</div>
+        <div th:if="${param.error}" style="color: red;">Invalid username and password.</div>
+        <div th:if="${param.logout}" style="color: green;">You have logged out.</div>
+        <div th:if="${success}" style="color: green;" th:text="${success}"></div>
+        <form name="f" th:action="@{/login}" method="post">
+            <table>
+                <tr>
+                    <td><label for="username">Email:</label></td>
+                    <td><input type="text" id="username" name="username" /></td>
+                </tr>
+                <tr>
+                    <td><label for="password">Password:</label></td>
+                    <td><input type="password" id="password" name="password" /></td>
+                </tr>
+                <tr>
+                    <td><button type="submit">Log in</button></td>
+                </tr>
+            </table>
+            <a href="/">Cancel<br></a>
+        </form>
+        <div>
+            <button onclick="location.href='/account/register'">Register</button>
+        </div>
+    </main>
 
-<footer>
-    <p>footer</p>
-</footer>
+    <footer>
+        <p>footer</p>
+    </footer>
 </body>
 
 </html>

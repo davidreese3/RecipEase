@@ -9,19 +9,19 @@
 </head>
 
 <body>
-<header>
-    <nav></nav>
-    <h1>Your account has been registered!</h1>
-</header>
+    <header>
+        <div th:replace="~{fragments/headerAndNavbar}"></div>
+        <h2>Your account has been registered!</h2>
+    </header>
 
-<main>
-    <p th:text="'An account has been created for ' + ${email} + '.'">
-    <p>Please check your email regarding account activation.</p>
-</main>
+    <main>
+        <p th:text="'An account has been created for ' + ${email} + '.'">
+        <p>Please check your email regarding account activation.</p>
+    </main>
 
-<footer>
-    <button onclick="location.href='/'">Back to homepage</button>
-</footer>
+    <footer>
+        <button onclick="location.href='/'">Back to homepage</button>
+    </footer>
 </body>
 
 </html>
