@@ -105,6 +105,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.context.DelegatingSecurityContextRepository;
@@ -139,7 +140,7 @@ public class WebSecurityConfig {
             if (exception.getCause() instanceof CustomUserDetailsService.InactiveAccountException) {
                 response.sendRedirect("/login?inactive");
             } else {
-                response.sendRedirect("/login?error");
+                response.sendRedirect("/login?authenticationError");
             }
         };
     }
@@ -159,8 +160,11 @@ public class WebSecurityConfig {
             }
         });
 
-        http.exceptionHandling(exceptionHandling -> exceptionHandling
-                .accessDeniedPage("/403"));
+//        http.exceptionHandling(exceptionHandling -> exceptionHandling
+//                .accessDeniedPage("/403"));
+        http.exceptionHandling(exceptionHandling ->
+                exceptionHandling.authenticationEntryPoint(customAuthenticationEntryPoint())
+        );
 
         http.formLogin(formLogin -> formLogin
                 .loginPage("/login")
@@ -179,6 +183,13 @@ public class WebSecurityConfig {
         http.securityContext(securityContext -> securityContext.requireExplicitSave(true));
 
         return http.build();
+    }
+
+    @Bean
+    public AuthenticationEntryPoint customAuthenticationEntryPoint() {
+        return (request, response, authException) -> {
+            response.sendRedirect("/login?loginRequiredError");
+        };
     }
 
     @Bean
