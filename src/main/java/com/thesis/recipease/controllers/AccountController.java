@@ -154,15 +154,15 @@ public class AccountController {
         return "account/editPassword";
     }
 
-    @RequestMapping(value = "/account/delete", method = RequestMethod.GET)
-    public String displayDeleteForm(Model model){
+    @RequestMapping(value = "/account/deactivate", method = RequestMethod.GET)
+    public String displayDeactivateForm(Model model){
         WebAccount webAccount = new WebAccount();
         model.addAttribute("webAccount",webAccount);
         return "account/deleteAccount";
     }
 
-    @RequestMapping(value = "/account/delete", method = RequestMethod.POST)
-    public String ProcessDeleteForm(Model model, HttpServletRequest request, Principal principal, HttpServletResponse response, WebAccount webAccount){
+    @RequestMapping(value = "/account/deactivate", method = RequestMethod.POST)
+    public String ProcessDeactivateForm(Model model, HttpServletRequest request, Principal principal, HttpServletResponse response, WebAccount webAccount){
         int id = securityService.getLoggedInUserId();
         if(!passwordEncoder.matches(webAccount.getPassword(),appService.getPasswordById(id))){
             model.addAttribute("error","The password you entered is incorrect.");
@@ -171,7 +171,7 @@ public class AccountController {
         appService.deleteAccountById(id);
         mailService.sendAccountDeletionEmail(principal.getName());
         invalidateSession(request, response);
-        model.addAttribute("success","Your account has been deleted.");
+        model.addAttribute("success","Your account has been deactivated.");
         return "login";
     }
 

@@ -15,14 +15,14 @@
 
     <main>
         <div th:if="${error}" th:text="${error}" style="color: red;"></div>
-        <form action="#" th:action="@{/account/delete}" th:object="${webAccount}" method="post">
+        <form action="#" th:action="@{/account/deactivate}" th:object="${webAccount}" method="post">
             <table>
                 <tr>
                     <td>Password:</td>
                     <td><input type="password" th:field="*{password}" /></td>
                 </tr>
                 <tr>
-                    <td><button type="submit">Delete</button></td><td></td>
+                    <td><button type="submit">Deactivate</button></td><td></td>
                 </tr>
             </table>
         </form>

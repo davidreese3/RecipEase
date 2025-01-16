@@ -19,7 +19,7 @@
         <button onclick="location.href='/profile/edit'" th:if="${isPersonal}">Edit Profile</button>
         <button onclick="location.href='/account/edit/email'" th:if="${isPersonal}">Edit Email</button>
         <button onclick="location.href='/account/edit/password'" th:if="${isPersonal}">Edit Password</button>
-        <button onclick="location.href='/account/delete'" th:if="${isPersonal}">Deactivate Account</button>
+        <button onclick="location.href='/account/deactivate'" th:if="${isPersonal}">Deactivate Account</button>
         <p>main</p>
         <div th:if="${error}" th:text="${error}" style="color: red;"></div>
         <div th:if="${message}" th:text="${message}" style="color: green;"></div>
