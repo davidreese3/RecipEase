@@ -8,11 +8,6 @@
                 <li><a href="#">Account</a>
                     <ul>
                         <li><a href="/profile/view/personal">View Your Profile</a></li>
-                        <li>
-                            <form th:action="@{/logout}" method="post">
-                                <button type="submit">Logout</button>
-                            </form>
-                        </li>
                         <li><a href="/profile/edit">Edit Profile</a></li>
                         <li><a href="/account/edit/email">Edit Email</a></li>
                         <li><a href="/account/edit/password">Edit Password</a></li>
@@ -40,6 +35,11 @@
                     <ul>
                         <li><a href="/substitution/view">View Known Substitutions</a></li>
                     </ul>
+                </li>
+                <li>
+                    <form th:action="@{/logout}" method="post">
+                        <button type="submit">Logout</button>
+                    </form>
                 </li>
             </ul>
         </nav>
