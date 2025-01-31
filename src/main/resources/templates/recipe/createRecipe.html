@@ -10,288 +10,525 @@
     <script src="/js/addLink.js" defer></script>
     <script src="/js/addUserSubstitutionEntry.js" defer></script>
     <script src="/js/addTags.js" defer></script>
+    <script src="/js/repopulateRemoveButtons.js" defer></script>
 </head>
 
 <body>
-    <header>
-        <div th:replace="~{fragments/headerAndNavbar}"></div>
-        <h2>Create your recipe</h2>
-    </header>
+<header>
+    <div th:replace="~{fragments/headerAndNavbar}"></div>
+    <h2>Create your recipe</h2>
+</header>
 
-    <main>
-        <div th:if="${error}" th:text="${error}" style="color: red;"></div>
-        <form id= "recipeForm" action="#" th:action="@{/recipe/create}" th:object="${webRecipe}" method="post" enctype="multipart/form-data">
-            <table>
-                <tr>
-                    <td><h3>Required Fields</h3></td>
-                </tr>
-                <tr>
-                    <td><h4>Recipe Info</h4></td>
-                </tr>
-                <tr>
-                    <td><label>Recipe Name: </label><input type="text" th:field="*{info.name}" placeholder="Recipe Name" maxlength="40" required/></td>
-                </tr>
-                <tr>
-                    <td><label>Recipe Description: </label><textarea th:field="*{info.description}" placeholder="Recipe Description: Not required, but encouraged." maxlength="1000"></textarea></td>
-                </tr>
-                <tr>
-                    <td><label>Makes: </label><input type="number" step="0.1" min="0.1" th:field="*{info.yield}" placeholder="Quantity recipe makes" required/></td>
-                    <td><label>Unit</label>
-                        <select th:field="*{info.unitOfYield}" required>
-                            <option value="">Select a Unit</option>
-                            <!-- Specific Food Portions -->
-                            <option value="Bowls">Bowls</option>
-                            <option value="Cakes">Cakes</option>
-                            <option value="Cookies">Cookies</option>
-                            <option value="Cupcakes">Cupcakes</option>
-                            <option value="Finished Dishes">Finished Dishes (fully prepared meals)</option>
-                            <option value="Gallons">Gallons (gal)</option>
-                            <option value="Grams">Grams (g)</option>
-                            <option value="Kilograms">Kilograms (kg)</option>
-                            <option value="Liters">Liters (l)</option>
-                            <option value="Loaves">Loaves</option>
-                            <option value="Milliliters">Milliliters (ml)</option>
-                            <option value="Muffins">Muffins</option>
-                            <option value="Ounces">Ounces (oz)</option>
-                            <option value="Patties">Patties</option>
-                            <option value="Pieces">Pieces</option>
-                            <option value="Pies">Pies</option>
-                            <option value="Pints">Pints (pt)</option>
-                            <option value="Plates">Plates</option>
-                            <option value="Quarts">Quarts (qt)</option>
-                            <option value="Rolls">Rolls</option>
-                            <option value="Servings">Servings</option>
-                            <option value="Slices">Slices</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td><label>Preparation Hours: </label><input type="number" step="1" min="0" value="0" th:field="*{info.prepHr}"></td>
-                    <td><label>Preparation Minutes: </label><input type="number" step="1" min="0" max="59" value="0" th:field="*{info.prepMin}"></td>
-                </tr>
-                <tr>
-                    <td><label>Process Hours: </label><input type="number" step="1" min="0" value="0" th:field="*{info.processHr}"></td>
-                    <td><label>Process Minutes:</label><input type="number" step="1" min="0" max="59" value="0" th:field="*{info.processMin}"></td>
-                </tr>
-                <tr>
-                    <td>
-                        <h4>Ingredients</h4>
-                        <button type="button" id="addIngredientBtn">Add Ingredient</button>
-                        <div id="ingredientList">
-                            <!-- The first ingredient entry is always present -->
-                            <div class="ingredientEntry">
-                                <input type="text" name="ingredients[0].component" placeholder="Ingredient Name" maxlength="45" required>
-                                <input type="number" min = "0" name="ingredients[0].wholeNumberQuantity" placeholder="Whole Number Quantity">
-                                <select name="ingredients[0].fractionQuantity">
-                                    <option value="0">Fractional Quantity (if needed)</option>
-                                    <option value="0">No fraction</option>
-                                    <option value="1/8">1/8</option>
-                                    <option value="1/4">1/4</option>
-                                    <option value="3/8">3/8</option>
-                                    <option value="1/3">1/3</option>
-                                    <option value="1/2">1/2</option>
-                                    <option value="5/8">5/8</option>
-                                    <option value="2/3">2/3</option>
-                                    <option value="3/4">3/4</option>
-                                </select>
-                                <select name="ingredients[0].measurement" required>
-                                    <option value="">Measurement</option>
-                                    <option value="Cups">Cups</option>
-                                    <option value="Dashes">Dashes</option>
-                                    <option value="Fluid Ounces">Fluid Ounces (fl oz)</option>
-                                    <option value="Grams">Grams (g)</option>
-                                    <option value="Kilograms">Kilograms (kg)</option>
-                                    <option value="Liters">Liters (L)</option>
-                                    <option value="Milliliters">Milliliters (ml)</option>
-                                    <option value="Ounces">Ounces (oz)</option>
-                                    <option value="Pinches">Pinches</option>
-                                    <option value="Pounds">Pounds (lb)</option>
-                                    <option value="Tablespoons">Tablespoons (tbsp)</option>
-                                    <option value="Teaspoons">Teaspoons (tsp)</option>
-                                    <option value="Whole">Whole Ingredient</option>
-                                </select>
-                                <select name="ingredients[0].preparation" required>
-                                    <option value="">Preparation</option>
-                                    <option value="Beaten">Beaten</option>
-                                    <option value="Boiled">Boiled</option>
-                                    <option value="Chopped">Chopped</option>
-                                    <option value="Crushed">Crushed</option>
-                                    <option value="Cubed">Cubed</option>
-                                    <option value="Diced">Diced</option>
-                                    <option value="Grated">Grated</option>
-                                    <option value="Ground">Ground</option>
-                                    <option value="Julienned">Julienned</option>
-                                    <option value="Mashed">Mashed</option>
-                                    <option value="Melted">Melted</option>
-                                    <option value="Minced">Minced</option>
-                                    <option value="Peeled">Peeled</option>
-                                    <option value="Roasted">Roasted</option>
-                                    <option value="Shaken">Shaken</option>
-                                    <option value="Sliced">Sliced</option>
-                                    <option value="Stirred">Stirred</option>
-                                    <option value="Toasted">Toasted</option>
-                                    <option value="Unprepared">Unprepared</option>
-                                    <option value="Whisked">Whisked</option>
-                                    <option value="Zested">Zested</option>
-                                </select>
-                            </div>
+<main>
+    <div th:if="${error}" th:text="${error}" style="color: red;"></div>
+    <form id= "recipeForm" action="#" th:action="@{/recipe/create}" th:object="${webRecipe}" method="post" enctype="multipart/form-data">
+        <table>
+            <tr>
+                <td><h3>Recipe Info</h3></td>
+            </tr>
+            <tr>
+                <td><label>Recipe Name: </label><input type="text" th:field="*{info.name}" placeholder="Recipe Name" maxlength="40" required/></td>
+            </tr>
+            <tr>
+                <td><label>Recipe Description: </label><textarea th:field="*{info.description}" placeholder="Recipe Description: Not required, but encouraged." maxlength="1000"></textarea></td>
+            </tr>
+            <tr>
+                <td><label>Makes: </label><input type="number" step="0.1" min="0.1" th:field="*{info.yield}" placeholder="Quantity recipe makes" required/></td>
+                <td><label>Unit</label>
+                    <select th:field="*{info.unitOfYield}" required>
+                        <option value="">Select a Unit</option>
+                        <!-- Specific Food Portions -->
+                        <option value="Bowls">Bowls</option>
+                        <option value="Cakes">Cakes</option>
+                        <option value="Cookies">Cookies</option>
+                        <option value="Cupcakes">Cupcakes</option>
+                        <option value="Finished Dishes">Finished Dishes (fully prepared meals)</option>
+                        <option value="Gallons">Gallons (gal)</option>
+                        <option value="Grams">Grams (g)</option>
+                        <option value="Kilograms">Kilograms (kg)</option>
+                        <option value="Liters">Liters (l)</option>
+                        <option value="Loaves">Loaves</option>
+                        <option value="Milliliters">Milliliters (ml)</option>
+                        <option value="Muffins">Muffins</option>
+                        <option value="Ounces">Ounces (oz)</option>
+                        <option value="Patties">Patties</option>
+                        <option value="Pieces">Pieces</option>
+                        <option value="Pies">Pies</option>
+                        <option value="Pints">Pints (pt)</option>
+                        <option value="Plates">Plates</option>
+                        <option value="Quarts">Quarts (qt)</option>
+                        <option value="Rolls">Rolls</option>
+                        <option value="Servings">Servings</option>
+                        <option value="Slices">Slices</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label>Preparation Hours: </label><input type="number" step="1" min="0" value="0" th:field="*{info.prepHr}"></td>
+                <td><label>Preparation Minutes: </label><input type="number" step="1" min="0" max="59" value="0" th:field="*{info.prepMin}"></td>
+            </tr>
+            <tr>
+                <td><label>Process Hours: </label><input type="number" step="1" min="0" value="0" th:field="*{info.processHr}"></td>
+                <td><label>Process Minutes:</label><input type="number" step="1" min="0" max="59" value="0" th:field="*{info.processMin}"></td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td><h3>Ingredients</h3></td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="button" id="addIngredientBtn">Add Ingredient</button>
+                    <div id="ingredientList">
+                        <div class="ingredientEntry" th:each="ingredient, iterStat : *{ingredients}">
+                            <input type="text" th:field="*{ingredients[__${iterStat.index}__].component}" placeholder="Ingredient Name" maxlength="45" required>
+                            <input type="number" min="0" th:field="*{ingredients[__${iterStat.index}__].wholeNumberQuantity}" placeholder="Whole Number Quantity">
+                            <select th:field="*{ingredients[__${iterStat.index}__].fractionQuantity}">
+                                <option value="0">Fractional Quantity (if needed)</option>
+                                <option value="0">No fraction</option>
+                                <option value="1/8">1/8</option>
+                                <option value="1/4">1/4</option>
+                                <option value="3/8">3/8</option>
+                                <option value="1/3">1/3</option>
+                                <option value="1/2">1/2</option>
+                                <option value="5/8">5/8</option>
+                                <option value="2/3">2/3</option>
+                                <option value="3/4">3/4</option>
+                                <option value="7/8">7/8</option>
+                            </select>
+                            <select th:field="*{ingredients[__${iterStat.index}__].measurement}" required>
+                                <option value="">Measurement</option>
+                                <option value="Cups">Cups</option>
+                                <option value="Dashes">Dashes</option>
+                                <option value="Fluid Ounces">Fluid Ounces (fl oz)</option>
+                                <option value="Grams">Grams (g)</option>
+                                <option value="Kilograms">Kilograms (kg)</option>
+                                <option value="Liters">Liters (L)</option>
+                                <option value="Milliliters">Milliliters (ml)</option>
+                                <option value="Ounces">Ounces (oz)</option>
+                                <option value="Pinches">Pinches</option>
+                                <option value="Pounds">Pounds (lb)</option>
+                                <option value="Tablespoons">Tablespoons (tbsp)</option>
+                                <option value="Teaspoons">Teaspoons (tsp)</option>
+                                <option value="Whole">Whole Ingredient</option>
+                            </select>
+                            <select th:field="*{ingredients[__${iterStat.index}__].preparation}" required>
+                                <option value="">Preparation</option>
+                                <option value="Beaten">Beaten</option>
+                                <option value="Boiled">Boiled</option>
+                                <option value="Chopped">Chopped</option>
+                                <option value="Crushed">Crushed</option>
+                                <option value="Cubed">Cubed</option>
+                                <option value="Diced">Diced</option>
+                                <option value="Grated">Grated</option>
+                                <option value="Ground">Ground</option>
+                                <option value="Julienned">Julienned</option>
+                                <option value="Mashed">Mashed</option>
+                                <option value="Melted">Melted</option>
+                                <option value="Minced">Minced</option>
+                                <option value="Peeled">Peeled</option>
+                                <option value="Roasted">Roasted</option>
+                                <option value="Shaken">Shaken</option>
+                                <option value="Sliced">Sliced</option>
+                                <option value="Stirred">Stirred</option>
+                                <option value="Toasted">Toasted</option>
+                                <option value="Unprepared">Unprepared</option>
+                                <option value="Whisked">Whisked</option>
+                                <option value="Zested">Zested</option>
+                            </select>
+                            <button type="button" class="removeButton" th:if="${iterStat.index > 0}">Remove</button>
                         </div>
-                    </td>
-                </tr>
+                    </div>
 
-                <tr>
-                    <td>
-                        <h4>Directions</h4>
-                        <button type="button" id="addDirectionBtn">Add Direction</button>
-                        <div id="directionList">
-                            <!-- The first direction entry is always present -->
-                            <div class="directionEntry">
-                                <textarea name="directions[0].direction" placeholder="Step Description" maxlength="300" required></textarea>
-                                <br>
-                                <select name="directions[0].method">
-                                    <option value="">Method</option>
-                                    <option value="Assembling">Assembling</option>
-                                    <option value="Baking">Baking</option>
-                                    <option value="Boiling">Boiling</option>
-                                    <option value="Frying">Frying</option>
-                                    <option value="Grilling">Grilling</option>
-                                    <option value="Mixing">Mixing</option>
-                                    <option value="Roasting">Roasting</option>
-                                    <option value="Searing">Searing</option>
-                                    <option value="Simmering">Simmering</option>
-                                    <option value="Steaming">Steaming</option>
-                                    <option value="Stirring">Stirring</option>
-                                    <option value="Whisking">Whisking</option>
-                                </select>
-                                <input type="number" name="directions[0].temp" placeholder="Temperature (°F)" min="0">
-                                <select name="directions[0].level">
-                                    <option value="">Heat Level</option>
-                                    <option value="Low">Low</option>
-                                    <option value="Medium">Medium</option>
-                                    <option value="High">High</option>
-                                </select>
-                            </div>
+                </td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td><h3>Directions</h3></td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="button" id="addDirectionBtn">Add Direction</button>
+                    <div id="directionList">
+                        <!-- The first direction entry is always present -->
+                        <div class="directionEntry" th:each="direction, iterStat : *{directions}">
+                            <textarea th:field="*{directions[__${iterStat.index}__].direction}" placeholder="Step Description" maxlength="300" required></textarea>
+                            <select th:field="*{directions[__${iterStat.index}__].method}">
+                                <option value="">Method</option>
+                                <option value="Assembling">Assembling</option>
+                                <option value="Baking">Baking</option>
+                                <option value="Boiling">Boiling</option>
+                                <option value="Frying">Frying</option>
+                                <option value="Grilling">Grilling</option>
+                                <option value="Mixing">Mixing</option>
+                                <option value="Roasting">Roasting</option>
+                                <option value="Searing">Searing</option>
+                                <option value="Simmering">Simmering</option>
+                                <option value="Steaming">Steaming</option>
+                                <option value="Stirring">Stirring</option>
+                                <option value="Whisking">Whisking</option>
+                            </select>
+                            <input type="number" th:field="*{directions[__${iterStat.index}__].temp}" placeholder="Temperature (°F)" min="0">
+                            <select th:field="*{directions[__${iterStat.index}__].level}">
+                                <option value="">Heat Level</option>
+                                <option value="Low">Low</option>
+                                <option value="Medium">Medium</option>
+                                <option value="High">High</option>
+                            </select>
+                            <button type="button" class="removeButton" th:if="${iterStat.index > 0}">Remove</button>
                         </div>
-                    </td>
-                </tr>
-                <tr><td><hr></td></tr>
-                <tr>
-                    <td><h3>Optional Fields</h3></td>
-                </tr>
-                <tr>
-                    <td><h4>Recipe Notes</h4></td>
-                </tr>
-                <tr>
-                    <td>
-                        <textarea name="note.note" placeholder="Add any additional notes or tips about the recipe here..." maxlength="2500"></textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <td><h4>Recipe Links</h4></td>
-                </tr>
-                <tr>
-                    <td>
-                        <button type="button" id="addLinkBtn">Add Link</button>
-                        <div id="linkList">
-                            <div id="linkEntry">
-                            </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td><h3>Recipe Notes</h3></td>
+            </tr>
+            <tr>
+                <td>
+                    <textarea th:field="*{note.note}" placeholder="Add any additional notes or tips about the recipe here..." maxlength="2500"></textarea>
+                </td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td><h3>Recipe Links</h3></td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="button" id="addLinkBtn">Add Link</button>
+                    <div id="linkList">
+                        <div th:each="link, iterStat : *{links}" class="linkEntry">
+                            <input type="text" th:field="*{links[__${iterStat.index}__].link}" class="existingLink" placeholder="Link" maxlength="125">
+                            <button type="button" class="removeButton" th:if="${iterStat.index >= 0}">Remove</button>
                         </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td><h4>User Substitutions</h4></td>
-                </tr>
-                <tr>
-                    <td>
-                        <button type="button" id="addUserSubBtn">Add Substitution</button>
-                        <div id="userSubList">
-                            <div id="substitutionEntry">
-                            </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td><h3>User Substitutions</h3></td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="button" id="addUserSubBtn">Add Substitution</button>
+                    <div id="userSubList">
+                        <div class="substitutionEntry" th:each="userSub, iterStat : *{userSubstitutionEntries}">
+                            <!-- Original Ingredient Fields -->
+                            <input type="text" th:field="*{userSubstitutionEntries[__${iterStat.index}__].originalComponent}" placeholder="Original Ingredient Name" maxlength="45" required>
+                            <input type="number" min="0" th:field="*{userSubstitutionEntries[__${iterStat.index}__].originalWholeNumberQuantity}" placeholder="Original Whole Number Quantity">
+                            <select th:field="*{userSubstitutionEntries[__${iterStat.index}__].originalFractionQuantity}">
+                                <option value="0">Fractional Quantity (if needed)</option>
+                                <option value="0">No fraction</option>
+                                <option value="1/8">1/8</option>
+                                <option value="1/4">1/4</option>
+                                <option value="3/8">3/8</option>
+                                <option value="1/3">1/3</option>
+                                <option value="1/2">1/2</option>
+                                <option value="5/8">5/8</option>
+                                <option value="2/3">2/3</option>
+                                <option value="3/4">3/4</option>
+                            </select>
+                            <select th:field="*{userSubstitutionEntries[__${iterStat.index}__].originalMeasurement}" required>
+                                <option value="">Measurement</option>
+                                <option value="Cups">Cups</option>
+                                <option value="Dashes">Dashes</option>
+                                <option value="Fluid Ounces">Fluid Ounces (fl oz)</option>
+                                <option value="Grams">Grams (g)</option>
+                                <option value="Kilograms">Kilograms (kg)</option>
+                                <option value="Liters">Liters (L)</option>
+                                <option value="Milliliters">Milliliters (ml)</option>
+                                <option value="Ounces">Ounces (oz)</option>
+                                <option value="Pinches">Pinches</option>
+                                <option value="Pounds">Pounds (lb)</option>
+                                <option value="Tablespoons">Tablespoons (tbsp)</option>
+                                <option value="Teaspoons">Teaspoons (tsp)</option>
+                                <option value="Whole">Whole Ingredient</option>
+                            </select>
+                            <select th:field="*{userSubstitutionEntries[__${iterStat.index}__].originalPreparation}" required>
+                                <option value="">Preparation</option>
+                                <option value="Beaten">Beaten</option>
+                                <option value="Boiled">Boiled</option>
+                                <option value="Chopped">Chopped</option>
+                                <option value="Crushed">Crushed</option>
+                                <option value="Cubed">Cubed</option>
+                                <option value="Diced">Diced</option>
+                                <option value="Grated">Grated</option>
+                                <option value="Ground">Ground</option>
+                                <option value="Julienned">Julienned</option>
+                                <option value="Mashed">Mashed</option>
+                                <option value="Melted">Melted</option>
+                                <option value="Minced">Minced</option>
+                                <option value="Peeled">Peeled</option>
+                                <option value="Roasted">Roasted</option>
+                                <option value="Shaken">Shaken</option>
+                                <option value="Sliced">Sliced</option>
+                                <option value="Stirred">Stirred</option>
+                                <option value="Toasted">Toasted</option>
+                                <option value="Unprepared">Unprepared</option>
+                                <option value="Whisked">Whisked</option>
+                                <option value="Zested">Zested</option>
+                            </select>
+                            <br>
+                            <!-- Substituted Ingredient Fields -->
+                            <input type="text" th:field="*{userSubstitutionEntries[__${iterStat.index}__].substitutedComponent}" placeholder="Substituted Ingredient Name" maxlength="45" required>
+                            <input type="number" min="0" th:field="*{userSubstitutionEntries[__${iterStat.index}__].substitutedWholeNumberQuantity}" placeholder="Substituted Whole Number Quantity">
+                            <select th:field="*{userSubstitutionEntries[__${iterStat.index}__].substitutedFractionQuantity}">
+                                <option value="0">Fractional Quantity (if needed)</option>
+                                <option value="0">No fraction</option>
+                                <option value="1/8">1/8</option>
+                                <option value="1/4">1/4</option>
+                                <option value="3/8">3/8</option>
+                                <option value="1/3">1/3</option>
+                                <option value="1/2">1/2</option>
+                                <option value="5/8">5/8</option>
+                                <option value="2/3">2/3</option>
+                                <option value="3/4">3/4</option>
+                            </select>
+                            <select th:field="*{userSubstitutionEntries[__${iterStat.index}__].substitutedMeasurement}" required>
+                                <option value="">Measurement</option>
+                                <option value="Cups">Cups</option>
+                                <option value="Dashes">Dashes</option>
+                                <option value="Fluid Ounces">Fluid Ounces (fl oz)</option>
+                                <option value="Grams">Grams (g)</option>
+                                <option value="Kilograms">Kilograms (kg)</option>
+                                <option value="Liters">Liters (L)</option>
+                                <option value="Milliliters">Milliliters (ml)</option>
+                                <option value="Ounces">Ounces (oz)</option>
+                                <option value="Pinches">Pinches</option>
+                                <option value="Pounds">Pounds (lb)</option>
+                                <option value="Tablespoons">Tablespoons (tbsp)</option>
+                                <option value="Teaspoons">Teaspoons (tsp)</option>
+                                <option value="Whole">Whole Ingredient</option>
+                            </select>
+                            <select th:field="*{userSubstitutionEntries[__${iterStat.index}__].substitutedPreparation}" required>
+                                <option value="">Preparation</option>
+                                <option value="Beaten">Beaten</option>
+                                <option value="Boiled">Boiled</option>
+                                <option value="Chopped">Chopped</option>
+                                <option value="Crushed">Crushed</option>
+                                <option value="Cubed">Cubed</option>
+                                <option value="Diced">Diced</option>
+                                <option value="Grated">Grated</option>
+                                <option value="Ground">Ground</option>
+                                <option value="Julienned">Julienned</option>
+                                <option value="Mashed">Mashed</option>
+                                <option value="Melted">Melted</option>
+                                <option value="Minced">Minced</option>
+                                <option value="Peeled">Peeled</option>
+                                <option value="Roasted">Roasted</option>
+                                <option value="Shaken">Shaken</option>
+                                <option value="Sliced">Sliced</option>
+                                <option value="Stirred">Stirred</option>
+                                <option value="Toasted">Toasted</option>
+                                <option value="Unprepared">Unprepared</option>
+                                <option value="Whisked">Whisked</option>
+                                <option value="Zested">Zested</option>
+                            </select>
+                            <button type="button" class="removeButton" th:if="${iterStat.index >= 0}">Remove</button>
                         </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td><h4>Upload Recipe Image</h4></td>
-                </tr>
-                <tr>
-                    <td>File to upload:</td>
-                    <td><input type="file" name="file" /></td>
-                </tr>
-                <tr>
-                    <td><h4>Recipe Tags</h4></td>
-                </tr>
-                <tr>
-                    <td>
-                        <button type="button" id="addHolidayBtn">Add Holiday</button>
-                        <div id="holidayList">
-                            <div class="holidayEntry">
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <button type="button" id="addMealTypeBtn">Add Meal Type</button>
-                        <div id="mealTypeList">
-                            <div class="mealTypeEntry">
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <button type="button" id="addCuisineBtn">Add Cuisine</button>
-                        <div id="cuisineList">
-                            <div class="cuisineEntry">
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <button type="button" id="addAllergenBtn">Add Allergen</button>
-                        <div id="allergenList">
-                            <div class="allergenEntry">
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <button type="button" id="addDietTypeBtn">Add Diet Type</button>
-                        <div id="dietTypeList">
-                            <div class="dietTypeEntry">
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <button type="button" id="addCookingLevelBtn">Add Cooking Level</button>
-                        <div id="cookingLevelList">
-                            <div class="cookingLevelEntry">
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <button type="button" id="addCookingStyleBtn">Add Cooking Style</button>
-                        <div id="cookingStyleList">
-                            <div class="cookingStyleEntry">
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            </table>
-            <br>
-            <button type="submit">Create Recipe</button>
-        </form>
-    </main>
+                    </div>
+                </td>
+            </tr>
 
-    <footer>
-        <p>footer</p>
-    </footer>
+        </table>
+        <table>
+            <tr>
+                <td><h3>Upload Recipe Image</h3></td>
+            </tr>
+            <tr>
+                <td><input type="file" name="file" /></td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td><h3>Recipe Tags</h3></td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="button" id="addHolidayBtn">Add Holiday</button>
+                    <div id="holidayList">
+                        <div th:each="holiday, iterStat : *{holidays}" class="holidayEntry">
+                            <select th:field="*{holidays[__${iterStat.index}__].field}" class="existingHoliday">
+                                <option value="">Holiday</option>
+                                <option value="Birthday">Birthday</option>
+                                <option value="Christmas">Christmas</option>
+                                <option value="Diwali">Diwali</option>
+                                <option value="Easter">Easter</option>
+                                <option value="Father’s Day">Father’s Day</option>
+                                <option value="Halloween">Halloween</option>
+                                <option value="Hanukkah">Hanukkah</option>
+                                <option value="Independence Day">Independence Day</option>
+                                <option value="Kwanzaa">Kwanzaa</option>
+                                <option value="Lunar New Year">Lunar New Year</option>
+                                <option value="Mother’s Day">Mother’s Day</option>
+                                <option value="New Year’s Day">New Year’s Day</option>
+                                <option value="Ramadan">Ramadan</option>
+                                <option value="St. Patrick’s Day">St. Patrick’s Day</option>
+                                <option value="Thanksgiving">Thanksgiving</option>
+                                <option value="Valentine’s Day">Valentine’s Day</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <button type="button" class="removeButton" th:if="${iterStat.index >= 0}">Remove</button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="button" id="addMealTypeBtn">Add Meal Type</button>
+                    <div id="mealTypeList">
+                        <div th:each="mealType, iterStat : *{mealTypes}" class="mealTypeEntry">
+                            <select th:field="*{mealTypes[__${iterStat.index}__].field}" class="existingMealType">
+                                <option value="">Meal type</option>
+                                <option value="Appetizer">Appetizer</option>
+                                <option value="Breakfast">Breakfast</option>
+                                <option value="Brunch">Brunch</option>
+                                <option value="Dessert">Dessert</option>
+                                <option value="Dinner">Dinner</option>
+                                <option value="Lunch">Lunch</option>
+                                <option value="Snack">Snack</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <button type="button" class="removeButton" th:if="${iterStat.index >= 0}">Remove</button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="button" id="addCuisineBtn">Add Cuisine</button>
+                    <div id="cuisineList">
+                        <div th:each="cuisine, iterStat : *{cuisines}" class="cuisineEntry">
+                            <select th:field="*{cuisines[__${iterStat.index}__].field}" class="existingCuisine">
+                                <option value="">Select a cuisine</option>
+                                <option value="African">African</option>
+                                <option value="American">American</option>
+                                <option value="Caribbean">Caribbean</option>
+                                <option value="Chinese">Chinese</option>
+                                <option value="French">French</option>
+                                <option value="Greek">Greek</option>
+                                <option value="Indian">Indian</option>
+                                <option value="Italian">Italian</option>
+                                <option value="Japanese">Japanese</option>
+                                <option value="Mediterranean">Mediterranean</option>
+                                <option value="Mexican">Mexican</option>
+                                <option value="Middle Eastern">Middle Eastern</option>
+                                <option value="Spanish">Spanish</option>
+                                <option value="Thai">Thai</option>
+                                <option value="Vietnamese">Vietnamese</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <button type="button" class="removeButton" th:if="${iterStat.index >= 0}">Remove</button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="button" id="addAllergenBtn">Add Allergen</button>
+                    <div id="allergenList">
+                        <div th:each="allergen, iterStat : *{allergens}" class="allergenEntry">
+                            <select th:field="*{allergens[__${iterStat.index}__].field}" class="existingAllergen">
+                                <option value="">Select an allergy</option>
+                                <option value="Dairy-Free">Dairy-Free</option>
+                                <option value="Egg-Free">Egg-Free</option>
+                                <option value="Fish-Free">Fish-Free</option>
+                                <option value="Gluten-Free">Gluten-Free</option>
+                                <option value="Peanut-Free">Peanut-Free</option>
+                                <option value="Sesame-Free">Sesame-Free</option>
+                                <option value="Shellfish-Free">Shellfish-Free</option>
+                                <option value="Soy-Free">Soy-Free</option>
+                                <option value="Tree Nut-Free">Tree Nut-Free</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <button type="button" class="removeButton" th:if="${iterStat.index >= 0}">Remove</button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="button" id="addDietTypeBtn">Add Diet Type</button>
+                    <div id="dietTypeList">
+                        <div th:each="dietType, iterStat : *{dietTypes}" class="dietTypeEntry">
+                            <select th:field="*{dietTypes[__${iterStat.index}__].field}" class="existingDietType">
+                                <option value="">Select a diet type</option>
+                                <option value="Keto">Keto</option>
+                                <option value="Low-Carb">Low-Carb</option>
+                                <option value="Low-Fat">Low-Fat</option>
+                                <option value="Paleo">Paleo</option>
+                                <option value="Pescatarian">Pescatarian</option>
+                                <option value="Vegetarian">Vegetarian</option>
+                                <option value="Vegan">Vegan</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <button type="button" class="removeButton" th:if="${iterStat.index >= 0}">Remove</button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="button" id="addCookingLevelBtn">Add Cooking Level</button>
+                    <div id="cookingLevelList">
+                        <div th:each="cookingLevel, iterStat : *{cookingLevels}" class="cookingLevelEntry">
+                            <select th:field="*{cookingLevels[__${iterStat.index}__].field}" class="existingCookingLevel">
+                                <option value="">Select a cooking level</option>
+                                <option value="Novice">Novice</option>
+                                <option value="Beginner">Beginner</option>
+                                <option value="Intermediate">Intermediate</option>
+                                <option value="Advanced">Advanced</option>
+                                <option value="Expert">Expert</option>
+                                <option value="Chef-Level">Chef-Level</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <button type="button" class="removeButton" th:if="${iterStat.index >= 0}">Remove</button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="button" id="addCookingStyleBtn">Add Cooking Style</button>
+                    <div id="cookingStyleList">
+                        <div th:each="cookingStyle, iterStat : *{cookingStyles}" class="cookingStyleEntry">
+                            <select th:field="*{cookingStyles[__${iterStat.index}__].field}" class="existingCookingStyle">
+                                <option value="">Select a cooking style</option>
+                                <option value="30-Minute Meals">30-Minute Meals</option>
+                                <option value="Air Fryer Recipes">Air Fryer Recipes</option>
+                                <option value="Baking">Baking</option>
+                                <option value="Comfort Food">Comfort Food</option>
+                                <option value="Freezer-Friendly">Freezer-Friendly</option>
+                                <option value="Grilled Recipes">Grilled Recipes</option>
+                                <option value="Healthy">Healthy</option>
+                                <option value="Kid-Friendly">Kid-Friendly</option>
+                                <option value="Make-Ahead Recipes">Make-Ahead Recipes</option>
+                                <option value="Meal Prep Friendly">Meal Prep Friendly</option>
+                                <option value="No-Bake Recipes">No-Bake Recipes</option>
+                                <option value="One-Pot Recipes">One-Pot Recipes</option>
+                                <option value="Party Food">Party Food</option>
+                                <option value="Quick & Easy">Quick & Easy</option>
+                                <option value="Sheet Pan Meals">Sheet Pan Meals</option>
+                                <option value="Slow Cooker Recipes">Slow Cooker Recipes</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <button type="button" class="removeButton" th:if="${iterStat.index >= 0}">Remove</button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <button type="submit">Create Recipe</button>
+    </form>
+</main>
+
+<footer>
+    <p>footer</p>
+</footer>
 </body>
 
 </html>
