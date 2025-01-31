@@ -80,10 +80,10 @@
                 <td>
                     <button type="button" id="addIngredientBtn">Add Ingredient</button>
                     <div id="ingredientList">
-                        <div class="ingredientEntry" th:each="ingredient, iterStat : *{ingredients}">
-                            <input type="text" th:field="*{ingredients[__${iterStat.index}__].component}" placeholder="Ingredient Name" maxlength="45" required>
-                            <input type="number" min="0" th:field="*{ingredients[__${iterStat.index}__].wholeNumberQuantity}" placeholder="Whole Number Quantity">
-                            <select th:field="*{ingredients[__${iterStat.index}__].fractionQuantity}">
+                        <div class="ingredientEntry" th:each="ingredient, index : *{ingredients}">
+                            <input type="text" th:field="*{ingredients[__${index.index}__].component}" placeholder="Ingredient Name" maxlength="45" required>
+                            <input type="number" min="0" th:field="*{ingredients[__${index.index}__].wholeNumberQuantity}" placeholder="Whole Number Quantity">
+                            <select th:field="*{ingredients[__${index.index}__].fractionQuantity}">
                                 <option value="0">Fractional Quantity (if needed)</option>
                                 <option value="0">No fraction</option>
                                 <option value="1/8">1/8</option>
@@ -96,7 +96,7 @@
                                 <option value="3/4">3/4</option>
                                 <option value="7/8">7/8</option>
                             </select>
-                            <select th:field="*{ingredients[__${iterStat.index}__].measurement}" required>
+                            <select th:field="*{ingredients[__${index.index}__].measurement}" required>
                                 <option value="">Measurement</option>
                                 <option value="Cups">Cups</option>
                                 <option value="Dashes">Dashes</option>
@@ -112,7 +112,7 @@
                                 <option value="Teaspoons">Teaspoons (tsp)</option>
                                 <option value="Whole">Whole Ingredient</option>
                             </select>
-                            <select th:field="*{ingredients[__${iterStat.index}__].preparation}" required>
+                            <select th:field="*{ingredients[__${index.index}__].preparation}" required>
                                 <option value="">Preparation</option>
                                 <option value="Beaten">Beaten</option>
                                 <option value="Boiled">Boiled</option>
@@ -136,7 +136,7 @@
                                 <option value="Whisked">Whisked</option>
                                 <option value="Zested">Zested</option>
                             </select>
-                            <button type="button" class="removeButton" th:if="${iterStat.index > 0}">Remove</button>
+                            <button type="button" class="removeButton" th:if="${index.index > 0}">Remove</button>
                         </div>
                     </div>
 
@@ -152,9 +152,9 @@
                     <button type="button" id="addDirectionBtn">Add Direction</button>
                     <div id="directionList">
                         <!-- The first direction entry is always present -->
-                        <div class="directionEntry" th:each="direction, iterStat : *{directions}">
-                            <textarea th:field="*{directions[__${iterStat.index}__].direction}" placeholder="Step Description" maxlength="300" required></textarea>
-                            <select th:field="*{directions[__${iterStat.index}__].method}">
+                        <div class="directionEntry" th:each="direction, index : *{directions}">
+                            <textarea th:field="*{directions[__${index.index}__].direction}" placeholder="Step Description" maxlength="300" required></textarea>
+                            <select th:field="*{directions[__${index.index}__].method}">
                                 <option value="">Method</option>
                                 <option value="Assembling">Assembling</option>
                                 <option value="Baking">Baking</option>
@@ -169,14 +169,14 @@
                                 <option value="Stirring">Stirring</option>
                                 <option value="Whisking">Whisking</option>
                             </select>
-                            <input type="number" th:field="*{directions[__${iterStat.index}__].temp}" placeholder="Temperature (°F)" min="0">
-                            <select th:field="*{directions[__${iterStat.index}__].level}">
+                            <input type="number" th:field="*{directions[__${index.index}__].temp}" placeholder="Temperature (°F)" min="0">
+                            <select th:field="*{directions[__${index.index}__].level}">
                                 <option value="">Heat Level</option>
                                 <option value="Low">Low</option>
                                 <option value="Medium">Medium</option>
                                 <option value="High">High</option>
                             </select>
-                            <button type="button" class="removeButton" th:if="${iterStat.index > 0}">Remove</button>
+                            <button type="button" class="removeButton" th:if="${index.index > 0}">Remove</button>
                         </div>
                     </div>
                 </td>
@@ -200,9 +200,9 @@
                 <td>
                     <button type="button" id="addLinkBtn">Add Link</button>
                     <div id="linkList">
-                        <div th:each="link, iterStat : *{links}" class="linkEntry">
-                            <input type="text" th:field="*{links[__${iterStat.index}__].link}" class="existingLink" placeholder="Link" maxlength="125">
-                            <button type="button" class="removeButton" th:if="${iterStat.index >= 0}">Remove</button>
+                        <div th:each="link, index : *{links}" class="linkEntry">
+                            <input type="text" th:field="*{links[__${index.index}__].link}" class="existingLink" placeholder="Link" maxlength="125">
+                            <button type="button" class="removeButton" th:if="${index.index >= 0}">Remove</button>
                         </div>
                     </div>
                 </td>
@@ -216,11 +216,11 @@
                 <td>
                     <button type="button" id="addUserSubBtn">Add Substitution</button>
                     <div id="userSubList">
-                        <div class="substitutionEntry" th:each="userSub, iterStat : *{userSubstitutionEntries}">
+                        <div class="substitutionEntry" th:each="userSub, index : *{userSubstitutionEntries}">
                             <!-- Original Ingredient Fields -->
-                            <input type="text" th:field="*{userSubstitutionEntries[__${iterStat.index}__].originalComponent}" placeholder="Original Ingredient Name" maxlength="45" required>
-                            <input type="number" min="0" th:field="*{userSubstitutionEntries[__${iterStat.index}__].originalWholeNumberQuantity}" placeholder="Original Whole Number Quantity">
-                            <select th:field="*{userSubstitutionEntries[__${iterStat.index}__].originalFractionQuantity}">
+                            <input type="text" th:field="*{userSubstitutionEntries[__${index.index}__].originalComponent}" placeholder="Original Ingredient Name" maxlength="45" required>
+                            <input type="number" min="0" th:field="*{userSubstitutionEntries[__${index.index}__].originalWholeNumberQuantity}" placeholder="Original Whole Number Quantity">
+                            <select th:field="*{userSubstitutionEntries[__${index.index}__].originalFractionQuantity}">
                                 <option value="0">Fractional Quantity (if needed)</option>
                                 <option value="0">No fraction</option>
                                 <option value="1/8">1/8</option>
@@ -232,7 +232,7 @@
                                 <option value="2/3">2/3</option>
                                 <option value="3/4">3/4</option>
                             </select>
-                            <select th:field="*{userSubstitutionEntries[__${iterStat.index}__].originalMeasurement}" required>
+                            <select th:field="*{userSubstitutionEntries[__${index.index}__].originalMeasurement}" required>
                                 <option value="">Measurement</option>
                                 <option value="Cups">Cups</option>
                                 <option value="Dashes">Dashes</option>
@@ -248,7 +248,7 @@
                                 <option value="Teaspoons">Teaspoons (tsp)</option>
                                 <option value="Whole">Whole Ingredient</option>
                             </select>
-                            <select th:field="*{userSubstitutionEntries[__${iterStat.index}__].originalPreparation}" required>
+                            <select th:field="*{userSubstitutionEntries[__${index.index}__].originalPreparation}" required>
                                 <option value="">Preparation</option>
                                 <option value="Beaten">Beaten</option>
                                 <option value="Boiled">Boiled</option>
@@ -274,9 +274,9 @@
                             </select>
                             <br>
                             <!-- Substituted Ingredient Fields -->
-                            <input type="text" th:field="*{userSubstitutionEntries[__${iterStat.index}__].substitutedComponent}" placeholder="Substituted Ingredient Name" maxlength="45" required>
-                            <input type="number" min="0" th:field="*{userSubstitutionEntries[__${iterStat.index}__].substitutedWholeNumberQuantity}" placeholder="Substituted Whole Number Quantity">
-                            <select th:field="*{userSubstitutionEntries[__${iterStat.index}__].substitutedFractionQuantity}">
+                            <input type="text" th:field="*{userSubstitutionEntries[__${index.index}__].substitutedComponent}" placeholder="Substituted Ingredient Name" maxlength="45" required>
+                            <input type="number" min="0" th:field="*{userSubstitutionEntries[__${index.index}__].substitutedWholeNumberQuantity}" placeholder="Substituted Whole Number Quantity">
+                            <select th:field="*{userSubstitutionEntries[__${index.index}__].substitutedFractionQuantity}">
                                 <option value="0">Fractional Quantity (if needed)</option>
                                 <option value="0">No fraction</option>
                                 <option value="1/8">1/8</option>
@@ -288,7 +288,7 @@
                                 <option value="2/3">2/3</option>
                                 <option value="3/4">3/4</option>
                             </select>
-                            <select th:field="*{userSubstitutionEntries[__${iterStat.index}__].substitutedMeasurement}" required>
+                            <select th:field="*{userSubstitutionEntries[__${index.index}__].substitutedMeasurement}" required>
                                 <option value="">Measurement</option>
                                 <option value="Cups">Cups</option>
                                 <option value="Dashes">Dashes</option>
@@ -304,7 +304,7 @@
                                 <option value="Teaspoons">Teaspoons (tsp)</option>
                                 <option value="Whole">Whole Ingredient</option>
                             </select>
-                            <select th:field="*{userSubstitutionEntries[__${iterStat.index}__].substitutedPreparation}" required>
+                            <select th:field="*{userSubstitutionEntries[__${index.index}__].substitutedPreparation}" required>
                                 <option value="">Preparation</option>
                                 <option value="Beaten">Beaten</option>
                                 <option value="Boiled">Boiled</option>
@@ -328,7 +328,7 @@
                                 <option value="Whisked">Whisked</option>
                                 <option value="Zested">Zested</option>
                             </select>
-                            <button type="button" class="removeButton" th:if="${iterStat.index >= 0}">Remove</button>
+                            <button type="button" class="removeButton" th:if="${index.index >= 0}">Remove</button>
                         </div>
                     </div>
                 </td>
@@ -351,8 +351,8 @@
                 <td>
                     <button type="button" id="addHolidayBtn">Add Holiday</button>
                     <div id="holidayList">
-                        <div th:each="holiday, iterStat : *{holidays}" class="holidayEntry">
-                            <select th:field="*{holidays[__${iterStat.index}__].field}" class="existingHoliday">
+                        <div th:each="holiday, index : *{holidays}" class="holidayEntry">
+                            <select th:field="*{holidays[__${index.index}__].field}" class="existingHoliday">
                                 <option value="">Holiday</option>
                                 <option value="Birthday">Birthday</option>
                                 <option value="Christmas">Christmas</option>
@@ -372,7 +372,7 @@
                                 <option value="Valentine’s Day">Valentine’s Day</option>
                                 <option value="Other">Other</option>
                             </select>
-                            <button type="button" class="removeButton" th:if="${iterStat.index >= 0}">Remove</button>
+                            <button type="button" class="removeButton" th:if="${index.index >= 0}">Remove</button>
                         </div>
                     </div>
                 </td>
@@ -381,8 +381,8 @@
                 <td>
                     <button type="button" id="addMealTypeBtn">Add Meal Type</button>
                     <div id="mealTypeList">
-                        <div th:each="mealType, iterStat : *{mealTypes}" class="mealTypeEntry">
-                            <select th:field="*{mealTypes[__${iterStat.index}__].field}" class="existingMealType">
+                        <div th:each="mealType, index : *{mealTypes}" class="mealTypeEntry">
+                            <select th:field="*{mealTypes[__${index.index}__].field}" class="existingMealType">
                                 <option value="">Meal type</option>
                                 <option value="Appetizer">Appetizer</option>
                                 <option value="Breakfast">Breakfast</option>
@@ -393,7 +393,7 @@
                                 <option value="Snack">Snack</option>
                                 <option value="Other">Other</option>
                             </select>
-                            <button type="button" class="removeButton" th:if="${iterStat.index >= 0}">Remove</button>
+                            <button type="button" class="removeButton" th:if="${index.index >= 0}">Remove</button>
                         </div>
                     </div>
                 </td>
@@ -402,8 +402,8 @@
                 <td>
                     <button type="button" id="addCuisineBtn">Add Cuisine</button>
                     <div id="cuisineList">
-                        <div th:each="cuisine, iterStat : *{cuisines}" class="cuisineEntry">
-                            <select th:field="*{cuisines[__${iterStat.index}__].field}" class="existingCuisine">
+                        <div th:each="cuisine, index : *{cuisines}" class="cuisineEntry">
+                            <select th:field="*{cuisines[__${index.index}__].field}" class="existingCuisine">
                                 <option value="">Select a cuisine</option>
                                 <option value="African">African</option>
                                 <option value="American">American</option>
@@ -422,7 +422,7 @@
                                 <option value="Vietnamese">Vietnamese</option>
                                 <option value="Other">Other</option>
                             </select>
-                            <button type="button" class="removeButton" th:if="${iterStat.index >= 0}">Remove</button>
+                            <button type="button" class="removeButton" th:if="${index.index >= 0}">Remove</button>
                         </div>
                     </div>
                 </td>
@@ -431,8 +431,8 @@
                 <td>
                     <button type="button" id="addAllergenBtn">Add Allergen</button>
                     <div id="allergenList">
-                        <div th:each="allergen, iterStat : *{allergens}" class="allergenEntry">
-                            <select th:field="*{allergens[__${iterStat.index}__].field}" class="existingAllergen">
+                        <div th:each="allergen, index : *{allergens}" class="allergenEntry">
+                            <select th:field="*{allergens[__${index.index}__].field}" class="existingAllergen">
                                 <option value="">Select an allergy</option>
                                 <option value="Dairy-Free">Dairy-Free</option>
                                 <option value="Egg-Free">Egg-Free</option>
@@ -445,7 +445,7 @@
                                 <option value="Tree Nut-Free">Tree Nut-Free</option>
                                 <option value="Other">Other</option>
                             </select>
-                            <button type="button" class="removeButton" th:if="${iterStat.index >= 0}">Remove</button>
+                            <button type="button" class="removeButton" th:if="${index.index >= 0}">Remove</button>
                         </div>
                     </div>
                 </td>
@@ -454,8 +454,8 @@
                 <td>
                     <button type="button" id="addDietTypeBtn">Add Diet Type</button>
                     <div id="dietTypeList">
-                        <div th:each="dietType, iterStat : *{dietTypes}" class="dietTypeEntry">
-                            <select th:field="*{dietTypes[__${iterStat.index}__].field}" class="existingDietType">
+                        <div th:each="dietType, index : *{dietTypes}" class="dietTypeEntry">
+                            <select th:field="*{dietTypes[__${index.index}__].field}" class="existingDietType">
                                 <option value="">Select a diet type</option>
                                 <option value="Keto">Keto</option>
                                 <option value="Low-Carb">Low-Carb</option>
@@ -466,7 +466,7 @@
                                 <option value="Vegan">Vegan</option>
                                 <option value="Other">Other</option>
                             </select>
-                            <button type="button" class="removeButton" th:if="${iterStat.index >= 0}">Remove</button>
+                            <button type="button" class="removeButton" th:if="${index.index >= 0}">Remove</button>
                         </div>
                     </div>
                 </td>
@@ -475,8 +475,8 @@
                 <td>
                     <button type="button" id="addCookingLevelBtn">Add Cooking Level</button>
                     <div id="cookingLevelList">
-                        <div th:each="cookingLevel, iterStat : *{cookingLevels}" class="cookingLevelEntry">
-                            <select th:field="*{cookingLevels[__${iterStat.index}__].field}" class="existingCookingLevel">
+                        <div th:each="cookingLevel, index : *{cookingLevels}" class="cookingLevelEntry">
+                            <select th:field="*{cookingLevels[__${index.index}__].field}" class="existingCookingLevel">
                                 <option value="">Select a cooking level</option>
                                 <option value="Novice">Novice</option>
                                 <option value="Beginner">Beginner</option>
@@ -486,7 +486,7 @@
                                 <option value="Chef-Level">Chef-Level</option>
                                 <option value="Other">Other</option>
                             </select>
-                            <button type="button" class="removeButton" th:if="${iterStat.index >= 0}">Remove</button>
+                            <button type="button" class="removeButton" th:if="${index.index >= 0}">Remove</button>
                         </div>
                     </div>
                 </td>
@@ -495,8 +495,8 @@
                 <td>
                     <button type="button" id="addCookingStyleBtn">Add Cooking Style</button>
                     <div id="cookingStyleList">
-                        <div th:each="cookingStyle, iterStat : *{cookingStyles}" class="cookingStyleEntry">
-                            <select th:field="*{cookingStyles[__${iterStat.index}__].field}" class="existingCookingStyle">
+                        <div th:each="cookingStyle, index : *{cookingStyles}" class="cookingStyleEntry">
+                            <select th:field="*{cookingStyles[__${index.index}__].field}" class="existingCookingStyle">
                                 <option value="">Select a cooking style</option>
                                 <option value="30-Minute Meals">30-Minute Meals</option>
                                 <option value="Air Fryer Recipes">Air Fryer Recipes</option>
@@ -516,7 +516,7 @@
                                 <option value="Slow Cooker Recipes">Slow Cooker Recipes</option>
                                 <option value="Other">Other</option>
                             </select>
-                            <button type="button" class="removeButton" th:if="${iterStat.index >= 0}">Remove</button>
+                            <button type="button" class="removeButton" th:if="${index.index >= 0}">Remove</button>
                         </div>
                     </div>
                 </td>
