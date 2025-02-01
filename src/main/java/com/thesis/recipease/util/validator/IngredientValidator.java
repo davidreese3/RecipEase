@@ -34,6 +34,9 @@ public class IngredientValidator {
     }
 
     private void checkLengthOfIngredient(WebIngredient webIngredient){
+        if(webIngredient.getComponent().length() < 0 || webIngredient.getComponent() == null){
+            errors.add("Each ingredient needs a component.");
+        }
         if(webIngredient.getComponent().length() > 45){
             errors.add("Ingredient \'" + webIngredient.getComponent() + "\' is too long. It should be 45 characters in length at maximum.");
         }

@@ -23,16 +23,16 @@ public class InfoValidator {
     }
 
     private void checkLengthOfName(String name) {
-        if (name != null && !name.trim().isEmpty()) {
+        if (name == null && !name.trim().isEmpty()) {
             errors.add("Recipe name is required.");
         }
-        else if (name.length() <= 40) {
+        else if (name.length() > 40) {
             errors.add("Recipe name cannot exceed 40 characters.");
         }
     }
 
     private void checkLengthOfDescription(String description) {
-        if (description.length() <= 1000){
+        if (description.length() > 1000){
             errors.add("Recipe description cannot exceed 1000 characters.");
         }
     }

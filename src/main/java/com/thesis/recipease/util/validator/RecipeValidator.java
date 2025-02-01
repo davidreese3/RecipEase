@@ -17,12 +17,15 @@ public class RecipeValidator {
     private InfoValidator infoValidator;
     @Autowired
     private IngredientValidator ingredientValidator;
+    @Autowired
+    private DirectionValidator directionValidator;
     private ArrayList<String> errors;
 
     public ArrayList<String> isRecipeValid(Model model, WebRecipe webRecipe) {
         errors = new ArrayList<String>();
         errors.addAll(infoValidator.validateInfo(webRecipe.getInfo()));
         errors.addAll(ingredientValidator.validateIngredients(webRecipe.getIngredients()));
+        errors.addAll(directionValidator.validateDirections(webRecipe.getDirections()));
         return errors;
     }
 }

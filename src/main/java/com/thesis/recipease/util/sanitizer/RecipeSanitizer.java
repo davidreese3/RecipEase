@@ -57,6 +57,7 @@ public class RecipeSanitizer {
         WebDirection webDirection;
         while(directionIterator.hasNext()){
             webDirection = directionIterator.next();
+            webDirection.setDirection(webDirection.getDirection().trim());
             if(isDirectionNull(webDirection)){
                 directionIterator.remove();
             }
@@ -95,12 +96,8 @@ public class RecipeSanitizer {
             Iterator<WebUserSubstitutionEntry> userSubstitutionEntryIterator = webUserSubstitutionEntries.iterator();
             WebUserSubstitutionEntry webUserSubstitutionEntry;
             while (userSubstitutionEntryIterator.hasNext()) {
-                System.out.println("??? INSIDE WHILE LOOP");
                 webUserSubstitutionEntry = userSubstitutionEntryIterator.next();
-                System.out.println("||TO STRING: "+ webUserSubstitutionEntry.toString());
-                System.out.println("{{ " + webUserSubstitutionEntry.getSubstitutedWholeNumberQuantity());
                 if (isUserSubNull(webUserSubstitutionEntry)) {
-                    System.out.println("WHOLE THING NULL");
                     userSubstitutionEntryIterator.remove();
                 }
                 else {
@@ -108,11 +105,7 @@ public class RecipeSanitizer {
                         webUserSubstitutionEntry.setOriginalWholeNumberQuantity(0);
                     }
                     if (webUserSubstitutionEntry.getSubstitutedWholeNumberQuantity() == null) {
-                        System.out.println("SUB WHOLE IS NULL {{}}");
                         webUserSubstitutionEntry.setSubstitutedWholeNumberQuantity(0);
-                    } else {
-                        System.out.println("SUB WHOLE IS NOT NULL {{}}" + webUserSubstitutionEntry.getSubstitutedWholeNumberQuantity());
-
                     }
                     if (isUserSubZero(webUserSubstitutionEntry)) {
                         userSubstitutionEntryIterator.remove();
