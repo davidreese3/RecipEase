@@ -38,17 +38,13 @@ public class RecipeSanitizer {
         WebIngredient webIngredient;
         while(ingredientIterator.hasNext()) {
             webIngredient = ingredientIterator.next();
-            System.out.println("[[" + webIngredient.getWholeNumberQuantity() + "||" + webIngredient.getFractionQuantity() + "]]");
-
+            webIngredient.setComponent(webIngredient.getComponent().trim());
             if (isIngredientNull(webIngredient)) {
                 ingredientIterator.remove();
             }
             else {
                 if (webIngredient.getWholeNumberQuantity() == null) {
                     webIngredient.setWholeNumberQuantity(0);
-                }
-                if (isIngredientZero(webIngredient)) {
-                    ingredientIterator.remove();
                 }
             }
         }

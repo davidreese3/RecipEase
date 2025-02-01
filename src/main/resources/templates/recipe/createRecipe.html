@@ -20,7 +20,9 @@
 </header>
 
 <main>
-    <div th:if="${error}" th:text="${error}" style="color: red;"></div>
+    <div th:each="error : ${errors}">
+        <span th:text="${error}"></span>
+    </div>
     <form id= "recipeForm" action="#" th:action="@{/recipe/create}" th:object="${webRecipe}" method="post" enctype="multipart/form-data">
         <table>
             <tr>

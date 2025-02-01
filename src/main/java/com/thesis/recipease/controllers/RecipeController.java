@@ -68,13 +68,11 @@ public class RecipeController {
         } else {
             webRecipe.setPhoto(null);
         }
-        if (!recipeValidator.isRecipeValid(model, webRecipe)) {
+        ArrayList<String> errors = new ArrayList<String>();
+        errors = recipeValidator.isRecipeValid(model, webRecipe);
+        if (!errors.isEmpty()) {
             model.addAttribute(webRecipe);
-            for(WebIngredient ingredient : webRecipe.getIngredients()){
-                if(ingredient != null) {
-                    System.out.println("WebIngredient || " + ingredient.getComponent());
-                }
-            }
+            model.addAttribute("errors", errors);
             return "recipe/createRecipe";
         }
         Recipe recipe = appService.addRecipe(securityService.getLoggedInUserId(), webRecipe);
