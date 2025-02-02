@@ -378,11 +378,11 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
         ('Egg', 1, '0', 'Whole', '', 'Yogurt', 0, '1/4', 'Cups', ''),
 
         -- Flours
-        ('White Flour', 1, '0', 'Cups', '', 'Almond Flour', 1, '0', 'Cups', ''),
-        ('White Flour', 1, '0', 'Cups', '', 'Oat Flour', 1, '0', 'Cups', 'Blended'),
-        ('White Flour', 1, '0', 'Cups', '', 'Coconut Flour', 0, '1/4', 'Cups', ''),
-        ('White Flour', 1, '0', 'Cups', '', 'Rice Flour', 1, '0', 'Cups', ''),
-        ('White Flour', 1, '0', 'Cups', '', 'Chickpea Flour', 1, '0', 'Cups', ''),
+        ('Flour', 1, '0', 'Cups', '', 'Almond Flour', 1, '0', 'Cups', ''),
+        ('Flour', 1, '0', 'Cups', '', 'Oat Flour', 1, '0', 'Cups', 'Blended'),
+        ('Flour', 1, '0', 'Cups', '', 'Coconut Flour', 0, '1/4', 'Cups', ''),
+        ('Flour', 1, '0', 'Cups', '', 'Rice Flour', 1, '0', 'Cups', ''),
+        ('Flour', 1, '0', 'Cups', '', 'Chickpea Flour', 1, '0', 'Cups', ''),
 
         -- Sugars and Sweeteners
         ('Sugar', 1, '0', 'Cups', '', 'Maple Syrup', 0, '3/4', 'Cups', ''),
