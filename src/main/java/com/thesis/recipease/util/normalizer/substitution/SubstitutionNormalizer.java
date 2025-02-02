@@ -1,4 +1,4 @@
-package com.thesis.recipease.util.normalizer;
+package com.thesis.recipease.util.normalizer.substitution;
 
 import com.thesis.recipease.model.domain.substitution.SubstitutionEntry;
 import com.thesis.recipease.model.domain.recipe.RecipeUserSubstitutionEntry;

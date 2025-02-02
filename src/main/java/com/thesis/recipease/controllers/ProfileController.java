@@ -5,7 +5,7 @@ import com.thesis.recipease.model.domain.profile.Profile;
 import com.thesis.recipease.model.domain.recipe.RecipeInfo;
 import com.thesis.recipease.model.web.profile.WebProfile;
 import com.thesis.recipease.util.error.ProfileErrorMessageGenerator;
-import com.thesis.recipease.util.normalizer.RecipeNormalizer;
+import com.thesis.recipease.util.normalizer.recipe.RecipeNormalizer;
 import com.thesis.recipease.util.security.SecurityService;
 import com.thesis.recipease.util.validator.profile.ProfileValidator;
 import org.springframework.beans.factory.annotation.Autowired;

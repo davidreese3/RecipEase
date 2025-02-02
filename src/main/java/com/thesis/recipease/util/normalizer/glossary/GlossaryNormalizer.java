@@ -1,4 +1,4 @@
-package com.thesis.recipease.util.normalizer;
+package com.thesis.recipease.util.normalizer.glossary;
 
 import org.springframework.stereotype.Service;
 

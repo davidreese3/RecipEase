@@ -186,13 +186,6 @@ public class RecipeSanitizer {
                 webUserSubstitutionEntry.getSubstitutedPreparation() == null;
     }
 
-    private boolean isUserSubZero(WebUserSubstitutionEntry webUserSubstitutionEntry){
-        return webUserSubstitutionEntry.getOriginalWholeNumberQuantity() == 0 &&
-                webUserSubstitutionEntry.getOriginalFractionQuantity().equals("0") &&
-                webUserSubstitutionEntry.getSubstitutedWholeNumberQuantity() == 0 &&
-                webUserSubstitutionEntry.getSubstitutedFractionQuantity().equals("0");
-    }
-
     private List<WebTag> processTag(List<WebTag> listOfTags) {
         // Remove null or empty fields
         listOfTags.removeIf(tag -> tag.getField() == null || tag.getField().trim().isEmpty());

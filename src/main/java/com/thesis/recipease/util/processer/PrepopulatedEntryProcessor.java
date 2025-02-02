@@ -6,7 +6,7 @@ import com.thesis.recipease.model.domain.substitution.SubstitutionEntry;
 import com.thesis.recipease.model.domain.recipe.Recipe;
 import com.thesis.recipease.model.domain.recipe.RecipeDirection;
 import com.thesis.recipease.model.domain.recipe.RecipeIngredient;
-import com.thesis.recipease.util.normalizer.GlossaryNormalizer;
+import com.thesis.recipease.util.normalizer.glossary.GlossaryNormalizer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

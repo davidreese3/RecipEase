@@ -1,4 +1,4 @@
-package com.thesis.recipease.util.normalizer;
+package com.thesis.recipease.util.normalizer.recipe;
 
 import com.thesis.recipease.model.domain.recipe.Recipe;
 import com.thesis.recipease.model.domain.recipe.RecipeInfo;
