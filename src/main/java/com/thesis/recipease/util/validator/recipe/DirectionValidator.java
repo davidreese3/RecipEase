@@ -1,4 +1,4 @@
-package com.thesis.recipease.util.validator;
+package com.thesis.recipease.util.validator.recipe;
 
 import com.thesis.recipease.model.web.recipe.WebDirection;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -7,7 +7,7 @@ import com.thesis.recipease.model.web.profile.WebProfile;
 import com.thesis.recipease.util.error.ProfileErrorMessageGenerator;
 import com.thesis.recipease.util.normalizer.RecipeNormalizer;
 import com.thesis.recipease.util.security.SecurityService;
-import com.thesis.recipease.util.validator.ProfileValidator;
+import com.thesis.recipease.util.validator.profile.ProfileValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

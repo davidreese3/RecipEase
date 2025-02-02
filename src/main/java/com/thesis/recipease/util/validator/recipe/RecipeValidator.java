@@ -1,14 +1,11 @@
-package com.thesis.recipease.util.validator;
+package com.thesis.recipease.util.validator.recipe;
 
-import com.thesis.recipease.model.web.recipe.WebDirection;
-import com.thesis.recipease.model.web.recipe.WebIngredient;
 import com.thesis.recipease.model.web.recipe.WebRecipe;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 @Service

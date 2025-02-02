@@ -1,11 +1,10 @@
-package com.thesis.recipease.util.validator;
+package com.thesis.recipease.util.validator.recipe;
 
 import com.thesis.recipease.model.web.recipe.WebInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class InfoValidator {

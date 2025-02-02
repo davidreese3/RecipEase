@@ -1,4 +1,4 @@
-package com.thesis.recipease.util.validator;
+package com.thesis.recipease.util.validator.recipe;
 
 import org.springframework.stereotype.Service;
 

@@ -12,7 +12,7 @@ import com.thesis.recipease.util.processer.PrepopulatedEntryProcessor;
 import com.thesis.recipease.util.sanitizer.RecipeSanitizer;
 import com.thesis.recipease.util.security.SecurityService;
 import com.thesis.recipease.util.storage.StorageService;
-import com.thesis.recipease.util.validator.RecipeValidator;
+import com.thesis.recipease.util.validator.recipe.RecipeValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

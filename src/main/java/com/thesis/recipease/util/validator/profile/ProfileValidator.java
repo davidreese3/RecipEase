@@ -1,4 +1,4 @@
-package com.thesis.recipease.util.validator;
+package com.thesis.recipease.util.validator.profile;
 
 import com.thesis.recipease.db.AppService;
 import com.thesis.recipease.model.web.profile.WebProfile;
