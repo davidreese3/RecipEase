@@ -76,11 +76,19 @@ public class RecipeController {
             return "recipe/createRecipe";
         }
         Recipe recipe = appService.addRecipe(securityService.getLoggedInUserId(), webRecipe);
-        if (!file.isEmpty()) {
-            storageService.store(file, recipe.getRecipeInfo().getRecipeId());
+        if (recipe == null){
+            errors.add("There was an issue saving your recipe. Please try again");
+            model.addAttribute(webRecipe);
+            model.addAttribute("errors", errors);
+            return "recipe/createRecipe";
         }
-        redirectAttributes.addFlashAttribute("message", "Your recipe has been posted!");
-        return "redirect:/recipe/view?recipeId=" + recipe.getRecipeInfo().getRecipeId();
+        else {
+            if (!file.isEmpty()) {
+                storageService.store(file, recipe.getRecipeInfo().getRecipeId());
+            }
+            redirectAttributes.addFlashAttribute("message", "Your recipe has been posted!");
+            return "redirect:/recipe/view?recipeId=" + recipe.getRecipeInfo().getRecipeId();
+        }
     }
 
     @RequestMapping(value = "/recipe/view", method = RequestMethod.GET)

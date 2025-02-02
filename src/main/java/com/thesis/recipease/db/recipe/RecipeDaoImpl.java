@@ -73,7 +73,7 @@ public class RecipeDaoImpl implements RecipeDao{
         catch (DataAccessException e) {
             System.out.println("Error in adding recipe");
             transactionManager.rollback(status);
-            throw e;
+            return null;
         }
         return getRecipeById(recipeId);
     }
