@@ -16,9 +16,8 @@
         <div th:if="${message}" th:text="${message}" style="color: green;"></div>
     </header>
 
-    <button id="printWithImages" class="noPrint">Print with Image</button>
-    <button id="printWithoutImages" class="noPrint">Print without Image</button>
-
+    <button id="printWithImages" class="noPrint">Print Recipe</button>
+    <button th:if="${recipe.recipePhoto != null}" id="printWithoutImages" class="noPrint">Print Recipe without Image</button>
     <main id="printable-section">
         <h3>Recipe Info</h3>
         <table>
