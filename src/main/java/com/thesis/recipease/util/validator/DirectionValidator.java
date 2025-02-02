@@ -20,16 +20,16 @@ public class DirectionValidator {
         }
         else {
             for (WebDirection webDirection : webDirections) {
-                checkLengthOfDirection(webDirection.getDirection());
-                checkMethodOfDirection(webDirection.getMethod());
-                checkTempOfDirection(webDirection.getTemp());
-                checkHeatLevelOfDirection(webDirection.getLevel());
+                validateLengthOfDirection(webDirection.getDirection());
+                validateMethodOfDirection(webDirection.getMethod());
+                validateTempOfDirection(webDirection.getTemp());
+                validateHeatLevelOfDirection(webDirection.getLevel());
             }
         }
         return errors;
     }
 
-    private void checkLengthOfDirection(String direction){
+    private void validateLengthOfDirection(String direction){
         if(direction == null || direction.isEmpty()){
             errors.add("Direction cannot be left empty.");
         }
@@ -38,19 +38,19 @@ public class DirectionValidator {
         }
     }
 
-    private void checkMethodOfDirection(String method){
+    private void validateMethodOfDirection(String method){
         if(!dropdownValidator.isValidMethod(method)){
             errors.add("Direction has an invalid method.");
         }
     }
 
-    private void checkTempOfDirection(int temp){
+    private void validateTempOfDirection(int temp){
         if(temp < 0){
             errors.add("Direction temperature cannot be less than 0.");
         }
     }
 
-    private void checkHeatLevelOfDirection(String heatLevel){
+    private void validateHeatLevelOfDirection(String heatLevel){
         if(!dropdownValidator.isValidHeatLevel(heatLevel)){
             errors.add("Direction has an invalid heat level.");
         }

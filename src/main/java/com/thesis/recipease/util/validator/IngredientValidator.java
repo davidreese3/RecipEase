@@ -22,18 +22,18 @@ public class IngredientValidator {
         }
         else {
             for (WebIngredient webIngredient : webIngredients) {
-                checkLengthOfIngredient(webIngredient);
-                checkQuantityOfIngredient(webIngredient);
-                checkFractionOfIngredient(webIngredient);
-                checkMeasurementOfIngredient(webIngredient);
-                checkPreperationOfIngredient(webIngredient);
+                validateLengthOfIngredient(webIngredient);
+                validateQuantityOfIngredient(webIngredient);
+                validateFractionOfIngredient(webIngredient);
+                validateMeasurementOfIngredient(webIngredient);
+                validatePreperationOfIngredient(webIngredient);
             }
-            checkForDuplicates(webIngredients);
+            validateDuplicates(webIngredients);
         }
         return errors;
     }
 
-    private void checkLengthOfIngredient(WebIngredient webIngredient){
+    private void validateLengthOfIngredient(WebIngredient webIngredient){
         if(webIngredient.getComponent().length() < 0 || webIngredient.getComponent() == null){
             errors.add("Each ingredient needs a component.");
         }
@@ -42,31 +42,31 @@ public class IngredientValidator {
         }
     }
 
-    private void checkQuantityOfIngredient(WebIngredient webIngredient) {
+    private void validateQuantityOfIngredient(WebIngredient webIngredient) {
         if (webIngredient.getWholeNumberQuantity() <= 0 && webIngredient.getFractionQuantity().equals("0")) {
             errors.add("Ingredient \'" + webIngredient.getComponent() + "\' cannot have a quantity of 0. If you do not want the ingredient, please remove it.");
         }
     }
 
-    private void checkFractionOfIngredient(WebIngredient webIngredient) {
+    private void validateFractionOfIngredient(WebIngredient webIngredient) {
         if (!dropdownValidator.isValidFraction(webIngredient.getFractionQuantity())) {
             errors.add("Ingredient '" + webIngredient.getComponent() + "' has an invalid fraction.");
         }
     }
 
-    private void checkMeasurementOfIngredient(WebIngredient webIngredient) {
+    private void validateMeasurementOfIngredient(WebIngredient webIngredient) {
         if (!dropdownValidator.isValidMeasurement(webIngredient.getMeasurement())) {
             errors.add("Ingredient '" + webIngredient.getComponent() + "' has an invalid measurement.");
         }
     }
 
-    private void checkPreperationOfIngredient(WebIngredient webIngredient){
+    private void validatePreperationOfIngredient(WebIngredient webIngredient){
         if (!dropdownValidator.isValidPreparation(webIngredient.getPreparation())) {
             errors.add("Ingredient '" + webIngredient.getComponent() + "' has an invalid preparation method.");
         }
     }
 
-    private void checkForDuplicates(List<WebIngredient> webIngredients){
+    private void validateDuplicates(List<WebIngredient> webIngredients){
         // For multiple duplicates of same component
         Set<String> duplicateTracker = new HashSet<>();
         for (int i = 0; i < webIngredients.size(); i++) {
