@@ -17,7 +17,11 @@ public class RecipeValidator {
     @Autowired
     private DirectionValidator directionValidator;
     @Autowired
+    private NoteValidator noteValidator;
+    @Autowired
     private UserSubstitutionValidator userSubstitutionValidator;
+    @Autowired
+    private LinkValidator linkValidator;
     @Autowired
     private TagValidator tagValidator;
     private ArrayList<String> errors;
@@ -27,9 +31,9 @@ public class RecipeValidator {
         errors.addAll(infoValidator.validateInfo(webRecipe.getInfo()));
         errors.addAll(ingredientValidator.validateIngredients(webRecipe.getIngredients()));
         errors.addAll(directionValidator.validateDirections(webRecipe.getDirections()));
-        //note
+        errors.addAll(noteValidator.validateNote(webRecipe.getNote()));
         errors.addAll(userSubstitutionValidator.validateUserSubstitutions(webRecipe.getUserSubstitutionEntries()));
-        //links
+        errors.addAll(linkValidator.validateLink(webRecipe.getLinks()));
         errors.addAll(tagValidator.validateTags(webRecipe));
         return errors;
     }

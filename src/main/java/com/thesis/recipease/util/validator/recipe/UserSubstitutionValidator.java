@@ -15,17 +15,19 @@ public class UserSubstitutionValidator {
 
     public ArrayList<String> validateUserSubstitutions(List<WebUserSubstitutionEntry> webUserSubstitutionEntries){
         errors = new ArrayList<String>();
-        for (WebUserSubstitutionEntry webUserSubstitutionEntry : webUserSubstitutionEntries) {
-            validateOriginalComponent(webUserSubstitutionEntry);
-            validateOriginalQuantity(webUserSubstitutionEntry);
-            validateOriginalFraction(webUserSubstitutionEntry);
-            validateOriginalMeasurement(webUserSubstitutionEntry);
-            validateOriginalPreparation(webUserSubstitutionEntry);
-            validateSubstitutedComponent(webUserSubstitutionEntry);
-            validateSubstitutedQuantity(webUserSubstitutionEntry);
-            validateSubstitutedFraction(webUserSubstitutionEntry);
-            validateSubstitutedMeasurement(webUserSubstitutionEntry);
-            validateSubstitutedPreparation(webUserSubstitutionEntry);
+        if(webUserSubstitutionEntries != null) {
+            for (WebUserSubstitutionEntry webUserSubstitutionEntry : webUserSubstitutionEntries) {
+                validateOriginalComponent(webUserSubstitutionEntry);
+                validateOriginalQuantity(webUserSubstitutionEntry);
+                validateOriginalFraction(webUserSubstitutionEntry);
+                validateOriginalMeasurement(webUserSubstitutionEntry);
+                validateOriginalPreparation(webUserSubstitutionEntry);
+                validateSubstitutedComponent(webUserSubstitutionEntry);
+                validateSubstitutedQuantity(webUserSubstitutionEntry);
+                validateSubstitutedFraction(webUserSubstitutionEntry);
+                validateSubstitutedMeasurement(webUserSubstitutionEntry);
+                validateSubstitutedPreparation(webUserSubstitutionEntry);
+            }
         }
         return errors;
     }
