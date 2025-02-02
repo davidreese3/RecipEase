@@ -1,0 +1,9 @@
+@media print {
+    .noPrint {
+        display: none !important;
+    }
+}
+
+.hideImages img {
+    display: none !important;
+}
