@@ -4,16 +4,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Ensure at least one ingredient field exists on page load
     if (ingredientList.children.length === 0) {
-        addIngredientFields(false);
+        addIngredientFields();
     }
 
     // Add event listener to the "Add Ingredient" button
     addButton.addEventListener('click', function () {
-        addIngredientFields(true);
+        addIngredientFields();
     });
 });
 
-function addIngredientFields(notFirstIngredient) {
+function addIngredientFields() {
     const ingredientDiv = document.createElement('div');
     ingredientDiv.classList.add('ingredientEntry');
 
@@ -116,6 +116,14 @@ function addIngredientFields(notFirstIngredient) {
         preparationSelect.appendChild(option);
     });
 
+    const removeButton = document.createElement('button');
+    removeButton.textContent = 'Remove';
+    removeButton.setAttribute('type', 'button');
+    removeButton.classList.add('removeButton');
+    removeButton.addEventListener('click', function () {
+        ingredientDiv.remove();
+    });
+
     // Append all inputs to the ingredient container
     ingredientDiv.appendChild(componentInput);
     ingredientDiv.appendChild(wholeNumberInput);
@@ -123,15 +131,5 @@ function addIngredientFields(notFirstIngredient) {
     ingredientDiv.appendChild(measurementSelect);
     ingredientDiv.appendChild(preparationSelect);
     ingredientList.appendChild(ingredientDiv);
-
-    if (notFirstIngredient) {
-        const removeButton = document.createElement('button');
-        removeButton.textContent = 'Remove';
-        removeButton.setAttribute('type', 'button');
-        removeButton.classList.add('removeButton');
-        removeButton.addEventListener('click', function () {
-            ingredientDiv.remove();
-        });
-        ingredientDiv.appendChild(removeButton);
-    }
+    ingredientDiv.appendChild(removeButton);
 }

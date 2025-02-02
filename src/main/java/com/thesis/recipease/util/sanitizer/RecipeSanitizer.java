@@ -34,17 +34,18 @@ public class RecipeSanitizer {
 
     public void sanitizeIngredients(){
         List<WebIngredient> webIngredients = webRecipe.getIngredients();
-        Iterator<WebIngredient> ingredientIterator = webIngredients.iterator();
-        WebIngredient webIngredient;
-        while(ingredientIterator.hasNext()) {
-            webIngredient = ingredientIterator.next();
-            webIngredient.setComponent(webIngredient.getComponent().trim());
-            if (isIngredientNull(webIngredient)) {
-                ingredientIterator.remove();
-            }
-            else {
-                if (webIngredient.getWholeNumberQuantity() == null) {
-                    webIngredient.setWholeNumberQuantity(0);
+        if(webIngredients != null) {
+            Iterator<WebIngredient> ingredientIterator = webIngredients.iterator();
+            WebIngredient webIngredient;
+            while (ingredientIterator.hasNext()) {
+                webIngredient = ingredientIterator.next();
+                if (isIngredientNull(webIngredient)) {
+                    ingredientIterator.remove();
+                } else {
+                    webIngredient.setComponent(webIngredient.getComponent().trim());
+                    if (webIngredient.getWholeNumberQuantity() == null) {
+                        webIngredient.setWholeNumberQuantity(0);
+                    }
                 }
             }
         }
@@ -53,16 +54,19 @@ public class RecipeSanitizer {
 
     public void sanitizeDirections(){
         List<WebDirection> webDirections = webRecipe.getDirections();
-        Iterator<WebDirection> directionIterator = webDirections.iterator();
-        WebDirection webDirection;
-        while(directionIterator.hasNext()){
-            webDirection = directionIterator.next();
-            webDirection.setDirection(webDirection.getDirection().trim());
-            if(isDirectionNull(webDirection)){
-                directionIterator.remove();
-            }
-            else if(webDirection.getTemp() == null){
-                webDirection.setTemp(0);
+        if(webDirections != null) {
+            Iterator<WebDirection> directionIterator = webDirections.iterator();
+            WebDirection webDirection;
+            while (directionIterator.hasNext()) {
+                webDirection = directionIterator.next();
+                if (isDirectionNull(webDirection)) {
+                    directionIterator.remove();
+                } else{
+                    webDirection.setDirection(webDirection.getDirection().trim());
+                    if (webDirection.getTemp() == null) {
+                        webDirection.setTemp(0);
+                    }
+                }
             }
         }
         webRecipe.setDirections(webDirections);

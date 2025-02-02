@@ -15,16 +15,17 @@ public class DirectionValidator {
 
     public ArrayList<String> validateDirections(List<WebDirection> webDirections){
         errors = new ArrayList<String>();
-        for(WebDirection webDirection: webDirections){
-            checkLengthOfDirection(webDirection.getDirection());
-            checkMethodOfDirection(webDirection.getMethod());
-            checkTempOfDirection(webDirection.getTemp());
-            checkHeatLevelOfDirection(webDirection.getLevel());
+        if(webDirections == null){
+            errors.add("Every recipe should have at least one direction.");
         }
-        //Direction
-        //Method valid
-        //Temp above 0
-        //heat valid
+        else {
+            for (WebDirection webDirection : webDirections) {
+                checkLengthOfDirection(webDirection.getDirection());
+                checkMethodOfDirection(webDirection.getMethod());
+                checkTempOfDirection(webDirection.getTemp());
+                checkHeatLevelOfDirection(webDirection.getLevel());
+            }
+        }
         return errors;
     }
 

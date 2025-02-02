@@ -4,16 +4,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Ensure at least one ingredient field exists on page load
     if (directionList.children.length === 0) {
-        addDirectionFields(false);
+        addDirectionFields();
     }
 
     // Add event listener to the "Add Ingredient" button
     addDirectionButton.addEventListener('click', function () {
-        addDirectionFields(true);
+        addDirectionFields();
     });
 });
 
-function addDirectionFields(notFirstDirection) {
+function addDirectionFields() {
     const directionDiv = document.createElement('div');
     directionDiv.classList.add('directionEntry');
 
@@ -78,23 +78,21 @@ function addDirectionFields(notFirstDirection) {
         levelSelect.appendChild(option);
     });
 
+    const removeButton = document.createElement('button');
+    removeButton.textContent = 'Remove';
+    removeButton.setAttribute('type', 'button');
+    removeButton.classList.add('removeButton');
+    removeButton.addEventListener('click', function () {
+       directionDiv.remove();
+    });
+
     // Append all inputs and the remove button to the direction div
     directionDiv.appendChild(directionTextarea);
     directionDiv.appendChild(methodSelect);
     directionDiv.appendChild(tempInput);
     directionDiv.appendChild(levelSelect);
+    directionDiv.appendChild(removeButton);
 
     // Append the direction div to the directionList
     directionList.appendChild(directionDiv);
-
-    if (notFirstDirection) {
-        const removeButton = document.createElement('button');
-        removeButton.textContent = 'Remove';
-        removeButton.setAttribute('type', 'button');
-        removeButton.classList.add('removeButton');
-        removeButton.addEventListener('click', function () {
-            directionDiv.remove();
-        });
-        directionDiv.appendChild(removeButton);
-    }
 }

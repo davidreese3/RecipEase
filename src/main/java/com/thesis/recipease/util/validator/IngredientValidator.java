@@ -15,21 +15,21 @@ public class IngredientValidator {
     private DropdownValidator dropdownValidator;
     private ArrayList<String> errors;
 
-    //needs to be fleshed out a bit (post thesis advisor meeting)
-    // Check Zero/Negative Ingredients
-    // Check Duplicate Ingredients (if discussed)
-    // Check Duplicate Ingredients
-
     public ArrayList<String> validateIngredients(List<WebIngredient> webIngredients){
         errors = new ArrayList<String>();
-        for (WebIngredient webIngredient : webIngredients) {
-            checkLengthOfIngredient(webIngredient);
-            checkQuantityOfIngredient(webIngredient);
-            checkFractionOfIngredient(webIngredient);
-            checkMeasurementOfIngredient(webIngredient);
-            checkPreperationOfIngredient(webIngredient);
+        if(webIngredients == null){
+            errors.add("Every recipe should have at least one ingredient.");
         }
-        checkForDuplicates(webIngredients);
+        else {
+            for (WebIngredient webIngredient : webIngredients) {
+                checkLengthOfIngredient(webIngredient);
+                checkQuantityOfIngredient(webIngredient);
+                checkFractionOfIngredient(webIngredient);
+                checkMeasurementOfIngredient(webIngredient);
+                checkPreperationOfIngredient(webIngredient);
+            }
+            checkForDuplicates(webIngredients);
+        }
         return errors;
     }
 

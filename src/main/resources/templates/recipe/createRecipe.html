@@ -21,7 +21,7 @@
 
 <main>
     <div th:each="error : ${errors}">
-        <span th:text="${error}"></span>
+        <span th:text="${error}" style="color: red;"></span>
     </div>
     <form id= "recipeForm" action="#" th:action="@{/recipe/create}" th:object="${webRecipe}" method="post" enctype="multipart/form-data">
         <table>
@@ -138,7 +138,9 @@
                                 <option value="Whisked">Whisked</option>
                                 <option value="Zested">Zested</option>
                             </select>
-                            <button type="button" class="removeButton" th:if="${index.index > 0}">Remove</button>
+<!--                            <button type="button" class="removeButton" th:if="${index.index > 0}">Remove</button>-->
+                            <button type="button" class="removeButton">Remove</button>
+
                         </div>
                     </div>
 
@@ -178,7 +180,9 @@
                                 <option value="Medium">Medium</option>
                                 <option value="High">High</option>
                             </select>
-                            <button type="button" class="removeButton" th:if="${index.index > 0}">Remove</button>
+<!--                            <button type="button" class="removeButton" th:if="${index.index > 0}">Remove</button>-->
+                            <button type="button" class="removeButton">Remove</button>
+
                         </div>
                     </div>
                 </td>

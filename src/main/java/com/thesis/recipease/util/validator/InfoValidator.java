@@ -23,7 +23,7 @@ public class InfoValidator {
     }
 
     private void checkLengthOfName(String name) {
-        if (name == null && !name.trim().isEmpty()) {
+        if (name == null || name.trim().isEmpty()) {
             errors.add("Recipe name is required.");
         }
         else if (name.length() > 40) {
