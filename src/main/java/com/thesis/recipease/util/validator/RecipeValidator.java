@@ -19,6 +19,8 @@ public class RecipeValidator {
     private IngredientValidator ingredientValidator;
     @Autowired
     private DirectionValidator directionValidator;
+    @Autowired
+    private TagValidator tagValidator;
     private ArrayList<String> errors;
 
     public ArrayList<String> isRecipeValid(Model model, WebRecipe webRecipe) {
@@ -26,6 +28,7 @@ public class RecipeValidator {
         errors.addAll(infoValidator.validateInfo(webRecipe.getInfo()));
         errors.addAll(ingredientValidator.validateIngredients(webRecipe.getIngredients()));
         errors.addAll(directionValidator.validateDirections(webRecipe.getDirections()));
+        errors.addAll(tagValidator.validateTags(webRecipe));
         return errors;
     }
 }

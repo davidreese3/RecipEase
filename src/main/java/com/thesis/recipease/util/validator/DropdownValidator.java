@@ -41,30 +41,59 @@ public class DropdownValidator {
             "", "Low", "Medium", "High"
     );
 
+    // Tags
+    private static final List<String> VALID_HOLIDAYS = Arrays.asList(
+            "Birthday", "Christmas", "Diwali", "Easter", "Father’s Day", "Halloween",
+            "Hanukkah", "Independence Day", "Kwanzaa", "Lunar New Year", "Mother’s Day",
+            "New Year’s Day", "Ramadan", "St. Patrick’s Day", "Thanksgiving", "Valentine’s Day", "Other"
+    );
+
+    private static final List<String> VALID_MEAL_TYPES = Arrays.asList(
+            "Appetizer", "Breakfast", "Brunch", "Dessert", "Dinner", "Lunch", "Snack", "Other"
+    );
+
+    private static final List<String> VALID_CUISINES = Arrays.asList(
+            "African", "American", "Caribbean", "Chinese", "French", "Greek", "Indian",
+            "Italian", "Japanese", "Mediterranean", "Mexican", "Middle Eastern", "Spanish",
+            "Thai", "Vietnamese", "Other"
+    );
+
+    private static final List<String> VALID_ALLERGENS = Arrays.asList(
+            "Dairy-Free", "Egg-Free", "Fish-Free", "Gluten-Free", "Peanut-Free", "Sesame-Free",
+            "Shellfish-Free", "Soy-Free", "Tree Nut-Free", "Other"
+    );
+
+    private static final List<String> VALID_DIET_TYPES = Arrays.asList(
+            "Keto", "Low-Carb", "Low-Fat", "Paleo", "Pescatarian", "Vegetarian", "Vegan", "Other"
+    );
+
+    private static final List<String> VALID_COOKING_LEVELS = Arrays.asList(
+            "Novice", "Beginner", "Intermediate", "Advanced", "Expert", "Chef-Level", "Other"
+    );
+
+    private static final List<String> VALID_COOKING_STYLES = Arrays.asList(
+            "30-Minute Meals", "Air Fryer Recipes", "Baking", "Comfort Food", "Freezer-Friendly",
+            "Grilled Recipes", "Healthy", "Kid-Friendly", "Make-Ahead Recipes", "Meal Prep Friendly",
+            "No-Bake Recipes", "One-Pot Recipes", "Party Food", "Quick & Easy", "Sheet Pan Meals",
+            "Slow Cooker Recipes", "Other"
+    );
+
     // Info
-    public boolean isValidUnitOfYield(String unit){
-        return VALID_UNITS_OF_YIELD.contains(unit);
-    }
+    public boolean isValidUnitOfYield(String unit){ return VALID_UNITS_OF_YIELD.contains(unit); }
 
     // Ingredients and subs
-    public boolean isValidMeasurement(String measurement){
-        return VALID_MEASUREMENTS.contains(measurement);
-    }
-
-    public boolean isValidPreparation(String preparation){
-        return VALID_PREPARATIONS.contains(preparation);
-    }
-
-    public boolean isValidFraction(String fraction){
-        return VALID_FRACTIONAL_QUANTITIES.contains(fraction);
-    }
+    public boolean isValidMeasurement(String measurement){ return VALID_MEASUREMENTS.contains(measurement); }
+    public boolean isValidPreparation(String preparation){ return VALID_PREPARATIONS.contains(preparation); }
+    public boolean isValidFraction(String fraction){ return VALID_FRACTIONAL_QUANTITIES.contains(fraction); }
 
     // Directions
-    public boolean isValidMethod(String method){
-        return VALID_METHODS.contains(method);
-    }
-
-    public boolean isValidHeatLevel(String heatLevel){
-        return VALID_HEAT_LEVELS.contains(heatLevel);
-    }
+    public boolean isValidMethod(String method){ return VALID_METHODS.contains(method); }
+    public boolean isValidHeatLevel(String heatLevel){ return VALID_HEAT_LEVELS.contains(heatLevel); }
+    public boolean isValidHoliday(String holiday){ return VALID_HOLIDAYS.contains(holiday); }
+    public boolean isValidMealType(String mealType){ return VALID_MEAL_TYPES.contains(mealType); }
+    public boolean isValidCuisine(String cuisine){ return VALID_CUISINES.contains(cuisine); }
+    public boolean isValidAllergen(String allergen){ return VALID_ALLERGENS.contains(allergen); }
+    public boolean isValidDietType(String dietType){ return VALID_DIET_TYPES.contains(dietType); }
+    public boolean isValidCookingLevel(String level){ return VALID_COOKING_LEVELS.contains(level); }
+    public boolean isValidCookingStyle(String style){ return VALID_COOKING_STYLES.contains(style); }
 }
