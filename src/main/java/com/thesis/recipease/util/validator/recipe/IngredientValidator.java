@@ -22,45 +22,45 @@ public class IngredientValidator {
         }
         else {
             for (WebIngredient webIngredient : webIngredients) {
-                validateLengthOfIngredient(webIngredient);
-                validateQuantityOfIngredient(webIngredient);
-                validateFractionOfIngredient(webIngredient);
-                validateMeasurementOfIngredient(webIngredient);
-                validatePreperationOfIngredient(webIngredient);
+                validateComponent(webIngredient);
+                validateQuantity(webIngredient);
+                validateFraction(webIngredient);
+                validateMeasurement(webIngredient);
+                validatePreperation(webIngredient);
             }
             validateDuplicates(webIngredients);
         }
         return errors;
     }
 
-    private void validateLengthOfIngredient(WebIngredient webIngredient){
+    private void validateComponent(WebIngredient webIngredient){
         if(webIngredient.getComponent().length() < 0 || webIngredient.getComponent() == null){
             errors.add("Each ingredient needs a component.");
         }
         if(webIngredient.getComponent().length() > 45){
-            errors.add("Ingredient \'" + webIngredient.getComponent() + "\' is too long. It should be 45 characters in length at maximum.");
+            errors.add("Ingredient '" + webIngredient.getComponent() + "' is too long. It should be 45 characters in length at maximum.");
         }
     }
 
-    private void validateQuantityOfIngredient(WebIngredient webIngredient) {
+    private void validateQuantity(WebIngredient webIngredient) {
         if (webIngredient.getWholeNumberQuantity() <= 0 && webIngredient.getFractionQuantity().equals("0")) {
-            errors.add("Ingredient \'" + webIngredient.getComponent() + "\' cannot have a quantity of 0. If you do not want the ingredient, please remove it.");
+            errors.add("Ingredient '" + webIngredient.getComponent() + "' cannot have a quantity of 0. If you do not want the ingredient, please remove it.");
         }
     }
 
-    private void validateFractionOfIngredient(WebIngredient webIngredient) {
+    private void validateFraction(WebIngredient webIngredient) {
         if (!dropdownValidator.isValidFraction(webIngredient.getFractionQuantity())) {
             errors.add("Ingredient '" + webIngredient.getComponent() + "' has an invalid fraction.");
         }
     }
 
-    private void validateMeasurementOfIngredient(WebIngredient webIngredient) {
+    private void validateMeasurement(WebIngredient webIngredient) {
         if (!dropdownValidator.isValidMeasurement(webIngredient.getMeasurement())) {
             errors.add("Ingredient '" + webIngredient.getComponent() + "' has an invalid measurement.");
         }
     }
 
-    private void validatePreperationOfIngredient(WebIngredient webIngredient){
+    private void validatePreperation(WebIngredient webIngredient){
         if (!dropdownValidator.isValidPreparation(webIngredient.getPreparation())) {
             errors.add("Ingredient '" + webIngredient.getComponent() + "' has an invalid preparation method.");
         }

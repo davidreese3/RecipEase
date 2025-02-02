@@ -111,9 +111,6 @@ public class RecipeSanitizer {
                     if (webUserSubstitutionEntry.getSubstitutedWholeNumberQuantity() == null) {
                         webUserSubstitutionEntry.setSubstitutedWholeNumberQuantity(0);
                     }
-                    if (isUserSubZero(webUserSubstitutionEntry)) {
-                        userSubstitutionEntryIterator.remove();
-                    }
                 }
             }
         }
