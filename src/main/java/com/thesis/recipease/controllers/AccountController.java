@@ -61,10 +61,6 @@ public class AccountController {
             model.addAttribute(registrationForm);
             return "account/registration";
         }
-        for (int i = 1; i <=10 ; i++) {
-            String pass = passwordEncoder.encode(webAccount.getPassword());
-            System.out.println("Encode" + i + ": (" + pass.length() + "): " + pass);
-        }
         List<String> roles = List.of("ROLE_USER");
         webAccount.setPassword(passwordEncoder.encode(webAccount.getPassword()));
         Account account = appService.addAccount(webAccount, roles, webProfile);
