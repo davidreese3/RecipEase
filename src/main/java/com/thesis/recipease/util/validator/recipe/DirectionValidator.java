@@ -20,38 +20,38 @@ public class DirectionValidator {
         }
         else {
             for (WebDirection webDirection : webDirections) {
-                validateLengthOfDirection(webDirection.getDirection());
-                validateMethodOfDirection(webDirection.getMethod());
-                validateTempOfDirection(webDirection.getTemp());
-                validateHeatLevelOfDirection(webDirection.getLevel());
+                validateDirectionText(webDirection);
+                validateMethod(webDirection);
+                validateTemp(webDirection);
+                validateHeatLevel(webDirection);
             }
         }
         return errors;
     }
 
-    private void validateLengthOfDirection(String direction){
-        if(direction == null || direction.isEmpty()){
+    private void validateDirectionText(WebDirection webDirection){
+        if(webDirection == null || webDirection.getDirection().isEmpty()){
             errors.add("Direction cannot be left empty.");
         }
-        else if (direction.length() > 300){
+        else if (webDirection.getDirection().length() > 300){
             errors.add("Direction cannot be longer than 300 characters.");
         }
     }
 
-    private void validateMethodOfDirection(String method){
-        if(!dropdownValidator.isValidMethod(method)){
+    private void validateMethod(WebDirection webDirection){
+        if(!dropdownValidator.isValidMethod(webDirection.getMethod())){
             errors.add("Direction has an invalid method.");
         }
     }
 
-    private void validateTempOfDirection(int temp){
-        if(temp < 0){
+    private void validateTemp(WebDirection webDirection){
+        if(webDirection.getTemp() < 0){
             errors.add("Direction temperature cannot be less than 0.");
         }
     }
 
-    private void validateHeatLevelOfDirection(String heatLevel){
-        if(!dropdownValidator.isValidHeatLevel(heatLevel)){
+    private void validateHeatLevel(WebDirection webDirection){
+        if(!dropdownValidator.isValidHeatLevel(webDirection.getLevel())){
             errors.add("Direction has an invalid heat level.");
         }
     }
