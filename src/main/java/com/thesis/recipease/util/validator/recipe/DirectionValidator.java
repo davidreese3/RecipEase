@@ -1,6 +1,7 @@
 package com.thesis.recipease.util.validator.recipe;
 
 import com.thesis.recipease.model.web.recipe.WebDirection;
+import com.thesis.recipease.model.web.recipe.WebRecipe;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -8,13 +9,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class DirectionValidator {
+public class DirectionValidator implements Validator{
     @Autowired
     private DropdownValidator dropdownValidator;
     private ArrayList<String> errors;
 
-    public ArrayList<String> validateDirections(List<WebDirection> webDirections){
+    public ArrayList<String> validate(WebRecipe webRecipe){
         errors = new ArrayList<String>();
+        List<WebDirection> webDirections = webRecipe.getDirections();
         if(webDirections == null){
             errors.add("Every recipe should have at least one direction.");
         }

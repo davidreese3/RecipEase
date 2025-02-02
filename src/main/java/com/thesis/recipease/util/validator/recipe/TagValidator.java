@@ -9,12 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class TagValidator {
+public class TagValidator implements Validator{
     @Autowired
     private DropdownValidator dropdownValidator;
     private ArrayList<String> errors;
 
-    public ArrayList<String> validateTags(WebRecipe webRecipe){
+    public ArrayList<String> validate(WebRecipe webRecipe){
         errors = new ArrayList<String>();
         if (webRecipe.getHolidays() != null){ validateHolidays(webRecipe.getHolidays()); }
         if (webRecipe.getMealTypes() != null){ validateMealTypes(webRecipe.getMealTypes()); }

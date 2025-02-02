@@ -1,5 +1,6 @@
 package com.thesis.recipease.util.validator.recipe;
 
+import com.thesis.recipease.model.web.recipe.WebRecipe;
 import com.thesis.recipease.model.web.recipe.WebUserSubstitutionEntry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,8 +14,9 @@ public class UserSubstitutionValidator {
     private DropdownValidator dropdownValidator;
     private ArrayList<String> errors;
 
-    public ArrayList<String> validateUserSubstitutions(List<WebUserSubstitutionEntry> webUserSubstitutionEntries){
+    public ArrayList<String> validate(WebRecipe webRecipe){
         errors = new ArrayList<String>();
+        List<WebUserSubstitutionEntry> webUserSubstitutionEntries = webRecipe.getUserSubstitutionEntries();
         if(webUserSubstitutionEntries != null) {
             for (WebUserSubstitutionEntry webUserSubstitutionEntry : webUserSubstitutionEntries) {
                 validateOriginalComponent(webUserSubstitutionEntry);

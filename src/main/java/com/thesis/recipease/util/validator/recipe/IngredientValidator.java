@@ -1,6 +1,7 @@
 package com.thesis.recipease.util.validator.recipe;
 
 import com.thesis.recipease.model.web.recipe.WebIngredient;
+import com.thesis.recipease.model.web.recipe.WebRecipe;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,13 +11,14 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-public class IngredientValidator {
+public class IngredientValidator implements Validator{
     @Autowired
     private DropdownValidator dropdownValidator;
     private ArrayList<String> errors;
 
-    public ArrayList<String> validateIngredients(List<WebIngredient> webIngredients){
+    public ArrayList<String> validate(WebRecipe webRecipe){
         errors = new ArrayList<String>();
+        List<WebIngredient> webIngredients = webRecipe.getIngredients();
         if(webIngredients == null){
             errors.add("Every recipe should have at least one ingredient.");
         }

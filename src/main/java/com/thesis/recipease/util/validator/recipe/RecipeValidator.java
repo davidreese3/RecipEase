@@ -28,13 +28,13 @@ public class RecipeValidator {
 
     public ArrayList<String> isRecipeValid(Model model, WebRecipe webRecipe) {
         errors = new ArrayList<String>();
-        errors.addAll(infoValidator.validateInfo(webRecipe.getInfo()));
-        errors.addAll(ingredientValidator.validateIngredients(webRecipe.getIngredients()));
-        errors.addAll(directionValidator.validateDirections(webRecipe.getDirections()));
-        errors.addAll(noteValidator.validateNote(webRecipe.getNote()));
-        errors.addAll(userSubstitutionValidator.validateUserSubstitutions(webRecipe.getUserSubstitutionEntries()));
-        errors.addAll(linkValidator.validateLink(webRecipe.getLinks()));
-        errors.addAll(tagValidator.validateTags(webRecipe));
+        errors.addAll(infoValidator.validate(webRecipe));
+        errors.addAll(ingredientValidator.validate(webRecipe));
+        errors.addAll(directionValidator.validate(webRecipe));
+        errors.addAll(noteValidator.validate(webRecipe));
+        errors.addAll(userSubstitutionValidator.validate(webRecipe));
+        errors.addAll(linkValidator.validate(webRecipe));
+        errors.addAll(tagValidator.validate(webRecipe));
         return errors;
     }
 }

@@ -1,19 +1,21 @@
 package com.thesis.recipease.util.validator.recipe;
 
 import com.thesis.recipease.model.web.recipe.WebInfo;
+import com.thesis.recipease.model.web.recipe.WebRecipe;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
 @Service
-public class InfoValidator {
+public class InfoValidator implements Validator{
     @Autowired
     private DropdownValidator dropdownValidator;
     private ArrayList<String> errors;
 
-    public ArrayList<String> validateInfo(WebInfo webInfo){
+    public ArrayList<String> validate(WebRecipe webRecipe){
         errors = new ArrayList<String>();
+        WebInfo webInfo = webRecipe.getInfo();
         checkLengthOfName(webInfo.getName());
         checkLengthOfDescription(webInfo.getDescription());
         checkQuantityOfYield(webInfo.getYield());
