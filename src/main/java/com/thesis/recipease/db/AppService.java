@@ -95,7 +95,8 @@ public class AppService {
     // READ OPS
     public Recipe getRecipeById(int recipeId) { return recipeDao.getRecipeById(recipeId); }
     public List<RecipeInfo> getRecipesByUserId(int userId) { return recipeDao.getRecipesByUserId(userId); }
-    public RecipeInfo getRecipeInfoById(int recipeId) { return recipeDao.getRecipeInfoById(recipeId); }
+    public int getUserIdByRecipeId(int recipeId) { return recipeDao.getUserIdByRecipeId(recipeId); }
+
     // UPDATE OPS
     // DELETE OPS
 

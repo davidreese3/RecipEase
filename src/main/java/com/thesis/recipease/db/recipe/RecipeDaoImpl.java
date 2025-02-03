@@ -299,7 +299,7 @@ public class RecipeDaoImpl implements RecipeDao{
     }
 
     //HELPER OPS
-    public RecipeInfo getRecipeInfoById(int recipeId){
+    private RecipeInfo getRecipeInfoById(int recipeId){
         final String SQL = "select i.*, coalesce(avg(r.ratingvalue), 0) as avgRating, count(r.ratingvalue) as numRaters " +
                 "from info i left join rating r on i.recipeid = r.recipeid " +
                 "where i.recipeid = ? group BY i.userid, i.recipeid " +
@@ -401,6 +401,15 @@ public class RecipeDaoImpl implements RecipeDao{
             return jdbcTemplate.query(SQL, new RecipeDaoImpl.RecipeInfoMapper(), userId);
         }catch (EmptyResultDataAccessException e) {
             return null;
+        }
+    }
+
+    public int getUserIdByRecipeId(int recipeId){
+        final String SQL = "select userid from info where recipeid = ? ";
+        try{
+            return jdbcTemplate.queryForObject(SQL, Integer.class, recipeId);
+        }catch (EmptyResultDataAccessException e) {
+            return -1;
         }
     }
 

@@ -22,7 +22,7 @@ public interface RecipeDao {
     // READ OPS
     public Recipe getRecipeById(int recipeId);
     public List<RecipeInfo> getRecipesByUserId(int userId);
-    public RecipeInfo getRecipeInfoById(int recipeId);
+    public int getUserIdByRecipeId(int recipeId);
     // UPDATE OPS
     // DELETE OPS
 }
