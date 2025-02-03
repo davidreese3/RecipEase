@@ -62,6 +62,15 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
         primary key (recipeId)
     );
 
+
+    -- version
+    create table if not exists version (
+        originalRecipeId int references info(recipeId) on delete cascade,
+        versionRecipeId int references info(recipeId) on delete cascade,
+        primary key (originalRecipeId, versionRecipeId)
+    );
+
+
     -- ingredient
     create table if not exists ingredient (
         recipeId int references info(recipeId) on delete cascade,
@@ -441,6 +450,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
     alter table authority owner to docker;
     alter table profile owner to docker;
     alter table info owner to docker;
+    alter table version owner to docker;
     alter table direction owner to docker;
     alter table ingredient owner to docker;
     alter table comment owner to docker;
