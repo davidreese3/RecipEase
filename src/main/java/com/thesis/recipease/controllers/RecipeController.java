@@ -148,6 +148,11 @@ public class RecipeController {
 
     @RequestMapping(value = "/recipe/rating/add", method = RequestMethod.POST)
     public String processRatingForm(Model model, WebRating webRating, RedirectAttributes redirectAttributes){
+        if (securityService.getLoggedInUserId() == appService.getRecipeInfoById(webRating.getRecipeId()).getUserId()){
+            redirectAttributes.addFlashAttribute("error", "You cannot rate your own recipe");
+            return "redirect:/recipe/view?recipeId=" + webRating.getRecipeId();
+
+        }
         RecipeRating recipeRating = appService.addRating(securityService.getLoggedInUserId(), webRating.getRecipeId(), webRating);
         if (recipeRating != null) {
             redirectAttributes.addFlashAttribute("message", "Your rating ("+webRating.getRatingValue()+") has be added");

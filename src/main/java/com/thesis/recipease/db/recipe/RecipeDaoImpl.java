@@ -299,7 +299,7 @@ public class RecipeDaoImpl implements RecipeDao{
     }
 
     //HELPER OPS
-    private RecipeInfo getRecipeInfo(int recipeId){
+    public RecipeInfo getRecipeInfo(int recipeId){
         final String SQL = "select i.*, coalesce(avg(r.ratingvalue), 0) as avgRating, count(r.ratingvalue) as numRaters " +
                 "from info i left join rating r on i.recipeid = r.recipeid " +
                 "where i.recipeid = ? group BY i.userid, i.recipeid " +
