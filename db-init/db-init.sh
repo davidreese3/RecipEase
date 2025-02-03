@@ -63,15 +63,15 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
     );
 
     -- ingredient
-        create table if not exists ingredient (
-            recipeId int references info(recipeId) on delete cascade,
-            component varchar(45),
-            wholeNumberQuantity int,
-            fractionQuantity varchar(4),
-            measurement varchar(20), --change once prepop made
-            preparation varchar(20), --change once prepop made
-            primary key (recipeId, component)
-        );
+    create table if not exists ingredient (
+        recipeId int references info(recipeId) on delete cascade,
+        component varchar(45),
+        wholeNumberQuantity int,
+        fractionQuantity varchar(4),
+        measurement varchar(20), --change once prepop made
+        preparation varchar(20), --change once prepop made
+        primary key (recipeId, component)
+    );
 
     -- direction
     create table if not exists direction (
