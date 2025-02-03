@@ -265,41 +265,41 @@ public class RecipeDaoImpl implements RecipeDao{
     // ------------------------------------------------
     @Override
     public Recipe getRecipeById(int recipeId){
-        RecipeInfo recipeInfo = getRecipeInfo(recipeId);
+        RecipeInfo recipeInfo = getRecipeInfoById(recipeId);
         if (recipeInfo == null) {
             return null;
         }
-        List<RecipeIngredient> recipeIngredients = getRecipeIngredients(recipeId);
-        List<RecipeDirection> recipeDirections = getRecipeDirections(recipeId);
+        List<RecipeIngredient> recipeIngredients = getRecipeIngredientsById(recipeId);
+        List<RecipeDirection> recipeDirections = getRecipeDirectionsById(recipeId);
 
         LinkedHashMap<String, String> recipeTags = new LinkedHashMap<>();
 
-        RecipeNote recipeNote = getNote(recipeId);
-        List<RecipeLink> recipeLinks = getLinks(recipeId);
-        List<RecipeUserSubstitutionEntry> recipeUserSubs = getUserSubs(recipeId);
-        RecipePhoto recipePhoto = getPhoto(recipeId);
-        List<RecipeTag> recipeHolidays = getTags(recipeId, "holiday");
+        RecipeNote recipeNote = getNoteById(recipeId);
+        List<RecipeLink> recipeLinks = getLinksById(recipeId);
+        List<RecipeUserSubstitutionEntry> recipeUserSubs = getUserSubsById(recipeId);
+        RecipePhoto recipePhoto = getPhotoById(recipeId);
+        List<RecipeTag> recipeHolidays = getTagsById(recipeId, "holiday");
         recipeTags.put("Holiday", getTagString(recipeHolidays));
-        List<RecipeTag> recipeMealTypes = getTags(recipeId, "mealType");
+        List<RecipeTag> recipeMealTypes = getTagsById(recipeId, "mealType");
         recipeTags.put("Meal Type", getTagString(recipeMealTypes));
-        List<RecipeTag> recipeCuisines = getTags(recipeId, "cuisine");
+        List<RecipeTag> recipeCuisines = getTagsById(recipeId, "cuisine");
         recipeTags.put("Cuisine", getTagString(recipeCuisines));
-        List<RecipeTag> recipeAllergens = getTags(recipeId, "allergen");
+        List<RecipeTag> recipeAllergens = getTagsById(recipeId, "allergen");
         recipeTags.put("Allergen", getTagString(recipeAllergens));
-        List<RecipeTag> recipeDietTypes = getTags(recipeId, "dietType");
+        List<RecipeTag> recipeDietTypes = getTagsById(recipeId, "dietType");
         recipeTags.put("Diet Type", getTagString(recipeDietTypes));
-        List<RecipeTag> recipeCookingLevels = getTags(recipeId, "cookingLevel");
+        List<RecipeTag> recipeCookingLevels = getTagsById(recipeId, "cookingLevel");
         recipeTags.put("Cooking Level", getTagString(recipeCookingLevels));
-        List<RecipeTag> recipeCookingStyles = getTags(recipeId, "cookingStyle");
+        List<RecipeTag> recipeCookingStyles = getTagsById(recipeId, "cookingStyle");
         recipeTags.put("Cooking Style", getTagString(recipeCookingStyles));
 
-        List<RecipeComment> recipeComments = getComments(recipeId);
+        List<RecipeComment> recipeComments = getCommentsById(recipeId);
 
         return new Recipe(recipeInfo, recipeIngredients, recipeDirections, recipeNote, recipeLinks, recipeUserSubs, recipePhoto, recipeTags, recipeComments);
     }
 
     //HELPER OPS
-    public RecipeInfo getRecipeInfo(int recipeId){
+    public RecipeInfo getRecipeInfoById(int recipeId){
         final String SQL = "select i.*, coalesce(avg(r.ratingvalue), 0) as avgRating, count(r.ratingvalue) as numRaters " +
                 "from info i left join rating r on i.recipeid = r.recipeid " +
                 "where i.recipeid = ? group BY i.userid, i.recipeid " +
@@ -311,7 +311,7 @@ public class RecipeDaoImpl implements RecipeDao{
         }
     }
 
-    private List<RecipeIngredient> getRecipeIngredients(int recipeId){
+    private List<RecipeIngredient> getRecipeIngredientsById(int recipeId){
         final String SQL = "select * from ingredient where recipeid = ?";
         try {
             return jdbcTemplate.query(SQL, new RecipeDaoImpl.RecipeIngredientMapper(), recipeId);
@@ -320,7 +320,7 @@ public class RecipeDaoImpl implements RecipeDao{
         }
     }
 
-    private List<RecipeDirection> getRecipeDirections(int recipeId){
+    private List<RecipeDirection> getRecipeDirectionsById(int recipeId){
         final String SQL = "select * from direction where recipeid = ?";
         try {
             return jdbcTemplate.query(SQL, new RecipeDaoImpl.RecipeDirectionMapper(), recipeId);
@@ -329,7 +329,7 @@ public class RecipeDaoImpl implements RecipeDao{
         }
     }
 
-    private RecipeNote getNote(int recipeId){
+    private RecipeNote getNoteById(int recipeId){
         final String SQL = "select * from note where recipeid = ?";
         try {
             return jdbcTemplate.queryForObject(SQL, new RecipeDaoImpl.RecipeNoteMapper(), recipeId);
@@ -338,7 +338,7 @@ public class RecipeDaoImpl implements RecipeDao{
         }
     }
 
-    private List<RecipeLink> getLinks(int recipeId){
+    private List<RecipeLink> getLinksById(int recipeId){
         final String SQL = "select * from link where recipeid = ?";
         try{
             return jdbcTemplate.query(SQL, new RecipeDaoImpl.RecipeLinkMapper(), recipeId);
@@ -347,7 +347,7 @@ public class RecipeDaoImpl implements RecipeDao{
         }
     }
 
-    private List<RecipeUserSubstitutionEntry> getUserSubs(int recipeId){
+    private List<RecipeUserSubstitutionEntry> getUserSubsById(int recipeId){
         final String SQL = "select * from userSubs where recipeid = ?";
         try{
             return jdbcTemplate.query(SQL, new RecipeDaoImpl.UserSubstitutionEntryMapper(), recipeId);
@@ -356,7 +356,7 @@ public class RecipeDaoImpl implements RecipeDao{
         }
     }
 
-    private RecipePhoto getPhoto(int recipeId){
+    private RecipePhoto getPhotoById(int recipeId){
         final String SQL = "select * from photo where recipeid = ?";
         try{
             return jdbcTemplate.queryForObject(SQL, new RecipeDaoImpl.RecipePhotoMapper(), recipeId);
@@ -365,7 +365,7 @@ public class RecipeDaoImpl implements RecipeDao{
         }
     }
 
-    private List<RecipeTag> getTags(int recipeId, String field){
+    private List<RecipeTag> getTagsById(int recipeId, String field){
         final String SQL = "select * from "+field+" where recipeid = ?";
         try{
             return jdbcTemplate.query(SQL, new RecipeTagMapper(field), recipeId);
@@ -382,7 +382,7 @@ public class RecipeDaoImpl implements RecipeDao{
         return joiner.toString();
     }
 
-    private List<RecipeComment> getComments(int recipeId){
+    private List<RecipeComment> getCommentsById(int recipeId){
         final String SQL = "select c.recipeId, c.commentId, c.commentUserId, c.commentText, concat(p.firstname, ' ' ,p.lastname) as name from comment c join profile p on c.commentUserId = p.id where c.recipeid = ?";
         try{
             return jdbcTemplate.query(SQL, new RecipeDaoImpl.CommentMapper(), recipeId);
