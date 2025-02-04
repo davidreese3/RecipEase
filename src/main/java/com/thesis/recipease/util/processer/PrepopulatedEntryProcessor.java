@@ -66,6 +66,8 @@ public class PrepopulatedEntryProcessor {
     }
 
     public void gatherStartingStrings(Recipe recipe){
+        glossaryTerms.setLength(0);
+        substitutionTerms.setLength(0);
         List<RecipeIngredient> recipeIngredientList = recipe.getRecipeIngredients();
         for(RecipeIngredient recipeIngredient : recipeIngredientList){
             glossaryTerms.append(recipeIngredient.getPreparation()).append(' ');
