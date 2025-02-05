@@ -2,22 +2,28 @@ document.addEventListener('DOMContentLoaded', function () {
     const ingredientList = document.querySelector('#ingredientList');
     const addButton = document.querySelector('#addIngredientBtn');
 
-    // Ensure at least one ingredient field exists on page load
+    // Reattach remove button functionality to existing rows
+    repopulateRemoveButtons();
+
     if (ingredientList.children.length === 0) {
-        addIngredientFields();
+            addIngredientFields();
     }
 
-    // Add event listener to the "Add Ingredient" button
     addButton.addEventListener('click', function () {
         addIngredientFields();
+    });
+
+    // Event delegation for dynamically added remove buttons
+    ingredientList.addEventListener('click', function (event) {
+        if (event.target.classList.contains('removeButton')) {
+            event.target.closest('tr').remove();
+        }
     });
 });
 
 function addIngredientFields() {
-    const ingredientDiv = document.createElement('div');
-    ingredientDiv.classList.add('ingredientEntry');
+    const tableRow = document.createElement('tr');
 
-    // Input for ingredient name
     const componentInput = document.createElement('input');
     componentInput.setAttribute('type', 'text');
     componentInput.setAttribute('name', `ingredients[${ingredientList.children.length}].component`);
@@ -25,14 +31,12 @@ function addIngredientFields() {
     componentInput.setAttribute('maxlength', '45');
     componentInput.required = true;
 
-    // Input for whole number quantity
     const wholeNumberInput = document.createElement('input');
     wholeNumberInput.setAttribute('type', 'number');
     wholeNumberInput.setAttribute('min', '0');
     wholeNumberInput.setAttribute('name', `ingredients[${ingredientList.children.length}].wholeNumberQuantity`);
     wholeNumberInput.setAttribute('placeholder', 'Whole Number Quantity');
 
-    // Dropdown for fractional quantity
     const fractionSelect = document.createElement('select');
     fractionSelect.setAttribute('name', `ingredients[${ingredientList.children.length}].fractionQuantity`);
     const fractionOptions = [
@@ -54,7 +58,6 @@ function addIngredientFields() {
         fractionSelect.appendChild(option);
     });
 
-    // Dropdown for measurement
     const measurementSelect = document.createElement('select');
     measurementSelect.setAttribute('name', `ingredients[${ingredientList.children.length}].measurement`);
     measurementSelect.required = true;
@@ -81,7 +84,6 @@ function addIngredientFields() {
         measurementSelect.appendChild(option);
     });
 
-    // Dropdown for preparation
     const preparationSelect = document.createElement('select');
     preparationSelect.setAttribute('name', `ingredients[${ingredientList.children.length}].preparation`);
     preparationSelect.required = true;
@@ -121,15 +123,29 @@ function addIngredientFields() {
     removeButton.setAttribute('type', 'button');
     removeButton.classList.add('removeButton');
     removeButton.addEventListener('click', function () {
-        ingredientDiv.remove();
+        tableRow.remove();
     });
 
-    // Append all inputs to the ingredient container
-    ingredientDiv.appendChild(componentInput);
-    ingredientDiv.appendChild(wholeNumberInput);
-    ingredientDiv.appendChild(fractionSelect);
-    ingredientDiv.appendChild(measurementSelect);
-    ingredientDiv.appendChild(preparationSelect);
-    ingredientList.appendChild(ingredientDiv);
-    ingredientDiv.appendChild(removeButton);
+    tableRow.appendChild(createCell(componentInput));
+    tableRow.appendChild(createCell(wholeNumberInput));
+    tableRow.appendChild(createCell(fractionSelect));
+    tableRow.appendChild(createCell(measurementSelect));
+    tableRow.appendChild(createCell(preparationSelect));
+    tableRow.appendChild(createCell(removeButton));
+
+    ingredientList.appendChild(tableRow);
+}
+
+function createCell(element) {
+    const cell = document.createElement('td');
+    cell.appendChild(element);
+    return cell;
+}
+
+function repopulateRemoveButtons() {
+    document.querySelectorAll('.removeButton').forEach(button => {
+        button.addEventListener('click', function () {
+            this.closest('tr').remove();
+        });
+    });
 }
