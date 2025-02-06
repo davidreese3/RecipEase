@@ -23,6 +23,8 @@ public interface RecipeDao {
     public Recipe getRecipeById(int recipeId);
     public List<RecipeInfo> getRecipesByUserId(int userId);
     public int getUserIdByRecipeId(int recipeId);
+    public int getNumberOfVariationByOriginalRecipeId(int originalRecipeId);
+    public int getDepthOfVariationByVariationRecipeId(int variationRecipeId);
     // UPDATE OPS
     // DELETE OPS
 }

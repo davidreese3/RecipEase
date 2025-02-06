@@ -96,6 +96,8 @@ public class AppService {
     public Recipe getRecipeById(int recipeId) { return recipeDao.getRecipeById(recipeId); }
     public List<RecipeInfo> getRecipesByUserId(int userId) { return recipeDao.getRecipesByUserId(userId); }
     public int getUserIdByRecipeId(int recipeId) { return recipeDao.getUserIdByRecipeId(recipeId); }
+    public int getNumberOfVariationByOriginalRecipeId(int originalRecipeId) { return recipeDao.getNumberOfVariationByOriginalRecipeId(originalRecipeId); };
+    public int getDepthOfVariationByVariationRecipeId(int variationRecipeId) { return recipeDao.getDepthOfVariationByVariationRecipeId(variationRecipeId); }
 
     // UPDATE OPS
     // DELETE OPS

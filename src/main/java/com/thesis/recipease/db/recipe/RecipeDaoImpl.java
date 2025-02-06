@@ -413,6 +413,34 @@ public class RecipeDaoImpl implements RecipeDao{
         }
     }
 
+    public int getNumberOfVariationByOriginalRecipeId(int originalRecipeId) {
+        final String SQL = "select count(originalrecipeid) from variation where originalrecipeid = ?";
+        try{
+            return jdbcTemplate.queryForObject(SQL, Integer.class, originalRecipeId);
+        }catch (EmptyResultDataAccessException e) {
+            return -1;
+        }
+    }
+
+    public int getDepthOfVariationByVariationRecipeId(int variationRecipeId) {
+        final String SQL = "with recursive variationDepth as ( " +
+                "select originalrecipeid, variationrecipeid, 1 as depth " +
+                "from variation " +
+                "union all " +
+                "select vd.originalrecipeid, v.variationrecipeid, vd.depth + 1 " +
+                "from variation v " +
+                "join variationDepth vd on v.originalrecipeid = vd.variationrecipeid" +
+                ")" +
+                "select max(depth) as maxDepth " +
+                "from variationDepth " +
+                "where variationrecipeid = ?";
+        try{
+            return jdbcTemplate.queryForObject(SQL, Integer.class, variationRecipeId);
+        }catch (EmptyResultDataAccessException e) {
+            return -1;
+        }
+    }
+
     // ------------------------------------------------
     // UPDATE OPS
     // ------------------------------------------------

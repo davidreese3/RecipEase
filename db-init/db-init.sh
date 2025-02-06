@@ -63,11 +63,11 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
     );
 
 
-    -- version
-    create table if not exists version (
+    -- variation
+    create table if not exists variation (
         originalRecipeId int references info(recipeId) on delete cascade,
-        versionRecipeId int references info(recipeId) on delete cascade,
-        primary key (originalRecipeId, versionRecipeId)
+        variationRecipeId int references info(recipeId) on delete cascade,
+        primary key (originalRecipeId, variationRecipeId)
     );
 
 
