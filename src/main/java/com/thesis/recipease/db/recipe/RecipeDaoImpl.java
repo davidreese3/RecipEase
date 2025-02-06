@@ -391,7 +391,6 @@ public class RecipeDaoImpl implements RecipeDao{
         }
     }
 
-    @Override
     public List<RecipeInfo> getRecipesByUserId(int userId){
         final String SQL = "select i.*, coalesce(avg(r.ratingvalue), 0) as avgRating, count(r.ratingvalue) as numRaters " +
                 "from info i left join rating r on i.recipeid = r.recipeid " +

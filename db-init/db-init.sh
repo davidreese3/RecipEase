@@ -49,7 +49,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
     create table if not exists info (
         recipeId serial,
         userId int references account(id) on delete cascade on update cascade,
-        name varchar(40),
+        name varchar(50),
         description varchar(1000),
         yield numeric,
         unitOfYield varchar(20), --change once prepop made
