@@ -272,21 +272,30 @@ public class RecipeDaoImpl implements RecipeDao{
         List<RecipeIngredient> recipeIngredients = getRecipeIngredientsById(recipeId);
         List<RecipeDirection> recipeDirections = getRecipeDirectionsById(recipeId);
 
+        LinkedHashMap<String, String> recipeTags = new LinkedHashMap<>();
+
         RecipeNote recipeNote = getNoteById(recipeId);
         List<RecipeLink> recipeLinks = getLinksById(recipeId);
         List<RecipeUserSubstitutionEntry> recipeUserSubs = getUserSubsById(recipeId);
         RecipePhoto recipePhoto = getPhotoById(recipeId);
         List<RecipeTag> recipeHolidays = getTagsById(recipeId, "holiday");
+        recipeTags.put("Holiday", getTagString(recipeHolidays));
         List<RecipeTag> recipeMealTypes = getTagsById(recipeId, "mealType");
+        recipeTags.put("Meal Type", getTagString(recipeMealTypes));
         List<RecipeTag> recipeCuisines = getTagsById(recipeId, "cuisine");
+        recipeTags.put("Cuisine", getTagString(recipeCuisines));
         List<RecipeTag> recipeAllergens = getTagsById(recipeId, "allergen");
+        recipeTags.put("Allergen", getTagString(recipeAllergens));
         List<RecipeTag> recipeDietTypes = getTagsById(recipeId, "dietType");
+        recipeTags.put("Diet Type", getTagString(recipeDietTypes));
         List<RecipeTag> recipeCookingLevels = getTagsById(recipeId, "cookingLevel");
+        recipeTags.put("Cooking Level", getTagString(recipeCookingLevels));
         List<RecipeTag> recipeCookingStyles = getTagsById(recipeId, "cookingStyle");
+        recipeTags.put("Cooking Style", getTagString(recipeCookingStyles));
 
         List<RecipeComment> recipeComments = getCommentsById(recipeId);
 
-        return new Recipe(recipeInfo, recipeIngredients, recipeDirections, recipeNote, recipeLinks, recipeUserSubs, recipePhoto, recipeHolidays, recipeMealTypes, recipeCuisines, recipeAllergens, recipeDietTypes, recipeCookingLevels, recipeCookingStyles, recipeComments);
+        return new Recipe(recipeInfo, recipeIngredients, recipeDirections, recipeNote, recipeLinks, recipeUserSubs, recipePhoto, recipeTags, recipeComments);
     }
 
     //HELPER OPS
@@ -382,7 +391,6 @@ public class RecipeDaoImpl implements RecipeDao{
         }
     }
 
-    @Override
     public List<RecipeInfo> getRecipesByUserId(int userId){
         final String SQL = "select i.*, coalesce(avg(r.ratingvalue), 0) as avgRating, count(r.ratingvalue) as numRaters " +
                 "from info i left join rating r on i.recipeid = r.recipeid " +
@@ -565,4 +573,3 @@ public class RecipeDaoImpl implements RecipeDao{
         }
     }
 }
-

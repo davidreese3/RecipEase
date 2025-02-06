@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public class RecipeNormalizer {
     public Recipe normalizeRecipe(Recipe recipe){
-        List<RecipeIngredient> recipeIngredients = recipe.getIngredients();
+        List<RecipeIngredient> recipeIngredients = recipe.getRecipeIngredients();
         for(RecipeIngredient recipeIngredient : recipeIngredients){
             recipeIngredient.setMeasurement(normalizeMeasurement(
                     recipeIngredient.getMeasurement(),
@@ -18,10 +18,10 @@ public class RecipeNormalizer {
                     recipeIngredient.getFractionQuantity(),
                     recipeIngredient.getPreparation()));
         }
-        recipe.setIngredients(recipeIngredients);
-        RecipeInfo recipeInfo = recipe.getInfo();
+        recipe.setRecipeIngredients(recipeIngredients);
+        RecipeInfo recipeInfo = recipe.getRecipeInfo();
         recipeInfo.setUnitOfYield(normalizeUnitOfYield(recipeInfo.getUnitOfYield(), recipeInfo.getYield()));
-        recipe.setInfo(recipeInfo);
+        recipe.setRecipeInfo(recipeInfo);
         return recipe;
     }
 

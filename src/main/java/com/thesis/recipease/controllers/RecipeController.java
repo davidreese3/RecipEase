@@ -91,10 +91,10 @@ public class RecipeController {
         }
         else {
             if (!file.isEmpty()) {
-                storageService.store(file, recipe.getInfo().getRecipeId());
+                storageService.store(file, recipe.getRecipeInfo().getRecipeId());
             }
             redirectAttributes.addFlashAttribute("message", "Your recipe has been posted!");
-            return "redirect:/recipe/view?recipeId=" + recipe.getInfo().getRecipeId();
+            return "redirect:/recipe/view?recipeId=" + recipe.getRecipeInfo().getRecipeId();
         }
     }
 
@@ -110,7 +110,7 @@ public class RecipeController {
         model.addAttribute("recipe", recipe);
 
 
-        String authorName = appService.getNameById(recipe.getInfo().getUserId());
+        String authorName = appService.getNameById(recipe.getRecipeInfo().getUserId());
         model.addAttribute("authorName", authorName);
 
         prepopulatedEntryProcessor.gatherStartingStrings(recipe);
@@ -125,7 +125,7 @@ public class RecipeController {
         userSubs = substitutionNormalizer.normalizeUserSubs(userSubs);
         recipe.setUserSubstitutionEntries(userSubs);
 
-        RecipePhoto recipePhoto = recipe.getPhoto();
+        RecipePhoto recipePhoto = recipe.getRecipePhoto();
         Path photoPath = null;
         if (recipePhoto != null) {
             String fileLocation = "/recipePictures/" + recipePhoto.getFileName();

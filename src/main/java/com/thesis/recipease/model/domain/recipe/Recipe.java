@@ -1,86 +1,72 @@
 package com.thesis.recipease.model.domain.recipe;
 
-import com.thesis.recipease.model.web.recipe.WebTag;
-
 import java.util.LinkedHashMap;
 import java.util.List;
 
 public class Recipe {
-    private RecipeInfo info;
-    private List<RecipeIngredient> ingredients;
-    private List<RecipeDirection> directions;
-    private RecipeNote note;
-    private List<RecipeLink> links;
+    private RecipeInfo recipeInfo;
+    private List<RecipeIngredient> recipeIngredients;
+    private List<RecipeDirection> recipeDirections;
+    private RecipeNote recipeNote;
+    private List<RecipeLink> recipeLinks;
     private List<RecipeUserSubstitutionEntry> userSubstitutionEntries;
-    private RecipePhoto photo;
-    private List<RecipeTag> holidays;
-    private List<RecipeTag> mealTypes;
-    private List<RecipeTag> cuisines;
-    private List<RecipeTag> allergens;
-    private List<RecipeTag> dietTypes;
-    private List<RecipeTag> cookingLevels;
-    private List<RecipeTag> cookingStyles;
-    private List<RecipeComment> comments;
+    private RecipePhoto recipePhoto;
+    private LinkedHashMap<String, String> recipeTags;
+    private List<RecipeComment> recipeComments;
 
 
     public Recipe(){}
 
-    public Recipe(RecipeInfo info, List<RecipeIngredient> ingredients, List<RecipeDirection> directions, RecipeNote note, List<RecipeLink> links, List<RecipeUserSubstitutionEntry> userSubstitutionEntries, RecipePhoto photo, List<RecipeTag> holidays, List<RecipeTag> mealTypes, List<RecipeTag> cuisines, List<RecipeTag> allergens, List<RecipeTag> dietTypes, List<RecipeTag> cookingLevels, List<RecipeTag> cookingStyles, List<RecipeComment> comments) {
-        this.info = info;
-        this.ingredients = ingredients;
-        this.directions = directions;
-        this.note = note;
-        this.links = links;
+    public Recipe(RecipeInfo recipeInfo, List<RecipeIngredient> recipeIngredients, List<RecipeDirection> recipeDirections, RecipeNote recipeNote, List<RecipeLink> recipeLinks, List<RecipeUserSubstitutionEntry> userSubstitutionEntries, RecipePhoto recipePhoto, LinkedHashMap<String, String> recipeTags, List<RecipeComment> recipeComments) {
+        this.recipeInfo = recipeInfo;
+        this.recipeIngredients = recipeIngredients;
+        this.recipeDirections = recipeDirections;
+        this.recipeNote = recipeNote;
+        this.recipeLinks = recipeLinks;
         this.userSubstitutionEntries = userSubstitutionEntries;
-        this.photo = photo;
-        this.holidays = holidays;
-        this.mealTypes = mealTypes;
-        this.cuisines = cuisines;
-        this.allergens = allergens;
-        this.dietTypes = dietTypes;
-        this.cookingLevels = cookingLevels;
-        this.cookingStyles = cookingStyles;
-        this.comments = comments;
+        this.recipePhoto = recipePhoto;
+        this.recipeTags = recipeTags;
+        this.recipeComments = recipeComments;
     }
 
-    public RecipeInfo getInfo() {
-        return info;
+    public RecipeInfo getRecipeInfo() {
+        return recipeInfo;
     }
 
-    public void setInfo(RecipeInfo info) {
-        this.info = info;
+    public void setRecipeInfo(RecipeInfo recipeInfo) {
+        this.recipeInfo = recipeInfo;
     }
 
-    public List<RecipeIngredient> getIngredients() {
-        return ingredients;
+    public List<RecipeIngredient> getRecipeIngredients() {
+        return recipeIngredients;
     }
 
-    public void setIngredients(List<RecipeIngredient> ingredients) {
-        this.ingredients = ingredients;
+    public void setRecipeIngredients(List<RecipeIngredient> recipeIngredients) {
+        this.recipeIngredients = recipeIngredients;
     }
 
-    public List<RecipeDirection> getDirections() {
-        return directions;
+    public List<RecipeDirection> getRecipeDirections() {
+        return recipeDirections;
     }
 
-    public void setDirections(List<RecipeDirection> directions) {
-        this.directions = directions;
+    public void setRecipeDirections(List<RecipeDirection> recipeDirections) {
+        this.recipeDirections = recipeDirections;
     }
 
-    public RecipeNote getNote() {
-        return note;
+    public RecipeNote getRecipeNote() {
+        return recipeNote;
     }
 
-    public void setNote(RecipeNote note) {
-        this.note = note;
+    public void setRecipeNote(RecipeNote recipeNote) {
+        this.recipeNote = recipeNote;
     }
 
-    public List<RecipeLink> getLinks() {
-        return links;
+    public List<RecipeLink> getRecipeLinks() {
+        return recipeLinks;
     }
 
-    public void setLinks(List<RecipeLink> links) {
-        this.links = links;
+    public void setRecipeLinks(List<RecipeLink> recipeLinks) {
+        this.recipeLinks = recipeLinks;
     }
 
     public List<RecipeUserSubstitutionEntry> getUserSubstitutionEntries() {
@@ -91,76 +77,27 @@ public class Recipe {
         this.userSubstitutionEntries = userSubstitutionEntries;
     }
 
-    public RecipePhoto getPhoto() {
-        return photo;
+    public RecipePhoto getRecipePhoto() {
+        return recipePhoto;
     }
 
-    public void setPhoto(RecipePhoto photo) {
-        this.photo = photo;
+    public void setRecipePhoto(RecipePhoto recipePhoto) {
+        this.recipePhoto = recipePhoto;
     }
 
-    public List<RecipeTag> getHolidays() {
-        return holidays;
+    public LinkedHashMap<String, String> getRecipeTags() {
+        return recipeTags;
     }
 
-    public void setHolidays(List<RecipeTag> holidays) {
-        this.holidays = holidays;
+    public void setRecipeTags(LinkedHashMap<String, String> recipeTags) {
+        this.recipeTags = recipeTags;
     }
 
-    public List<RecipeTag> getMealTypes() {
-        return mealTypes;
+    public List<RecipeComment> getRecipeComments() {
+        return recipeComments;
     }
 
-    public void setMealTypes(List<RecipeTag> mealTypes) {
-        this.mealTypes = mealTypes;
-    }
-
-    public List<RecipeTag> getCuisines() {
-        return cuisines;
-    }
-
-    public void setCuisines(List<RecipeTag> cuisines) {
-        this.cuisines = cuisines;
-    }
-
-    public List<RecipeTag> getAllergens() {
-        return allergens;
-    }
-
-    public void setAllergens(List<RecipeTag> allergens) {
-        this.allergens = allergens;
-    }
-
-    public List<RecipeTag> getDietTypes() {
-        return dietTypes;
-    }
-
-    public void setDietTypes(List<RecipeTag> dietTypes) {
-        this.dietTypes = dietTypes;
-    }
-
-    public List<RecipeTag> getCookingLevels() {
-        return cookingLevels;
-    }
-
-    public void setCookingLevels(List<RecipeTag> cookingLevels) {
-        this.cookingLevels = cookingLevels;
-    }
-
-    public List<RecipeTag> getCookingStyles() {
-        return cookingStyles;
-    }
-
-    public void setCookingStyles(List<RecipeTag> cookingStyles) {
-        this.cookingStyles = cookingStyles;
-    }
-
-    public List<RecipeComment> getComments() {
-        return comments;
-    }
-
-    public void setComments(List<RecipeComment> comments) {
-        this.comments = comments;
+    public void setRecipeComments(List<RecipeComment> recipeComments) {
+        this.recipeComments = recipeComments;
     }
 }
-
