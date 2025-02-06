@@ -12,51 +12,51 @@
 <body>
     <header class="noPrint">
         <div th:replace="~{fragments/headerAndNavbar}"></div>
-        <h2 th:text="'View ' + ${recipe.recipeInfo.name}"></h2>
+        <h2 th:text="'View ' + ${recipe.info.name}"></h2>
         <div th:if="${message}" th:text="${message}" style="color: green;"></div>
         <div th:if="${error}" th:text="${error}" style="color: red;"></div>
 
     </header>
 
     <button id="printWithImages" class="noPrint">Print Recipe</button>
-    <button th:if="${recipe.recipePhoto != null}" id="printWithoutImages" class="noPrint">Print Recipe without Image</button>
+    <button th:if="${recipe.photo != null}" id="printWithoutImages" class="noPrint">Print Recipe without Image</button>
     <main id="printable-section">
         <h3>Recipe Info</h3>
         <table>
             <tbody>
             <tr>
-                <td th:text="${recipe.recipeInfo.name}"></td>
+                <td th:text="${recipe.info.name}"></td>
             </tr>
             <tr>
                 <td>
-                    <a th:href="${'http://localhost:8080/profile/view?id=' + recipe.recipeInfo.userId}" th:text="${authorName}"></a>
+                    <a th:href="${'http://localhost:8080/profile/view?id=' + recipe.info.userId}" th:text="${authorName}"></a>
 
                 </td>
             </tr>
             <tr>
-                <td th:text="${@recipeUtils.formatRatingLong(recipe.recipeInfo.ratingInfo.averageRating, recipe.recipeInfo.ratingInfo.numberOfRaters)}"></td>
+                <td th:text="${@recipeUtils.formatRatingLong(recipe.info.ratingInfo.averageRating, recipe.info.ratingInfo.numberOfRaters)}"></td>
             </tr>
             <tr>
-                <td th:text = ${recipe.recipeInfo.description}></td>
+                <td th:text = ${recipe.info.description}></td>
             </tr>
             <tr>
-                <td th:text="'Makes ' + ${#numbers.formatDecimal(recipe.recipeInfo.yield, 0, recipe.recipeInfo.yield % 1 == 0 ? 0 : 1)} + ' ' + ${recipe.recipeInfo.unitOfYield}"></td>
+                <td th:text="'Makes ' + ${#numbers.formatDecimal(recipe.info.yield, 0, recipe.info.yield % 1 == 0 ? 0 : 1)} + ' ' + ${recipe.info.unitOfYield}"></td>
             </tr>
             <tr>
-                <td th:text="${@recipeUtils.formatTimeLong('Preparation Time', recipe.recipeInfo.prepHr, recipe.recipeInfo.prepMin)}"></td>
+                <td th:text="${@recipeUtils.formatTimeLong('Preparation Time', recipe.info.prepHr, recipe.info.prepMin)}"></td>
             </tr>
             <tr>
-                <td th:text="${@recipeUtils.formatTimeLong('Process Time', recipe.recipeInfo.processHr, recipe.recipeInfo.processMin)}"></td>
+                <td th:text="${@recipeUtils.formatTimeLong('Process Time', recipe.info.processHr, recipe.info.processMin)}"></td>
             </tr>
             <tr>
-                <td th:text="${@recipeUtils.formatTimeLong('Total Time', recipe.recipeInfo.totalHr, recipe.recipeInfo.totalMin)}"></td>
+                <td th:text="${@recipeUtils.formatTimeLong('Total Time', recipe.info.totalHr, recipe.info.totalMin)}"></td>
             </tr>
             </tbody>
         </table>
         <h3>Ingredients</h3>
         <table>
             <tbody>
-            <tr th:each="ingredient : ${recipe.recipeIngredients}">
+            <tr th:each="ingredient : ${recipe.ingredients}">
                 <td>
                     <input type="checkbox">
                     <span th:text="${@recipeUtils.formatIngredient(ingredient.wholeNumberQuantity, ingredient.fractionQuantity,
@@ -68,7 +68,7 @@
         <h3>Directions</h3>
         <table>
             <tbody>
-            <tr th:each="direction : ${recipe.recipeDirections}">
+            <tr th:each="direction : ${recipe.directions}">
                 <td th:text="'Step ' + ${direction.stepNum} + ': ' + ${direction.direction}"></td>
                 <td th:text="${@recipeUtils.formatDirectionDetails(direction.method, direction.level, direction.temp)}"></td>
             </tr>
@@ -111,14 +111,14 @@
             </table>
         </div>
         <hr>
-        <div th:if="${recipe.recipeNote != null}">
+        <div th:if="${recipe.note != null}">
             <h3>Notes</h3>
-            <span th:text="${recipe.recipeNote.note}"></span>
+            <span th:text="${recipe.note.note}"></span>
         </div>
-        <div th:if="${recipe.recipeLinks.size != 0}">
+        <div th:if="${recipe.links.size != 0}">
             <h3>Links</h3>
             <p>Links below are added by users to external sites</p>
-            <li th:each="link : ${recipe.recipeLinks}">
+            <li th:each="link : ${recipe.links}">
                 <a th:href="${link.link}" th:text="${link.link}"></a>
             </li>
         </div>
@@ -145,29 +145,20 @@
             </table>
         </div>
         <div>
-            <img th:if="${recipe.recipePhoto != null}" th:src="${recipe.recipePhoto.fileLocation}" alt="Recipe Photo" height="200px">
+            <img th:if="${recipe.photo != null}" th:src="${recipe.photo.fileLocation}" alt="Recipe Photo" height="200px">
         </div>
-        <div th:if="${tagsExist}">
-            <h3>Recipe Tags</h3>
-            <ul>
-                <li th:each="tag : ${recipe.recipeTags}" th:if="${tag.value != ''}">
-                    <span th:text="${tag.key}"></span>:
-                    <span th:text="${tag.value}"></span>
-                </li>
-            </ul>
-        </div>
-        <div th:if="${recipe.recipeComments.size != 0}">
+        <div th:if="${recipe.comments.size != 0}">
             <h3>Comments</h3>
             <table>
                 <tbody>
-                <tr th:each="comment : ${recipe.recipeComments}">
+                <tr th:each="comment : ${recipe.comments}">
                     <td th:text="${comment.commentUserName} + ': '"></td>
                     <td th:text="${comment.commentText}"></td>
                 </tr>
                 </tbody>
             </table>
         </div>
-        <div th:if="${recipe.recipeComments.size == 0}" class="noPrint">
+        <div th:if="${recipe.comments.size == 0}" class="noPrint">
             <h3>Comments</h3>
             <span>There are no comments on this recipe.</span>
         </div>

@@ -59,6 +59,13 @@ public class RecipeController {
         return "recipe/createRecipe";
     }
 
+    @RequestMapping(value = "/recipe/variation/create", method = RequestMethod.GET)
+    public String displayVariationCreationForm(Model model, @RequestParam("recipeId") int recipeId) {
+        Recipe recipe = appService.getRecipeById(recipeId);
+        model.addAttribute("webRecipe", recipe);
+        return "recipe/createVariation";
+    }
+
     @RequestMapping(value = "/recipe/create", method = RequestMethod.POST)
     public String processRecipeCreationForm(Model model, Principal principal, WebRecipe webRecipe, @RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
         webRecipe = recipeSanitizer.sanitizeRecipe(webRecipe);
@@ -84,10 +91,10 @@ public class RecipeController {
         }
         else {
             if (!file.isEmpty()) {
-                storageService.store(file, recipe.getRecipeInfo().getRecipeId());
+                storageService.store(file, recipe.getInfo().getRecipeId());
             }
             redirectAttributes.addFlashAttribute("message", "Your recipe has been posted!");
-            return "redirect:/recipe/view?recipeId=" + recipe.getRecipeInfo().getRecipeId();
+            return "redirect:/recipe/view?recipeId=" + recipe.getInfo().getRecipeId();
         }
     }
 
@@ -103,7 +110,7 @@ public class RecipeController {
         model.addAttribute("recipe", recipe);
 
 
-        String authorName = appService.getNameById(recipe.getRecipeInfo().getUserId());
+        String authorName = appService.getNameById(recipe.getInfo().getUserId());
         model.addAttribute("authorName", authorName);
 
         prepopulatedEntryProcessor.gatherStartingStrings(recipe);
@@ -118,15 +125,12 @@ public class RecipeController {
         userSubs = substitutionNormalizer.normalizeUserSubs(userSubs);
         recipe.setUserSubstitutionEntries(userSubs);
 
-        RecipePhoto recipePhoto = recipe.getRecipePhoto();
+        RecipePhoto recipePhoto = recipe.getPhoto();
         Path photoPath = null;
         if (recipePhoto != null) {
             String fileLocation = "/recipePictures/" + recipePhoto.getFileName();
             recipePhoto.setFileLocation(fileLocation); // Use public URL for display
         }
-
-        boolean tagsExist = !(recipe.getRecipeTags().values().stream().allMatch(String::isEmpty));
-        model.addAttribute("tagsExist", tagsExist);
 
         WebComment webComment = new WebComment();
         webComment.setRecipeId(recipeId);

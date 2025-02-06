@@ -32,7 +32,7 @@ public class PrepopulatedEntryProcessor {
         String glossaryLemmasFinal = lemmaProcessor.processText(glossaryTermsString);
 
         // unit shouldn't go through lemma as it is a specific word
-        String unit = recipe.getRecipeInfo().getUnitOfYield();
+        String unit = recipe.getInfo().getUnitOfYield();
         glossaryLemmasFinal = glossaryLemmasFinal + " " + unit.toLowerCase();
 
         List<GlossaryEntry> glossaryEntries = appService.getAllGlossaryEntries();
@@ -68,14 +68,14 @@ public class PrepopulatedEntryProcessor {
     public void gatherStartingStrings(Recipe recipe){
         glossaryTerms.setLength(0);
         substitutionTerms.setLength(0);
-        List<RecipeIngredient> recipeIngredientList = recipe.getRecipeIngredients();
+        List<RecipeIngredient> recipeIngredientList = recipe.getIngredients();
         for(RecipeIngredient recipeIngredient : recipeIngredientList){
             glossaryTerms.append(recipeIngredient.getPreparation()).append(' ');
             glossaryTerms.append(recipeIngredient.getMeasurement()).append(' ');
             substitutionTerms.append(recipeIngredient.getComponent()).append(' ');
         }
 
-        List<RecipeDirection> recipeDirectionList = recipe.getRecipeDirections();
+        List<RecipeDirection> recipeDirectionList = recipe.getDirections();
         for(RecipeDirection recipeDirection : recipeDirectionList){
             glossaryTerms.append(recipeDirection.getDirection()).append(' ');
             glossaryTerms.append(recipeDirection.getMethod()).append(' ');
