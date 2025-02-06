@@ -47,20 +47,20 @@ table {
             </tr>
             <tr>
                 <td><label>Recipe Name: </label></td>
-                <td><input type="text" th:field="*{recipeInfo.name}" placeholder="Recipe Name" maxlength="40" required/></td>
+                <td><input type="text" th:field="*{info.name}" placeholder="Recipe Name" maxlength="40" required/></td>
             </tr>
             <tr>
                 <td><label>Recipe Description: </label></td>
-                <td><textarea th:field="*{recipeInfo.description}" placeholder="Recipe Description: Not required, but encouraged." maxlength="1000"></textarea></td>
+                <td><textarea th:field="*{info.description}" placeholder="Recipe Description: Not required, but encouraged." maxlength="1000"></textarea></td>
             </tr>
             <tr>
                 <td><label>Servings: </label></td>
-                <td><input type="number" step="0.1" min="0.1" th:field="*{recipeInfo.yield}" placeholder="Quantity recipe makes" required/></td>
+                <td><input type="number" step="0.1" min="0.1" th:field="*{info.yield}" placeholder="Quantity recipe makes" required/></td>
             </tr>
             <tr>
                 <td><label>Unit of Servings</label></td>
                 <td>
-                    <select th:field="*{recipeInfo.unitOfYield}" required>
+                    <select th:field="*{info.unitOfYield}" required>
                         <option value="">Select a Unit</option>
                         <!-- Specific Food Portions -->
                         <option value="Bowls">Bowls</option>
@@ -90,19 +90,19 @@ table {
             </tr>
             <tr>
                 <td><label>Preparation Hours: </label></td>
-                <td><input type="number" step="1" min="0" value="0" th:field="*{recipeInfo.prepHr}"></td>
+                <td><input type="number" step="1" min="0" value="0" th:field="*{info.prepHr}"></td>
             </tr>
             <tr>
                 <td><label>Preparation Minutes: </label></td>
-                <td><input type="number" step="1" min="0" max="59" value="0" th:field="*{recipeInfo.prepMin}"></td>
+                <td><input type="number" step="1" min="0" max="59" value="0" th:field="*{info.prepMin}"></td>
             </tr>
             <tr>
                 <td><label>Process Hours: </label></td>
-                <td><input type="number" step="1" min="0" value="0" th:field="*{recipeInfo.processHr}"></td>
+                <td><input type="number" step="1" min="0" value="0" th:field="*{info.processHr}"></td>
             </tr>
             <tr>
                 <td><label>Process Minutes:</label></td>
-                <td><input type="number" step="1" min="0" max="59" value="0" th:field="*{recipeInfo.processMin}"></td>
+                <td><input type="number" step="1" min="0" max="59" value="0" th:field="*{info.processMin}"></td>
             </tr>
         </table>
         <h3>Ingredients</h3>
@@ -119,7 +119,7 @@ table {
                 </tr>
             </thead>
             <tbody id="ingredientList">
-                <tr class="ingredientEntry" th:each="ingredient, index : *{recipeIngredients}">
+                <tr class="ingredientEntry" th:each="ingredient, index : *{ingredients}">
                     <td><input type="text" th:field="*{recipeIngredients[__${index.index}__].component}" placeholder="Ingredient Name" maxlength="45" required></td>
                     <td><input type="number" min="0" th:field="*{recipeIngredients[__${index.index}__].wholeNumberQuantity}" placeholder="Whole Number Quantity"></td>
                     <td>
