@@ -186,46 +186,46 @@ table {
             </tbody>
         </table>
 
+        <h3>Directions</h3>
+        <button type="button" id="addDirectionBtn">Add Direction</button>
         <table>
-            <tr>
-                <td><h3>Directions</h3></td>
-            </tr>
-            <tr>
-                <td>
-                    <button type="button" id="addDirectionBtn">Add Direction</button>
-                    <div id="directionList">
-                        <!-- The first direction entry is always present -->
-                        <div class="directionEntry" th:each="direction, index : *{directions}">
-                            <textarea th:field="*{directions[__${index.index}__].direction}" placeholder="Step Description" maxlength="300" required></textarea>
-                            <select th:field="*{directions[__${index.index}__].method}">
-                                <option value="">Method</option>
-                                <option value="Assembling">Assembling</option>
-                                <option value="Baking">Baking</option>
-                                <option value="Boiling">Boiling</option>
-                                <option value="Frying">Frying</option>
-                                <option value="Grilling">Grilling</option>
-                                <option value="Mixing">Mixing</option>
-                                <option value="Roasting">Roasting</option>
-                                <option value="Searing">Searing</option>
-                                <option value="Simmering">Simmering</option>
-                                <option value="Steaming">Steaming</option>
-                                <option value="Stirring">Stirring</option>
-                                <option value="Whisking">Whisking</option>
-                            </select>
-                            <input type="number" th:field="*{directions[__${index.index}__].temp}" placeholder="Temperature (°F)" min="0">
-                            <select th:field="*{directions[__${index.index}__].level}">
-                                <option value="">Heat Level</option>
-                                <option value="Low">Low</option>
-                                <option value="Medium">Medium</option>
-                                <option value="High">High</option>
-                            </select>
-<!--                            <button type="button" class="removeButton" th:if="${index.index > 0}">Remove</button>-->
-                            <button type="button" class="removeButton">Remove</button>
-
-                        </div>
-                    </div>
-                </td>
-            </tr>
+            <thead>
+                <tr>
+                    <th>Direction</th>
+                    <th>Method</th>
+                    <th>Temperature</th>
+                    <th>Heat Level</th>
+                </tr>
+            </thead>
+            <tbody id="directionList">
+                <tr class="directionEntry" th:each="direction, index : *{directions}">
+                <!-- The first direction entry is always present -->
+                    <td><textarea th:field="*{directions[__${index.index}__].direction}" placeholder="Step Description" maxlength="300" required></textarea></td>
+                    <td><select th:field="*{directions[__${index.index}__].method}">
+                        <option value="">Method</option>
+                        <option value="Assembling">Assembling</option>
+                        <option value="Baking">Baking</option>
+                        <option value="Boiling">Boiling</option>
+                        <option value="Frying">Frying</option>
+                        <option value="Grilling">Grilling</option>
+                        <option value="Mixing">Mixing</option>
+                        <option value="Roasting">Roasting</option>
+                        <option value="Searing">Searing</option>
+                        <option value="Simmering">Simmering</option>
+                        <option value="Steaming">Steaming</option>
+                        <option value="Stirring">Stirring</option>
+                        <option value="Whisking">Whisking</option>
+                    </select></td>
+                    <td><input type="number" th:field="*{directions[__${index.index}__].temp}" placeholder="Temperature (°F)" min="0"></td>
+                    <td><select th:field="*{directions[__${index.index}__].level}">
+                        <option value="">Heat Level</option>
+                        <option value="Low">Low</option>
+                        <option value="Medium">Medium</option>
+                        <option value="High">High</option>
+                    </select></td>
+                    <td><button type="button" class="removeButton">Remove</button></td>
+                </tr>
+            </tbody>
         </table>
         <table>
             <tr>

@@ -13,7 +13,6 @@ document.addEventListener('DOMContentLoaded', function () {
         addIngredientFields();
     });
 
-    // Event delegation for dynamically added remove buttons
     ingredientList.addEventListener('click', function (event) {
         if (event.target.classList.contains('removeButton')) {
             event.target.closest('tr').remove();
@@ -22,11 +21,12 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function addIngredientFields() {
+    const rowCount = ingredientList.children.length;
     const tableRow = document.createElement('tr');
 
     const componentInput = document.createElement('input');
     componentInput.setAttribute('type', 'text');
-    componentInput.setAttribute('name', `ingredients[${ingredientList.children.length}].component`);
+    componentInput.setAttribute('name', `ingredients[${rowCount}].component`);
     componentInput.setAttribute('placeholder', 'Ingredient Name');
     componentInput.setAttribute('maxlength', '45');
     componentInput.required = true;
@@ -34,11 +34,11 @@ function addIngredientFields() {
     const wholeNumberInput = document.createElement('input');
     wholeNumberInput.setAttribute('type', 'number');
     wholeNumberInput.setAttribute('min', '0');
-    wholeNumberInput.setAttribute('name', `ingredients[${ingredientList.children.length}].wholeNumberQuantity`);
+    wholeNumberInput.setAttribute('name', `ingredients[${rowCount}].wholeNumberQuantity`);
     wholeNumberInput.setAttribute('placeholder', 'Whole Number Quantity');
 
     const fractionSelect = document.createElement('select');
-    fractionSelect.setAttribute('name', `ingredients[${ingredientList.children.length}].fractionQuantity`);
+    fractionSelect.setAttribute('name', `ingredients[${rowCount}].fractionQuantity`);
     const fractionOptions = [
         { value: '0', text: 'Fractional Quantity (if needed)' },
         { value: '0', text: 'No fraction' },
@@ -59,7 +59,7 @@ function addIngredientFields() {
     });
 
     const measurementSelect = document.createElement('select');
-    measurementSelect.setAttribute('name', `ingredients[${ingredientList.children.length}].measurement`);
+    measurementSelect.setAttribute('name', `ingredients[${rowCount}].measurement`);
     measurementSelect.required = true;
     const measurementOptions = [
         { value: '', text: 'Measurement' },
@@ -85,7 +85,7 @@ function addIngredientFields() {
     });
 
     const preparationSelect = document.createElement('select');
-    preparationSelect.setAttribute('name', `ingredients[${ingredientList.children.length}].preparation`);
+    preparationSelect.setAttribute('name', `ingredients[${rowCount}].preparation`);
     preparationSelect.required = true;
     const preparationOptions = [
         { value: '', text: 'Preparation' },

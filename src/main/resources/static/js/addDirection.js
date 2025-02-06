@@ -1,34 +1,43 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const directionList = document.querySelector('#directionList'); // Reference the directionList div
-    const addDirectionButton = document.querySelector('#addDirectionBtn'); // Reference the Add Direction button
+    const directionList = document.querySelector('#directionList'); // Ensure it's queried
+    const addButton = document.querySelector('#addDirectionBtn');
 
-    // Ensure at least one ingredient field exists on page load
+    // Reattach remove button functionality to existing rows
+    repopulateRemoveButtons();
+
     if (directionList.children.length === 0) {
-        addDirectionFields();
+            addDirectionFields();
     }
 
-    // Add event listener to the "Add Ingredient" button
-    addDirectionButton.addEventListener('click', function () {
+    addButton.addEventListener('click', function () {
         addDirectionFields();
+    });
+
+    directionList.addEventListener('click', function (event) {
+        if (event.target.classList.contains('removeButton')) {
+            event.target.closest('tr').remove();
+        }
     });
 });
 
 function addDirectionFields() {
-    const directionDiv = document.createElement('div');
-    directionDiv.classList.add('directionEntry');
+
+    const rowCount = directionList.children.length; // Get current row count
+    const row = document.createElement('tr');
+    row.classList.add('directionEntry');
 
     // Textarea for direction step description
     const directionTextarea = document.createElement('textarea');
-    directionTextarea.setAttribute('name', `directions[${directionList.children.length}].direction`);
+    directionTextarea.setAttribute('name', `directions[${rowCount}].direction`);
     directionTextarea.setAttribute('rows', '2');
     directionTextarea.setAttribute('cols', '50');
     directionTextarea.setAttribute('placeholder', 'Step Description');
-    directionTextarea.setAttribute('maxlength','300');
+    directionTextarea.setAttribute('maxlength', '300');
     directionTextarea.required = true;
 
     // Dropdown for method
     const methodSelect = document.createElement('select');
-    methodSelect.setAttribute('name', `directions[${directionList.children.length}].method`);
+    methodSelect.setAttribute('name', `directions[${rowCount}].method`);
 
     const methodOptions = [
         { value: '', text: 'Method' },
@@ -56,13 +65,13 @@ function addDirectionFields() {
     // Input for temperature
     const tempInput = document.createElement('input');
     tempInput.setAttribute('type', 'number');
-    tempInput.setAttribute('name', `directions[${directionList.children.length}].temp`);
+    tempInput.setAttribute('name', `directions[${rowCount}].temp`);
     tempInput.setAttribute('placeholder', 'Temperature (°F)');
     tempInput.setAttribute('min', '0');
 
-    // Dropdown for level
+    // Dropdown for heat level
     const levelSelect = document.createElement('select');
-    levelSelect.setAttribute('name', `directions[${directionList.children.length}].level`);
+    levelSelect.setAttribute('name', `directions[${rowCount}].level`);
 
     const levelOptions = [
         { value: '', text: 'Heat Level' },
@@ -78,21 +87,36 @@ function addDirectionFields() {
         levelSelect.appendChild(option);
     });
 
+    // Remove button
     const removeButton = document.createElement('button');
     removeButton.textContent = 'Remove';
     removeButton.setAttribute('type', 'button');
     removeButton.classList.add('removeButton');
+
     removeButton.addEventListener('click', function () {
-       directionDiv.remove();
+        row.remove();
     });
 
-    // Append all inputs and the remove button to the direction div
-    directionDiv.appendChild(directionTextarea);
-    directionDiv.appendChild(methodSelect);
-    directionDiv.appendChild(tempInput);
-    directionDiv.appendChild(levelSelect);
-    directionDiv.appendChild(removeButton);
+    // Append all elements using createCell()
+    row.appendChild(createCell(directionTextarea));
+    row.appendChild(createCell(methodSelect));
+    row.appendChild(createCell(tempInput));
+    row.appendChild(createCell(levelSelect));
+    row.appendChild(createCell(removeButton));
 
-    // Append the direction div to the directionList
-    directionList.appendChild(directionDiv);
+    directionList.appendChild(row);
+}
+
+function createCell(element) {
+    const cell = document.createElement('td');
+    cell.appendChild(element);
+    return cell;
+}
+
+function repopulateRemoveButtons() {
+    document.querySelectorAll('.removeButton').forEach(button => {
+        button.addEventListener('click', function () {
+            this.closest('tr').remove();
+        });
+    });
 }
