@@ -155,6 +155,9 @@ public class RecipeController {
             recipePhoto.setFileLocation(fileLocation); // Use public URL for display
         }
 
+        boolean tagsExist = !(recipe.getRecipeTags().values().stream().allMatch(String::isEmpty));
+        model.addAttribute("tagsExist", tagsExist);
+
         WebComment webComment = new WebComment();
         webComment.setRecipeId(recipeId);
         model.addAttribute("webComment", webComment);
