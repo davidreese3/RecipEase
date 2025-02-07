@@ -20,6 +20,8 @@ public class InfoValidator implements Validator{
         checkLengthOfDescription(webInfo.getDescription());
         checkQuantityOfYield(webInfo.getYield());
         CheckUnitOfYield(webInfo.getUnitOfYield());
+        CheckMinutes(webInfo.getPrepMin(), webInfo.getProcessMin());
+        CheckHours(webInfo.getPrepHr(), webInfo.getProcessHr());
         return errors;
     }
 
@@ -53,6 +55,24 @@ public class InfoValidator implements Validator{
         }
         else if (!dropdownValidator.isValidUnitOfYield(unitOfYield)){
             errors.add("Unit of yield has an invalid unit.");
+        }
+    }
+
+    private void CheckMinutes(int prepMin, int processMin){
+        if(prepMin < 0 || prepMin > 59){
+            errors.add("Preparation minutes must be within 0-59.");
+        }
+        if(processMin < 0 || processMin > 59){
+            errors.add("Process minutes must be within 0-59.");
+        }
+    }
+
+    private void CheckHours(int prepHr, int processHr){
+        if(prepHr < 0){
+            errors.add("Process hours must be greater than 0.");
+        }
+        if(processHr < 0){
+            errors.add("Process hours must be greater than 0.");
         }
     }
 }
