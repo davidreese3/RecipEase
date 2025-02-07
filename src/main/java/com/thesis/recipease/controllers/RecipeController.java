@@ -148,6 +148,11 @@ public class RecipeController {
         userSubs = substitutionNormalizer.normalizeUserSubs(userSubs);
         recipe.setUserSubstitutionEntries(userSubs);
 
+        RecipeVariation recipeVariation = recipe.getRecipeVariation();
+        if(recipeVariation  != null) {
+            model.addAttribute("originalLink", "/recipe/view?recipeId=" + recipe.getRecipeVariation().getOriginalRecipeId());
+        }
+
         RecipePhoto recipePhoto = recipe.getRecipePhoto();
         Path photoPath = null;
         if (recipePhoto != null) {
@@ -157,7 +162,6 @@ public class RecipeController {
 
         boolean tagsExist = !(recipe.getRecipeTags().values().stream().allMatch(String::isEmpty));
         model.addAttribute("tagsExist", tagsExist);
-
         WebComment webComment = new WebComment();
         webComment.setRecipeId(recipeId);
         model.addAttribute("webComment", webComment);

@@ -291,6 +291,7 @@ public class RecipeDaoImpl implements RecipeDao{
         List<RecipeLink> recipeLinks = getLinksById(recipeId);
         List<RecipeUserSubstitutionEntry> recipeUserSubs = getUserSubsById(recipeId);
         RecipePhoto recipePhoto = getPhotoById(recipeId);
+        RecipeVariation recipeVariation = getVariationById(recipeId);
         List<RecipeTag> recipeHolidays = getTagsById(recipeId, "holiday");
         recipeTags.put("Holiday", getTagString(recipeHolidays));
         List<RecipeTag> recipeMealTypes = getTagsById(recipeId, "mealType");
@@ -308,8 +309,9 @@ public class RecipeDaoImpl implements RecipeDao{
 
         List<RecipeComment> recipeComments = getCommentsById(recipeId);
 
-        return new Recipe(recipeInfo, recipeIngredients, recipeDirections, recipeNote, recipeLinks, recipeUserSubs, recipePhoto, recipeTags, recipeComments);
-    }
+        return new Recipe(recipeInfo, recipeIngredients, recipeDirections, recipeNote, recipeLinks, recipeUserSubs, recipePhoto, recipeVariation, recipeTags, recipeComments);
+
+        }
 
     //HELPER OPS
     private RecipeInfo getRecipeInfoById(int recipeId){
@@ -378,6 +380,24 @@ public class RecipeDaoImpl implements RecipeDao{
         }
     }
 
+    private RecipeVariation getVariationById(int recipeId){
+        final String SQL = "select * from variation where variationrecipeid = ?";
+        try{
+            return jdbcTemplate.queryForObject(SQL, new RecipeDaoImpl.RecipeVariationMapper(), recipeId);
+        }catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
+    private List<RecipeComment> getCommentsById(int recipeId){
+        final String SQL = "select c.recipeId, c.commentId, c.commentUserId, c.commentText, concat(p.firstname, ' ' ,p.lastname) as name from comment c join profile p on c.commentUserId = p.id where c.recipeid = ?";
+        try{
+            return jdbcTemplate.query(SQL, new RecipeDaoImpl.CommentMapper(), recipeId);
+        }catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
     private List<RecipeTag> getTagsById(int recipeId, String field){
         final String SQL = "select * from "+field+" where recipeid = ?";
         try{
@@ -393,15 +413,6 @@ public class RecipeDaoImpl implements RecipeDao{
             joiner.add(tag.getField());
         }
         return joiner.toString();
-    }
-
-    private List<RecipeComment> getCommentsById(int recipeId){
-        final String SQL = "select c.recipeId, c.commentId, c.commentUserId, c.commentText, concat(p.firstname, ' ' ,p.lastname) as name from comment c join profile p on c.commentUserId = p.id where c.recipeid = ?";
-        try{
-            return jdbcTemplate.query(SQL, new RecipeDaoImpl.CommentMapper(), recipeId);
-        }catch (EmptyResultDataAccessException e) {
-            return null;
-        }
     }
 
     public List<RecipeInfo> getRecipesByUserId(int userId){
@@ -637,6 +648,16 @@ public class RecipeDaoImpl implements RecipeDao{
             recipeUserSubstitutionEntry.setSubstitutedMeasurement(rs.getString("substitutedMeasurement"));
             recipeUserSubstitutionEntry.setSubstitutedPreparation(rs.getString("substitutedPreparation"));
             return recipeUserSubstitutionEntry;
+        }
+    }
+
+    class RecipeVariationMapper implements RowMapper<RecipeVariation> {
+        @Override
+        public RecipeVariation mapRow(ResultSet rs, int rowNum) throws SQLException {
+            RecipeVariation recipeVariation = new RecipeVariation();
+            recipeVariation.setOriginalRecipeId(rs.getInt("originalRecipeId"));
+            recipeVariation.setVariationRecipeId(rs.getInt("variationRecipeId"));
+            return recipeVariation;
         }
     }
 

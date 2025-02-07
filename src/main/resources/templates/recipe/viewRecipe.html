@@ -52,6 +52,11 @@
         <tr>
             <td th:text="${@recipeUtils.formatTimeLong('Total Time', recipe.recipeInfo.totalHr, recipe.recipeInfo.totalMin)}"></td>
         </tr>
+        <tr th:if="${originalLink}">
+            <td>
+                <a th:href="${originalLink}" th:text="'Link to original recipe'"></a>
+            </td>
+        </tr>
         </tbody>
     </table>
     <h3>Ingredients</h3>
