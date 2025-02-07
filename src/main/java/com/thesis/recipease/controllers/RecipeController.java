@@ -5,6 +5,8 @@ import com.thesis.recipease.model.domain.glossary.GlossaryEntry;
 import com.thesis.recipease.model.domain.recipe.*;
 import com.thesis.recipease.model.domain.substitution.SubstitutionEntry;
 import com.thesis.recipease.model.web.recipe.*;
+import com.thesis.recipease.model.web.recipe.util.WebRating;
+import com.thesis.recipease.model.web.recipe.util.WebScaling;
 import com.thesis.recipease.util.error.RecipeErrorMessageGenerator;
 import com.thesis.recipease.util.normalizer.recipe.RecipeNormalizer;
 import com.thesis.recipease.util.normalizer.substitution.SubstitutionNormalizer;
@@ -162,6 +164,9 @@ public class RecipeController {
 
         boolean tagsExist = !(recipe.getRecipeTags().values().stream().allMatch(String::isEmpty));
         model.addAttribute("tagsExist", tagsExist);
+        WebScaling webScaling = new WebScaling();
+        webScaling.setRecipeId(recipeId);
+        model.addAttribute("webScaling", webScaling);
         WebComment webComment = new WebComment();
         webComment.setRecipeId(recipeId);
         model.addAttribute("webComment", webComment);
@@ -193,4 +198,11 @@ public class RecipeController {
         }
         return "redirect:/recipe/view?recipeId=" + webRating.getRecipeId();
     }
+
+    @RequestMapping(value = "/recipe/scaling", method = RequestMethod.POST)
+    public String processScalingForm(Model model, WebScaling webScaling, RedirectAttributes redirectAttributes) {
+        // insert code here once ingredient quantity logic is fixed
+        return "redirect:/recipe/view?recipeId=" + webScaling.getRecipeId();
+    }
+
 }

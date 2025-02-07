@@ -15,7 +15,7 @@ import com.thesis.recipease.model.domain.recipe.RecipeRating;
 import com.thesis.recipease.model.domain.substitution.SubstitutionEntry;
 import com.thesis.recipease.model.web.account.WebAccount;
 import com.thesis.recipease.model.web.profile.WebProfile;
-import com.thesis.recipease.model.web.recipe.WebRating;
+import com.thesis.recipease.model.web.recipe.util.WebRating;
 import com.thesis.recipease.model.web.recipe.WebRecipe;
 import com.thesis.recipease.model.web.recipe.WebComment;
 import org.springframework.beans.factory.annotation.Autowired;

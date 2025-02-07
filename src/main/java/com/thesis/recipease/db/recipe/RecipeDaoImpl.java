@@ -3,6 +3,7 @@ package com.thesis.recipease.db.recipe;
 import com.thesis.recipease.model.domain.recipe.*;
 import com.thesis.recipease.model.web.recipe.*;
 import com.thesis.recipease.model.web.recipe.WebComment;
+import com.thesis.recipease.model.web.recipe.util.WebRating;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
