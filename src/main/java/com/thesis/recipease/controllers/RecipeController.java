@@ -124,7 +124,8 @@ public class RecipeController {
     }
 
     @RequestMapping(value = "/recipe/view", method = RequestMethod.GET)
-    public String displayRecipe(Model model, @RequestParam("recipeId") int recipeId) {
+    public String displayRecipe(Model model, @RequestParam("recipeId") int recipeId,
+                                @RequestParam(value = "scale", required = false) Double scale) {
         Recipe recipe = appService.getRecipeById(recipeId);
         if (recipe == null){
             model.addAttribute("message", recipeErrorMessageGenerator.getRecipeError());
@@ -132,8 +133,8 @@ public class RecipeController {
         }
         // reason for this is so that when versioning it can select the correct type from db
         recipe = recipeNormalizer.normalizeRecipe(recipe);
+        //insert scaling logic here
         model.addAttribute("recipe", recipe);
-
 
         String authorName = appService.getNameById(recipe.getRecipeInfo().getUserId());
         model.addAttribute("authorName", authorName);
@@ -164,15 +165,19 @@ public class RecipeController {
 
         boolean tagsExist = !(recipe.getRecipeTags().values().stream().allMatch(String::isEmpty));
         model.addAttribute("tagsExist", tagsExist);
+
         WebScaling webScaling = new WebScaling();
         webScaling.setRecipeId(recipeId);
         model.addAttribute("webScaling", webScaling);
+
         WebComment webComment = new WebComment();
         webComment.setRecipeId(recipeId);
         model.addAttribute("webComment", webComment);
+
         WebRating webRating = new WebRating();
         webRating.setRecipeId(recipeId);
         model.addAttribute("webRating", webRating);
+
         return "recipe/viewRecipe";
     }
 
@@ -201,8 +206,6 @@ public class RecipeController {
 
     @RequestMapping(value = "/recipe/scaling", method = RequestMethod.POST)
     public String processScalingForm(Model model, WebScaling webScaling, RedirectAttributes redirectAttributes) {
-        // insert code here once ingredient quantity logic is fixed
-        return "redirect:/recipe/view?recipeId=" + webScaling.getRecipeId();
+        return "redirect:/recipe/view?recipeId=" + webScaling.getRecipeId() + "&scale=" + webScaling.getScalingValue();
     }
-
 }
