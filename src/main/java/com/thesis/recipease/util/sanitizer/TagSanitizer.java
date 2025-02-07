@@ -4,6 +4,7 @@ import com.thesis.recipease.model.web.recipe.WebRecipe;
 import com.thesis.recipease.model.web.recipe.WebTag;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
@@ -37,7 +38,7 @@ public class TagSanitizer implements Sanitizer{
 
         List<WebTag> cookingLevels = webRecipe.getCookingLevels();
         if(cookingLevels != null) {
-            webRecipe.setCookingLevels(processTag(cookingLevels));
+            webRecipe.setCookingLevels(sortTags(cookingLevels));
         }
 
         List<WebTag> cookingStyles = webRecipe.getCookingStyles();
@@ -60,4 +61,19 @@ public class TagSanitizer implements Sanitizer{
 
         return sortedTags;
     }
+
+    private static final List<String> SORT_ORDER = Arrays.asList(
+            "Novice", "Beginner", "Intermediate", "Advanced", "Expert", "Chef-Level"
+    );
+
+    public static List<WebTag> sortTags(List<WebTag> listOfTags) {
+        listOfTags.sort((tag1, tag2) -> {
+            int index1 = SORT_ORDER.indexOf(tag1.getField());
+            int index2 = SORT_ORDER.indexOf(tag2.getField());
+            // Compare the indices to determine the order of sorting
+            return Integer.compare(index1, index2);
+        });
+        return listOfTags;
+    }
+
 }
