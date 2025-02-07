@@ -17,6 +17,7 @@
     <div th:if="${error}" th:text="${error}" style="color: red;"></div>
 
 </header>
+<button th:onclick="|location.href='/recipe/variation/create?recipeId=' + ${recipe.recipeInfo.recipeId}|">Create Variation</button>
 
 <button id="printWithImages" class="noPrint">Print Recipe</button>
 <button th:if="${recipe.recipePhoto != null}" id="printWithoutImages" class="noPrint">Print Recipe without Image</button>

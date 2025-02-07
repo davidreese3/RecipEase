@@ -67,6 +67,7 @@ public class RecipeDaoImpl implements RecipeDao{
             insertTags(webRecipe.getDietTypes(), recipeId, "dietType");
             insertTags(webRecipe.getCookingLevels(), recipeId, "cookingLevel");
             insertTags(webRecipe.getCookingStyles(), recipeId, "cookingStyle");
+            insertVariation(webRecipe.getVariation(), recipeId);
             transactionManager.commit(status);
             System.out.println("Success");
         }
@@ -222,6 +223,18 @@ public class RecipeDaoImpl implements RecipeDao{
                     return ps;
                 });
             }
+        }
+    }
+
+    private void insertVariation(WebVariation webVariation, int recipeId){
+        if (webVariation != null) {
+            final String SQL = "insert into variation (originalrecipeid, variationrecipeid) values (?, ?)";
+            jdbcTemplate.update(dataSource -> {
+                PreparedStatement ps = dataSource.prepareStatement(SQL);
+                ps.setInt(1, webVariation.getOriginalrecipeid());
+                ps.setInt(2, recipeId);
+                return ps;
+            });
         }
     }
 
@@ -412,8 +425,96 @@ public class RecipeDaoImpl implements RecipeDao{
         }
     }
 
+    public WebRecipe getWebRecipeById(int recipeId){
+        WebInfo recipeInfo = getWebRecipeInfoById(recipeId);
+        if (recipeInfo == null) {
+            return null;
+        }
+        List<WebIngredient> recipeIngredients = getWebRecipeIngredientsById(recipeId);
+        List<WebDirection> recipeDirections = getWebRecipeDirectionsById(recipeId);
+
+
+        WebNote recipeNote = getWebNoteById(recipeId);
+        List<WebLink> recipeLinks = getWebLinksById(recipeId);
+        List<WebUserSubstitutionEntry> recipeUserSubs = getWebUserSubsById(recipeId);
+
+        List<WebTag> recipeHolidays = getWebTagsById(recipeId, "holiday");
+        List<WebTag> recipeMealTypes = getWebTagsById(recipeId, "mealType");
+        List<WebTag> recipeCuisines = getWebTagsById(recipeId, "cuisine");
+        List<WebTag> recipeAllergens = getWebTagsById(recipeId, "allergen");
+        List<WebTag> recipeDietTypes = getWebTagsById(recipeId, "dietType");
+        List<WebTag> recipeCookingLevels = getWebTagsById(recipeId, "cookingLevel");
+        List<WebTag> recipeCookingStyles = getWebTagsById(recipeId, "cookingStyle");
+
+        return new WebRecipe(recipeInfo, recipeIngredients, recipeDirections, recipeNote, recipeLinks, recipeUserSubs, recipeHolidays, recipeMealTypes, recipeCuisines , recipeAllergens, recipeDietTypes, recipeCookingLevels, recipeCookingStyles, null);
+    }
+
+    // Helper Methods
+    private WebInfo getWebRecipeInfoById(int recipeId){
+        final String SQL = "select * from info where recipeid = ?";
+        try {
+            return jdbcTemplate.queryForObject(SQL, new RecipeDaoImpl.WebInfoMapper(), recipeId);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
+    private List<WebIngredient> getWebRecipeIngredientsById(int recipeId){
+        final String SQL = "select * from ingredient where recipeid = ?";
+        try {
+            return jdbcTemplate.query(SQL, new RecipeDaoImpl.WebIngredientMapper(), recipeId);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
+    private List<WebDirection> getWebRecipeDirectionsById(int recipeId){
+        final String SQL = "select * from direction where recipeid = ?";
+        try {
+            return jdbcTemplate.query(SQL, new RecipeDaoImpl.WebDirectionMapper(), recipeId);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
+    private WebNote getWebNoteById(int recipeId){
+        final String SQL = "select * from note where recipeid = ?";
+        try {
+            return jdbcTemplate.queryForObject(SQL, new RecipeDaoImpl.WebNoteMapper(), recipeId);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
+    private List<WebLink> getWebLinksById(int recipeId){
+        final String SQL = "select * from link where recipeid = ?";
+        try{
+            return jdbcTemplate.query(SQL, new RecipeDaoImpl.WebLinkMapper(), recipeId);
+        }catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
+    private List<WebUserSubstitutionEntry> getWebUserSubsById(int recipeId){
+        final String SQL = "select * from userSubs where recipeid = ?";
+        try{
+            return jdbcTemplate.query(SQL, new RecipeDaoImpl.WebUserSubstitutionEntryMapper(), recipeId);
+        }catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
+    private List<WebTag> getWebTagsById(int recipeId, String field){
+        final String SQL = "select * from "+field+" where recipeid = ?";
+        try{
+            return jdbcTemplate.query(SQL, new WebTagMapper(field), recipeId);
+        }catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
     public int getNumberOfVariationByOriginalRecipeId(int originalRecipeId) {
-        final String SQL = "select count(originalrecipeid) from variation where originalrecipeid = ?";
+        final String SQL = "select count(originalrecipeid) + 1 from variation where originalrecipeid = ?";
         try{
             return jdbcTemplate.queryForObject(SQL, Integer.class, originalRecipeId);
         }catch (EmptyResultDataAccessException e) {
@@ -421,20 +522,20 @@ public class RecipeDaoImpl implements RecipeDao{
         }
     }
 
-    public int getDepthOfVariationByVariationRecipeId(int variationRecipeId) {
-        final String SQL = "with recursive variationDepth as ( " +
+    public int getDepthOfVariationByOriginalRecipeId(int originalRecipeId) {
+        final String SQL = "with recursive variationDepth as ( "+
                 "select originalrecipeid, variationrecipeid, 1 as depth " +
                 "from variation " +
+                "where variationrecipeid = ? " +
                 "union all " +
-                "select vd.originalrecipeid, v.variationrecipeid, vd.depth + 1 " +
+                "select v.originalrecipeid, v.variationrecipeid, vd.depth + 1 " +
                 "from variation v " +
-                "join variationDepth vd on v.originalrecipeid = vd.variationrecipeid" +
-                ")" +
-                "select max(depth) as maxDepth " +
-                "from variationDepth " +
-                "where variationrecipeid = ?";
+                "join variationDepth vd on v.variationrecipeid = vd.originalrecipeid " +
+                ") " +
+                "select coalesce(max(depth), 0) + 1 as nextDepth " +
+                "from variationDepth";
         try{
-            return jdbcTemplate.queryForObject(SQL, Integer.class, variationRecipeId);
+            return jdbcTemplate.queryForObject(SQL, Integer.class, originalRecipeId);
         }catch (EmptyResultDataAccessException e) {
             return -1;
         }
@@ -570,6 +671,85 @@ public class RecipeDaoImpl implements RecipeDao{
             ratingInfo.setAverageRating(rs.getDouble("avgRating"));
             ratingInfo.setNumberOfRaters(rs.getInt("numRaters"));
             return ratingInfo;
+        }
+    }
+
+    class WebInfoMapper implements RowMapper<WebInfo> {
+        @Override
+        public WebInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
+            WebInfo recipeInfo = new WebInfo();
+            recipeInfo.setName(rs.getString("name"));
+            recipeInfo.setDescription(rs.getString("description"));
+            recipeInfo.setYield(rs.getDouble("yield"));
+            recipeInfo.setUnitOfYield(rs.getString("unitofyield"));
+            recipeInfo.setPrepMin(rs.getInt("prepMin"));
+            recipeInfo.setPrepHr(rs.getInt("prepHr"));
+            recipeInfo.setProcessMin(rs.getInt("processMin"));
+            recipeInfo.setProcessHr(rs.getInt("processHr"));
+            recipeInfo.setTotalMin(rs.getInt("totalMin"));
+            recipeInfo.setTotalHr(rs.getInt("totalHr"));
+            return recipeInfo;
+        }
+    }
+
+    class WebIngredientMapper implements RowMapper<WebIngredient> {
+        @Override
+        public WebIngredient mapRow(ResultSet rs, int rowNum) throws SQLException {
+            WebIngredient recipeIngredient = new WebIngredient();
+            recipeIngredient.setComponent(rs.getString("component"));
+            recipeIngredient.setWholeNumberQuantity(rs.getInt("wholeNumberQuantity"));
+            recipeIngredient.setFractionQuantity(rs.getString("fractionQuantity"));
+            recipeIngredient.setMeasurement(rs.getString("measurement"));
+            recipeIngredient.setPreparation(rs.getString("preparation"));
+            return recipeIngredient;
+        }
+    }
+
+    class WebDirectionMapper implements RowMapper<WebDirection> {
+        @Override
+        public WebDirection mapRow(ResultSet rs, int rowNum) throws SQLException {
+            WebDirection recipeDirection = new WebDirection();
+            recipeDirection.setDirection(rs.getString("direction"));
+            recipeDirection.setMethod(rs.getString("method"));
+            recipeDirection.setTemp(rs.getInt("temp"));
+            recipeDirection.setLevel(rs.getString("level"));
+            return recipeDirection;
+        }
+    }
+
+    class WebNoteMapper implements RowMapper<WebNote> {
+        @Override
+        public WebNote mapRow(ResultSet rs, int rowNum) throws SQLException {
+            WebNote recipeNote = new WebNote();
+            recipeNote.setNote(rs.getString("note"));
+            return recipeNote;
+        }
+    }
+
+    class WebLinkMapper implements RowMapper<WebLink> {
+        @Override
+        public WebLink mapRow(ResultSet rs, int rowNum) throws SQLException {
+            WebLink recipeLink = new WebLink();
+            recipeLink.setLink(rs.getString("link"));
+            return recipeLink;
+        }
+    }
+
+    class WebUserSubstitutionEntryMapper implements RowMapper<WebUserSubstitutionEntry> {
+        @Override
+        public WebUserSubstitutionEntry mapRow(ResultSet rs, int rowNum) throws SQLException {
+            WebUserSubstitutionEntry recipeUserSubstitutionEntry = new WebUserSubstitutionEntry();
+            recipeUserSubstitutionEntry.setOriginalComponent(rs.getString("originalComponent"));
+            recipeUserSubstitutionEntry.setOriginalWholeNumberQuantity(rs.getInt("originalWholeNumberQuantity"));
+            recipeUserSubstitutionEntry.setOriginalFractionQuantity(rs.getString("originalFractionQuantity"));
+            recipeUserSubstitutionEntry.setOriginalMeasurement(rs.getString("originalMeasurement"));
+            recipeUserSubstitutionEntry.setOriginalPreparation(rs.getString("originalPreparation"));
+            recipeUserSubstitutionEntry.setSubstitutedComponent(rs.getString("substitutedComponent"));
+            recipeUserSubstitutionEntry.setSubstitutedWholeNumberQuantity(rs.getInt("substitutedWholeNumberQuantity"));
+            recipeUserSubstitutionEntry.setSubstitutedFractionQuantity(rs.getString("substitutedFractionQuantity"));
+            recipeUserSubstitutionEntry.setSubstitutedMeasurement(rs.getString("substitutedMeasurement"));
+            recipeUserSubstitutionEntry.setSubstitutedPreparation(rs.getString("substitutedPreparation"));
+            return recipeUserSubstitutionEntry;
         }
     }
 }

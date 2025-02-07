@@ -55,18 +55,34 @@ public class RecipeController {
     @RequestMapping(value = "/recipe/create", method = RequestMethod.GET)
     public String displayRecipeCreationForm(Model model) {
         WebRecipe webRecipe = new WebRecipe();
+        webRecipe.setVariation(new WebVariation(-1,true));
         model.addAttribute("webRecipe", webRecipe);
         return "recipe/createRecipe";
     }
 
     @RequestMapping(value = "/recipe/variation/create", method = RequestMethod.GET)
     public String displayVariationCreationForm(Model model, @RequestParam("recipeId") int recipeId) {
-        Recipe recipe = appService.getRecipeById(recipeId);
-        model.addAttribute("webRecipe", recipe);
+        WebRecipe webRecipe = appService.getWebRecipeById(recipeId);
+        if (webRecipe == null) {
+            model.addAttribute("message", recipeErrorMessageGenerator.getVariationError());
+            return "recipe/createVariationDNE";
+        }
+
+        String variationPattern = ".*\\[v\\d+\\.\\d+]$";
+        WebInfo webInfo = webRecipe.getInfo();
+        String name = webInfo.getName();
+        if (name.matches(variationPattern)){
+            name = name.replaceAll("\\[v\\d+\\.\\d+]$", "").trim();
+            webInfo.setName(name);
+            webRecipe.setInfo(webInfo);
+        }
+        webRecipe.setVariation(new WebVariation(recipeId,true));
+        model.addAttribute("webRecipe", webRecipe);
+        System.out.print("Variation: " +webRecipe.getVariation().isVariation()+ " [" + webRecipe.getVariation().getOriginalrecipeid() +"]" + "[" +recipeId+ "]");
         return "recipe/createVariation";
     }
 
-    @RequestMapping(value = "/recipe/create", method = RequestMethod.POST)
+    @RequestMapping(value = {"/recipe/create", "/recipe/variation/create"}, method = RequestMethod.POST)
     public String processRecipeCreationForm(Model model, Principal principal, WebRecipe webRecipe, @RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
         webRecipe = recipeSanitizer.sanitizeRecipe(webRecipe);
         if (!file.isEmpty()) {
@@ -81,6 +97,13 @@ public class RecipeController {
             model.addAttribute(webRecipe);
             model.addAttribute("errors", errors);
             return "recipe/createRecipe";
+        }
+        WebVariation webVariation = webRecipe.getVariation();
+        if (webVariation != null){
+            int numVariation = appService.getNumberOfVariationByOriginalRecipeId(webVariation.getOriginalrecipeid());
+            int numDepth = appService.getDepthOfVariationByOriginalRecipeId(webVariation.getOriginalrecipeid());
+            WebInfo webInfo  = webRecipe.getInfo();
+            webInfo.setName(webInfo.getName() + " [v" + numDepth + "." + numVariation + "]");
         }
         Recipe recipe = appService.addRecipe(securityService.getLoggedInUserId(), webRecipe);
         if (recipe == null){

@@ -21,10 +21,11 @@ public interface RecipeDao {
     public RecipeRating addRating(int userId, int recipeId, WebRating webRating);
     // READ OPS
     public Recipe getRecipeById(int recipeId);
+    public WebRecipe getWebRecipeById(int recipeId);
     public List<RecipeInfo> getRecipesByUserId(int userId);
     public int getUserIdByRecipeId(int recipeId);
     public int getNumberOfVariationByOriginalRecipeId(int originalRecipeId);
-    public int getDepthOfVariationByVariationRecipeId(int variationRecipeId);
+    public int getDepthOfVariationByOriginalRecipeId(int originalRecipeId);
     // UPDATE OPS
     // DELETE OPS
 }

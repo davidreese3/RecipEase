@@ -17,10 +17,11 @@ public class WebRecipe {
     private List<WebTag> dietTypes;
     private List<WebTag> cookingLevels;
     private List<WebTag> cookingStyles;
+    private WebVariation variation;
 
     public WebRecipe(){}
 
-    public WebRecipe(WebInfo info, List<WebIngredient> ingredients, List<WebDirection> directions, WebNote note, List<WebLink> links, List<WebUserSubstitutionEntry> userSubstitutionEntries, List<WebTag> holidays, List<WebTag> mealTypes, List<WebTag> cuisines, List<WebTag> allergens, List<WebTag> dietTypes, List<WebTag> cookingLevels, List<WebTag> cookingStyles) {
+    public WebRecipe(WebInfo info, List<WebIngredient> ingredients, List<WebDirection> directions, WebNote note, List<WebLink> links, List<WebUserSubstitutionEntry> userSubstitutionEntries, List<WebTag> holidays, List<WebTag> mealTypes, List<WebTag> cuisines, List<WebTag> allergens, List<WebTag> dietTypes, List<WebTag> cookingLevels, List<WebTag> cookingStyles, WebVariation variation) {
         this.info = info;
         this.ingredients = ingredients;
         this.directions = directions;
@@ -34,6 +35,7 @@ public class WebRecipe {
         this.dietTypes = dietTypes;
         this.cookingLevels = cookingLevels;
         this.cookingStyles = cookingStyles;
+        this.variation = variation;
     }
 
     public WebInfo getInfo() {
@@ -148,5 +150,11 @@ public class WebRecipe {
         this.cookingStyles = cookingStyles;
     }
 
+    public WebVariation getVariation() {
+        return variation;
+    }
 
+    public void setVariation(WebVariation variation) {
+        this.variation = variation;
+    }
 }

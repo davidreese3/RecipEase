@@ -15,7 +15,20 @@ public class RecipeErrorMessageGenerator {
             "Looks like this recipe has disappeared faster than a cookie from the jar! Search for something else to munch on."
     };
 
+    private static final String [] VARIATION_ERRORS = {
+            "Oops! You can't remix a recipe that doesn't exist. Try starting from scratch!",
+            "Uh-oh! This recipe is missing, so variations are off the table. Maybe cook up something new?",
+            "Looks like the original recipe is missing—no variations allowed on thin air!",
+            "This recipe has vanished, which means variations are a no-go. Try a different dish!",
+            "Trying to customize a missing recipe? That's like seasoning a meal that isn't there!",
+            "Recipe not found! Unfortunately, you can’t build on something that doesn’t exist."
+    };
+
     public String getRecipeError(){
         return RECIPE_ERRORS[(int) Math.floor(Math.random() * RECIPE_ERRORS.length)];
+    }
+
+    public String getVariationError(){
+        return VARIATION_ERRORS[(int) Math.floor(Math.random() * VARIATION_ERRORS.length)];
     }
 }
