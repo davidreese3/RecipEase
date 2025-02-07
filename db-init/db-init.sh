@@ -79,7 +79,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
         fractionQuantity varchar(4),
         measurement varchar(20), --change once prepop made
         preparation varchar(20), --change once prepop made
-        primary key (recipeId, component)
+        primary key (recipeId, component, preparation)
     );
 
     -- direction
