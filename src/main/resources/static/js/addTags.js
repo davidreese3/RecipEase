@@ -85,8 +85,7 @@ document.addEventListener('DOMContentLoaded', function () {
         { value: 'Intermediate', text: 'Intermediate' },
         { value: 'Advanced', text: 'Advanced' },
         { value: 'Expert', text: 'Expert' },
-        { value: 'Chef-Level', text: 'Chef-Level' },
-        { value: 'Other', text: 'Other' }
+        { value: 'Chef-Level', text: 'Chef-Level' }
     ]);
 
     setupDynamicFields('cookingStyleList', 'addCookingStyleBtn', 'cookingStyles', [
