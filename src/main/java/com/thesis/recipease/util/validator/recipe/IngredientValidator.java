@@ -1,5 +1,6 @@
 package com.thesis.recipease.util.validator.recipe;
 
+import com.thesis.recipease.model.web.recipe.WebInfo;
 import com.thesis.recipease.model.web.recipe.WebIngredient;
 import com.thesis.recipease.model.web.recipe.WebRecipe;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,14 +24,21 @@ public class IngredientValidator implements Validator{
             errors.add("Every recipe should have at least one ingredient.");
         }
         else {
+            Set<String> seenIngredients = new HashSet<>();
+            Set<String> reportedDuplicates = new HashSet<>();
+
             for (WebIngredient webIngredient : webIngredients) {
                 validateComponent(webIngredient);
                 validateQuantity(webIngredient);
                 validateFraction(webIngredient);
                 validateMeasurement(webIngredient);
                 validatePreperation(webIngredient);
+
+                String key = webIngredient.getComponent().toLowerCase() + "|" + webIngredient.getPreparation().toLowerCase();
+                if (!seenIngredients.add(key) && reportedDuplicates.add(key)) {
+                    errors.add("Ingredient '" + webIngredient.getComponent() + "' has a duplicate preparation. Please remove the duplicate or change preparation.");
+                }
             }
-            validateDuplicates(webIngredients);
         }
         return errors;
     }
@@ -67,21 +75,4 @@ public class IngredientValidator implements Validator{
             errors.add("Ingredient '" + webIngredient.getComponent() + "' has an invalid preparation method.");
         }
     }
-
-    private void validateDuplicates(List<WebIngredient> webIngredients){
-        // For multiple duplicates of same component
-        Set<String> duplicateTracker = new HashSet<>();
-        for (int i = 0; i < webIngredients.size(); i++) {
-            String currIngredient = webIngredients.get(i).getComponent();
-            for (int j = i + 1; j < webIngredients.size(); j++){
-                if (currIngredient.equalsIgnoreCase(webIngredients.get(j).getComponent())){
-                    if (!duplicateTracker.contains(currIngredient.toLowerCase())) {
-                        errors.add("Ingredient '" + currIngredient + "' has a duplicate. Please remove duplicate");
-                        duplicateTracker.add(currIngredient.toLowerCase());
-                    }
-                }
-            }
-        }
-    }
-
 }
