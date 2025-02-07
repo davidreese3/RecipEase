@@ -75,54 +75,6 @@
         </tr>
         </tbody>
     </table>
-    <div th:if="${glossaryList.size != 0}">
-        <hr>
-        <h3>Glossary Terms</h3>
-        <table>
-            <tbody>
-            <tr th:each="entry : ${glossaryList}">
-                <td>
-                    <strong th:text="${entry.term}"></strong>
-                    <span th:text="': ' + ${entry.definition}"></span>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-    <div th:if="${substitutionList.size != 0}">
-        <hr>
-        <h3>Known Substitution</h3>
-        <table>
-            <thead>
-            <tr>
-                <th>Original</th>
-                <th>Amount and Preparation</th>
-                <th>Substituted</th>
-                <th>Amount and Preparation</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="entry : ${substitutionList}">
-                <td th:text="${entry.originalComponent}"></td>
-                <td th:text="${@recipeUtils.formatSubs(entry.originalWholeNumberQuantity, entry.originalFractionQuantity, entry.originalMeasurement, entry.originalPreparation)}"></td>
-                <td th:text="${entry.substitutedComponent}"></td>
-                <td th:text="${@recipeUtils.formatSubs(entry.substitutedWholeNumberQuantity, entry.substitutedFractionQuantity, entry.substitutedMeasurement, entry.substitutedPreparation)}"></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-    <hr>
-    <div th:if="${recipe.recipeNote != null}">
-        <h3>Notes</h3>
-        <span th:text="${recipe.recipeNote.note}"></span>
-    </div>
-    <div th:if="${recipe.recipeLinks.size != 0}">
-        <h3>Links</h3>
-        <p>Links below are added by users to external sites</p>
-        <li th:each="link : ${recipe.recipeLinks}">
-            <a th:href="${link.link}" th:text="${link.link}"></a>
-        </li>
-    </div>
     <div th:if="${recipe.userSubstitutionEntries.size != 0}">
         <h3>User Substitutions</h3>
         <table>
@@ -145,17 +97,56 @@
             </tbody>
         </table>
     </div>
+    <div th:if="${glossaryList.size != 0}">
+        <hr>
+        <details><summary>Glossary Terms</summary>
+            <table>
+                <tr th:each="entry : ${glossaryList}">
+                    <td>
+                        <strong th:text="${entry.term}"></strong>
+                        <span th:text="': ' + ${entry.definition}"></span>
+                    </td>
+                </tr>
+            </table>
+        </details>
+    </div>
+    <div th:if="${substitutionList.size != 0}">
+        <hr>
+        <details><summary>Known Substitution</summary>
+            <table>
+                <thead>
+                <tr>
+                    <th>Original</th>
+                    <th>Amount and Preparation</th>
+                    <th>Substituted</th>
+                    <th>Amount and Preparation</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="entry : ${substitutionList}">
+                    <td th:text="${entry.originalComponent}"></td>
+                    <td th:text="${@recipeUtils.formatSubs(entry.originalWholeNumberQuantity, entry.originalFractionQuantity, entry.originalMeasurement, entry.originalPreparation)}"></td>
+                    <td th:text="${entry.substitutedComponent}"></td>
+                    <td th:text="${@recipeUtils.formatSubs(entry.substitutedWholeNumberQuantity, entry.substitutedFractionQuantity, entry.substitutedMeasurement, entry.substitutedPreparation)}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </details>
+    </div>
+    <hr>
+    <div th:if="${recipe.recipeNote != null}">
+        <h3>Notes</h3>
+        <span th:text="${recipe.recipeNote.note}"></span>
+    </div>
+    <div th:if="${recipe.recipeLinks.size != 0}">
+        <h3>Links</h3>
+        <p>Links below are added by users to external sites</p>
+        <li th:each="link : ${recipe.recipeLinks}">
+            <a th:href="${link.link}" th:text="${link.link}"></a>
+        </li>
+    </div>
     <div>
         <img th:if="${recipe.recipePhoto != null}" th:src="${recipe.recipePhoto.fileLocation}" alt="Recipe Photo" height="200px">
-    </div>
-    <div th:if="${tagsExist}">
-        <h3>Recipe Tags</h3>
-        <ul>
-            <li th:each="tag : ${recipe.recipeTags}" th:if="${tag.value != ''}">
-                <span th:text="${tag.key}"></span>:
-                <span th:text="${tag.value}"></span>
-            </li>
-        </ul>
     </div>
     <div th:if="${recipe.recipeComments.size != 0}">
         <h3>Comments</h3>
