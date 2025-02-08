@@ -2,6 +2,7 @@ package com.thesis.recipease.util.sanitizer;
 
 import com.thesis.recipease.model.web.recipe.WebIngredient;
 import com.thesis.recipease.model.web.recipe.WebRecipe;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Iterator;
@@ -9,6 +10,9 @@ import java.util.List;
 
 @Service
 public class IngredientSanitizer implements Sanitizer{
+    @Autowired
+    QuantitySanitizer quantitySanitizer;
+
     public WebRecipe sanitize(WebRecipe webRecipe){
         List<WebIngredient> webIngredients = webRecipe.getIngredients();
         if(webIngredients != null) {
@@ -20,8 +24,7 @@ public class IngredientSanitizer implements Sanitizer{
                     ingredientIterator.remove();
                 } else {
                     webIngredient.setComponent(webIngredient.getComponent().trim());
-                    webIngredient.setQuantity(webIngredient.getQuantity().replaceAll("\\s*/\\s*", "/")
-                            .replaceAll("\\s+", " ").trim());
+                    webIngredient.setQuantity(quantitySanitizer.sanitize(webIngredient.getQuantity()));
                 }
             }
         }

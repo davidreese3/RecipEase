@@ -31,15 +31,14 @@ public class RecipeNormalizer {
     }
 
     public String normalizeMeasurement(String measurement, String quantity, String preparation) {
-        //needs to be reworkded
         if (measurement != null && preparation != null
                 && measurement.equals("Whole") && preparation.equals("Unprepared")) {
             return "";
         }
-        if (measurement.equals("Fluid Ounces")){
+        if (measurement.equals("Fluid Ounces") && quantity.equals("1")){
             return "Fluid Ounce";
         }
-        if (quantity.equals("1") && quantity.equals("0")) {
+        if (quantity.equals("1")) {
             if (measurement.endsWith("es")) {
                 return measurement.substring(0, measurement.length() - 2);
             } else if (measurement.endsWith("s")) {
@@ -48,7 +47,6 @@ public class RecipeNormalizer {
         }
         return measurement;
     }
-
 
     public String normalizeUnitOfYield(String unitOfYield, double yield) {
         if (yield != 1){
