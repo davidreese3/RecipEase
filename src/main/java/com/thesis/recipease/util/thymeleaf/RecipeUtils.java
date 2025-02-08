@@ -37,15 +37,8 @@ public class RecipeUtils {
         return result;
     }
 
-    public static String formatIngredient(int wholeNumberQuantity, String fractionQuantity, String measurement, String preparation, String component) {
-        String result = "";
-        if (wholeNumberQuantity != 0) {
-            result += wholeNumberQuantity + " ";
-        }
-        if (!"0".equals(fractionQuantity)) {
-            result += fractionQuantity + " ";
-        }
-        result += measurement + " " + preparation + " " + component;
+    public static String formatIngredient(String quantity, String measurement, String preparation, String component) {
+        String result = quantity + " " + measurement + " " + preparation + " " + component;
         return result.trim();
     }
 

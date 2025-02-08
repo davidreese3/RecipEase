@@ -111,16 +111,15 @@ public class RecipeDaoImpl implements RecipeDao{
     }
 
     private void insertRecipeIngredients(List<WebIngredient> webIngredients, int recipeId){
-        final String SQL = "insert into ingredient (recipeid, component, wholeNumberQuantity, fractionQuantity, measurement, preparation) values (?, ?, ?, ?, ?, ?)";
+        final String SQL = "insert into ingredient (recipeid, component, quantity, measurement, preparation) values (?, ?, ?, ?, ?)";
         for(WebIngredient webIngredient : webIngredients){
             jdbcTemplate.update(dataSource -> {
                 PreparedStatement ps = dataSource.prepareStatement(SQL);
                 ps.setInt(1, recipeId);
                 ps.setString(2, webIngredient.getComponent());
-                ps.setDouble(3, webIngredient.getWholeNumberQuantity());
-                ps.setString(4, webIngredient.getFractionQuantity());
-                ps.setString(5, webIngredient.getMeasurement());
-                ps.setString(6, webIngredient.getPreparation());
+                ps.setString(3, webIngredient.getQuantity());
+                ps.setString(4, webIngredient.getMeasurement());
+                ps.setString(5, webIngredient.getPreparation());
                 return ps;
             });
         }
@@ -591,8 +590,7 @@ public class RecipeDaoImpl implements RecipeDao{
             RecipeIngredient recipeIngredient = new RecipeIngredient();
             recipeIngredient.setRecipeId(rs.getInt("recipeId"));
             recipeIngredient.setComponent(rs.getString("component"));
-            recipeIngredient.setWholeNumberQuantity(rs.getInt("wholeNumberQuantity"));
-            recipeIngredient.setFractionQuantity(rs.getString("fractionQuantity"));
+            recipeIngredient.setQuantity(rs.getString("quantity"));
             recipeIngredient.setMeasurement(rs.getString("measurement"));
             recipeIngredient.setPreparation(rs.getString("preparation"));
             return recipeIngredient;
@@ -719,8 +717,7 @@ public class RecipeDaoImpl implements RecipeDao{
         public WebIngredient mapRow(ResultSet rs, int rowNum) throws SQLException {
             WebIngredient recipeIngredient = new WebIngredient();
             recipeIngredient.setComponent(rs.getString("component"));
-            recipeIngredient.setWholeNumberQuantity(rs.getInt("wholeNumberQuantity"));
-            recipeIngredient.setFractionQuantity(rs.getString("fractionQuantity"));
+            recipeIngredient.setQuantity(rs.getString("quantity"));
             recipeIngredient.setMeasurement(rs.getString("measurement"));
             recipeIngredient.setPreparation(rs.getString("preparation"));
             return recipeIngredient;

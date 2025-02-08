@@ -14,8 +14,7 @@ public class RecipeNormalizer {
         for(RecipeIngredient recipeIngredient : recipeIngredients){
             recipeIngredient.setMeasurement(normalizeMeasurement(
                     recipeIngredient.getMeasurement(),
-                    recipeIngredient.getWholeNumberQuantity(),
-                    recipeIngredient.getFractionQuantity(),
+                    recipeIngredient.getQuantity(),
                     recipeIngredient.getPreparation()));
         }
         recipe.setRecipeIngredients(recipeIngredients);
@@ -31,7 +30,8 @@ public class RecipeNormalizer {
         return recipeInfo;
     }
 
-    public String normalizeMeasurement(String measurement, Integer wholeNumberQuantity, String fractionQuantity, String preparation) {
+    public String normalizeMeasurement(String measurement, String quantity, String preparation) {
+        //needs to be reworkded
         if (measurement != null && preparation != null
                 && measurement.equals("Whole") && preparation.equals("Unprepared")) {
             return "";
@@ -39,7 +39,7 @@ public class RecipeNormalizer {
         if (measurement.equals("Fluid Ounces")){
             return "Fluid Ounce";
         }
-        if (wholeNumberQuantity == 1 && fractionQuantity.equals("0")) {
+        if (quantity.equals("1") && quantity.equals("0")) {
             if (measurement.endsWith("es")) {
                 return measurement.substring(0, measurement.length() - 2);
             } else if (measurement.endsWith("s")) {

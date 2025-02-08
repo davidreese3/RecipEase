@@ -20,9 +20,8 @@ public class IngredientSanitizer implements Sanitizer{
                     ingredientIterator.remove();
                 } else {
                     webIngredient.setComponent(webIngredient.getComponent().trim());
-                    if (webIngredient.getWholeNumberQuantity() == null) {
-                        webIngredient.setWholeNumberQuantity(0);
-                    }
+                    webIngredient.setQuantity(webIngredient.getQuantity().replaceAll("\\s*/\\s*", "/")
+                            .replaceAll("\\s+", " ").trim());
                 }
             }
         }
@@ -32,8 +31,7 @@ public class IngredientSanitizer implements Sanitizer{
 
     private boolean isIngredientNull(WebIngredient webIngredient){
         return webIngredient.getComponent() == null &&
-                webIngredient.getWholeNumberQuantity() == null &&
-                webIngredient.getFractionQuantity() == null &&
+                webIngredient.getQuantity() == null &&
                 webIngredient.getMeasurement() == null &&
                 webIngredient.getPreparation() == null;
     }

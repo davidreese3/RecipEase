@@ -2,17 +2,15 @@ package com.thesis.recipease.model.web.recipe;
 
 public class WebIngredient {
     private String component;
-    private Integer wholeNumberQuantity;
-    private String fractionQuantity;
+    private String quantity;
     private String measurement;
     private String preparation;
 
     public WebIngredient(){}
 
-    public WebIngredient(String component, int wholeNumberQuantity, String fractionQuantity, String measurement, String preparation) {
+    public WebIngredient(String component, String quantity, String measurement, String preparation) {
         this.component = component;
-        this.wholeNumberQuantity = wholeNumberQuantity;
-        this.fractionQuantity = fractionQuantity;
+        this.quantity = quantity;
         this.measurement = measurement;
         this.preparation = preparation;
     }
@@ -25,22 +23,13 @@ public class WebIngredient {
         this.component = component;
     }
 
-    public Integer getWholeNumberQuantity() {
-        return wholeNumberQuantity;
+    public String getQuantity() {
+        return quantity;
     }
 
-    public void setWholeNumberQuantity(Integer wholeNumberQuantity) {
-        this.wholeNumberQuantity = wholeNumberQuantity;
+    public void setQuantity(String quantity) {
+        this.quantity = quantity;
     }
-
-    public String getFractionQuantity() {
-        return fractionQuantity;
-    }
-
-    public void setFractionQuantity(String fractionQuantity) {
-        this.fractionQuantity = fractionQuantity;
-    }
-
 
     public String getMeasurement() {
         return measurement;
@@ -56,16 +45,5 @@ public class WebIngredient {
 
     public void setPreparation(String preparation) {
         this.preparation = preparation;
-    }
-
-    @Override
-    public String toString() {
-        return "WebIngredient{" +
-                "component='" + component + '\'' +
-                ", wholeNumberQuantity=" + wholeNumberQuantity +
-                ", fractionQuantity='" + fractionQuantity + '\'' +
-                ", measurement='" + measurement + '\'' +
-                ", preparation='" + preparation + '\'' +
-                '}';
     }
 }

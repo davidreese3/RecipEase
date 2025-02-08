@@ -75,8 +75,8 @@
         <tr th:each="ingredient : ${recipe.recipeIngredients}">
             <td>
                 <input type="checkbox">
-                <span th:text="${@recipeUtils.formatIngredient(ingredient.wholeNumberQuantity, ingredient.fractionQuantity,
-                            ingredient.measurement, ingredient.preparation, ingredient.component)}"></span>
+                <span th:text="${@recipeUtils.formatIngredient(ingredient.quantity, ingredient.measurement,
+                                                            ingredient.preparation, ingredient.component)}"></span>
             </td>
         </tr>
         </tbody>

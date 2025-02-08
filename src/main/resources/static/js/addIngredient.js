@@ -27,42 +27,19 @@ function addIngredientFields() {
     const componentInput = document.createElement('input');
     componentInput.setAttribute('type', 'text');
     componentInput.setAttribute('name', `ingredients[${rowCount}].component`);
-    componentInput.setAttribute('placeholder', 'Ingredient Name');
     componentInput.setAttribute('maxlength', '45');
     componentInput.required = true;
 
-    const wholeNumberInput = document.createElement('input');
-    wholeNumberInput.setAttribute('type', 'number');
-    wholeNumberInput.setAttribute('min', '0');
-    wholeNumberInput.setAttribute('name', `ingredients[${rowCount}].wholeNumberQuantity`);
-    wholeNumberInput.setAttribute('placeholder', 'Whole Number Quantity');
-
-    const fractionSelect = document.createElement('select');
-    fractionSelect.setAttribute('name', `ingredients[${rowCount}].fractionQuantity`);
-    const fractionOptions = [
-        { value: '0', text: 'Fractional Quantity (if needed)' },
-        { value: '0', text: 'No fraction' },
-        { value: '1/8', text: '1/8' },
-        { value: '1/4', text: '1/4' },
-        { value: '3/8', text: '3/8' },
-        { value: '1/3', text: '1/3' },
-        { value: '1/2', text: '1/2' },
-        { value: '5/8', text: '5/8' },
-        { value: '2/3', text: '2/3' },
-        { value: '3/4', text: '3/4' }
-    ];
-    fractionOptions.forEach(optionData => {
-        const option = document.createElement('option');
-        option.value = optionData.value;
-        option.textContent = optionData.text;
-        fractionSelect.appendChild(option);
-    });
+    const quantity = document.createElement('input');
+    quantity.setAttribute('type', 'text');
+    quantity.setAttribute('name', `ingredients[${rowCount}].quantity`);
+    quantity.setAttribute('maxlength', '45');
 
     const measurementSelect = document.createElement('select');
     measurementSelect.setAttribute('name', `ingredients[${rowCount}].measurement`);
     measurementSelect.required = true;
     const measurementOptions = [
-        { value: '', text: 'Measurement' },
+        { value: '', text: '' },
         { value: 'Cups', text: 'Cups' },
         { value: 'Dashes', text: 'Dashes' },
         { value: 'Fluid Ounces', text: 'Fluid Ounces (fl oz)' },
@@ -88,7 +65,7 @@ function addIngredientFields() {
     preparationSelect.setAttribute('name', `ingredients[${rowCount}].preparation`);
     preparationSelect.required = true;
     const preparationOptions = [
-        { value: '', text: 'Preparation' },
+        { value: '', text: '' },
         { value: 'Beaten', text: 'Beaten' },
         { value: 'Boiled', text: 'Boiled' },
         { value: 'Chopped', text: 'Chopped' },
@@ -127,8 +104,7 @@ function addIngredientFields() {
     });
 
     tableRow.appendChild(createCell(componentInput));
-    tableRow.appendChild(createCell(wholeNumberInput));
-    tableRow.appendChild(createCell(fractionSelect));
+    tableRow.appendChild(createCell(quantity));
     tableRow.appendChild(createCell(measurementSelect));
     tableRow.appendChild(createCell(preparationSelect));
     tableRow.appendChild(createCell(removeButton));

@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class IngredientValidator implements Validator{
@@ -30,7 +32,6 @@ public class IngredientValidator implements Validator{
             for (WebIngredient webIngredient : webIngredients) {
                 validateComponent(webIngredient);
                 validateQuantity(webIngredient);
-                validateFraction(webIngredient);
                 validateMeasurement(webIngredient);
                 validatePreperation(webIngredient);
 
@@ -53,14 +54,15 @@ public class IngredientValidator implements Validator{
     }
 
     private void validateQuantity(WebIngredient webIngredient) {
-        if (webIngredient.getWholeNumberQuantity() <= 0 && webIngredient.getFractionQuantity().equals("0")) {
-            errors.add("Ingredient '" + webIngredient.getComponent() + "' cannot have a quantity of 0. If you do not want the ingredient, please remove it.");
+        String quantityRegex = "\\d+|\\.\\d+|\\d+\\.\\d+|\\d+\\s+\\d+/\\d+|\\d+/\\d+";
+        Pattern pattern = Pattern.compile(quantityRegex);
+        Matcher matcher = pattern.matcher(webIngredient.getQuantity());
+        if (!matcher.matches()){
+            errors.add("Ingredient '" + webIngredient.getComponent() + "' has an invalid quantity.");
         }
-    }
+        else if (webIngredient.getQuantity().length() > 10){
+            errors.add("Ingredient '" + webIngredient.getComponent() + "' cannot have a quantity exceeding 10 characters.");
 
-    private void validateFraction(WebIngredient webIngredient) {
-        if (!dropdownValidator.isValidFraction(webIngredient.getFractionQuantity())) {
-            errors.add("Ingredient '" + webIngredient.getComponent() + "' has an invalid fraction.");
         }
     }
 

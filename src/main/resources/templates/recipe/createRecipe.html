@@ -111,8 +111,7 @@ table {
             <thead>
             <tr>
                 <th>Ingredient Name</th>
-                <th>Whole Number Quantity</th>
-                <th>Fractional Quantity</th>
+                <th>Quantity</th>
                 <th>Measurement</th>
                 <th>Preparation</th>
                 <th>&nbsp;</th>
@@ -121,25 +120,10 @@ table {
             <tbody id="ingredientList">
             <tr class="ingredientEntry" th:each="ingredient, index : *{ingredients}">
                 <td><input type="text" th:field="*{ingredients[__${index.index}__].component}" placeholder="Ingredient Name" maxlength="45" required></td>
-                <td><input type="number" min="0" th:field="*{ingredients[__${index.index}__].wholeNumberQuantity}" placeholder="Whole Number Quantity"></td>
-                <td>
-                    <select th:field="*{ingredients[__${index.index}__].fractionQuantity}">
-                        <option value="0">Fractional Quantity (if needed)</option>
-                        <option value="0">No fraction</option>
-                        <option value="1/8">1/8</option>
-                        <option value="1/4">1/4</option>
-                        <option value="3/8">3/8</option>
-                        <option value="1/3">1/3</option>
-                        <option value="1/2">1/2</option>
-                        <option value="5/8">5/8</option>
-                        <option value="2/3">2/3</option>
-                        <option value="3/4">3/4</option>
-                        <option value="7/8">7/8</option>
-                    </select>
-                </td>
+                <td><input type="text" th:field="*{ingredients[__${index.index}__].quantity}" placeholder="Quantity"></td>
                 <td>
                     <select th:field="*{ingredients[__${index.index}__].measurement}" required>
-                        <option value="">Measurement</option>
+                        <option value=""></option>
                         <option value="Cups">Cups</option>
                         <option value="Dashes">Dashes</option>
                         <option value="Fluid Ounces">Fluid Ounces (fl oz)</option>
@@ -157,7 +141,7 @@ table {
                 </td>
                 <td>
                     <select th:field="*{ingredients[__${index.index}__].preparation}" required>
-                        <option value="">Preparation</option>
+                        <option value=""></option>
                         <option value="Beaten">Beaten</option>
                         <option value="Boiled">Boiled</option>
                         <option value="Chopped">Chopped</option>
