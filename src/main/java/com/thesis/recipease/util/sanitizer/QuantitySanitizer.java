@@ -46,8 +46,9 @@ public class QuantitySanitizer{
 
     private String decimalToFraction(double decimal) {
         // Handle 1/3 and 2/3
-        if (Math.abs(decimal - 0.333) < 0.005) return "1/3";
-        if (Math.abs(decimal - 0.666) < 0.005) return "2/3";
+        if (Math.abs(decimal - 0.333) < 0.005) { return "1/3"; }
+        if (Math.abs(decimal - 0.666) < 0.005) { return "2/3"; }
+        if (Math.abs(decimal - (int) decimal) < 0.005) { return "" + (int) decimal; }
 
         String decimalStr = String.valueOf(decimal);
         int decimalPlaces;
