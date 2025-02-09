@@ -7,6 +7,7 @@ import com.thesis.recipease.model.domain.substitution.SubstitutionEntry;
 import com.thesis.recipease.model.web.recipe.*;
 import com.thesis.recipease.model.web.recipe.util.WebRating;
 import com.thesis.recipease.model.web.recipe.util.WebScaling;
+import com.thesis.recipease.model.web.recipe.util.WebSearch;
 import com.thesis.recipease.util.error.RecipeErrorMessageGenerator;
 import com.thesis.recipease.util.normalizer.recipe.RecipeNormalizer;
 import com.thesis.recipease.util.normalizer.substitution.SubstitutionNormalizer;
@@ -216,5 +217,18 @@ public class RecipeController {
     @RequestMapping(value = "/recipe/scaling", method = RequestMethod.POST)
     public String processScalingForm(Model model, WebScaling webScaling, RedirectAttributes redirectAttributes) {
         return "redirect:/recipe/view?recipeId=" + webScaling.getRecipeId() + "&scale=" + webScaling.getScalingValue();
+    }
+
+    @RequestMapping(value = "/recipe/search", method = RequestMethod.GET)
+    public String displaySearchForm(Model model, WebSearch webSearch){
+        webSearch = new WebSearch();
+        model.addAttribute("webSearch", webSearch);
+        return "recipe/searchRecipe";
+    }
+
+    @RequestMapping(value = "/recipe/search", method = RequestMethod.GET)
+    public String processSearchForm(Model model, WebSearch webSearch){
+        model.addAttribute("webSearch", webSearch);
+        return "recipe/searchRecipe";
     }
 }
