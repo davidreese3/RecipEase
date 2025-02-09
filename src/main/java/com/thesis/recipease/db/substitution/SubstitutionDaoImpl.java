@@ -53,13 +53,11 @@ public class SubstitutionDaoImpl implements SubstitutionDao{
         public SubstitutionEntry mapRow(ResultSet rs, int rowNum) throws SQLException {
             SubstitutionEntry substitutionEntry = new SubstitutionEntry();
             substitutionEntry.setOriginalComponent(rs.getString("originalComponent"));
-            substitutionEntry.setOriginalWholeNumberQuantity(rs.getInt("originalWholeNumberQuantity"));
-            substitutionEntry.setOriginalFractionQuantity(rs.getString("originalFractionQuantity"));
+            substitutionEntry.setOriginalQuantity(rs.getString("originalQuantity"));
             substitutionEntry.setOriginalMeasurement(rs.getString("originalMeasurement"));
             substitutionEntry.setOriginalPreparation(rs.getString("originalPreparation"));
             substitutionEntry.setSubstitutedComponent(rs.getString("substitutedComponent"));
-            substitutionEntry.setSubstitutedWholeNumberQuantity(rs.getInt("substitutedWholeNumberQuantity"));
-            substitutionEntry.setSubstitutedFractionQuantity(rs.getString("substitutedFractionQuantity"));
+            substitutionEntry.setSubstitutedQuantity(rs.getString("substitutedQuantity"));
             substitutionEntry.setSubstitutedMeasurement(rs.getString("substitutedMeasurement"));
             substitutionEntry.setSubstitutedPreparation(rs.getString("substitutedPreparation"));
             return substitutionEntry;

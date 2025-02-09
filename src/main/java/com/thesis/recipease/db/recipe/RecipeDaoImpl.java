@@ -173,26 +173,24 @@ public class RecipeDaoImpl implements RecipeDao{
     private void insertUserSubstitutionEntries(List<WebUserSubstitutionEntry> webUserSubstitutionEntries, int recipeId){
         if(webUserSubstitutionEntries != null) {
             final String SQL = "insert into userSubs " +
-                    "(recipeId, originalComponent, originalWholeNumberQuantity, " +
-                    "originalFractionQuantity, originalMeasurement, " +
+                    "(recipeId, originalComponent, " +
+                    "originalQuantity, originalMeasurement, " +
                     "originalPreparation, substitutedComponent, " +
-                    "substitutedWholeNumberQuantity, substitutedFractionQuantity, " +
+                    "substitutedQuantity, " +
                     "substitutedMeasurement, substitutedPreparation) " +
-                    "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    "values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             for (WebUserSubstitutionEntry webUserSubstitutionEntry : webUserSubstitutionEntries) {
                 jdbcTemplate.update(dataSource -> {
                     PreparedStatement ps = dataSource.prepareStatement(SQL);
                     ps.setInt(1, recipeId);
                     ps.setString(2, webUserSubstitutionEntry.getOriginalComponent());
-                    ps.setInt(3, webUserSubstitutionEntry.getOriginalWholeNumberQuantity());
-                    ps.setString(4, webUserSubstitutionEntry.getOriginalFractionQuantity());
-                    ps.setString(5, webUserSubstitutionEntry.getOriginalMeasurement());
-                    ps.setString(6, webUserSubstitutionEntry.getOriginalPreparation());
-                    ps.setString(7, webUserSubstitutionEntry.getSubstitutedComponent());
-                    ps.setInt(8, webUserSubstitutionEntry.getSubstitutedWholeNumberQuantity());
-                    ps.setString(9, webUserSubstitutionEntry.getSubstitutedFractionQuantity());
-                    ps.setString(10, webUserSubstitutionEntry.getSubstitutedMeasurement());
-                    ps.setString(11, webUserSubstitutionEntry.getSubstitutedPreparation());
+                    ps.setString(3, webUserSubstitutionEntry.getOriginalQuantity());
+                    ps.setString(4, webUserSubstitutionEntry.getOriginalMeasurement());
+                    ps.setString(5, webUserSubstitutionEntry.getOriginalPreparation());
+                    ps.setString(6, webUserSubstitutionEntry.getSubstitutedComponent());
+                    ps.setString(7, webUserSubstitutionEntry.getSubstitutedQuantity());
+                    ps.setString(8, webUserSubstitutionEntry.getSubstitutedMeasurement());
+                    ps.setString(9, webUserSubstitutionEntry.getSubstitutedPreparation());
                     return ps;
                 });
             }
@@ -637,13 +635,11 @@ public class RecipeDaoImpl implements RecipeDao{
             RecipeUserSubstitutionEntry recipeUserSubstitutionEntry = new RecipeUserSubstitutionEntry();
             recipeUserSubstitutionEntry.setRecipeId(rs.getInt("recipeId"));
             recipeUserSubstitutionEntry.setOriginalComponent(rs.getString("originalComponent"));
-            recipeUserSubstitutionEntry.setOriginalWholeNumberQuantity(rs.getInt("originalWholeNumberQuantity"));
-            recipeUserSubstitutionEntry.setOriginalFractionQuantity(rs.getString("originalFractionQuantity"));
+            recipeUserSubstitutionEntry.setOriginalQuantity(rs.getString("originalQuantity"));
             recipeUserSubstitutionEntry.setOriginalMeasurement(rs.getString("originalMeasurement"));
             recipeUserSubstitutionEntry.setOriginalPreparation(rs.getString("originalPreparation"));
             recipeUserSubstitutionEntry.setSubstitutedComponent(rs.getString("substitutedComponent"));
-            recipeUserSubstitutionEntry.setSubstitutedWholeNumberQuantity(rs.getInt("substitutedWholeNumberQuantity"));
-            recipeUserSubstitutionEntry.setSubstitutedFractionQuantity(rs.getString("substitutedFractionQuantity"));
+            recipeUserSubstitutionEntry.setSubstitutedQuantity(rs.getString("substitutedQuantity"));
             recipeUserSubstitutionEntry.setSubstitutedMeasurement(rs.getString("substitutedMeasurement"));
             recipeUserSubstitutionEntry.setSubstitutedPreparation(rs.getString("substitutedPreparation"));
             return recipeUserSubstitutionEntry;
@@ -759,13 +755,11 @@ public class RecipeDaoImpl implements RecipeDao{
         public WebUserSubstitutionEntry mapRow(ResultSet rs, int rowNum) throws SQLException {
             WebUserSubstitutionEntry recipeUserSubstitutionEntry = new WebUserSubstitutionEntry();
             recipeUserSubstitutionEntry.setOriginalComponent(rs.getString("originalComponent"));
-            recipeUserSubstitutionEntry.setOriginalWholeNumberQuantity(rs.getInt("originalWholeNumberQuantity"));
-            recipeUserSubstitutionEntry.setOriginalFractionQuantity(rs.getString("originalFractionQuantity"));
+            recipeUserSubstitutionEntry.setOriginalQuantity(rs.getString("originalQuantity"));
             recipeUserSubstitutionEntry.setOriginalMeasurement(rs.getString("originalMeasurement"));
             recipeUserSubstitutionEntry.setOriginalPreparation(rs.getString("originalPreparation"));
             recipeUserSubstitutionEntry.setSubstitutedComponent(rs.getString("substitutedComponent"));
-            recipeUserSubstitutionEntry.setSubstitutedWholeNumberQuantity(rs.getInt("substitutedWholeNumberQuantity"));
-            recipeUserSubstitutionEntry.setSubstitutedFractionQuantity(rs.getString("substitutedFractionQuantity"));
+            recipeUserSubstitutionEntry.setSubstitutedQuantity(rs.getString("substitutedQuantity"));
             recipeUserSubstitutionEntry.setSubstitutedMeasurement(rs.getString("substitutedMeasurement"));
             recipeUserSubstitutionEntry.setSubstitutedPreparation(rs.getString("substitutedPreparation"));
             return recipeUserSubstitutionEntry;

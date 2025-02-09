@@ -28,21 +28,11 @@
             <tr th:each="substitution : ${substitutions}">
                 <td th:text="${substitution.originalComponent}"></td>
                 <td>
-                    <span th:text="
-                        ${substitution.originalWholeNumberQuantity != 0 ? substitution.originalWholeNumberQuantity + ' ' : ''} +
-                        ${substitution.originalFractionQuantity != '0' ? substitution.originalFractionQuantity + ' ' : ''} +
-                        ${substitution.originalMeasurement} + ' ' +
-                        ${substitution.originalPreparation != null ? substitution.originalPreparation : ''}
-                    "></span>
+                    <span th:text="${@recipeUtils.formatSubs(substitution.originalQuantity, substitution.originalMeasurement, substitution.originalPreparation)}"></span>
                 </td>
                 <td th:text="${substitution.substitutedComponent}"></td>
                 <td>
-                    <span th:text="
-                        ${substitution.substitutedWholeNumberQuantity != 0 ? substitution.substitutedWholeNumberQuantity + ' ' : ''} +
-                        ${substitution.substitutedFractionQuantity != '0' ? substitution.substitutedFractionQuantity + ' ' : ''} +
-                        ${substitution.substitutedMeasurement} + ' ' +
-                        ${substitution.substitutedPreparation != null ? substitution.substitutedPreparation : ''}
-                    "></span>
+                    <span th:text="${@recipeUtils.formatSubs(substitution.substitutedQuantity, substitution.substitutedMeasurement, substitution.substitutedPreparation)}"></span>
                 </td>
             </tr>
 

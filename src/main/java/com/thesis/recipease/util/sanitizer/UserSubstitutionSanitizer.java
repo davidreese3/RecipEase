@@ -19,14 +19,6 @@ public class UserSubstitutionSanitizer implements Sanitizer{
                 if (isUserSubNull(webUserSubstitutionEntry)) {
                     userSubstitutionEntryIterator.remove();
                 }
-                else {
-                    if (webUserSubstitutionEntry.getOriginalWholeNumberQuantity() == null) {
-                        webUserSubstitutionEntry.setOriginalWholeNumberQuantity(0);
-                    }
-                    if (webUserSubstitutionEntry.getSubstitutedWholeNumberQuantity() == null) {
-                        webUserSubstitutionEntry.setSubstitutedWholeNumberQuantity(0);
-                    }
-                }
             }
         }
         webRecipe.setUserSubstitutionEntries(webUserSubstitutionEntries);
@@ -35,13 +27,11 @@ public class UserSubstitutionSanitizer implements Sanitizer{
 
     private boolean isUserSubNull(WebUserSubstitutionEntry webUserSubstitutionEntry){
         return webUserSubstitutionEntry.getOriginalComponent() == null &&
-                webUserSubstitutionEntry.getOriginalWholeNumberQuantity() == null &&
-                webUserSubstitutionEntry.getOriginalFractionQuantity() == null &&
+                webUserSubstitutionEntry.getOriginalQuantity() == null &&
                 webUserSubstitutionEntry.getOriginalMeasurement() == null &&
                 webUserSubstitutionEntry.getOriginalPreparation() == null &&
                 webUserSubstitutionEntry.getSubstitutedComponent() == null &&
-                webUserSubstitutionEntry.getSubstitutedWholeNumberQuantity() == null &&
-                webUserSubstitutionEntry.getSubstitutedFractionQuantity() == null &&
+                webUserSubstitutionEntry.getSubstitutedQuantity() == null &&
                 webUserSubstitutionEntry.getSubstitutedMeasurement() == null &&
                 webUserSubstitutionEntry.getSubstitutedPreparation() == null;
     }

@@ -6,7 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class UserSubstitutionValidator implements Validator{
@@ -18,17 +22,24 @@ public class UserSubstitutionValidator implements Validator{
         errors = new ArrayList<String>();
         List<WebUserSubstitutionEntry> webUserSubstitutionEntries = webRecipe.getUserSubstitutionEntries();
         if(webUserSubstitutionEntries != null) {
+            Set<String> seenIngredients = new HashSet<>();
+            Set<String> reportedDuplicates = new HashSet<>();
             for (WebUserSubstitutionEntry webUserSubstitutionEntry : webUserSubstitutionEntries) {
                 validateOriginalComponent(webUserSubstitutionEntry);
                 validateOriginalQuantity(webUserSubstitutionEntry);
-                validateOriginalFraction(webUserSubstitutionEntry);
                 validateOriginalMeasurement(webUserSubstitutionEntry);
                 validateOriginalPreparation(webUserSubstitutionEntry);
                 validateSubstitutedComponent(webUserSubstitutionEntry);
                 validateSubstitutedQuantity(webUserSubstitutionEntry);
-                validateSubstitutedFraction(webUserSubstitutionEntry);
                 validateSubstitutedMeasurement(webUserSubstitutionEntry);
                 validateSubstitutedPreparation(webUserSubstitutionEntry);
+
+                String key = webUserSubstitutionEntry.getOriginalComponent().toLowerCase() + "|" + webUserSubstitutionEntry.getOriginalPreparation().toLowerCase() + "|"
+                + webUserSubstitutionEntry.getSubstitutedComponent().toLowerCase() + "|" + webUserSubstitutionEntry.getSubstitutedPreparation().toLowerCase();
+
+                if (!seenIngredients.add(key) && reportedDuplicates.add(key)) {
+                    errors.add("Substitution '" + webUserSubstitutionEntry.getOriginalComponent() + "' has a duplicate ingredient and preparation. Please remove the duplicate or change preparation.");
+                }
             }
         }
         return errors;
@@ -44,13 +55,15 @@ public class UserSubstitutionValidator implements Validator{
     }
 
     private void validateOriginalQuantity(WebUserSubstitutionEntry entry) {
-        if (entry.getOriginalWholeNumberQuantity() <= 0 && entry.getOriginalFractionQuantity().equals("0")) {
-            errors.add("Original ingredient '" + entry.getOriginalComponent() + "' cannot have a quantity of 0. If you do not want the ingredient, please remove it.");
+        String quantityRegex = "\\d+|\\.\\d+|\\d+\\.\\d+|\\d+\\s+\\d+/\\d+|\\d+/\\d+";
+        Pattern pattern = Pattern.compile(quantityRegex);
+        Matcher matcher = pattern.matcher(entry.getOriginalQuantity());
+        if (!matcher.matches()){
+            errors.add("Original ingredient '" + entry.getOriginalComponent() + "' has an invalid quantity.");
         }
-    }
-    private void validateOriginalFraction(WebUserSubstitutionEntry entry) {
-        if (!dropdownValidator.isValidFraction(entry.getOriginalFractionQuantity())) {
-            errors.add("Original ingredient '" + entry.getOriginalComponent() + "' has an invalid fraction.");
+        else if (entry.getOriginalQuantity().length() > 10){
+            errors.add("Original ingredient '" + entry.getOriginalComponent() + "' cannot have a quantity exceeding 10 characters.");
+
         }
     }
 
@@ -76,14 +89,15 @@ public class UserSubstitutionValidator implements Validator{
     }
 
     private void validateSubstitutedQuantity(WebUserSubstitutionEntry entry) {
-        if (entry.getSubstitutedWholeNumberQuantity() <= 0 && entry.getSubstitutedFractionQuantity().equals("0")) {
-            errors.add("Substituted ingredient '" + entry.getSubstitutedComponent() + "' cannot have a quantity of 0. If you do not want the ingredient, please remove it");
+        String quantityRegex = "\\d+|\\.\\d+|\\d+\\.\\d+|\\d+\\s+\\d+/\\d+|\\d+/\\d+";
+        Pattern pattern = Pattern.compile(quantityRegex);
+        Matcher matcher = pattern.matcher(entry.getSubstitutedQuantity());
+        if (!matcher.matches()){
+            errors.add("Substituted ingredient '" + entry.getSubstitutedComponent() + "' has an invalid quantity.");
         }
-    }
+        else if (entry.getSubstitutedQuantity().length() > 10){
+            errors.add("Substituted ingredient '" + entry.getSubstitutedComponent() + "' cannot have a quantity exceeding 10 characters.");
 
-    private void validateSubstitutedFraction(WebUserSubstitutionEntry entry) {
-        if (!dropdownValidator.isValidFraction(entry.getSubstitutedFractionQuantity())) {
-            errors.add("Substituted ingredient '" + entry.getSubstitutedComponent() + "' has an invalid fraction.");
         }
     }
 

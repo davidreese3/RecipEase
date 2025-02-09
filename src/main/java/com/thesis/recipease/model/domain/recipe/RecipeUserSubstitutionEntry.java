@@ -3,28 +3,24 @@ package com.thesis.recipease.model.domain.recipe;
 public class RecipeUserSubstitutionEntry {
     private int recipeId;
     private String originalComponent;
-    private Integer originalWholeNumberQuantity;
-    private String originalFractionQuantity;
+    private String originalQuantity;
     private String originalMeasurement;
     private String originalPreparation;
     private String substitutedComponent;
-    private Integer substitutedWholeNumberQuantity;
-    private String substitutedFractionQuantity;
+    private String substitutedQuantity;
     private String substitutedMeasurement;
     private String substitutedPreparation;
 
     public RecipeUserSubstitutionEntry(){}
 
-    public RecipeUserSubstitutionEntry(int recipeId, String originalComponent, Integer originalWholeNumberQuantity, String originalFractionQuantity, String originalMeasurement, String originalPreparation, String substitutedComponent, Integer substitutedWholeNumberQuantity, String substitutedFractionQuantity, String substitutedMeasurement, String substitutedPreparation) {
+    public RecipeUserSubstitutionEntry(int recipeId, String originalComponent, String originalQuantity, String originalMeasurement, String originalPreparation, String substitutedComponent, String substitutedQuantity, String substitutedMeasurement, String substitutedPreparation) {
         this.recipeId = recipeId;
         this.originalComponent = originalComponent;
-        this.originalWholeNumberQuantity = originalWholeNumberQuantity;
-        this.originalFractionQuantity = originalFractionQuantity;
+        this.originalQuantity = originalQuantity;
         this.originalMeasurement = originalMeasurement;
         this.originalPreparation = originalPreparation;
         this.substitutedComponent = substitutedComponent;
-        this.substitutedWholeNumberQuantity = substitutedWholeNumberQuantity;
-        this.substitutedFractionQuantity = substitutedFractionQuantity;
+        this.substitutedQuantity = substitutedQuantity;
         this.substitutedMeasurement = substitutedMeasurement;
         this.substitutedPreparation = substitutedPreparation;
     }
@@ -45,20 +41,12 @@ public class RecipeUserSubstitutionEntry {
         this.originalComponent = originalComponent;
     }
 
-    public Integer getOriginalWholeNumberQuantity() {
-        return originalWholeNumberQuantity;
+    public String getOriginalQuantity() {
+        return originalQuantity;
     }
 
-    public void setOriginalWholeNumberQuantity(Integer originalWholeNumberQuantity) {
-        this.originalWholeNumberQuantity = originalWholeNumberQuantity;
-    }
-
-    public String getOriginalFractionQuantity() {
-        return originalFractionQuantity;
-    }
-
-    public void setOriginalFractionQuantity(String originalFractionQuantity) {
-        this.originalFractionQuantity = originalFractionQuantity;
+    public void setOriginalQuantity(String originalQuantity) {
+        this.originalQuantity = originalQuantity;
     }
 
     public String getOriginalMeasurement() {
@@ -85,20 +73,12 @@ public class RecipeUserSubstitutionEntry {
         this.substitutedComponent = substitutedComponent;
     }
 
-    public Integer getSubstitutedWholeNumberQuantity() {
-        return substitutedWholeNumberQuantity;
+    public String getSubstitutedQuantity() {
+        return substitutedQuantity;
     }
 
-    public void setSubstitutedWholeNumberQuantity(Integer substitutedWholeNumberQuantity) {
-        this.substitutedWholeNumberQuantity = substitutedWholeNumberQuantity;
-    }
-
-    public String getSubstitutedFractionQuantity() {
-        return substitutedFractionQuantity;
-    }
-
-    public void setSubstitutedFractionQuantity(String substitutedFractionQuantity) {
-        this.substitutedFractionQuantity = substitutedFractionQuantity;
+    public void setSubstitutedQuantity(String substitutedQuantity) {
+        this.substitutedQuantity = substitutedQuantity;
     }
 
     public String getSubstitutedMeasurement() {
@@ -115,22 +95,5 @@ public class RecipeUserSubstitutionEntry {
 
     public void setSubstitutedPreparation(String substitutedPreparation) {
         this.substitutedPreparation = substitutedPreparation;
-    }
-
-    @Override
-    public String toString() {
-        return "RecipeUserSubstitutionEntry{" +
-                "recipeId=" + recipeId +
-                ", originalComponent='" + originalComponent + '\'' +
-                ", originalWholeNumberQuantity=" + originalWholeNumberQuantity +
-                ", originalFractionQuantity='" + originalFractionQuantity + '\'' +
-                ", originalMeasurement='" + originalMeasurement + '\'' +
-                ", originalPreparation='" + originalPreparation + '\'' +
-                ", substitutedComponent='" + substitutedComponent + '\'' +
-                ", substitutedWholeNumberQuantity=" + substitutedWholeNumberQuantity +
-                ", substitutedFractionQuantity='" + substitutedFractionQuantity + '\'' +
-                ", substitutedMeasurement='" + substitutedMeasurement + '\'' +
-                ", substitutedPreparation='" + substitutedPreparation + '\'' +
-                '}';
     }
 }

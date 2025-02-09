@@ -105,9 +105,9 @@
             <tr th:each="entry : ${recipe.userSubstitutionEntries}">
 
                 <td th:text="${entry.originalComponent}"></td>
-                <td th:text="${@recipeUtils.formatSubs(entry.originalWholeNumberQuantity, entry.originalFractionQuantity, entry.originalMeasurement, entry.originalPreparation)}"></td>
+                <td th:text="${@recipeUtils.formatSubs(entry.originalQuantity, entry.originalMeasurement, entry.originalPreparation)}"></td>
                 <td th:text="${entry.substitutedComponent}"></td>
-                <td th:text="${@recipeUtils.formatSubs(entry.substitutedWholeNumberQuantity, entry.substitutedFractionQuantity, entry.substitutedMeasurement, entry.substitutedPreparation)}"></td>
+                <td th:text="${@recipeUtils.formatSubs(entry.substitutedQuantity, entry.substitutedMeasurement, entry.substitutedPreparation)}"></td>
             </tr>
             </tbody>
         </table>
@@ -140,9 +140,9 @@
                 <tbody>
                 <tr th:each="entry : ${substitutionList}">
                     <td th:text="${entry.originalComponent}"></td>
-                    <td th:text="${@recipeUtils.formatSubs(entry.originalWholeNumberQuantity, entry.originalFractionQuantity, entry.originalMeasurement, entry.originalPreparation)}"></td>
+                    <td th:text="${@recipeUtils.formatSubs(entry.originalQuantity, entry.originalMeasurement, entry.originalPreparation)}"></td>
                     <td th:text="${entry.substitutedComponent}"></td>
-                    <td th:text="${@recipeUtils.formatSubs(entry.substitutedWholeNumberQuantity, entry.substitutedFractionQuantity, entry.substitutedMeasurement, entry.substitutedPreparation)}"></td>
+                    <td th:text="${@recipeUtils.formatSubs(entry.substitutedQuantity, entry.substitutedMeasurement, entry.substitutedPreparation)}"></td>
                 </tr>
                 </tbody>
             </table>

@@ -204,16 +204,14 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
     create table if not exists userSubs (
         recipeId int references info(recipeId) on delete cascade,
         originalComponent varchar(45),
-        originalWholeNumberQuantity int,
-        originalFractionQuantity varchar(4),
+        originalQuantity varchar(12),
         originalMeasurement varchar(20), --change once prepop made
         originalPreparation varchar(20), --change once prepop made
         substitutedComponent varchar(45),
-        substitutedWholeNumberQuantity int,
-        substitutedFractionQuantity varchar(4),
+        substitutedQuantity varchar(12),
         substitutedMeasurement varchar(20), --change once prepop made
         substitutedPreparation varchar(20), --change once prepop made
-        primary key(recipeId, originalComponent, substitutedComponent)
+        primary key(recipeId, originalComponent, originalPreparation, substitutedComponent, substitutedPreparation)
     );
 
     -- =============================
@@ -223,13 +221,11 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
     -- knownSubs
     create table if not exists knownSubs (
         originalComponent varchar(45),
-        originalWholeNumberQuantity int,
-        originalFractionQuantity varchar(4),
+        originalQuantity varchar(12),
         originalMeasurement varchar(20), --change once prepop made
         originalPreparation varchar(20), --change once prepop made
         substitutedComponent varchar(45),
-        substitutedWholeNumberQuantity int,
-        substitutedFractionQuantity varchar(4),
+        substitutedQuantity varchar(12),
         substitutedMeasurement varchar(20), --change once prepop made
         substitutedPreparation varchar(20), --change once prepop made
         primary key(originalComponent, substitutedComponent)
@@ -355,79 +351,79 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
 
     -- Common baking and cooking substitutions
     INSERT INTO knownSubs (
-        originalComponent, originalWholeNumberQuantity, originalFractionQuantity, originalMeasurement, originalPreparation,
-        substitutedComponent, substitutedWholeNumberQuantity, substitutedFractionQuantity, substitutedMeasurement, substitutedPreparation
+        originalComponent, originalQuantity, originalMeasurement, originalPreparation,
+        substitutedComponent, substitutedQuantity, substitutedMeasurement, substitutedPreparation
     )
     VALUES
         -- Fats and Oils
-        ('Butter', 1, '0', 'Cups', '', 'Coconut Oil', 1, '0', 'Cups', 'Melted'),
-        ('Butter', 1, '0', 'Cups', '', 'Olive Oil', 0, '3/4', 'Cups', ''),
-        ('Oil', 1, '0', 'Cups', '', 'Mashed Banana', 0, '1/2', 'Cups', ''),
-        ('Oil', 1, '0', 'Cups', '', 'Greek Yogurt', 0, '3/4', 'Cups', ''),
-        ('Oil', 1, '0', 'Cups', '', 'Applesauce', 0, '3/4', 'Cups', 'Unsweetened'),
-        ('Shortening', 1, '0', 'Cups', '', 'Butter', 1, '0', 'Cups', ''),
-        ('Butter', 1, '0', 'Tablespoons', '', 'Ghee', 1, '0', 'Tablespoons', ''),
+        ('Butter', '1', 'Cups', '', 'Coconut Oil', '1', 'Cups', 'Melted'),
+        ('Butter', '1', 'Cups', '', 'Olive Oil', '3/4', 'Cups', ''),
+        ('Oil', '1', 'Cups', '', 'Mashed Banana', '1/2', 'Cups', ''),
+        ('Oil', '1', 'Cups', '', 'Greek Yogurt', '3/4', 'Cups', ''),
+        ('Oil', '1', 'Cups', '', 'Applesauce', '3/4', 'Cups', 'Unsweetened'),
+        ('Shortening', '1', 'Cups', '', 'Butter', '1', 'Cups', ''),
+        ('Butter', '1', 'Tablespoons', '', 'Ghee', '1', 'Tablespoons', ''),
 
         -- Dairy
-        ('Milk', 1, '0', 'Cups', '', 'Soy Milk', 1, '0', 'Cups', ''),
-        ('Milk', 1, '0', 'Cups', '', 'Oat Milk', 1, '0', 'Cups', ''),
-        ('Heavy Cream', 1, '0', 'Cups', '', 'Milk + Butter', 1, '0', 'Cups', 'Combined'),
-        ('Cream Cheese', 1, '0', 'Cups', '', 'Ricotta Cheese', 1, '0', 'Cups', ''),
-        ('Sour Cream', 1, '0', 'Cups', '', 'Cottage Cheese', 1, '0', 'Cups', 'Blended'),
-        ('Buttermilk', 1, '0', 'Cups', '', 'Yogurt + Water', 1, '0', 'Cups', 'Mixed'),
-        ('Milk', 1, '0', 'Cups', '', 'Cashew Milk', 1, '0', 'Cups', ''),
-        ('Butter', 1, '0', 'Cups', '', 'Avocado', 1, '0', 'Cups', 'Mashed'),
+        ('Milk', '1', 'Cups', '', 'Soy Milk', '1', 'Cups', ''),
+        ('Milk', '1', 'Cups', '', 'Oat Milk', '1', 'Cups', ''),
+        ('Heavy Cream', '1', 'Cups', '', 'Milk + Butter', '1', 'Cups', 'Combined'),
+        ('Cream Cheese', '1', 'Cups', '', 'Ricotta Cheese', '1', 'Cups', ''),
+        ('Sour Cream', '1', 'Cups', '', 'Cottage Cheese', '1', 'Cups', 'Blended'),
+        ('Buttermilk', '1', 'Cups', '', 'Yogurt + Water', '1', 'Cups', 'Mixed'),
+        ('Milk', '1', 'Cups', '', 'Cashew Milk', '1', 'Cups', ''),
+        ('Butter', '1', 'Cups', '', 'Avocado', '1', 'Cups', 'Mashed'),
 
         -- Eggs
-        ('Egg', 1, '0', 'Whole', '', 'Banana', 0, '1/2', 'Cups', 'Mashed'),
-        ('Egg', 1, '0', 'Whole', '', 'Unsweetened Applesauce', 0, '1/4', 'Cups', ''),
-        ('Egg', 1, '0', 'Whole', '', 'Silken Tofu', 0, '1/4', 'Cups', 'Blended'),
-        ('Egg', 1, '0', 'Whole', '', 'Commercial Egg Replacer', 1, '0', 'Tablespoons', 'Mixed with water'),
-        ('Egg', 1, '0', 'Whole', '', 'Yogurt', 0, '1/4', 'Cups', ''),
+        ('Egg', '1', 'Whole', '', 'Banana', '1/2', 'Cups', 'Mashed'),
+        ('Egg', '1', 'Whole', '', 'Unsweetened Applesauce', '1/4', 'Cups', ''),
+        ('Egg', '1', 'Whole', '', 'Silken Tofu', '1/4', 'Cups', 'Blended'),
+        ('Egg', '1', 'Whole', '', 'Commercial Egg Replacer', '1', 'Tablespoons', 'Mixed with water'),
+        ('Egg', '1', 'Whole', '', 'Yogurt', '1/4', 'Cups', ''),
 
         -- Flours
-        ('Flour', 1, '0', 'Cups', '', 'Almond Flour', 1, '0', 'Cups', ''),
-        ('Flour', 1, '0', 'Cups', '', 'Oat Flour', 1, '0', 'Cups', 'Blended'),
-        ('Flour', 1, '0', 'Cups', '', 'Coconut Flour', 0, '1/4', 'Cups', ''),
-        ('Flour', 1, '0', 'Cups', '', 'Rice Flour', 1, '0', 'Cups', ''),
-        ('Flour', 1, '0', 'Cups', '', 'Chickpea Flour', 1, '0', 'Cups', ''),
+        ('Flour', '1', 'Cups', '', 'Almond Flour', '1', 'Cups', ''),
+        ('Flour', '1', 'Cups', '', 'Oat Flour', '1', 'Cups', 'Blended'),
+        ('Flour', '1', 'Cups', '', 'Coconut Flour', '1/4', 'Cups', ''),
+        ('Flour', '1', 'Cups', '', 'Rice Flour', '1', 'Cups', ''),
+        ('Flour', '1', 'Cups', '', 'Chickpea Flour', '1', 'Cups', ''),
 
         -- Sugars and Sweeteners
-        ('Sugar', 1, '0', 'Cups', '', 'Maple Syrup', 0, '3/4', 'Cups', ''),
-        ('Sugar', 1, '0', 'Cups', '', 'Agave Nectar', 0, '3/4', 'Cups', ''),
-        ('Sugar', 1, '0', 'Cups', '', 'Stevia', 1, '0', 'Teaspoons', 'Powdered'),
-        ('Brown Sugar', 1, '0', 'Cups', '', 'Coconut Sugar', 1, '0', 'Cups', ''),
-        ('Honey', 1, '0', 'Cups', '', 'Maple Syrup', 1, '0', 'Cups', ''),
-        ('Honey', 1, '0', 'Cups', '', 'Molasses', 0, '3/4', 'Cups', ''),
+        ('Sugar', '1', 'Cups', '', 'Maple Syrup', '3/4', 'Cups', ''),
+        ('Sugar', '1', 'Cups', '', 'Agave Nectar', '3/4', 'Cups', ''),
+        ('Sugar', '1', 'Cups', '', 'Stevia', '1', 'Teaspoons', 'Powdered'),
+        ('Brown Sugar', '1', 'Cups', '', 'Coconut Sugar', '1', 'Cups', ''),
+        ('Honey', '1', 'Cups', '', 'Maple Syrup', '1', 'Cups', ''),
+        ('Honey', '1', 'Cups', '', 'Molasses', '3/4', 'Cups', ''),
 
         -- Grains and Pasta
-        ('Pasta', 1, '0', 'Cups', 'Cooked', 'Spaghetti Squash', 1, '0', 'Cups', 'Cooked'),
-        ('Rice', 1, '0', 'Cups', 'Cooked', 'Quinoa', 1, '0', 'Cups', 'Cooked'),
-        ('Rice', 1, '0', 'Cups', 'Cooked', 'Barley', 1, '0', 'Cups', 'Cooked'),
-        ('Couscous', 1, '0', 'Cups', 'Cooked', 'Cauliflower Rice', 1, '0', 'Cups', 'Grated'),
+        ('Pasta', '1', 'Cups', 'Cooked', 'Spaghetti Squash', '1', 'Cups', 'Cooked'),
+        ('Rice', '1', 'Cups', 'Cooked', 'Quinoa', '1', 'Cups', 'Cooked'),
+        ('Rice', '1', 'Cups', 'Cooked', 'Barley', '1', 'Cups', 'Cooked'),
+        ('Couscous', '1', 'Cups', 'Cooked', 'Cauliflower Rice', '1', 'Cups', 'Grated'),
 
         -- Proteins
-        ('Ground Beef', 1, '0', 'Pounds', '', 'Mushrooms', 1, '0', 'Pounds', 'Chopped'),
-        ('Ground Chicken', 1, '0', 'Pounds', '', 'Ground Turkey', 1, '0', 'Pounds', ''),
-        ('Ground Meat', 1, '0', 'Pounds', '', 'Tofu', 1, '0', 'Pounds', 'Crumbled'),
-        ('Ground Beef', 1, '0', 'Pounds', '', 'Black Beans', 1, '0', 'Pounds', 'Cooked'),
-        ('Chicken Breast', 1, '0', 'Cups', 'Shredded', 'Jackfruit', 1, '0', 'Cups', 'Shredded'),
+        ('Ground Beef', '1', 'Pounds', '', 'Mushrooms', '1', 'Pounds', 'Chopped'),
+        ('Ground Chicken', '1', 'Pounds', '', 'Ground Turkey', '1', 'Pounds', ''),
+        ('Ground Meat', '1', 'Pounds', '', 'Tofu', '1', 'Pounds', 'Crumbled'),
+        ('Ground Beef', '1', 'Pounds', '', 'Black Beans', '1', 'Pounds', 'Cooked'),
+        ('Chicken Breast', '1', 'Cups', 'Shredded', 'Jackfruit', '1', 'Cups', 'Shredded'),
 
         -- Thickeners and Binders
-        ('Cornstarch', 1, '0', 'Tablespoons', '', 'Arrowroot Powder', 1, '0', 'Tablespoons', ''),
-        ('Cornstarch', 1, '0', 'Tablespoons', '', 'Tapioca Starch', 2, '0', 'Tablespoons', ''),
-        ('Gelatin', 1, '0', 'Tablespoons', '', 'Agar Agar', 1, '0', 'Tablespoons', ''),
+        ('Cornstarch', '1', 'Tablespoons', '', 'Arrowroot Powder', '1', 'Tablespoons', ''),
+        ('Cornstarch', '1', 'Tablespoons', '', 'Tapioca Starch', '2', 'Tablespoons', ''),
+        ('Gelatin', '1', 'Tablespoons', '', 'Agar Agar', '1', 'Tablespoons', ''),
 
         -- Miscellaneous
-        ('Salt', 1, '0', 'Teaspoons', '', 'Seaweed Powder', 1, '0', 'Teaspoons', ''),
-        ('Soy Sauce', 1, '0', 'Tablespoons', '', 'Coconut Aminos', 1, '0', 'Tablespoons', ''),
-        ('Vinegar', 1, '0', 'Tablespoons', '', 'Lemon Juice', 1, '0', 'Tablespoons', ''),
-        ('Wine', 1, '0', 'Cups', '', 'Grape Juice + Vinegar', 1, '0', 'Cups', 'Mixed'),
-        ('Breadcrumbs', 1, '0', 'Cups', '', 'Crushed Crackers', 1, '0', 'Cups', ''),
-        ('Breadcrumbs', 1, '0', 'Cups', '', 'Ground Nuts', 1, '0', 'Cups', ''),
-        ('Baking Powder', 1, '0', 'Teaspoons', '', 'Baking Soda + Lemon Juice', 0, '1/2', 'Teaspoons', 'Combined'),
-        ('Tomato Sauce', 1, '0', 'Cups', '', 'Tomato Paste + Water', 0, '1/2', 'Cups', 'Mixed'),
-        ('Cocoa Powder', 1, '0', 'Tablespoons', '', 'Carob Powder', 1, '0', 'Tablespoons', '');
+        ('Salt', '1', 'Teaspoons', '', 'Seaweed Powder', '1', 'Teaspoons', ''),
+        ('Soy Sauce', '1', 'Tablespoons', '', 'Coconut Aminos', '1', 'Tablespoons', ''),
+        ('Vinegar', '1', 'Tablespoons', '', 'Lemon Juice', '1', 'Tablespoons', ''),
+        ('Wine', '1', 'Cups', '', 'Grape Juice + Vinegar', '1', 'Cups', 'Mixed'),
+        ('Breadcrumbs', '1', 'Cups', '', 'Crushed Crackers', '1', 'Cups', ''),
+        ('Breadcrumbs', '1', 'Cups', '', 'Ground Nuts', '1', 'Cups', ''),
+        ('Baking Powder', '1', 'Teaspoons', '', 'Baking Soda + Lemon Juice', '1/2', 'Teaspoons', 'Combined'),
+        ('Tomato Sauce', '1', 'Cups', '', 'Tomato Paste + Water', '1/2', 'Cups', 'Mixed'),
+        ('Cocoa Powder', '1', 'Tablespoons', '', 'Carob Powder', '1', 'Tablespoons', '');
 
     -- Insert into account table
         INSERT INTO account (email, password, active, activationCode) VALUES

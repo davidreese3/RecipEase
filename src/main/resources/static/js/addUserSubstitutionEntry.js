@@ -1,24 +1,19 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const userSubList = document.querySelector('#userSubList'); // Reference the userSubList div
-    const addUserSubBtn = document.querySelector('#addUserSubBtn'); // Reference the Add Substitution button
+    const userSubList = document.querySelector('#userSubList');
+    const addUserSubBtn = document.querySelector('#addUserSubBtn');
 
-    // Add event listener to the button
+    // Reattach remove button functionality to existing rows
+    repopulateRemoveButtons();
+
     addUserSubBtn.addEventListener('click', function () {
-        addSubstitutionFields(fractionOptions, measurementOptions, preparationOptions);
+        addSubstitutionFields(measurementOptions, preparationOptions);
     });
 
-    const fractionOptions = [
-        { value: '0', text: 'Fractional Quantity (if needed)' },
-        { value: '0', text: 'No fraction' },
-        { value: '1/8', text: '1/8' },
-        { value: '1/4', text: '1/4' },
-        { value: '3/8', text: '3/8' },
-        { value: '1/3', text: '1/3' },
-        { value: '1/2', text: '1/2' },
-        { value: '5/8', text: '5/8' },
-        { value: '2/3', text: '2/3' },
-        { value: '3/4', text: '3/4' }
-    ];
+    userSubList.addEventListener('click', function (event) {
+        if (event.target.classList.contains('removeButton')) {
+            event.target.closest('tr').remove();
+        }
+    });
 
     const measurementOptions = [
         { value: '', text: 'Measurement' },
@@ -37,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
         { value: 'Whole', text: 'Whole Ingredient' }
     ];
 
-    const preparationOptions =  [
+    const preparationOptions = [
         { value: '', text: 'Preparation' },
         { value: 'Beaten', text: 'Beaten' },
         { value: 'Boiled', text: 'Boiled' },
@@ -63,57 +58,54 @@ document.addEventListener('DOMContentLoaded', function () {
     ];
 });
 
-function addSubstitutionFields(fractionOptions, measurementOptions, preparationOptions) {
-    const subDiv = document.createElement('div');
-    subDiv.classList.add('substitutionEntry');
+function addSubstitutionFields(measurementOptions, preparationOptions) {
+    const row = document.createElement('tr');
+    row.classList.add('substitutionEntry');
 
-    // Inputs and select elements for original ingredient
+    // Original ingredient fields
     const originalComponentInput = createInput('text', `userSubstitutionEntries[${userSubList.children.length}].originalComponent`, 'Original Ingredient Name', 45, true);
-    const originalWholeNumberInput = createInput('number', `userSubstitutionEntries[${userSubList.children.length}].originalWholeNumberQuantity`, 'Original Whole Number Quantity', null, false, 0);
-    const originalFractionSelect = createSelect(`userSubstitutionEntries[${userSubList.children.length}].originalFractionQuantity`, fractionOptions);
+    const originalQuantityInput = createInput('text', `userSubstitutionEntries[${userSubList.children.length}].originalQuantity`, 'Original Quantity', null, false);
     const originalMeasurementSelect = createSelect(`userSubstitutionEntries[${userSubList.children.length}].originalMeasurement`, measurementOptions, true);
     const originalPreparationSelect = createSelect(`userSubstitutionEntries[${userSubList.children.length}].originalPreparation`, preparationOptions, true);
 
-    // Inputs and select elements for substituted ingredient
+    // Substituted ingredient fields
     const substitutedComponentInput = createInput('text', `userSubstitutionEntries[${userSubList.children.length}].substitutedComponent`, 'Substituted Ingredient Name', 45, true);
-    const substitutedWholeNumberInput = createInput('number', `userSubstitutionEntries[${userSubList.children.length}].substitutedWholeNumberQuantity`, 'Substituted Whole Number Quantity', null, false, 0);
-    const substitutedFractionSelect = createSelect(`userSubstitutionEntries[${userSubList.children.length}].substitutedFractionQuantity`, fractionOptions);
+    const substitutedQuantityInput = createInput('text', `userSubstitutionEntries[${userSubList.children.length}].substitutedQuantity`, 'Substituted Quantity', null, false);
     const substitutedMeasurementSelect = createSelect(`userSubstitutionEntries[${userSubList.children.length}].substitutedMeasurement`, measurementOptions, true);
     const substitutedPreparationSelect = createSelect(`userSubstitutionEntries[${userSubList.children.length}].substitutedPreparation`, preparationOptions, true);
 
-    // Remove button for this substitution
+    // Remove button
+    const removeButtonCell = document.createElement('td');
     const removeButton = document.createElement('button');
     removeButton.textContent = 'Remove';
     removeButton.setAttribute('type', 'button');
-    removeButton.addEventListener('click', function() {
-        subDiv.remove();
+    removeButton.addEventListener('click', function () {
+        row.remove();
     });
 
-    // Append all inputs and the remove button to the subDiv
-    subDiv.appendChild(originalComponentInput);
-    subDiv.appendChild(originalWholeNumberInput);
-    subDiv.appendChild(originalFractionSelect);
-    subDiv.appendChild(originalMeasurementSelect);
-    subDiv.appendChild(originalPreparationSelect);
-    subDiv.appendChild(document.createElement('br'));
-    subDiv.appendChild(substitutedComponentInput);
-    subDiv.appendChild(substitutedWholeNumberInput);
-    subDiv.appendChild(substitutedFractionSelect);
-    subDiv.appendChild(substitutedMeasurementSelect);
-    subDiv.appendChild(substitutedPreparationSelect);
-    subDiv.appendChild(removeButton);
+    removeButtonCell.appendChild(removeButton);
 
-    // Append the subDiv to the userSubList
-    userSubList.appendChild(subDiv);
+    // Append fields to row
+    row.appendChild(createCell(originalComponentInput));
+    row.appendChild(createCell(originalQuantityInput));
+    row.appendChild(createCell(originalMeasurementSelect));
+    row.appendChild(createCell(originalPreparationSelect));
+    row.appendChild(createCell(substitutedComponentInput));
+    row.appendChild(createCell(substitutedQuantityInput));
+    row.appendChild(createCell(substitutedMeasurementSelect));
+    row.appendChild(createCell(substitutedPreparationSelect));
+    row.appendChild(removeButtonCell);
+
+    // Append the row to the userSubList table
+    userSubList.appendChild(row);
 }
 
-function createInput(type, name, placeholder, maxLength, required, min = null) {
+function createInput(type, name, placeholder, maxLength, required) {
     const input = document.createElement('input');
     input.setAttribute('type', type);
     input.setAttribute('name', name);
     input.setAttribute('placeholder', placeholder);
     if (maxLength) input.setAttribute('maxlength', maxLength);
-    if (min !== null) input.setAttribute('min', min);
     if (required) input.required = true;
     return input;
 }
@@ -129,4 +121,18 @@ function createSelect(name, options, required = false) {
         select.appendChild(option);
     });
     return select;
+}
+
+function createCell(element) {
+    const cell = document.createElement('td');
+    cell.appendChild(element);
+    return cell;
+}
+
+function repopulateRemoveButtons() {
+    document.querySelectorAll('.removeButton').forEach(button => {
+        button.addEventListener('click', function () {
+            this.closest('tr').remove();
+        });
+    });
 }

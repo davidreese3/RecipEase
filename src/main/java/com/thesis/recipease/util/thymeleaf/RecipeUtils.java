@@ -42,21 +42,8 @@ public class RecipeUtils {
         return result.trim();
     }
 
-    public static String formatSubs(int wholeNumberQuantity, String fractionQuantity, String measurement, String preparation) {
-        String result = "";
-        if ("0".equals(fractionQuantity)) {
-            if (wholeNumberQuantity != 0) {
-                result += wholeNumberQuantity;
-            }
-        }
-        else if (wholeNumberQuantity == 0) {
-            result += fractionQuantity;
-
-        }
-        else {
-            result += wholeNumberQuantity + " " + fractionQuantity;
-        }
-        result += " " + measurement + " " + preparation;
+    public static String formatSubs(String quantity, String measurement, String preparation) {
+        String result = quantity + " " + measurement + " " + preparation;
         return result.trim();
     }
 

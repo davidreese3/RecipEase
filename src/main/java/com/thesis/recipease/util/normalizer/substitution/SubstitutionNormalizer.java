@@ -12,13 +12,11 @@ public class SubstitutionNormalizer {
         for (SubstitutionEntry substitution : substitutionList) {
             String fixedOriginal = normalizeMeasurement(
                     substitution.getOriginalMeasurement(),
-                    substitution.getOriginalWholeNumberQuantity(),
-                    substitution.getOriginalFractionQuantity()
+                    substitution.getOriginalQuantity()
             );
             String fixedSubstituted = normalizeMeasurement(
                     substitution.getSubstitutedMeasurement(),
-                    substitution.getSubstitutedWholeNumberQuantity(),
-                    substitution.getSubstitutedFractionQuantity()
+                    substitution.getSubstitutedQuantity()
             );
             substitution.setOriginalMeasurement(fixedOriginal);
             substitution.setSubstitutedMeasurement(fixedSubstituted);
@@ -30,13 +28,11 @@ public class SubstitutionNormalizer {
         for (RecipeUserSubstitutionEntry substitution : substitutionList) {
             String fixedOriginal = normalizeMeasurement(
                     substitution.getOriginalMeasurement(),
-                    substitution.getOriginalWholeNumberQuantity(),
-                    substitution.getOriginalFractionQuantity()
+                    substitution.getOriginalQuantity()
             );
             String fixedSubstituted = normalizeMeasurement(
                     substitution.getSubstitutedMeasurement(),
-                    substitution.getSubstitutedWholeNumberQuantity(),
-                    substitution.getSubstitutedFractionQuantity()
+                    substitution.getSubstitutedQuantity()
             );
             substitution.setOriginalMeasurement(fixedOriginal);
             substitution.setSubstitutedMeasurement(fixedSubstituted);
@@ -44,11 +40,14 @@ public class SubstitutionNormalizer {
         return substitutionList;
     }
 
-    public static String normalizeMeasurement(String measurement, Integer wholeNumberQuantity, String fractionQuantity) {
+    public String normalizeMeasurement(String measurement, String quantity) {
         if (measurement.equals("Whole")) {
             return measurement;
         }
-        if (measurement != null && wholeNumberQuantity == 1 && fractionQuantity.equals("0")) {
+        if (measurement.equals("Fluid Ounces") && quantity.equals("1")){
+            return "Fluid Ounce";
+        }
+        if (quantity.equals("1")) {
             if (measurement.endsWith("es")) {
                 return measurement.substring(0, measurement.length() - 2);
             } else if (measurement.endsWith("s")) {
