@@ -23,6 +23,8 @@ public class RecipeValidator {
     @Autowired
     private LinkValidator linkValidator;
     @Autowired
+    private PhotoValidator photoValidator;
+    @Autowired
     private TagValidator tagValidator;
     private ArrayList<String> errors;
 
@@ -34,6 +36,7 @@ public class RecipeValidator {
         errors.addAll(noteValidator.validate(webRecipe));
         errors.addAll(userSubstitutionValidator.validate(webRecipe));
         errors.addAll(linkValidator.validate(webRecipe));
+        errors.addAll(photoValidator.validate(webRecipe));
         errors.addAll(tagValidator.validate(webRecipe));
         return errors;
     }

@@ -94,7 +94,7 @@ public class RecipeController {
         webRecipe = recipeSanitizer.sanitizeRecipe(webRecipe);
         if (!file.isEmpty()) {
             String extension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf('.')); // Get file extension
-            webRecipe.setPhoto(new WebPhoto("recipe|" + extension));
+            webRecipe.setPhoto(new WebPhoto("recipe|" + extension, file));
         } else {
             webRecipe.setPhoto(null);
         }
