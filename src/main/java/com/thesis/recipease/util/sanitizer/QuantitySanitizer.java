@@ -29,9 +29,9 @@ public class QuantitySanitizer{
             return quantity;
         }
 
-        // decimal numbers
         try {
             double decimalVal = Double.parseDouble(quantity);
+            if(decimalVal % 1 == 0){ return (int) decimalVal + ""; }
             String fraction = decimalToFraction(decimalVal);
             if (decimalVal > 1) {
                 int wholeVal = (int) decimalVal;
@@ -48,7 +48,6 @@ public class QuantitySanitizer{
         // Handle 1/3 and 2/3
         if (Math.abs(decimal - 0.333) < 0.005) { return "1/3"; }
         if (Math.abs(decimal - 0.666) < 0.005) { return "2/3"; }
-        if (Math.abs(decimal - (int) decimal) < 0.005) { return "" + (int) decimal; }
 
         String decimalStr = String.valueOf(decimal);
         int decimalPlaces;

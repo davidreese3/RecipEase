@@ -11,7 +11,9 @@ import com.thesis.recipease.util.error.RecipeErrorMessageGenerator;
 import com.thesis.recipease.util.normalizer.recipe.RecipeNormalizer;
 import com.thesis.recipease.util.normalizer.substitution.SubstitutionNormalizer;
 import com.thesis.recipease.util.processer.PrepopulatedEntryProcessor;
+import com.thesis.recipease.util.sanitizer.IngredientSanitizer;
 import com.thesis.recipease.util.sanitizer.RecipeSanitizer;
+import com.thesis.recipease.util.scaler.IngredientScaler;
 import com.thesis.recipease.util.security.SecurityService;
 import com.thesis.recipease.util.storage.StorageService;
 import com.thesis.recipease.util.validator.recipe.RecipeValidator;
@@ -46,6 +48,8 @@ public class RecipeController {
     private RecipeErrorMessageGenerator recipeErrorMessageGenerator;
     @Autowired
     private RecipeValidator recipeValidator;
+    @Autowired
+    IngredientScaler ingredientScaler;
 
     private final StorageService storageService;
 
@@ -131,7 +135,12 @@ public class RecipeController {
             model.addAttribute("message", recipeErrorMessageGenerator.getRecipeError());
             return "recipe/viewRecipeDNE";
         }
-        // reason for this is so that when versioning it can select the correct type from db
+        if (scale != null){
+            if (scale != 1) {
+                List<RecipeIngredient> ingredients = recipe.getRecipeIngredients();
+                recipe.setRecipeIngredients(ingredientScaler.Scale(scale, ingredients));
+            }
+        }
         recipe = recipeNormalizer.normalizeRecipe(recipe);
         //insert scaling logic here
         model.addAttribute("recipe", recipe);
