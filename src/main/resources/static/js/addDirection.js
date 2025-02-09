@@ -31,7 +31,6 @@ function addDirectionFields() {
     directionTextarea.setAttribute('name', `directions[${rowCount}].direction`);
     directionTextarea.setAttribute('rows', '2');
     directionTextarea.setAttribute('cols', '50');
-    directionTextarea.setAttribute('placeholder', 'Step Description');
     directionTextarea.setAttribute('maxlength', '300');
     directionTextarea.required = true;
 
@@ -40,7 +39,7 @@ function addDirectionFields() {
     methodSelect.setAttribute('name', `directions[${rowCount}].method`);
 
     const methodOptions = [
-        { value: '', text: 'Method' },
+        { value: '', text: '' },
         { value: 'Assembling', text: 'Assembling' },
         { value: 'Baking', text: 'Baking' },
         { value: 'Boiling', text: 'Boiling' },
@@ -66,7 +65,6 @@ function addDirectionFields() {
     const tempInput = document.createElement('input');
     tempInput.setAttribute('type', 'number');
     tempInput.setAttribute('name', `directions[${rowCount}].temp`);
-    tempInput.setAttribute('placeholder', 'Temperature (°F)');
     tempInput.setAttribute('min', '0');
 
     // Dropdown for heat level
@@ -74,7 +72,7 @@ function addDirectionFields() {
     levelSelect.setAttribute('name', `directions[${rowCount}].level`);
 
     const levelOptions = [
-        { value: '', text: 'Heat Level' },
+        { value: '', text: '' },
         { value: 'Low', text: 'Low' },
         { value: 'Medium', text: 'Medium' },
         { value: 'High', text: 'High' }

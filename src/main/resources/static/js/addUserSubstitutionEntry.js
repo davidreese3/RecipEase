@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     const measurementOptions = [
-        { value: '', text: 'Measurement' },
+        { value: '', text: '' },
         { value: 'Cups', text: 'Cups' },
         { value: 'Dashes', text: 'Dashes' },
         { value: 'Fluid Ounces', text: 'Fluid Ounces (fl oz)' },
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
     ];
 
     const preparationOptions = [
-        { value: '', text: 'Preparation' },
+        { value: '', text: '' },
         { value: 'Beaten', text: 'Beaten' },
         { value: 'Boiled', text: 'Boiled' },
         { value: 'Chopped', text: 'Chopped' },
@@ -63,14 +63,14 @@ function addSubstitutionFields(measurementOptions, preparationOptions) {
     row.classList.add('substitutionEntry');
 
     // Original ingredient fields
-    const originalComponentInput = createInput('text', `userSubstitutionEntries[${userSubList.children.length}].originalComponent`, 'Original Ingredient Name', 45, true);
-    const originalQuantityInput = createInput('text', `userSubstitutionEntries[${userSubList.children.length}].originalQuantity`, 'Original Quantity', null, false);
+    const originalComponentInput = createInput('text', `userSubstitutionEntries[${userSubList.children.length}].originalComponent`, 45, true);
+    const originalQuantityInput = createInput('text', `userSubstitutionEntries[${userSubList.children.length}].originalQuantity`, null, false);
     const originalMeasurementSelect = createSelect(`userSubstitutionEntries[${userSubList.children.length}].originalMeasurement`, measurementOptions, true);
     const originalPreparationSelect = createSelect(`userSubstitutionEntries[${userSubList.children.length}].originalPreparation`, preparationOptions, true);
 
     // Substituted ingredient fields
-    const substitutedComponentInput = createInput('text', `userSubstitutionEntries[${userSubList.children.length}].substitutedComponent`, 'Substituted Ingredient Name', 45, true);
-    const substitutedQuantityInput = createInput('text', `userSubstitutionEntries[${userSubList.children.length}].substitutedQuantity`, 'Substituted Quantity', null, false);
+    const substitutedComponentInput = createInput('text', `userSubstitutionEntries[${userSubList.children.length}].substitutedComponent`, 45, true);
+    const substitutedQuantityInput = createInput('text', `userSubstitutionEntries[${userSubList.children.length}].substitutedQuantity`, null, false);
     const substitutedMeasurementSelect = createSelect(`userSubstitutionEntries[${userSubList.children.length}].substitutedMeasurement`, measurementOptions, true);
     const substitutedPreparationSelect = createSelect(`userSubstitutionEntries[${userSubList.children.length}].substitutedPreparation`, preparationOptions, true);
 
@@ -100,11 +100,10 @@ function addSubstitutionFields(measurementOptions, preparationOptions) {
     userSubList.appendChild(row);
 }
 
-function createInput(type, name, placeholder, maxLength, required) {
+function createInput(type, name, maxLength, required) {
     const input = document.createElement('input');
     input.setAttribute('type', type);
     input.setAttribute('name', name);
-    input.setAttribute('placeholder', placeholder);
     if (maxLength) input.setAttribute('maxlength', maxLength);
     if (required) input.required = true;
     return input;

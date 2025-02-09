@@ -119,8 +119,8 @@ table {
             </thead>
             <tbody id="ingredientList">
             <tr class="ingredientEntry" th:each="ingredient, index : *{ingredients}">
-                <td><input type="text" th:field="*{ingredients[__${index.index}__].component}" placeholder="Ingredient Name" maxlength="45" required></td>
-                <td><input type="text" th:field="*{ingredients[__${index.index}__].quantity}" placeholder="Quantity"></td>
+                <td><input type="text" th:field="*{ingredients[__${index.index}__].component}" maxlength="45" required></td>
+                <td><input type="text" th:field="*{ingredients[__${index.index}__].quantity}" required></td>
                 <td>
                     <select th:field="*{ingredients[__${index.index}__].measurement}" required>
                         <option value=""></option>
@@ -177,16 +177,15 @@ table {
             <tr>
                 <th>Direction</th>
                 <th>Method</th>
-                <th>Temperature</th>
+                <th>Temperature (°F)</th>
                 <th>Heat Level</th>
             </tr>
             </thead>
             <tbody id="directionList">
             <tr class="directionEntry" th:each="direction, index : *{directions}">
-                <!-- The first direction entry is always present -->
                 <td><textarea th:field="*{directions[__${index.index}__].direction}" placeholder="Step Description" maxlength="300" required></textarea></td>
                 <td><select th:field="*{directions[__${index.index}__].method}">
-                    <option value="">Method</option>
+                    <option value=""></option>
                     <option value="Assembling">Assembling</option>
                     <option value="Baking">Baking</option>
                     <option value="Boiling">Boiling</option>
@@ -200,9 +199,9 @@ table {
                     <option value="Stirring">Stirring</option>
                     <option value="Whisking">Whisking</option>
                 </select></td>
-                <td><input type="number" th:field="*{directions[__${index.index}__].temp}" placeholder="Temperature (°F)" min="0"></td>
+                <td><input type="number" th:field="*{directions[__${index.index}__].temp}" min="0"></td>
                 <td><select th:field="*{directions[__${index.index}__].level}">
-                    <option value="">Heat Level</option>
+                    <option value=""></option>
                     <option value="Low">Low</option>
                     <option value="Medium">Medium</option>
                     <option value="High">High</option>
@@ -256,10 +255,10 @@ table {
             <tr class="substitutionEntry" th:each="userSub, index : *{userSubstitutionEntries}">
                 <!-- Original Ingredient Fields -->
                 <td>
-                    <input type="text" th:field="*{userSubstitutionEntries[__${index.index}__].originalComponent}" placeholder="Original Ingredient Name" maxlength="45" required>
+                    <input type="text" th:field="*{userSubstitutionEntries[__${index.index}__].originalComponent}" maxlength="45" required>
                 </td>
                 <td>
-                    <input type="text" th:field="*{userSubstitutionEntries[__${index.index}__].originalQuantity}" placeholder="Quantity">
+                    <input type="text" th:field="*{userSubstitutionEntries[__${index.index}__].originalQuantity}" required>
                 </td>
                 <td>
                     <select th:field="*{userSubstitutionEntries[__${index.index}__].originalMeasurement}" required>
@@ -307,10 +306,10 @@ table {
                 </td>
                 <td>
                     <!-- Substituted Ingredient Fields -->
-                    <input type="text" th:field="*{userSubstitutionEntries[__${index.index}__].substitutedComponent}" placeholder="Substituted Ingredient Name" maxlength="45" required>
+                    <input type="text" th:field="*{userSubstitutionEntries[__${index.index}__].substitutedComponent}" maxlength="45" required>
                 </td>
                 <td>
-                    <input type="text" th:field="*{userSubstitutionEntries[__${index.index}__].substitutedQuantity}" placeholder="Quantity">
+                    <input type="text" th:field="*{userSubstitutionEntries[__${index.index}__].substitutedQuantity}" required>
                 </td>
                 <td>
                     <select th:field="*{userSubstitutionEntries[__${index.index}__].substitutedMeasurement}" required>
