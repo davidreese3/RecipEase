@@ -226,7 +226,7 @@ public class RecipeController {
         return "recipe/searchRecipe";
     }
 
-    @RequestMapping(value = "/recipe/search", method = RequestMethod.GET)
+    @RequestMapping(value = "/recipe/search", method = RequestMethod.POST)
     public String processSearchForm(Model model, WebSearch webSearch){
         model.addAttribute("webSearch", webSearch);
         return "recipe/searchRecipe";
