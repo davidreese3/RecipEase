@@ -47,21 +47,21 @@ table {
             </tr>
             <tr>
                 <td><label>Recipe Name: </label></td>
-                <td><input type="text" th:field="*{info.name}" placeholder="Recipe Name" maxlength="40" required/></td>
+                <td><input type="text" th:field="*{info.name}" maxlength="40" required/></td>
             </tr>
             <tr>
-                <td><label>Recipe Description: </label></td>
-                <td><textarea th:field="*{info.description}" placeholder="Recipe Description: Not required, but encouraged." maxlength="1000"></textarea></td>
+                <td><label>Recipe Description:</label><br><label>(Not required, but encouraged.)</label></td>
+                <td><textarea th:field="*{info.description}" maxlength="1000"></textarea></td>
             </tr>
             <tr>
                 <td><label>Servings: </label></td>
-                <td><input type="number" step="0.1" min="0.1" th:field="*{info.yield}" placeholder="Quantity recipe makes" required/></td>
+                <td><input type="number" step="0.1" min="0.1" th:field="*{info.yield}" required/></td>
             </tr>
             <tr>
                 <td><label>Unit of Servings</label></td>
                 <td>
                     <select th:field="*{info.unitOfYield}" required>
-                        <option value="">Select a Unit</option>
+                        <option value=""></option>
                         <!-- Specific Food Portions -->
                         <option value="Bowls">Bowls</option>
                         <option value="Cakes">Cakes</option>
@@ -212,11 +212,11 @@ table {
         </table>
         <table>
             <tr>
-                <td><h3>Recipe Notes</h3></td>
+                <td><h3>Recipe Notes</h3><label>Add any additional notes or tips about the recipe.</label></td>
             </tr>
             <tr>
                 <td>
-                    <textarea th:field="*{note.note}" placeholder="Add any additional notes or tips about the recipe here..." maxlength="2500"></textarea>
+                    <textarea th:field="*{note.note}" maxlength="2500"></textarea>
                 </td>
             </tr>
         </table>
@@ -380,7 +380,7 @@ table {
                     <div id="holidayList">
                         <div th:each="holiday, index : *{holidays}" class="holidayEntry">
                             <select th:field="*{holidays[__${index.index}__].field}" class="existingHoliday">
-                                <option value="">Holiday</option>
+                                <option value="">Select a holiday</option>
                                 <option value="Birthday">Birthday</option>
                                 <option value="Christmas">Christmas</option>
                                 <option value="Diwali">Diwali</option>
@@ -410,7 +410,7 @@ table {
                     <div id="mealTypeList">
                         <div th:each="mealType, index : *{mealTypes}" class="mealTypeEntry">
                             <select th:field="*{mealTypes[__${index.index}__].field}" class="existingMealType">
-                                <option value="">Meal type</option>
+                                <option value="">Select a meal type</option>
                                 <option value="Appetizer">Appetizer</option>
                                 <option value="Breakfast">Breakfast</option>
                                 <option value="Brunch">Brunch</option>

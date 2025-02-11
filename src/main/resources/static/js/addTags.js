@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     setupDynamicFields('holidayList', 'addHolidayBtn', 'holidays', [
-        { value: '', text: 'Holiday' },
+        { value: '', text: 'Select a Holiday' },
         { value: 'Birthday', text: 'Birthday' },
         { value: 'Christmas', text: 'Christmas' },
         { value: 'Diwali', text: 'Diwali' },
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
     ]);
 
     setupDynamicFields('mealTypeList', 'addMealTypeBtn', 'mealTypes', [
-        { value: '', text: 'Meal type' },
+        { value: '', text: 'Select a Meal type' },
         { value: 'Appetizer', text: 'Appetizer' },
         { value: 'Breakfast', text: 'Breakfast' },
         { value: 'Brunch', text: 'Brunch' },
