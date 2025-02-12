@@ -1,0 +1,13 @@
+.userSubs tr:nth-child(odd) {
+    background-color: #A9A9A9;
+}
+
+.userSubs tr:nth-child(even) {
+    background-color: #FFFFFF;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+

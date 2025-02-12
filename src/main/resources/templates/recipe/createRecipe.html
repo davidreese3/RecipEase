@@ -11,24 +11,8 @@
     <script src="/js/addUserSubstitutionEntry.js" defer></script>
     <script src="/js/addTags.js" defer></script>
     <script src="/js/repopulateRemoveButtons.js" defer></script>
+    <link rel="stylesheet" th:href="@{/testingStyles.css}">
 </head>
-
-<style>
-    /* for testing purposes */
-    table td:nth-child(even) {
-    background-color: #A9A9A9; /* Light gray */
-}
-
-table td:nth-child(odd) {
-    background-color: #ffffff; /* White */
-}
-
-table {
-    border-collapse: collapse;
-    width: 100%; /* Ensures the table takes full width */
-}
-
-</style>
 
 <body>
 <header>
@@ -238,30 +222,53 @@ table {
         </table>
         <h3>User Substitutions</h3>
         <button type="button" id="addUserSubBtn">Add Substitution</button>
-        <table>
+        <table class="userSubs">
             <thead>
             <tr>
-                <th>O Ingredient Name</th>
-                <th>O Quantity</th>
-                <th>O Measurement</th>
-                <th>O Preparation</th>
-                <th>S Ingredient Name</th>
-                <th>S Quantity</th>
-                <th>S Measurement</th>
-                <th>S Preparation</th>
+                <th>Type</th>
+                <th>Ingredient Name</th>
+                <th>Quantity</th>
+                <th>Measurement</th>
+                <th>Preparation</th>
             </tr>
             </thead>
             <tbody id="userSubList">
             <tr class="substitutionEntry" th:each="userSub, index : *{userSubstitutionEntries}">
-                <!-- Original Ingredient Fields -->
+                <td>
+                    <label>Original:</label>
+                    <br>
+                    <label>Substitute: </label>
+                </td>
                 <td>
                     <input type="text" th:field="*{userSubstitutionEntries[__${index.index}__].originalComponent}" maxlength="45" required>
+                    <br>
+                    <input type="text" th:field="*{userSubstitutionEntries[__${index.index}__].substitutedComponent}" maxlength="45" required>
                 </td>
                 <td>
                     <input type="text" th:field="*{userSubstitutionEntries[__${index.index}__].originalQuantity}" required>
+                    <br>
+                    <input type="text" th:field="*{userSubstitutionEntries[__${index.index}__].substitutedQuantity}" required>
+
                 </td>
                 <td>
                     <select th:field="*{userSubstitutionEntries[__${index.index}__].originalMeasurement}" required>
+                        <option value="">Measurement</option>
+                        <option value="Cups">Cups</option>
+                        <option value="Dashes">Dashes</option>
+                        <option value="Fluid Ounces">Fluid Ounces (fl oz)</option>
+                        <option value="Grams">Grams (g)</option>
+                        <option value="Kilograms">Kilograms (kg)</option>
+                        <option value="Liters">Liters (L)</option>
+                        <option value="Milliliters">Milliliters (ml)</option>
+                        <option value="Ounces">Ounces (oz)</option>
+                        <option value="Pinches">Pinches</option>
+                        <option value="Pounds">Pounds (lb)</option>
+                        <option value="Tablespoons">Tablespoons (tbsp)</option>
+                        <option value="Teaspoons">Teaspoons (tsp)</option>
+                        <option value="Whole">Whole Ingredient</option>
+                    </select>
+                    <br>
+                    <select th:field="*{userSubstitutionEntries[__${index.index}__].substitutedMeasurement}" required>
                         <option value="">Measurement</option>
                         <option value="Cups">Cups</option>
                         <option value="Dashes">Dashes</option>
@@ -303,33 +310,7 @@ table {
                         <option value="Whisked">Whisked</option>
                         <option value="Zested">Zested</option>
                     </select>
-                </td>
-                <td>
-                    <!-- Substituted Ingredient Fields -->
-                    <input type="text" th:field="*{userSubstitutionEntries[__${index.index}__].substitutedComponent}" maxlength="45" required>
-                </td>
-                <td>
-                    <input type="text" th:field="*{userSubstitutionEntries[__${index.index}__].substitutedQuantity}" required>
-                </td>
-                <td>
-                    <select th:field="*{userSubstitutionEntries[__${index.index}__].substitutedMeasurement}" required>
-                        <option value="">Measurement</option>
-                        <option value="Cups">Cups</option>
-                        <option value="Dashes">Dashes</option>
-                        <option value="Fluid Ounces">Fluid Ounces (fl oz)</option>
-                        <option value="Grams">Grams (g)</option>
-                        <option value="Kilograms">Kilograms (kg)</option>
-                        <option value="Liters">Liters (L)</option>
-                        <option value="Milliliters">Milliliters (ml)</option>
-                        <option value="Ounces">Ounces (oz)</option>
-                        <option value="Pinches">Pinches</option>
-                        <option value="Pounds">Pounds (lb)</option>
-                        <option value="Tablespoons">Tablespoons (tbsp)</option>
-                        <option value="Teaspoons">Teaspoons (tsp)</option>
-                        <option value="Whole">Whole Ingredient</option>
-                    </select>
-                </td>
-                <td>
+                    <br>
                     <select th:field="*{userSubstitutionEntries[__${index.index}__].substitutedPreparation}" required>
                         <option value="">Preparation</option>
                         <option value="Beaten">Beaten</option>

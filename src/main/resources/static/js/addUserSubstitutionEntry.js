@@ -63,12 +63,14 @@ function addSubstitutionFields(measurementOptions, preparationOptions) {
     row.classList.add('substitutionEntry');
 
     // Original ingredient fields
+    const originalLabel = createLabel('Original: ');
     const originalComponentInput = createInput('text', `userSubstitutionEntries[${userSubList.children.length}].originalComponent`, 45, true);
     const originalQuantityInput = createInput('text', `userSubstitutionEntries[${userSubList.children.length}].originalQuantity`, null, false);
     const originalMeasurementSelect = createSelect(`userSubstitutionEntries[${userSubList.children.length}].originalMeasurement`, measurementOptions, true);
     const originalPreparationSelect = createSelect(`userSubstitutionEntries[${userSubList.children.length}].originalPreparation`, preparationOptions, true);
 
     // Substituted ingredient fields
+    const substitutedLabel = createLabel('Substituted: ')
     const substitutedComponentInput = createInput('text', `userSubstitutionEntries[${userSubList.children.length}].substitutedComponent`, 45, true);
     const substitutedQuantityInput = createInput('text', `userSubstitutionEntries[${userSubList.children.length}].substitutedQuantity`, null, false);
     const substitutedMeasurementSelect = createSelect(`userSubstitutionEntries[${userSubList.children.length}].substitutedMeasurement`, measurementOptions, true);
@@ -86,18 +88,21 @@ function addSubstitutionFields(measurementOptions, preparationOptions) {
     removeButtonCell.appendChild(removeButton);
 
     // Append fields to row
-    row.appendChild(createCell(originalComponentInput));
-    row.appendChild(createCell(originalQuantityInput));
-    row.appendChild(createCell(originalMeasurementSelect));
-    row.appendChild(createCell(originalPreparationSelect));
-    row.appendChild(createCell(substitutedComponentInput));
-    row.appendChild(createCell(substitutedQuantityInput));
-    row.appendChild(createCell(substitutedMeasurementSelect));
-    row.appendChild(createCell(substitutedPreparationSelect));
+    row.appendChild(createCellWithBr(originalLabel, substitutedLabel));
+    row.appendChild(createCellWithBr(originalComponentInput, substitutedComponentInput));
+    row.appendChild(createCellWithBr(originalQuantityInput, substitutedQuantityInput));
+    row.appendChild(createCellWithBr(originalMeasurementSelect, substitutedMeasurementSelect));
+    row.appendChild(createCellWithBr(originalPreparationSelect, substitutedPreparationSelect));
     row.appendChild(removeButtonCell);
 
     // Append the row to the userSubList table
     userSubList.appendChild(row);
+}
+
+function createLabel(text) {
+    const label = document.createElement('label');
+    label.textContent = text;
+    return label;
 }
 
 function createInput(type, name, maxLength, required) {
@@ -122,9 +127,11 @@ function createSelect(name, options, required = false) {
     return select;
 }
 
-function createCell(element) {
+function createCellWithBr(originalElement, substitutedElement) {
     const cell = document.createElement('td');
-    cell.appendChild(element);
+    cell.appendChild(originalElement);
+    cell.appendChild(document.createElement('br'));
+    cell.appendChild(substitutedElement);
     return cell;
 }
 
