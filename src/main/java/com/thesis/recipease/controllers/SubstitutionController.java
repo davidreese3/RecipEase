@@ -19,11 +19,11 @@ public class SubstitutionController {
     private SubstitutionNormalizer substitutionNormalizer;
 
     @RequestMapping(value = "/substitution/view" , method = RequestMethod.GET)
-    public String displayKnownSubstitition(Model model){
+    public String displayCommonSubstitition(Model model){
         List<SubstitutionEntry> substitutions = appService.getAllSubstitutionEntries();
         substitutions = substitutionNormalizer.normalizeSubs(substitutions);
         model.addAttribute("substitutions",substitutions);
-        return "substitution/knownSubstitutions";
+        return "substitution/commonSubstitutions";
     }
 
 
