@@ -59,9 +59,14 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
         processHr int,
         totalMin int, -- trigger
         totalHr int,
+        fts_document tsvector generated always as (
+                setweight(to_tsvector('english', name), 'A') ||
+                setweight(to_tsvector('english', description), 'C')
+            ) stored,
         primary key (recipeId)
     );
 
+    create index info_fts_idx on info using gin(fts_document);
 
     -- variation
     create table if not exists variation (
@@ -112,6 +117,10 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
         ratingValue int,
         primary key (recipeId, ratingUserId)
     );
+
+    create index idx_rating_recipeid on rating(recipeid);
+    create index idx_info_recipeid on info(recipeid);
+
 
     -- =============================
     -- Recipe Option Fields Tables
