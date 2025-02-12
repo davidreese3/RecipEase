@@ -15,36 +15,162 @@
 
 <main>
     <form id= "recipeForm" action="#" th:action="@{/recipe/search}" th:object="${webSearch}" method="post">
-        <label>Search here: </label>
-        <input type="text" th:field="*{name}">
-        <!-- insert tags here -->
-
+        <table>
+            <tr>
+                <td colspan="7">
+                    <label>Search here: </label><input type="text" th:field="*{name}">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <select th:field="*{holidays}" class="existingHoliday">
+                        <option value="">Select a holiday</option>
+                        <option value="Birthday">Birthday</option>
+                        <option value="Christmas">Christmas</option>
+                        <option value="Diwali">Diwali</option>
+                        <option value="Easter">Easter</option>
+                        <option value="Father’s Day">Father’s Day</option>
+                        <option value="Halloween">Halloween</option>
+                        <option value="Hanukkah">Hanukkah</option>
+                        <option value="Independence Day">Independence Day</option>
+                        <option value="Kwanzaa">Kwanzaa</option>
+                        <option value="Lunar New Year">Lunar New Year</option>
+                        <option value="Mother’s Day">Mother’s Day</option>
+                        <option value="New Year’s Day">New Year’s Day</option>
+                        <option value="Ramadan">Ramadan</option>
+                        <option value="St. Patrick’s Day">St. Patrick’s Day</option>
+                        <option value="Thanksgiving">Thanksgiving</option>
+                        <option value="Valentine’s Day">Valentine’s Day</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </td>
+                <td>
+                    <select th:field="*{mealTypes}" class="existingMealType">
+                        <option value="">Select a meal type</option>
+                        <option value="Appetizer">Appetizer</option>
+                        <option value="Breakfast">Breakfast</option>
+                        <option value="Brunch">Brunch</option>
+                        <option value="Dessert">Dessert</option>
+                        <option value="Dinner">Dinner</option>
+                        <option value="Lunch">Lunch</option>
+                        <option value="Snack">Snack</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </td>
+                <td>
+                    <select th:field="*{cuisines}" class="existingCuisine">
+                        <option value="">Select a cuisine</option>
+                        <option value="African">African</option>
+                        <option value="American">American</option>
+                        <option value="Caribbean">Caribbean</option>
+                        <option value="Chinese">Chinese</option>
+                        <option value="French">French</option>
+                        <option value="Greek">Greek</option>
+                        <option value="Indian">Indian</option>
+                        <option value="Italian">Italian</option>
+                        <option value="Japanese">Japanese</option>
+                        <option value="Mediterranean">Mediterranean</option>
+                        <option value="Mexican">Mexican</option>
+                        <option value="Middle Eastern">Middle Eastern</option>
+                        <option value="Spanish">Spanish</option>
+                        <option value="Thai">Thai</option>
+                        <option value="Vietnamese">Vietnamese</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </td>
+                <td>
+                    <select th:field="*{allergens}" class="existingAllergen">
+                        <option value="">Select an allergy</option>
+                        <option value="Dairy-Free">Dairy-Free</option>
+                        <option value="Egg-Free">Egg-Free</option>
+                        <option value="Fish-Free">Fish-Free</option>
+                        <option value="Gluten-Free">Gluten-Free</option>
+                        <option value="Peanut-Free">Peanut-Free</option>
+                        <option value="Sesame-Free">Sesame-Free</option>
+                        <option value="Shellfish-Free">Shellfish-Free</option>
+                        <option value="Soy-Free">Soy-Free</option>
+                        <option value="Tree Nut-Free">Tree Nut-Free</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </td>
+                <td>
+                    <select th:field="*{dietTypes}" class="existingDietType">
+                        <option value="">Select a diet type</option>
+                        <option value="Keto">Keto</option>
+                        <option value="Low-Carb">Low-Carb</option>
+                        <option value="Low-Fat">Low-Fat</option>
+                        <option value="Paleo">Paleo</option>
+                        <option value="Pescatarian">Pescatarian</option>
+                        <option value="Vegetarian">Vegetarian</option>
+                        <option value="Vegan">Vegan</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </td>
+                <td>
+                    <select th:field="*{cookingLevels}" class="existingCookingLevel">
+                        <option value="">Select a cooking level</option>
+                        <option value="Novice">Novice</option>
+                        <option value="Beginner">Beginner</option>
+                        <option value="Intermediate">Intermediate</option>
+                        <option value="Advanced">Advanced</option>
+                        <option value="Expert">Expert</option>
+                        <option value="Chef-Level">Chef-Level</option>
+                    </select>
+                </td>
+                <td>
+                    <select th:field="*{cookingStyles}" class="existingCookingStyle">
+                        <option value="">Select a cooking style</option>
+                        <option value="30-Minute Meals">30-Minute Meals</option>
+                        <option value="Air Fryer Recipes">Air Fryer Recipes</option>
+                        <option value="Baking">Baking</option>
+                        <option value="Comfort Food">Comfort Food</option>
+                        <option value="Freezer-Friendly">Freezer-Friendly</option>
+                        <option value="Grilled Recipes">Grilled Recipes</option>
+                        <option value="Healthy">Healthy</option>
+                        <option value="Kid-Friendly">Kid-Friendly</option>
+                        <option value="Make-Ahead Recipes">Make-Ahead Recipes</option>
+                        <option value="Meal Prep Friendly">Meal Prep Friendly</option>
+                        <option value="No-Bake Recipes">No-Bake Recipes</option>
+                        <option value="One-Pot Recipes">One-Pot Recipes</option>
+                        <option value="Party Food">Party Food</option>
+                        <option value="Quick & Easy">Quick & Easy</option>
+                        <option value="Sheet Pan Meals">Sheet Pan Meals</option>
+                        <option value="Slow Cooker Recipes">Slow Cooker Recipes</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="submit">Search</button>
+                </td>
+            </tr>
+        </table>
         <hr>
         <table th:if="${results}">
             <thead>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Makes</th>
-                <th>Prep Time</th>
-                <th>Make Time</th>
-                <th>Total Time</th>
-                <th>Rating</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Makes</th>
+            <th>Prep Time</th>
+            <th>Make Time</th>
+            <th>Total Time</th>
+            <th>Rating</th>
             </thead>
             <tbody>
-                <tr th:each="recipe : ${results}">
-                    <td>
-                        <a th:href="${'http://localhost:8080/recipe/view?recipeId=' + recipe.recipeId}" th:text="${recipe.name}"></a>
-                    </td>
-                    <td th:text="${recipe.description}"></td>
-                    <td th:text="${#numbers.formatDecimal(recipe.yield, 0, recipe.yield % 1 == 0 ? 0 : 1)} + ' ' + ${recipe.unitOfYield}"></td>
-                    <td th:text="${@recipeUtils.formatTimeShort(recipe.prepHr, recipe.prepMin)}"></td>
-                    <td th:text="${@recipeUtils.formatTimeShort(recipe.processHr, recipe.processMin)}"></td>
-                    <td th:text="${@recipeUtils.formatTimeShort(recipe.totalHr, recipe.totalMin)}"></td>
-                    <td th:text="${@recipeUtils.formatRatingShort(recipe.ratingInfo.averageRating, recipe.ratingInfo.numberOfRaters)}"></td>
-                </tr>
+            <tr th:each="recipe : ${results}">
+                <td>
+                    <a th:href="${'http://localhost:8080/recipe/view?recipeId=' + recipe.recipeId}" th:text="${recipe.name}"></a>
+                </td>
+                <td th:text="${recipe.description}"></td>
+                <td th:text="${#numbers.formatDecimal(recipe.yield, 0, recipe.yield % 1 == 0 ? 0 : 1)} + ' ' + ${recipe.unitOfYield}"></td>
+                <td th:text="${@recipeUtils.formatTimeShort(recipe.prepHr, recipe.prepMin)}"></td>
+                <td th:text="${@recipeUtils.formatTimeShort(recipe.processHr, recipe.processMin)}"></td>
+                <td th:text="${@recipeUtils.formatTimeShort(recipe.totalHr, recipe.totalMin)}"></td>
+                <td th:text="${@recipeUtils.formatRatingShort(recipe.ratingInfo.averageRating, recipe.ratingInfo.numberOfRaters)}"></td>
+            </tr>
             </tbody>
         </table>
-        <button type="submit">Search</button>
     </form>
 </main>
 
