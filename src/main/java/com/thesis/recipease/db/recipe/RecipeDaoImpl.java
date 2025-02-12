@@ -4,6 +4,7 @@ import com.thesis.recipease.model.domain.recipe.*;
 import com.thesis.recipease.model.web.recipe.*;
 import com.thesis.recipease.model.web.recipe.WebComment;
 import com.thesis.recipease.model.web.recipe.util.WebRating;
+import com.thesis.recipease.model.web.recipe.util.WebSearch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -312,17 +313,19 @@ public class RecipeDaoImpl implements RecipeDao{
         }
 
     //HELPER OPS
-    private RecipeInfo getRecipeInfoById(int recipeId){
-        final String SQL = "select i.*, coalesce(avg(r.ratingvalue), 0) as avgRating, count(r.ratingvalue) as numRaters " +
-                "from info i left join rating r on i.recipeid = r.recipeid " +
-                "where i.recipeid = ? group BY i.userid, i.recipeid " +
-                "order by i.recipeid asc";
+    private RecipeInfo getRecipeInfoById(int recipeId) {
+        final String SQL = "select i.*, " +
+            "coalesce((select avg(r.ratingvalue) from rating r WHERE r.recipeid = i.recipeid), 0) as avgRating, " +
+            "coalesce((select count(r.ratingvalue) from rating r WHERE r.recipeid = i.recipeid), 0) as numRaters " +
+            "from info i " +
+            "where i.recipeid = ?";
         try {
-            return jdbcTemplate.queryForObject(SQL, new RecipeDaoImpl.RecipeInfoMapper(), recipeId);
+            return jdbcTemplate.queryForObject(SQL, new RecipeInfoMapper(), recipeId);
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
     }
+
 
     private List<RecipeIngredient> getRecipeIngredientsById(int recipeId){
         final String SQL = "select * from ingredient where recipeid = ?";
@@ -547,6 +550,25 @@ public class RecipeDaoImpl implements RecipeDao{
             return jdbcTemplate.queryForObject(SQL, Integer.class, originalRecipeId);
         }catch (EmptyResultDataAccessException e) {
             return -1;
+        }
+    }
+
+    public List<RecipeInfo> getRecipesBySearchCriteria(WebSearch webSearch){
+        String queryName = webSearch.getName();
+        // sanitized string
+        queryName = queryName.replaceAll("[^a-zA-Z0-9 ]", "");
+        queryName = queryName.replaceAll("\\s+", " & ");
+        String SQL = "select i.*, " +
+                "coalesce((select avg(r.ratingvalue) from rating r WHERE r.recipeid = i.recipeid), 0) as avgRating, " +
+                "coalesce((select count(r.ratingvalue) from rating r WHERE r.recipeid = i.recipeid), 0) as numRaters " +
+                "from info i " +
+                "where i.fts_document @@ to_tsquery('english', ?) ";
+        // add in tag support
+        SQL += "order by ts_rank(i.fts_document, to_tsquery('english', ?)) desc";
+        try {
+            return jdbcTemplate.query(SQL, new RecipeDaoImpl.RecipeInfoMapper(), queryName, queryName);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
         }
     }
 

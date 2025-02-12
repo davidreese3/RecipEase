@@ -7,6 +7,7 @@ import com.thesis.recipease.model.domain.recipe.RecipeRating;
 import com.thesis.recipease.model.web.recipe.util.WebRating;
 import com.thesis.recipease.model.web.recipe.WebRecipe;
 import com.thesis.recipease.model.web.recipe.WebComment;
+import com.thesis.recipease.model.web.recipe.util.WebSearch;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
@@ -26,6 +27,7 @@ public interface RecipeDao {
     public int getUserIdByRecipeId(int recipeId);
     public int getNumberOfVariationByOriginalRecipeId(int originalRecipeId);
     public int getDepthOfVariationByOriginalRecipeId(int originalRecipeId);
+    public List<RecipeInfo> getRecipesBySearchCriteria(WebSearch webSearch);
     // UPDATE OPS
     // DELETE OPS
 }

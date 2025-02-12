@@ -228,7 +228,11 @@ public class RecipeController {
 
     @RequestMapping(value = "/recipe/search", method = RequestMethod.POST)
     public String processSearchForm(Model model, WebSearch webSearch){
+        String str = webSearch.getName();
+        List<RecipeInfo> results = appService.getRecipesBySearchCriteria(webSearch);
+        webSearch.setName(str);
         model.addAttribute("webSearch", webSearch);
+        model.addAttribute("results",results);
         return "recipe/searchRecipe";
     }
 }

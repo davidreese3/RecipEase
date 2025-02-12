@@ -18,6 +18,7 @@ import com.thesis.recipease.model.web.profile.WebProfile;
 import com.thesis.recipease.model.web.recipe.util.WebRating;
 import com.thesis.recipease.model.web.recipe.WebRecipe;
 import com.thesis.recipease.model.web.recipe.WebComment;
+import com.thesis.recipease.model.web.recipe.util.WebSearch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -99,8 +100,9 @@ public class AppService {
     public WebRecipe getWebRecipeById(int recipeId) { return recipeDao.getWebRecipeById(recipeId); }
     public int getNumberOfVariationByOriginalRecipeId(int originalRecipeId) { return recipeDao.getNumberOfVariationByOriginalRecipeId(originalRecipeId); };
     public int getDepthOfVariationByOriginalRecipeId(int originalRecipeId) { return recipeDao.getDepthOfVariationByOriginalRecipeId(originalRecipeId); }
+    public List<RecipeInfo> getRecipesBySearchCriteria(WebSearch webSearch){ return recipeDao.getRecipesBySearchCriteria(webSearch); }
 
-    // UPDATE OPS
+        // UPDATE OPS
     // DELETE OPS
 
     // ------------------------
