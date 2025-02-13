@@ -20,7 +20,7 @@ public class TagSanitizer implements Sanitizer{
         List<WebTag> mealTypes = webRecipe.getMealTypes();
         if(mealTypes != null) {
             webRecipe.setMealTypes(processTag(mealTypes));
-            webRecipe.setMealTypes(assignFields(mealTypes, "Meal Type"));
+            webRecipe.setMealTypes(assignFields(mealTypes, "Meal Types"));
         }
 
         List<WebTag> cuisines = webRecipe.getCuisines();

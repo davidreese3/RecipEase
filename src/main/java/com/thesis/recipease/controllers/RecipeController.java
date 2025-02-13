@@ -185,7 +185,6 @@ public class RecipeController {
         WebRating webRating = new WebRating();
         webRating.setRecipeId(recipeId);
         model.addAttribute("webRating", webRating);
-
         return "recipe/viewRecipe";
     }
 

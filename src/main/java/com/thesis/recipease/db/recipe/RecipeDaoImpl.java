@@ -292,20 +292,20 @@ public class RecipeDaoImpl implements RecipeDao{
         List<RecipeUserSubstitutionEntry> recipeUserSubs = getUserSubsById(recipeId);
         RecipePhoto recipePhoto = getPhotoById(recipeId);
         RecipeVariation recipeVariation = getVariationById(recipeId);
-        List<RecipeTag> recipeHolidays = getTagsById(recipeId, "holiday");
-        recipeTags.put("Holiday", getTagString(recipeHolidays));
-        List<RecipeTag> recipeMealTypes = getTagsById(recipeId, "mealType");
-        recipeTags.put("Meal Type", getTagString(recipeMealTypes));
-        List<RecipeTag> recipeCuisines = getTagsById(recipeId, "cuisine");
-        recipeTags.put("Cuisine", getTagString(recipeCuisines));
-        List<RecipeTag> recipeAllergens = getTagsById(recipeId, "allergen");
-        recipeTags.put("Allergen", getTagString(recipeAllergens));
-        List<RecipeTag> recipeDietTypes = getTagsById(recipeId, "dietType");
-        recipeTags.put("Diet Type", getTagString(recipeDietTypes));
-        List<RecipeTag> recipeCookingLevels = getTagsById(recipeId, "cookingLevel");
-        recipeTags.put("Cooking Level", getTagString(recipeCookingLevels));
-        List<RecipeTag> recipeCookingStyles = getTagsById(recipeId, "cookingStyle");
-        recipeTags.put("Cooking Style", getTagString(recipeCookingStyles));
+        List<RecipeTag> recipeHolidays = getTagsById(recipeId, "Holidays");
+        recipeTags.put("Holidays", getTagString(recipeHolidays));
+        List<RecipeTag> recipeMealTypes = getTagsById(recipeId, "Meal Types");
+        recipeTags.put("Meal Types", getTagString(recipeMealTypes));
+        List<RecipeTag> recipeCuisines = getTagsById(recipeId, "Cuisines");
+        recipeTags.put("Cuisines", getTagString(recipeCuisines));
+        List<RecipeTag> recipeAllergens = getTagsById(recipeId, "Allergens");
+        recipeTags.put("Allergens", getTagString(recipeAllergens));
+        List<RecipeTag> recipeDietTypes = getTagsById(recipeId, "Diet Types");
+        recipeTags.put("Diet Types", getTagString(recipeDietTypes));
+        List<RecipeTag> recipeCookingLevels = getTagsById(recipeId, "Cooking Levels");
+        recipeTags.put("Cooking Levels", getTagString(recipeCookingLevels));
+        List<RecipeTag> recipeCookingStyles = getTagsById(recipeId, "Cooking Styles");
+        recipeTags.put("Cooking Styles", getTagString(recipeCookingStyles));
 
         List<RecipeComment> recipeComments = getCommentsById(recipeId);
 
@@ -412,7 +412,7 @@ public class RecipeDaoImpl implements RecipeDao{
     private static String getTagString(List<RecipeTag> tags){
         StringJoiner joiner = new StringJoiner(", ");
         for (RecipeTag tag : tags) {
-            joiner.add(tag.getField());
+            joiner.add(tag.getValue());
         }
         return joiner.toString();
     }

@@ -197,15 +197,15 @@
             <button type="submit" name="ratingValue" value="5">5</button>
         </form>
     </div>
-<!--    <div>-->
-<!--        <h3>Recipe Tags</h3>-->
-<!--        <ul>-->
-<!--            <li th:each="tag : ${recipe.recipeTags}" th:if="${tag.value != ''}">-->
-<!--                <span th:text="${tag.key}"></span>:-->
-<!--                <span th:text="${tag.value}"></span>-->
-<!--            </li>-->
-<!--        </ul>-->
-<!--    </div>-->
+    <div if="${tagsExist}">
+        <h3>Recipe Tags</h3>
+        <ul>
+            <li th:each="tag : ${recipe.recipeTags}" th:if="${tag.value != ''}">
+                <span th:text="${tag.key}"></span>:
+                <span th:text="${tag.value}"></span>
+            </li>
+        </ul>
+    </div>
 
 </main>
 
