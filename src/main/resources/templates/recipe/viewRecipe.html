@@ -198,13 +198,15 @@
         </form>
     </div>
     <div if="${tagsExist}">
-        <h3>Recipe Tags</h3>
+        <hr>
+        <details><summary>Tags</summary>
         <ul>
             <li th:each="tag : ${recipe.recipeTags}" th:if="${tag.value != ''}">
                 <span th:text="${tag.key}"></span>:
                 <span th:text="${tag.value}"></span>
             </li>
         </ul>
+        </details>
     </div>
 
 </main>
