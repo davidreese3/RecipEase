@@ -143,7 +143,6 @@ public class RecipeController {
             }
         }
         recipe = recipeNormalizer.normalizeRecipe(recipe);
-        //insert scaling logic here
         model.addAttribute("recipe", recipe);
 
         String authorName = appService.getNameById(recipe.getRecipeInfo().getUserId());
@@ -173,6 +172,7 @@ public class RecipeController {
             recipePhoto.setFileLocation(fileLocation); // Use public URL for display
         }
 
+        System.out.println("|||" + recipe.getRecipeTags().get(0));
         boolean tagsExist = !(recipe.getRecipeTags().values().stream().allMatch(String::isEmpty));
         model.addAttribute("tagsExist", tagsExist);
 

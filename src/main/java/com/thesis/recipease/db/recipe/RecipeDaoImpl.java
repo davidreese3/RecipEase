@@ -213,12 +213,13 @@ public class RecipeDaoImpl implements RecipeDao{
 
     private void insertTags(List<WebTag> webTags, int recipeId, String field){
         if(webTags != null) {
-            final String SQL = "insert into " + field + " (recipeid, " + field + ") values (?, ?)";
+            final String SQL = "insert into tags (recipeid, tagField, tagValue) values (?, ?, ?)";
             for (WebTag webTag : webTags) {
                 jdbcTemplate.update(dataSource -> {
                     PreparedStatement ps = dataSource.prepareStatement(SQL);
                     ps.setInt(1, recipeId);
                     ps.setString(2, webTag.getField());
+                    ps.setString(3, webTag.getValue());
                     return ps;
                 });
             }
@@ -400,9 +401,9 @@ public class RecipeDaoImpl implements RecipeDao{
     }
 
     private List<RecipeTag> getTagsById(int recipeId, String field){
-        final String SQL = "select * from "+field+" where recipeid = ?";
+        final String SQL = "select * from tags where recipeid = ? and tagField = ?";
         try{
-            return jdbcTemplate.query(SQL, new RecipeTagMapper(field), recipeId);
+            return jdbcTemplate.query(SQL, new RecipeDaoImpl.RecipeTagMapper(), recipeId, field);
         }catch (EmptyResultDataAccessException e) {
             return null;
         }
@@ -687,6 +688,18 @@ public class RecipeDaoImpl implements RecipeDao{
             recipePhoto.setFileLocation("");
             return recipePhoto;
         }
+    }
+
+    class RecipeTagMapper implements RowMapper<RecipeTag> {
+        @Override
+        public RecipeTag mapRow(ResultSet rs, int rowNum) throws SQLException {
+            RecipeTag recipeTag = new RecipeTag();
+            recipeTag.setRecipeId(rs.getInt("recipeId"));
+            recipeTag.setField(rs.getString("tagField"));
+            recipeTag.setValue(rs.getString("tagValue"));
+            return recipeTag;
+        }
+
     }
 
     class CommentMapper implements RowMapper<RecipeComment> {

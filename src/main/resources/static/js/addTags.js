@@ -124,7 +124,8 @@ function addField(container, inputName, options, selectedValue) {
     div.classList.add('entry');
 
     const select = document.createElement('select');
-    select.setAttribute('name', `${inputName}[]`);
+    const index = container.children.length; // Get the correct index
+    select.setAttribute('name', `${inputName}[${index}].value`); // Proper indexing
 
     options.forEach(option => {
         const opt = document.createElement('option');
@@ -141,9 +142,20 @@ function addField(container, inputName, options, selectedValue) {
     removeButton.setAttribute('type', 'button');
     removeButton.addEventListener('click', function () {
         div.remove();
+        updateIndexes(container, inputName); // Update indexes after removal
     });
 
     div.appendChild(select);
     div.appendChild(removeButton);
     container.appendChild(div);
+}
+
+function updateIndexes(container, inputName) {
+    const entries = container.children;
+    for (let i = 0; i < entries.length; i++) {
+        const select = entries[i].querySelector('select');
+        if (select) {
+            select.setAttribute('name', `${inputName}[${i}]`);
+        }
+    }
 }

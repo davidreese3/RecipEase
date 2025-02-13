@@ -127,56 +127,14 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
     -- =============================
 
     -- ======
-    -- Categories
+    -- Tags
     -- ======
 
-    -- holiday
-    create table if not exists holiday (
+    create table if not exists tags (
         recipeId int references info(recipeId) on delete cascade,
-        holiday varchar(30),
-        primary key (recipeId, holiday)
-    );
-
-    -- meal type
-    create table if not exists mealType (
-        recipeId int references info(recipeId) on delete cascade,
-        mealType varchar(30),
-        primary key (recipeId, mealType)
-    );
-
-    -- cuisine
-    create table if not exists cuisine (
-        recipeId int references info(recipeId) on delete cascade,
-        cuisine varchar(30),
-        primary key (recipeId, cuisine)
-    );
-
-    -- allergen
-    create table if not exists allergen (
-        recipeId int references info(recipeId) on delete cascade,
-        allergen varchar(30),
-        primary key (recipeId, allergen)
-    );
-
-    -- diet type
-    create table if not exists dietType (
-        recipeId int references info(recipeId) on delete cascade,
-        dietType varchar(30),
-        primary key (recipeId, dietType)
-    );
-
-    -- cooking level
-    create table if not exists cookingLevel (
-        recipeId int references info(recipeId) on delete cascade,
-        cookingLevel varchar(30),
-        primary key (recipeId, cookingLevel)
-    );
-
-    -- cooking style
-    create table if not exists cookingStyle (
-        recipeId int references info(recipeId) on delete cascade,
-        cookingStyle varchar(30),
-        primary key (recipeId, cookingStyle)
+        tagField varchar(30),
+        tagValue varchar(30),
+        primary key (recipeId, tagField, tagValue)
     );
 
     -- ======
@@ -459,13 +417,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
     alter table ingredient owner to docker;
     alter table comment owner to docker;
     alter table rating owner to docker;
-    alter table holiday owner to docker;
-    alter table mealType owner to docker;
-    alter table cuisine owner to docker;
-    alter table allergen owner to docker;
-    alter table dietType owner to docker;
-    alter table cookingLevel owner to docker;
-    alter table cookingStyle owner to docker;
+    alter table tags owner to docker;
     alter table photo owner to docker;
     alter table link owner to docker;
     alter table note owner to docker;

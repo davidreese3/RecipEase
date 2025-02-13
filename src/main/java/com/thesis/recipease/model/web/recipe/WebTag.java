@@ -2,10 +2,13 @@ package com.thesis.recipease.model.web.recipe;
 
 public class WebTag {
     private String field;
+    private String value;
 
     public WebTag(){}
-    public WebTag(String field) {
+
+    public WebTag(String field, String value) {
         this.field = field;
+        this.value = value;
     }
 
     public String getField() {
@@ -16,11 +19,12 @@ public class WebTag {
         this.field = field;
     }
 
-    @Override
-    public String toString() {
-        return "WebTag{" +
-                "field='" + field + '\'' +
-                '}';
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
     }
 
     //needed to easily delete duplicates
@@ -33,17 +37,17 @@ public class WebTag {
             return false;
         }
         WebTag otherTag = (WebTag) obj;
-        return (this.field == null && otherTag.field == null) || (this.field != null && this.field.equals(otherTag.field));
+        return (this.value == null && otherTag.value == null) || (this.value != null && this.value.equals(otherTag.value));
     }
 
     //needed to easily delete duplicates
     @Override
     public int hashCode() {
-        if (field == null){
+        if (value == null){
             return 0;
         }
         else{
-            return field.hashCode();
+            return value.hashCode();
         }
     }
 }
