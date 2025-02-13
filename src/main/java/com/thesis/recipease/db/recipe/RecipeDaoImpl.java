@@ -310,15 +310,15 @@ public class RecipeDaoImpl implements RecipeDao{
 
         return new Recipe(recipeInfo, recipeIngredients, recipeDirections, recipeNote, recipeLinks, recipeUserSubs, recipePhoto, recipeVariation, recipeTags, recipeComments);
 
-        }
+    }
 
     //HELPER OPS
     private RecipeInfo getRecipeInfoById(int recipeId) {
         final String SQL = "select i.*, " +
-            "coalesce((select avg(r.ratingvalue) from rating r WHERE r.recipeid = i.recipeid), 0) as avgRating, " +
-            "coalesce((select count(r.ratingvalue) from rating r WHERE r.recipeid = i.recipeid), 0) as numRaters " +
-            "from info i " +
-            "where i.recipeid = ?";
+                "coalesce((select avg(r.ratingvalue) from rating r WHERE r.recipeid = i.recipeid), 0) as avgRating, " +
+                "coalesce((select count(r.ratingvalue) from rating r WHERE r.recipeid = i.recipeid), 0) as numRaters " +
+                "from info i " +
+                "where i.recipeid = ?";
         try {
             return jdbcTemplate.queryForObject(SQL, new RecipeInfoMapper(), recipeId);
         } catch (EmptyResultDataAccessException e) {
