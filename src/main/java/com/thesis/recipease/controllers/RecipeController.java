@@ -171,8 +171,6 @@ public class RecipeController {
             String fileLocation = "/recipePictures/" + recipePhoto.getFileName();
             recipePhoto.setFileLocation(fileLocation); // Use public URL for display
         }
-
-        System.out.println("|||" + recipe.getRecipeTags().get(0));
         boolean tagsExist = !(recipe.getRecipeTags().values().stream().allMatch(String::isEmpty));
         model.addAttribute("tagsExist", tagsExist);
 

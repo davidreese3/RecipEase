@@ -18,7 +18,6 @@ public class AccountValidator {
     public AccountValidator(){}
 
     public boolean isAccountValid(Model model, WebAccount webAccount){
-        System.out.println("Validation email: " + webAccount.getEmail());
         if(!isEmailValid(webAccount.getEmail())) {
             model.addAttribute("error", "Invalid email address.");
             return false;
