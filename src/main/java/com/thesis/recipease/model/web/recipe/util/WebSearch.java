@@ -88,4 +88,11 @@ public class WebSearch {
     public void setCookingStyles(String cookingStyles) {
         this.cookingStyles = cookingStyles;
     }
+
+    public boolean areTagsAllEmpty() {
+        return holidays.isBlank() && mealTypes.isBlank() && cuisines.isBlank() &&
+                allergens.isBlank() && dietTypes.isBlank() && cookingLevels.isBlank() &&
+                cookingStyles.isBlank();
+    }
+
 }

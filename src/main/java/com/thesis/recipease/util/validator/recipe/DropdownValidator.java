@@ -43,36 +43,36 @@ public class DropdownValidator {
 
     // Tags
     private static final List<String> VALID_HOLIDAYS = Arrays.asList(
-            "Birthday", "Christmas", "Diwali", "Easter", "Father’s Day", "Halloween",
+            "", "Birthday", "Christmas", "Diwali", "Easter", "Father’s Day", "Halloween",
             "Hanukkah", "Independence Day", "Kwanzaa", "Lunar New Year", "Mother’s Day",
             "New Year’s Day", "Ramadan", "St. Patrick’s Day", "Thanksgiving", "Valentine’s Day", "Other"
     );
 
     private static final List<String> VALID_MEAL_TYPES = Arrays.asList(
-            "Appetizer", "Breakfast", "Brunch", "Dessert", "Dinner", "Lunch", "Snack", "Other"
+            "", "Appetizer", "Breakfast", "Brunch", "Dessert", "Dinner", "Lunch", "Snack", "Other"
     );
 
     private static final List<String> VALID_CUISINES = Arrays.asList(
-            "African", "American", "Caribbean", "Chinese", "French", "Greek", "Indian",
+            "", "African", "American", "Caribbean", "Chinese", "French", "Greek", "Indian",
             "Italian", "Japanese", "Mediterranean", "Mexican", "Middle Eastern", "Spanish",
             "Thai", "Vietnamese", "Other"
     );
 
     private static final List<String> VALID_ALLERGENS = Arrays.asList(
-            "Dairy-Free", "Egg-Free", "Fish-Free", "Gluten-Free", "Peanut-Free", "Sesame-Free",
+            "", "Dairy-Free", "Egg-Free", "Fish-Free", "Gluten-Free", "Peanut-Free", "Sesame-Free",
             "Shellfish-Free", "Soy-Free", "Tree Nut-Free", "Other"
     );
 
     private static final List<String> VALID_DIET_TYPES = Arrays.asList(
-            "Keto", "Low-Carb", "Low-Fat", "Paleo", "Pescatarian", "Vegetarian", "Vegan", "Other"
+            "", "Keto", "Low-Carb", "Low-Fat", "Paleo", "Pescatarian", "Vegetarian", "Vegan", "Other"
     );
 
     private static final List<String> VALID_COOKING_LEVELS = Arrays.asList(
-            "Novice", "Beginner", "Intermediate", "Advanced", "Expert", "Chef-Level", "Other"
+            "", "Novice", "Beginner", "Intermediate", "Advanced", "Expert", "Chef-Level", "Other"
     );
 
     private static final List<String> VALID_COOKING_STYLES = Arrays.asList(
-            "30-Minute Meals", "Air Fryer Recipes", "Baking", "Comfort Food", "Freezer-Friendly",
+            "", "30-Minute Meals", "Air Fryer Recipes", "Baking", "Comfort Food", "Freezer-Friendly",
             "Grilled Recipes", "Healthy", "Kid-Friendly", "Make-Ahead Recipes", "Meal Prep Friendly",
             "No-Bake Recipes", "One-Pot Recipes", "Party Food", "Quick & Easy", "Sheet Pan Meals",
             "Slow Cooker Recipes", "Other"

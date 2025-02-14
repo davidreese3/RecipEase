@@ -555,23 +555,188 @@ public class RecipeDaoImpl implements RecipeDao{
     }
 
     public List<RecipeInfo> getRecipesBySearchCriteria(WebSearch webSearch){
+        List<RecipeInfo> results = new ArrayList<RecipeInfo>();
         String queryName = webSearch.getName();
-        // sanitized string
-        queryName = queryName.replaceAll("[^a-zA-Z0-9 ]", "");
-        queryName = queryName.replaceAll("\\s+", " & ");
-        String SQL = "select i.*, " +
-                "coalesce((select avg(r.ratingvalue) from rating r WHERE r.recipeid = i.recipeid), 0) as avgRating, " +
-                "coalesce((select count(r.ratingvalue) from rating r WHERE r.recipeid = i.recipeid), 0) as numRaters " +
+        boolean emptyName = queryName.isBlank();
+        boolean emptyTags = webSearch.areTagsAllEmpty();
+
+        if(emptyName){
+            if(emptyTags){ // search by top rated in general
+                results = getRecipesBySearchCriteriaByNothing();
+            }
+            else{ //search by tags
+                results = getRecipesBySearchCriteriaByTags(webSearch);
+            }
+        }
+        else {
+            queryName = queryName.replaceAll("[^a-zA-Z0-9 ]", "");
+            queryName = queryName.replaceAll("\\s+", " & ");
+            webSearch.setName(queryName);
+            if(emptyTags){ // search by name
+                results = getRecipesBySearchCriteriaByName(webSearch);
+            }
+            else { // search by tag and name
+                results = getRecipesBySearchCriteriaByNameAndTags(webSearch);
+            }
+        }
+        return results;
+    }
+
+    private List<RecipeInfo> getRecipesBySearchCriteriaByNothing(){
+        // top-rated recipes in general
+        final String SQL = "select i.*, " +
+                "coalesce((select avg(r.ratingvalue) from rating r where r.recipeid = i.recipeid), 0) as avgRating, " +
+                "coalesce((select count(r.ratingvalue) from rating r where r.recipeid = i.recipeid), 0) as numRaters " +
                 "from info i " +
-                "where i.fts_document @@ to_tsquery('english', ?) ";
-        // add in tag support
-        SQL += "order by ts_rank(i.fts_document, to_tsquery('english', ?)) desc";
+                "group by i.recipeid " +
+//                "having coalesce((select count(r.ratingvalue) from rating r where r.recipeid = i.recipeid), 0) >= 1 " +
+                "order by avgrating desc";
         try {
-            return jdbcTemplate.query(SQL, new RecipeDaoImpl.RecipeInfoMapper(), queryName, queryName);
+            return jdbcTemplate.query(SQL, new RecipeDaoImpl.RecipeInfoMapper());
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
     }
+
+    private List<RecipeInfo> getRecipesBySearchCriteriaByTags(WebSearch webSearch){
+        // top-rated recipes with tags
+        String SQL = "select i.*, " +
+                "coalesce((select avg(r.ratingvalue) from rating r where r.recipeid = i.recipeid), 0) as avgRating, " +
+                "coalesce((select count(r.ratingvalue) from rating r where r.recipeid = i.recipeid), 0) as numRaters " +
+                "from info i left join tags t on i.recipeid = t.recipeid " +
+                "where 1=1 ";
+
+        List<Object> params = new ArrayList<>();
+        List<String> tagConditions = new ArrayList<>();
+
+        if (!webSearch.getHolidays().isBlank()){
+            tagConditions.add("(t.tagField = ? and t.tagValue = ?)");
+            params.add("Holidays");
+            params.add(webSearch.getHolidays());
+        }
+        if (!webSearch.getMealTypes().isBlank()){
+            tagConditions.add("(t.tagField = ? and t.tagValue = ?)");
+            params.add("Meal Types");
+            params.add(webSearch.getMealTypes());
+        }
+        if (!webSearch.getCuisines().isBlank()){
+            tagConditions.add("(t.tagField = ? and t.tagValue = ?)");
+            params.add("Cuisines");
+            params.add(webSearch.getCuisines());
+        }
+        if (!webSearch.getAllergens().isBlank()){
+            tagConditions.add("(t.tagField = ? and t.tagValue = ?)");
+            params.add("Allergens");
+            params.add(webSearch.getAllergens());
+        }
+        if (!webSearch.getDietTypes().isBlank()){
+            tagConditions.add("(t.tagField = ? and t.tagValue = ?)");
+            params.add("Diet Types");
+            params.add(webSearch.getDietTypes());
+        }
+        if (!webSearch.getCookingLevels().isBlank()){
+            tagConditions.add("(t.tagField = ? and t.tagValue = ?)");
+            params.add("Cooking Levels");
+            params.add(webSearch.getCookingLevels());
+        }
+        if (!webSearch.getCookingStyles().isBlank()){
+            tagConditions.add("(t.tagField = ? and t.tagValue = ?)");
+            params.add("Cooking Styles");
+            params.add(webSearch.getCookingStyles());
+        }
+
+        SQL += "and (" + String.join(" or " , tagConditions) + ") " +
+                "group by i.recipeid " +
+                "having count(distinct t.tagField) = ? " +
+//                "and coalesce((select count(r.ratingvalue) from rating r where r.recipeid = i.recipeid), 0) >= 1 " +
+                "order by avgrating desc";
+        params.add(tagConditions.size());
+
+        try {
+            return jdbcTemplate.query(SQL, new RecipeDaoImpl.RecipeInfoMapper(), params.toArray());
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
+    private List<RecipeInfo> getRecipesBySearchCriteriaByName(WebSearch webSearch){
+        String SQL = "select i.*, " +
+                "coalesce((select avg(r.ratingvalue) from rating r where r.recipeid = i.recipeid), 0) as avgRating, " +
+                "coalesce((select count(r.ratingvalue) from rating r where r.recipeid = i.recipeid), 0) as numRaters " +
+                "from info i " +
+                "where i.fts_document @@ to_tsquery('english', ?) " +
+                "order by ts_rank(i.fts_document, to_tsquery('english', ?)) DESC";
+        List<Object> params = new ArrayList<>();
+        params.add(webSearch.getName());
+        params.add(webSearch.getName());
+        try {
+            return jdbcTemplate.query(SQL, new RecipeDaoImpl.RecipeInfoMapper(), params.toArray());
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
+    private List<RecipeInfo> getRecipesBySearchCriteriaByNameAndTags(WebSearch webSearch){
+        String SQL = "select i.*, " +
+                "coalesce((select avg(r.ratingvalue) from rating r where r.recipeid = i.recipeid), 0) as avgRating, " +
+                "coalesce((select count(r.ratingvalue) from rating r where r.recipeid = i.recipeid), 0) as numRaters " +
+                "from info i left join tags t on i.recipeid = t.recipeid " +
+                "where i.fts_document @@ to_tsquery('english', ?) ";
+
+        List<Object> params = new ArrayList<>();
+        List<String> tagConditions = new ArrayList<>();
+        params.add(webSearch.getName());
+
+        if (!webSearch.getHolidays().isBlank()){
+            tagConditions.add("(t.tagField = ? and t.tagValue = ?)");
+            params.add("Holidays");
+            params.add(webSearch.getHolidays());
+        }
+        if (!webSearch.getMealTypes().isBlank()){
+            tagConditions.add("(t.tagField = ? and t.tagValue = ?)");
+            params.add("Meal Types");
+            params.add(webSearch.getMealTypes());
+        }
+        if (!webSearch.getCuisines().isBlank()){
+            tagConditions.add("(t.tagField = ? and t.tagValue = ?)");
+            params.add("Cuisines");
+            params.add(webSearch.getCuisines());
+        }
+        if (!webSearch.getAllergens().isBlank()){
+            tagConditions.add("(t.tagField = ? and t.tagValue = ?)");
+            params.add("Allergens");
+            params.add(webSearch.getAllergens());
+        }
+        if (!webSearch.getDietTypes().isBlank()){
+            tagConditions.add("(t.tagField = ? and t.tagValue = ?)");
+            params.add("Diet Types");
+            params.add(webSearch.getDietTypes());
+        }
+        if (!webSearch.getCookingLevels().isBlank()){
+            tagConditions.add("(t.tagField = ? and t.tagValue = ?)");
+            params.add("Cooking Levels");
+            params.add(webSearch.getCookingLevels());
+        }
+        if (!webSearch.getCookingStyles().isBlank()){
+            tagConditions.add("(t.tagField = ? and t.tagValue = ?)");
+            params.add("Cooking Styles");
+            params.add(webSearch.getCookingStyles());
+        }
+
+        SQL += "and (" + String.join(" or " , tagConditions) + ") " +
+                "group by i.recipeid " +
+                "having count(distinct t.tagField) = ? ";
+        params.add(tagConditions.size());
+
+        SQL += "order by ts_rank(i.fts_document, to_tsquery('english', ?)) desc";
+        params.add(webSearch.getName());
+        try {
+            return jdbcTemplate.query(SQL, new RecipeDaoImpl.RecipeInfoMapper(), params.toArray());
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
 
     // ------------------------------------------------
     // UPDATE OPS

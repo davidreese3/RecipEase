@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RecipEase </title>
+    <title>RecipEase Search</title>
 </head>
 
 <body>
@@ -14,6 +14,9 @@
 </header>
 
 <main>
+    <div th:each="error : ${errors}">
+        <span th:text="${error}" style="color: red;"></span>
+    </div>
     <form id= "recipeForm" action="#" th:action="@{/recipe/search}" th:object="${webSearch}" method="post">
         <table>
             <tr>
@@ -147,6 +150,9 @@
             </tr>
         </table>
         <hr>
+        <div th:if="${message}">
+            <span th:text="${message}"></span>
+        </div>
         <table th:if="${results}">
             <thead>
             <th>Name</th>

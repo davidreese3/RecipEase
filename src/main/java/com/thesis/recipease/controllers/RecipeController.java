@@ -14,10 +14,12 @@ import com.thesis.recipease.util.normalizer.substitution.SubstitutionNormalizer;
 import com.thesis.recipease.util.processer.PrepopulatedEntryProcessor;
 import com.thesis.recipease.util.sanitizer.IngredientSanitizer;
 import com.thesis.recipease.util.sanitizer.RecipeSanitizer;
+import com.thesis.recipease.util.sanitizer.SearchSanitizer;
 import com.thesis.recipease.util.scaler.IngredientScaler;
 import com.thesis.recipease.util.security.SecurityService;
 import com.thesis.recipease.util.storage.StorageService;
 import com.thesis.recipease.util.validator.recipe.RecipeValidator;
+import com.thesis.recipease.util.validator.recipe.SearchValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -51,6 +53,10 @@ public class RecipeController {
     private RecipeValidator recipeValidator;
     @Autowired
     IngredientScaler ingredientScaler;
+    @Autowired
+    SearchSanitizer searchSanitizer;
+    @Autowired
+    SearchValidator searchValidator;
 
     private final StorageService storageService;
 
@@ -225,11 +231,22 @@ public class RecipeController {
 
     @RequestMapping(value = "/recipe/search", method = RequestMethod.POST)
     public String processSearchForm(Model model, WebSearch webSearch){
+        webSearch = searchSanitizer.sanitize(webSearch);
+        List<String> errors = searchValidator.validate(webSearch);
+        if (!errors.isEmpty()) {
+            model.addAttribute(webSearch);
+            model.addAttribute("errors", errors);
+            return "recipe/searchRecipe";
+        }
         String str = webSearch.getName();
         List<RecipeInfo> results = appService.getRecipesBySearchCriteria(webSearch);
         webSearch.setName(str);
         model.addAttribute("webSearch", webSearch);
-        model.addAttribute("results",results);
+        if(results.isEmpty()){
+            model.addAttribute("message", "There are no search results with your search criteria");
+            return "recipe/searchRecipe";
+        }
+        model.addAttribute("results", results);
         return "recipe/searchRecipe";
     }
 }
