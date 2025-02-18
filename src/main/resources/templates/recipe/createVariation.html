@@ -383,7 +383,7 @@ table {
                     <button type="button" id="addHolidayBtn">Add Holiday</button>
                     <div id="holidayList">
                         <div th:each="holiday, index : *{holidays}" class="holidayEntry">
-                            <select th:field="*{holidays[__${index.index}__].field}" class="existingHoliday">
+                            <select th:field="*{holidays[__${index.index}__].value}" class="existingHoliday">
                                 <option value="">Holiday</option>
                                 <option value="Birthday">Birthday</option>
                                 <option value="Christmas">Christmas</option>
@@ -413,7 +413,7 @@ table {
                     <button type="button" id="addMealTypeBtn">Add Meal Type</button>
                     <div id="mealTypeList">
                         <div th:each="mealType, index : *{mealTypes}" class="mealTypeEntry">
-                            <select th:field="*{mealTypes[__${index.index}__].field}" class="existingMealType">
+                            <select th:field="*{mealTypes[__${index.index}__].value}" class="existingMealType">
                                 <option value="">Meal type</option>
                                 <option value="Appetizer">Appetizer</option>
                                 <option value="Breakfast">Breakfast</option>
@@ -434,7 +434,7 @@ table {
                     <button type="button" id="addCuisineBtn">Add Cuisine</button>
                     <div id="cuisineList">
                         <div th:each="cuisine, index : *{cuisines}" class="cuisineEntry">
-                            <select th:field="*{cuisines[__${index.index}__].field}" class="existingCuisine">
+                            <select th:field="*{cuisines[__${index.index}__].value}" class="existingCuisine">
                                 <option value="">Select a cuisine</option>
                                 <option value="African">African</option>
                                 <option value="American">American</option>
@@ -463,7 +463,7 @@ table {
                     <button type="button" id="addAllergenBtn">Add Allergen</button>
                     <div id="allergenList">
                         <div th:each="allergen, index : *{allergens}" class="allergenEntry">
-                            <select th:field="*{allergens[__${index.index}__].field}" class="existingAllergen">
+                            <select th:field="*{allergens[__${index.index}__].value}" class="existingAllergen">
                                 <option value="">Select an allergy</option>
                                 <option value="Dairy-Free">Dairy-Free</option>
                                 <option value="Egg-Free">Egg-Free</option>
@@ -486,7 +486,7 @@ table {
                     <button type="button" id="addDietTypeBtn">Add Diet Type</button>
                     <div id="dietTypeList">
                         <div th:each="dietType, index : *{dietTypes}" class="dietTypeEntry">
-                            <select th:field="*{dietTypes[__${index.index}__].field}" class="existingDietType">
+                            <select th:field="*{dietTypes[__${index.index}__].value}" class="existingDietType">
                                 <option value="">Select a diet type</option>
                                 <option value="Keto">Keto</option>
                                 <option value="Low-Carb">Low-Carb</option>
@@ -507,7 +507,7 @@ table {
                     <button type="button" id="addCookingLevelBtn">Add Cooking Level</button>
                     <div id="cookingLevelList">
                         <div th:each="cookingLevel, index : *{cookingLevels}" class="cookingLevelEntry">
-                            <select th:field="*{cookingLevels[__${index.index}__].field}" class="existingCookingLevel">
+                            <select th:field="*{cookingLevels[__${index.index}__].value}" class="existingCookingLevel">
                                 <option value="">Select a cooking level</option>
                                 <option value="Novice">Novice</option>
                                 <option value="Beginner">Beginner</option>
@@ -527,7 +527,7 @@ table {
                     <button type="button" id="addCookingStyleBtn">Add Cooking Style</button>
                     <div id="cookingStyleList">
                         <div th:each="cookingStyle, index : *{cookingStyles}" class="cookingStyleEntry">
-                            <select th:field="*{cookingStyles[__${index.index}__].field}" class="existingCookingStyle">
+                            <select th:field="*{cookingStyles[__${index.index}__].value}" class="existingCookingStyle">
                                 <option value="">Select a cooking style</option>
                                 <option value="30-Minute Meals">30-Minute Meals</option>
                                 <option value="Air Fryer Recipes">Air Fryer Recipes</option>

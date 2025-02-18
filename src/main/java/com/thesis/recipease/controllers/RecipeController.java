@@ -91,7 +91,6 @@ public class RecipeController {
         }
         webRecipe.setVariation(new WebVariation(recipeId,true));
         model.addAttribute("webRecipe", webRecipe);
-        System.out.print("Variation: " +webRecipe.getVariation().isVariation()+ " [" + webRecipe.getVariation().getOriginalrecipeid() +"]" + "[" +recipeId+ "]");
         return "recipe/createVariation";
     }
 

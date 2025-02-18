@@ -25,6 +25,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Repository
 public class RecipeDaoImpl implements RecipeDao{
@@ -451,13 +452,14 @@ public class RecipeDaoImpl implements RecipeDao{
         List<WebLink> recipeLinks = getWebLinksById(recipeId);
         List<WebUserSubstitutionEntry> recipeUserSubs = getWebUserSubsById(recipeId);
 
-        List<WebTag> recipeHolidays = getWebTagsById(recipeId, "holiday");
-        List<WebTag> recipeMealTypes = getWebTagsById(recipeId, "mealType");
-        List<WebTag> recipeCuisines = getWebTagsById(recipeId, "cuisine");
-        List<WebTag> recipeAllergens = getWebTagsById(recipeId, "allergen");
-        List<WebTag> recipeDietTypes = getWebTagsById(recipeId, "dietType");
-        List<WebTag> recipeCookingLevels = getWebTagsById(recipeId, "cookingLevel");
-        List<WebTag> recipeCookingStyles = getWebTagsById(recipeId, "cookingStyle");
+        List<WebTag> webTags = getWebTagsById(recipeId);
+        List<WebTag> recipeHolidays = filterByField(webTags, "Holidays");
+        List<WebTag> recipeMealTypes = filterByField(webTags, "Meal Types");
+        List<WebTag> recipeCuisines = filterByField(webTags, "Cuisines");
+        List<WebTag> recipeAllergens = filterByField(webTags, "Allergens");
+        List<WebTag> recipeDietTypes = filterByField(webTags, "Diet Types");
+        List<WebTag> recipeCookingLevels = filterByField(webTags, "Cooking Levels");
+        List<WebTag> recipeCookingStyles = filterByField(webTags, "Cooking Styles");
 
         return new WebRecipe(recipeInfo, recipeIngredients, recipeDirections, recipeNote, recipeLinks, recipeUserSubs, recipeHolidays, recipeMealTypes, recipeCuisines , recipeAllergens, recipeDietTypes, recipeCookingLevels, recipeCookingStyles, null);
     }
@@ -517,13 +519,19 @@ public class RecipeDaoImpl implements RecipeDao{
         }
     }
 
-    private List<WebTag> getWebTagsById(int recipeId, String field){
-        final String SQL = "select * from "+field+" where recipeid = ?";
+    private List<WebTag> getWebTagsById(int recipeId){
+        final String SQL = "select * from tags where recipeid = ?";
         try{
-            return jdbcTemplate.query(SQL, new WebTagMapper(field), recipeId);
+            return jdbcTemplate.query(SQL, new RecipeDaoImpl.WebTagMapper(), recipeId);
         }catch (EmptyResultDataAccessException e) {
             return null;
         }
+    }
+
+    public static List<WebTag> filterByField(List<WebTag> tags, String targetField) {
+        return tags.stream()
+                .filter(tag -> targetField.equals(tag.getField()))
+                .collect(Collectors.toList());
     }
 
     public int getNumberOfVariationByOriginalRecipeId(int originalRecipeId) {
@@ -963,6 +971,16 @@ public class RecipeDaoImpl implements RecipeDao{
             recipeUserSubstitutionEntry.setSubstitutedMeasurement(rs.getString("substitutedMeasurement"));
             recipeUserSubstitutionEntry.setSubstitutedPreparation(rs.getString("substitutedPreparation"));
             return recipeUserSubstitutionEntry;
+        }
+    }
+
+    class WebTagMapper implements RowMapper<WebTag> {
+        @Override
+        public WebTag mapRow(ResultSet rs, int rowNum) throws SQLException {
+            WebTag tag = new WebTag();
+            tag.setField(rs.getString("tagField"));
+            tag.setValue(rs.getString("tagValue"));
+            return tag;
         }
     }
 }
