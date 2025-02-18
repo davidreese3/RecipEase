@@ -40,7 +40,6 @@
         <tr>
             <td>
                 <a th:href="${'http://localhost:8080/profile/view?id=' + recipe.recipeInfo.userId}" th:text="${authorName}"></a>
-
             </td>
         </tr>
         <tr>
@@ -63,7 +62,7 @@
         </tr>
         <tr th:if="${originalLink}">
             <td>
-                <a th:href="${originalLink}" th:text="'Link to original recipe'"></a>
+                <a th:href="${originalLink}" th:text="'Link to the original recipe'"></a>
             </td>
         </tr>
         </tbody>
