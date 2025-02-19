@@ -39,7 +39,7 @@
                 </li>
 
                 <!-- Moderator Section -->
-                <li sec:authorize="hasRole('MOD')"><a href="#">Moderator</a>
+                <li sec:authorize="hasRole('MOD') or hasRole('ADMIN')"><a href="#">Moderator</a>
                     <ul>
                         <li><a href="#">Moderator Dashboard</a></li>
                     </ul>
