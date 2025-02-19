@@ -106,6 +106,8 @@ public class AppService {
 
         // UPDATE OPS
     // DELETE OPS
+    public int deleteRecipeByRecipeId(int recipeId) { return recipeDao.deleteRecipeByRecipeId(recipeId); }
+
 
     // ------------------------
     // GLOSSARY OPERATIONS

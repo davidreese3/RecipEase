@@ -255,4 +255,13 @@ public class RecipeController {
         model.addAttribute("results", results);
         return "recipe/searchRecipe";
     }
+
+    @RequestMapping(value = "/recipe/delete", method = RequestMethod.POST)
+    public String deleteRecipe(Model model, @RequestParam("recipeId") int recipeId, RedirectAttributes redirectAttributes) {
+        if (appService.deleteRecipeByRecipeId(recipeId) == -1) {
+            redirectAttributes.addFlashAttribute("error", "Error deleting recipe. Try again.");
+            return "redirect:/recipe/view?recipeId=" + recipeId;
+        }
+        return "recipe/recipeDeleted";
+    }
 }

@@ -754,6 +754,16 @@ public class RecipeDaoImpl implements RecipeDao{
     // DELETE OPS
     // ------------------------------------------------
 
+    public int deleteRecipeByRecipeId(int recipeId){
+        final String SQL = "delete from info where recipeid = ?";
+        try {
+            jdbcTemplate.update(SQL, recipeId);
+        } catch (DataAccessException e) {
+            return -1;
+        }
+        return 0;
+    }
+
     // ------------------------------------------------
     // MAPPERS
     // ------------------------------------------------

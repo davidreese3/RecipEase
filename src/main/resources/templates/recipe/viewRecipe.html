@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="UTF-8">
@@ -29,6 +30,11 @@
         <button type="submit" name="scalingValue" value="2">2x</button>
         <button type="submit" name="scalingValue" value="4">4x</button>
     </form>
+    <form id="deleteForm" th:action="@{/recipe/delete}" method="post" sec:authorize="hasRole('MOD') or hasRole('ADMIN')" >
+        <input type="hidden" name="recipeId" th:value="${recipe.recipeInfo.recipeId}" />
+        <button type="submit">Delete Recipe</button>
+    </form>
+
 </div>
 <main id="printable-section">
     <h3>Recipe Info</h3>

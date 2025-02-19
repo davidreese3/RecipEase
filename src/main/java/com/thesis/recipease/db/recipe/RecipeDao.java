@@ -30,4 +30,5 @@ public interface RecipeDao {
     public List<RecipeInfo> getRecipesBySearchCriteria(WebSearch webSearch);
     // UPDATE OPS
     // DELETE OPS
+    public int deleteRecipeByRecipeId(int recipeId);
 }
