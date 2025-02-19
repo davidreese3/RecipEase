@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import com.thesis.recipease.util.generator.VerificationCodeGenerator;
+
 
 import java.security.Principal;
 import java.util.Arrays;
@@ -63,6 +65,7 @@ public class AccountController {
         }
         List<String> roles = List.of("ROLE_USER");
         webAccount.setPassword(passwordEncoder.encode(webAccount.getPassword()));
+        webAccount.setVerificationCode(VerificationCodeGenerator.generateVerificationCode());
         Account account = appService.addAccount(webAccount, roles, webProfile);
         String activationLink = "http://localhost:8080/account/activate?id=" + account.getId();
         mailService.sendActivationEmail(webAccount.getEmail(), activationLink, account.getVerificationCode());

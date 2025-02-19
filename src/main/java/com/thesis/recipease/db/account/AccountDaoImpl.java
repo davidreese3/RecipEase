@@ -47,7 +47,6 @@ public class AccountDaoImpl implements AccountDao{
     public Account addAccount(WebAccount webAccount, List<String> roles, WebProfile webProfile) {
         Random random = new Random();
         int id;
-        int activationCode = 100000 + random.nextInt(900000);
         DefaultTransactionDefinition def = new DefaultTransactionDefinition();
         def.setIsolationLevel(TransactionDefinition.ISOLATION_REPEATABLE_READ);
         TransactionStatus status = transactionManager.getTransaction(def);
@@ -59,7 +58,7 @@ public class AccountDaoImpl implements AccountDao{
                 PreparedStatement ps = dataSource.prepareStatement(accountSQL, Statement.RETURN_GENERATED_KEYS);
                 ps.setString(1, webAccount.getEmail());
                 ps.setString(2, webAccount.getPassword());
-                ps.setInt(3, activationCode);
+                ps.setInt(3, webAccount.getVerificationCode());
                 return ps;
             }, keyHolder);
 

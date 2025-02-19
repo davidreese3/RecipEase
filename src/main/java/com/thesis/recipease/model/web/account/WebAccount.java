@@ -4,12 +4,15 @@ public class WebAccount {
     private String email;
     private String password;
     private String confirmPassword;
+    private int verificationCode;
 
     public WebAccount(){}
-    public WebAccount(String email, String password, String confirmPassword){
+
+    public WebAccount(String email, String password, String confirmPassword, int verificationCode) {
         this.email = email;
         this.password = password;
         this.confirmPassword = confirmPassword;
+        this.verificationCode = verificationCode;
     }
 
     public String getEmail() {
@@ -34,5 +37,13 @@ public class WebAccount {
 
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
+    }
+
+    public int getVerificationCode() {
+        return verificationCode;
+    }
+
+    public void setVerificationCode(int verificationCode) {
+        this.verificationCode = verificationCode;
     }
 }
