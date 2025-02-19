@@ -5,15 +5,15 @@ public class Account {
     private String email;
     private String password;
     private boolean active;
-    private int activationCode;
+    private int verificationCode;
 
     public Account(){}
-    public Account(int id, String email, String password, boolean active, int activationCode){
+    public Account(int id, String email, String password, boolean active, int verificationCode){
         this.id = id;
         this.email = email;
         this.password = password;
         this.active = active;
-        this.activationCode = activationCode;
+        this.verificationCode = verificationCode;
     }
 
     public int getId() {
@@ -48,11 +48,11 @@ public class Account {
         this.active = active;
     }
 
-    public int getActivationCode() {
-        return activationCode;
+    public int getVerificationCode() {
+        return verificationCode;
     }
 
-    public void setActivationCode(int activationCode) {
-        this.activationCode = activationCode;
+    public void setVerificationCode(int verificationCode) {
+        this.verificationCode = verificationCode;
     }
 }

@@ -17,11 +17,11 @@ public interface AccountDao {
     // READ OPS
     public Account getAccountById(int id);
     public Account getAccountByEmail(String email);
-    public Integer getActivationCodeById(int id);
+    public Integer getVerificationCodeById(int id);
     public String getPasswordById(int id);
     // UPDATE OPS
     public Account updatePasswordById(int id, String password);
-    public boolean verifyActivationCodeAndActivate(int id, int code, int activationCode);
+    public boolean verifyVerificationCodeAndActivate(int id, int code, int verificationCode);
     public Account updateEmailById(int id, String newEmail);
     public Account deactivateAccountById(int id);
     // DELETE OPS

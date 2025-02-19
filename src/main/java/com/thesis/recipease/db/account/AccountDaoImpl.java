@@ -53,7 +53,7 @@ public class AccountDaoImpl implements AccountDao{
         TransactionStatus status = transactionManager.getTransaction(def);
         try {
             // insert into account
-            final String accountSQL = "insert into account (email, password, active, activationcode) values (?, ?, false, ?)";
+            final String accountSQL = "insert into account (email, password, active, verificationcode) values (?, ?, false, ?)";
             KeyHolder keyHolder = new GeneratedKeyHolder();
             jdbcTemplate.update(dataSource -> {
                 PreparedStatement ps = dataSource.prepareStatement(accountSQL, Statement.RETURN_GENERATED_KEYS);
@@ -125,8 +125,8 @@ public class AccountDaoImpl implements AccountDao{
     }
 
     @Override
-    public Integer getActivationCodeById(int id) {
-        final String SQL = "select activationCode from account where id = ?";
+    public Integer getVerificationCodeById(int id) {
+        final String SQL = "select verificationCode from account where id = ?";
         try {
             return jdbcTemplate.queryForObject(SQL, Integer.class, id);
         } catch (EmptyResultDataAccessException e) {
@@ -149,8 +149,8 @@ public class AccountDaoImpl implements AccountDao{
     // ------------------------------------------------
 
     @Override
-    public boolean verifyActivationCodeAndActivate(int id, int code, int activationCode) {
-        if(activationCode == code){
+    public boolean verifyVerificationCodeAndActivate(int id, int code, int verificationCode) {
+        if(verificationCode == code){
             final String SQL = "update account set active = true where id = ?";
             jdbcTemplate.update(SQL, id);
             return true;
@@ -222,7 +222,7 @@ public class AccountDaoImpl implements AccountDao{
             account.setId(rs.getInt("id"));
             account.setEmail(rs.getString("email"));
             account.setPassword(rs.getString("password"));
-            account.setActivationCode(rs.getInt("activationCode"));
+            account.setVerificationCode(rs.getInt("verificationCode"));
             return account;
         }
     }

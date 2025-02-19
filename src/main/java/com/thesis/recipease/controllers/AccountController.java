@@ -65,7 +65,7 @@ public class AccountController {
         webAccount.setPassword(passwordEncoder.encode(webAccount.getPassword()));
         Account account = appService.addAccount(webAccount, roles, webProfile);
         String activationLink = "http://localhost:8080/account/activate?id=" + account.getId();
-        mailService.sendActivationEmail(webAccount.getEmail(), activationLink, account.getActivationCode());
+        mailService.sendActivationEmail(webAccount.getEmail(), activationLink, account.getVerificationCode());
         model.addAttribute("email", webAccount.getEmail());
         return "account/registrationConfirmation";
     }
@@ -81,8 +81,8 @@ public class AccountController {
 
     @RequestMapping(value = "/account/activate", method = RequestMethod.POST)
     public String processActivationForm(Model model, @RequestParam("id") int id, @RequestParam("code") int code) {
-        int activationCode = appService.getActivationCodeById(id);
-        if (!appService.verifyActivationCodeAndActivate(id,code,activationCode)){
+        int activationCode = appService.getVerificationCodeById(id);
+        if (!appService.verifyVerificationCodeAndActivate(id,code,activationCode)){
             model.addAttribute("id",id);
             model.addAttribute("error", "Invalid Activation Code");
             return "account/activation";

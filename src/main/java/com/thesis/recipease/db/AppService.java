@@ -48,13 +48,13 @@ public class AppService {
     public Account getAccountByEmail(String email) {
         return accountDao.getAccountByEmail(email);
     }
-    public Integer getActivationCodeById(int id) { return accountDao.getActivationCodeById(id); }
+    public Integer getVerificationCodeById(int id) { return accountDao.getVerificationCodeById(id); }
     public String getPasswordById(int id){
         return accountDao.getPasswordById(id);
     }
 
     // UPDATE OPS
-    public boolean verifyActivationCodeAndActivate(int id, int code, int activationCode) { return accountDao.verifyActivationCodeAndActivate(id, code, activationCode); }
+    public boolean verifyVerificationCodeAndActivate(int id, int code, int verificationCode) { return accountDao.verifyVerificationCodeAndActivate(id, code, verificationCode); }
     public Account updateEmailById(int id, String newEmail){ return accountDao.updateEmailById(id, newEmail); }
     public Account updatePasswordById(int id, String password){ return accountDao.updatePasswordById(id, password); }
     public Account deactivateAccountById(int id) { return accountDao.deactivateAccountById(id); }

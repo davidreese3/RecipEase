@@ -18,7 +18,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
         email varchar(50) unique not null,
         password varchar(97) not null,
         active boolean not null,
-        activationCode int,
+        verificationCode int,
         primary key (id)
     );
 
@@ -393,7 +393,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
         ('Cocoa Powder', '1', 'Tablespoons', '', 'Carob Powder', '1', 'Tablespoons', '');
 
     -- Insert into account table
-        INSERT INTO account (email, password, active, activationCode) VALUES
+        INSERT INTO account (email, password, active, verificationCode) VALUES
         ('david33reese@gmail.com', '\$argon2id\$v=19\$m=65536,t=3,p=1\$2qnmXPBW7VUtoy4tPmGe3w\$CopbmJNKnWJ9DklYbSqgjPSYHfPTIvctvmSYidgmBBM', TRUE, 123456),
         ('frank_reese@yahoo.com', '\$argon2id\$v=19\$m=65536,t=3,p=1\$2qnmXPBW7VUtoy4tPmGe3w\$CopbmJNKnWJ9DklYbSqgjPSYHfPTIvctvmSYidgmBBM', TRUE, 123456);
 
