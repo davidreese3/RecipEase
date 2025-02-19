@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <div th:fragment="navbar">
     <header>
         <nav>
@@ -34,6 +35,18 @@
                 <li><a href="#">Substitutions</a>
                     <ul>
                         <li><a href="/substitution/view">View Common Substitutions</a></li>
+                    </ul>
+                </li>
+
+                <!-- Moderator Section -->
+                <li sec:authorize="hasRole('MOD')"><a href="#">Moderator</a>
+                    <ul>
+                        <li><a href="#">Moderator Dashboard</a></li>
+                    </ul>
+                </li>
+                <li sec:authorize="hasRole('Admin')"><a href="#">Admin</a>
+                    <ul>
+                        <li><a href="#">Admin Dashboard</a></li>
                     </ul>
                 </li>
                 <li>
