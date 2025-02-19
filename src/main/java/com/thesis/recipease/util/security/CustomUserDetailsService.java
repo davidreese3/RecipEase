@@ -1,7 +1,7 @@
 package com.thesis.recipease.util.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -36,13 +37,25 @@ public class CustomUserDetailsService implements UserDetailsService {
                     throw new InactiveAccountException("Account is not active");
                 }
 
-                // Return CustomUserDetails
+                // Fetch authorities (roles) for this user
+                List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+                PreparedStatement roleStatement = connection.prepareStatement(
+                        "select role from authority where email = ?"
+                );
+                roleStatement.setString(1, username);
+                ResultSet roleResultSet = roleStatement.executeQuery();
+                while (roleResultSet.next()) {
+                    String role = roleResultSet.getString("role");
+                    authorities.add(new SimpleGrantedAuthority(role));  // Mapping role to authority
+                }
+
+                // Return CustomUserDetails with roles/authorities
                 return new CustomUserDetails(
                         userId,
                         email,
                         password,
                         isActive,
-                        List.of() // Replace with actual roles/authorities if needed
+                        authorities
                 );
             } else {
                 throw new UsernameNotFoundException("User not found");
