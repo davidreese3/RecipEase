@@ -135,16 +135,44 @@ public class MailService {
 
 
 
-    public void sendResetPasswordEmail(String to, String subject, String body) {
+    public void sendResetPasswordEmail(String to, String verificationLink, int verificationCode) {
         try {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
             helper.setTo(to);
-            helper.setSubject(subject);
-            helper.setText(body, true); // Set 'true' for HTML content
+            helper.setFrom("RecipEase <recipeasecommunication@gmail.com>");
+            helper.setSubject("Reset Your RecipEase Password");
+
+            String body = """
+        <html>
+        <body>
+            <p>Dear User,</p>
+            <p>We received a request to reset your password for your <strong>RecipEase</strong> account.</p>
+            <p>To reset your password, please click the link below:</p>
+            <p>
+                <a href="%s" target="_blank" rel="noopener noreferrer" 
+                   style="background-color: #06D2FF; color: white; text-decoration: none; 
+                          padding: 10px 20px; font-weight: bold; border-radius: 5px;">
+                    Reset My Password
+                </a>
+            </p>
+            <p>If the button above doesn’t work, you can also enter the following verification code on the reset page:</p>
+            <p style="font-size: 1.5em; font-weight: bold; color: #333; border: 1px solid #ddd; 
+                      padding: 10px; display: inline-block; background-color: #f9f9f9;">%s</p>
+            <p>This link and code will expire after a short time for security reasons.</p>
+            <p>If you did not request a password reset, please ignore this email or contact our support team at 
+                <a href="mailto:recipeasecommunication@gmail.com">recipeasecommunication@gmail.com</a>.</p>
+            <p>Thank you for using <strong>RecipEase</strong>!</p>
+            <p><strong>Bon appétit,</strong><br>The RecipEase Team</p>
+        </body>
+        </html>
+        """.formatted(verificationLink, verificationCode);
+
+            helper.setText(body, true); // 'true' indicates HTML content
             mailSender.send(message);
         } catch (MessagingException e) {
             e.printStackTrace(); // Log the error for debugging
         }
     }
+
 }

@@ -24,6 +24,7 @@ public interface AccountDao {
     public boolean verifyVerificationCodeAndActivate(int id, int code, int verificationCode);
     public Account updateEmailById(int id, String newEmail);
     public Account deactivateAccountById(int id);
+    public int generateAndSaveVerificationCode(int id);
     // DELETE OPS
     public Account deleteAccountById(int id);
 

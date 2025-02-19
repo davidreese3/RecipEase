@@ -24,6 +24,8 @@ import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 import java.util.List;
+import com.thesis.recipease.util.generator.VerificationCodeGenerator;
+
 
 @Repository
 public class AccountDaoImpl implements AccountDao{
@@ -192,6 +194,18 @@ public class AccountDaoImpl implements AccountDao{
             return ps;
         });
         return getAccountById(id);
+    }
+
+    public int generateAndSaveVerificationCode(int id){
+        int verificationCode = VerificationCodeGenerator.generateVerificationCode();
+        final String SQL = "update account set verificationCode = ? where id = ?";
+        jdbcTemplate.update(dataSource -> {
+            PreparedStatement ps = dataSource.prepareStatement(SQL);
+            ps.setInt(1, verificationCode);
+            ps.setInt(2,id);
+            return ps;
+        });
+        return verificationCode;
     }
 
     // ------------------------------------------------

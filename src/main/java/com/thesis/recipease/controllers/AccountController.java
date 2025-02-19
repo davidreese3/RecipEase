@@ -84,8 +84,8 @@ public class AccountController {
 
     @RequestMapping(value = "/account/activate", method = RequestMethod.POST)
     public String processActivationForm(Model model, @RequestParam("id") int id, @RequestParam("code") int code) {
-        int activationCode = appService.getVerificationCodeById(id);
-        if (!appService.verifyVerificationCodeAndActivate(id,code,activationCode)){
+        int verificationCode = appService.getVerificationCodeById(id);
+        if (!appService.verifyVerificationCodeAndActivate(id,code,verificationCode)){
             model.addAttribute("id",id);
             model.addAttribute("error", "Invalid Activation Code");
             return "account/activation";
@@ -128,7 +128,7 @@ public class AccountController {
     }
 
     @RequestMapping(value = "account/edit/password", method = RequestMethod.POST)
-    public String displayEditAccountPasswordForm(Model model, Principal principal, WebAccount webAccount){
+    public String processEditAccountPasswordForm(Model model, Principal principal, WebAccount webAccount){
         if(!accountValidator.isPasswordValid(webAccount.getPassword())){
             model.addAttribute("error", "Password is not strong enough. It must include:");
             List<String> passwordCriteria = Arrays.asList(
@@ -176,6 +176,71 @@ public class AccountController {
         invalidateSession(request, response);
         redirectAttributes.addFlashAttribute("success","Your account has been deactivated.");
         return "redirect:/login";
+    }
+
+    @RequestMapping(value = "account/reset/password/request", method = RequestMethod.GET)
+    public String displayPasswordResetForm(Model model) {
+        return "account/resetPasswordRequest";
+    }
+
+    @RequestMapping(value = "account/reset/password/request", method = RequestMethod.POST)
+    public String processPasswordResetForm(@RequestParam("email") String email, Model model) {
+        System.out.println("Inside processPasswordResetForm");
+        Account account = appService.getAccountByEmail(email);
+
+        if (account == null) {
+            model.addAttribute("error", "No account found with that email.");
+            return "login";
+        }
+
+        int verificationCode = appService.generateAndSaveVerificationCode(account.getId());
+        String resetLink = "http://localhost:8080/account/reset/password?id=" + account.getId();
+
+        mailService.sendResetPasswordEmail(email, resetLink, verificationCode);
+
+        model.addAttribute("success", "A password reset link has been sent to your email.");
+        return "login";
+    }
+
+
+    @RequestMapping(value = "account/reset/password", method = RequestMethod.GET)
+    public String displayResetAccountPasswordForm(Model model, @RequestParam("id") int id){
+        WebAccount webAccount = new WebAccount();
+        model.addAttribute("webAccount",webAccount);
+        model.addAttribute("id", id);
+        return "account/resetPassword";
+    }
+
+    @RequestMapping(value = "account/reset/password", method = RequestMethod.POST)
+    public String processResetAccountPasswordForm(Model model, WebAccount webAccount, @RequestParam("id") int id, @RequestParam("code") int code){
+        int verificationCode = appService.getVerificationCodeById(id);
+        if(!appService.verifyVerificationCodeAndActivate(id, code, verificationCode)){
+            model.addAttribute("id",id);
+            model.addAttribute("error", "Invalid Activation Code");
+            return "account/resetPassword";
+        }
+        if(!accountValidator.isPasswordValid(webAccount.getPassword())){
+            model.addAttribute("error", "Password is not strong enough. It must include:");
+            List<String> passwordCriteria = Arrays.asList(
+                    "At least one lowercase letter",
+                    "At least one uppercase letter",
+                    "At least one special character",
+                    "A minimum length of 8 characters",
+                    "No spaces at all."
+            );
+            model.addAttribute("id",id);
+            model.addAttribute("passwordCriteria",passwordCriteria);
+            return "account/resetPassword";
+        }
+        if(!accountValidator.arePasswordsMatching(webAccount.getPassword(), webAccount.getConfirmPassword())){
+            model.addAttribute("error", "Passwords do not match.");
+            model.addAttribute("id",id);
+            return "account/resetPassword";
+        }
+        webAccount.setPassword(passwordEncoder.encode(webAccount.getPassword()));
+        Account account = appService.updatePasswordById(id, webAccount.getPassword());
+        model.addAttribute("success", "Your password has been updated.");
+        return "account/resetPassword";
     }
 
     // ------------------------------------------------

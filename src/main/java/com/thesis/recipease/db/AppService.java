@@ -48,6 +48,7 @@ public class AppService {
     public Account getAccountByEmail(String email) {
         return accountDao.getAccountByEmail(email);
     }
+    public Account getAccountById(int id) { return  accountDao.getAccountById(id); }
     public Integer getVerificationCodeById(int id) { return accountDao.getVerificationCodeById(id); }
     public String getPasswordById(int id){
         return accountDao.getPasswordById(id);
@@ -58,6 +59,7 @@ public class AppService {
     public Account updateEmailById(int id, String newEmail){ return accountDao.updateEmailById(id, newEmail); }
     public Account updatePasswordById(int id, String password){ return accountDao.updatePasswordById(id, password); }
     public Account deactivateAccountById(int id) { return accountDao.deactivateAccountById(id); }
+    public int generateAndSaveVerificationCode(int id) { return accountDao.generateAndSaveVerificationCode(id); }
 
     // DELETE OPS
     public Account deleteAccountById(int id){
