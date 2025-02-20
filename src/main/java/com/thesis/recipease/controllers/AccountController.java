@@ -291,11 +291,39 @@ public class AccountController {
         return "redirect:/profile/view?id=" + id;
     }
 
-    @RequestMapping(value="/userDashboard", method = RequestMethod.GET)
+    @RequestMapping(value="/adminDashboard", method = RequestMethod.GET)
     public String displayUserDashboard(Model model){
         List<User> users = appService.getUsers();
         model.addAttribute("users", users);
         return "moderation/adminDashboard";
+    }
+
+//
+//    @RequestMapping(value="/adminDashboard", method = RequestMethod.POST)
+//    public String processChangeEmailAdminDashboard(Model model){
+//            return "redirect:/adminDashboard";
+//    }
+//
+    @RequestMapping(value="/adminDashboard/delete", method = RequestMethod.POST)
+    public String processDeleteAdminDashboard(RedirectAttributes redirectAttributes, @RequestParam("id") int id, @RequestParam("email") String email){
+        if (appService.deleteAccountById(id) == -1) {
+            redirectAttributes.addFlashAttribute("error", "Error deleting account. Try again.");
+            return "redirect:/adminDashboard";
+        }
+        mailService.sendAccountDeletionEmail(email);
+        redirectAttributes.addFlashAttribute("message", "This account has been deleted.");
+        return "redirect:/adminDashboard";
+    }
+
+    @RequestMapping(value="/adminDashboard/activate", method = RequestMethod.POST)
+    public String processActivateAdminDashboard(RedirectAttributes redirectAttributes, @RequestParam("id") int id, @RequestParam("email") String email){
+        if (appService.reactivateAccountById(id) == -1) {
+            redirectAttributes.addFlashAttribute("error", "Error activating account. Try again.");
+            return "redirect:/adminDashboard";
+        }
+        mailService.sendAccountReactivatedByModeratorEmail(email);
+        redirectAttributes.addFlashAttribute("message", "This account has been reactivated.");
+        return "redirect:/adminDashboard";
     }
 
     // ------------------------------------------------

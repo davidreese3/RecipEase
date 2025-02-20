@@ -39,23 +39,23 @@
                 <td th:text="${user.name}"></td>
                 <td th:text="${user.roles}"></td>
                 <td>
-                    <button th:onclick="|location.href='/userDashboard/change?id=' + ${user.id}|" >Change</button>
+                    <button th:onclick="|location.href='/adminDashboard/change?id=' + ${user.id}|" >Change</button>
                 </td>
                 <td>
-                    <form id="deleteForm" th:action="@{/userDashboard/delete}" method="post">
+                    <form id="deleteForm" th:action="@{/adminDashboard/delete}" method="post">
                         <input type="hidden" name="id" th:value="${user.id}" />
+                        <input type="hidden" name="email" th:value="${user.email}" />
                         <button type="submit">Delete</button>
                     </form>
                 </td>
                 <td th:if="${!user.active}">
-                    <form id="activateForm" th:action="@{/userDashboard/activate}" method="post" sec:authorize="hasRole('ADMIN')" >
+                    <form id="activateForm" th:action="@{/adminDashboard/activate}" method="post" sec:authorize="hasRole('ADMIN')" >
+                        <input type="hidden" name="email" th:value="${user.email}" />
                         <input type="hidden" name="id" th:value="${user.id}" />
                         <button type="submit">Activate</button>
                     </form>
                 </td>
-                <td th:if="${user.active}">
-                    <p>Currently Active</p>
-                </td>
+                <td th:if="${user.active}">Currently Active</td>
             </tr>
         </tbody>
     </table>
