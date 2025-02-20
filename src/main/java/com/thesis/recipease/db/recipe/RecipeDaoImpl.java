@@ -764,6 +764,16 @@ public class RecipeDaoImpl implements RecipeDao{
         return 0;
     }
 
+    public int deleteCommentByCommentId(int commentId){
+        final String SQL = "delete from comment where commentid = ?";
+        try {
+            jdbcTemplate.update(SQL, commentId);
+        } catch (DataAccessException e) {
+            return -1;
+        }
+        return 0;
+    }
+
     // ------------------------------------------------
     // MAPPERS
     // ------------------------------------------------

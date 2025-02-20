@@ -107,6 +107,7 @@ public class AppService {
         // UPDATE OPS
     // DELETE OPS
     public int deleteRecipeByRecipeId(int recipeId) { return recipeDao.deleteRecipeByRecipeId(recipeId); }
+    public int deleteCommentByCommentId(int commentId) { return recipeDao.deleteCommentByCommentId(commentId); }
 
 
     // ------------------------

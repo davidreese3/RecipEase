@@ -31,4 +31,5 @@ public interface RecipeDao {
     // UPDATE OPS
     // DELETE OPS
     public int deleteRecipeByRecipeId(int recipeId);
+    public int deleteCommentByCommentId(int commentId);
 }
