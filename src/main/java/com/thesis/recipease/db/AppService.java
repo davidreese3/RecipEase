@@ -13,6 +13,7 @@ import com.thesis.recipease.model.domain.recipe.RecipeInfo;
 import com.thesis.recipease.model.domain.recipe.RecipeComment;
 import com.thesis.recipease.model.domain.recipe.RecipeRating;
 import com.thesis.recipease.model.domain.substitution.SubstitutionEntry;
+import com.thesis.recipease.model.user.User;
 import com.thesis.recipease.model.web.account.WebAccount;
 import com.thesis.recipease.model.web.profile.WebProfile;
 import com.thesis.recipease.model.web.recipe.util.WebRating;
@@ -53,6 +54,7 @@ public class AppService {
     public String getPasswordById(int id){
         return accountDao.getPasswordById(id);
     }
+    public List<User> getUsers() { return accountDao.getUsers(); }
 
     // UPDATE OPS
     public boolean verifyVerificationCodeAndActivate(int id, int code, int verificationCode) { return accountDao.verifyVerificationCodeAndActivate(id, code, verificationCode); }

@@ -6,28 +6,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RecipEase User Dashboard</title>
+    <title>RecipEase Admin Dashboard</title>
 </head>
 
 <body>
 <header>
     <div th:replace="~{fragments/headerAndNavbar}"></div>
-    <h2>User Dashboard</h2>
+    <h2>Admin Dashboard</h2>
 </header>
 
 <main>
+    <div th:if="${error}" th:text="${error}" style="color: red;"></div>
+    <div th:if="${message}" th:text="${message}" style="color: green;"></div>
     <table>
         <thead>
-            <th>ID</th>
-            <th>Email</th>
-            <th>Active</th>
-            <th>Name</th>
-            <th>Roles</th>
-            <th>Edit Email<th>
-            <th>Delete Account<th>
-            <th>Reactivate<th>
+            <tr>
+                <th>ID</th>
+                <th>Email</th>
+                <th>Active</th>
+                <th>Name</th>
+                <th>Roles</th>
+                <th>Edit Email</th>
+                <th>Delete Account</th>
+                <th>Activate</th>
+            </tr>
         </thead>
-        <tbody th:each="$user : *{users}">
+        <tbody th:each="user : ${users}">
             <tr>
                 <td th:text="${user.id}"></td>
                 <td th:text="${user.email}"></td>
@@ -35,7 +39,7 @@
                 <td th:text="${user.name}"></td>
                 <td th:text="${user.roles}"></td>
                 <td>
-
+                    <button th:onclick="|location.href='/userDashboard/change?id=' + ${user.id}|" >Change</button>
                 </td>
                 <td>
                     <form id="deleteForm" th:action="@{/userDashboard/delete}" method="post">
@@ -43,17 +47,14 @@
                         <button type="submit">Delete</button>
                     </form>
                 </td>
-                <td th:if="${user.active}">
+                <td th:if="${!user.active}">
                     <form id="activateForm" th:action="@{/userDashboard/activate}" method="post" sec:authorize="hasRole('ADMIN')" >
                         <input type="hidden" name="id" th:value="${user.id}" />
                         <button type="submit">Activate</button>
                     </form>
                 </td>
-                <td th:if="${!user.active}">
+                <td th:if="${user.active}">
                     <p>Currently Active</p>
-                </td>
-                <td>
-                    <button th:onclick="|location.href='/userDashboard/change?id=' + ${user.id}|" >Change</button>
                 </td>
             </tr>
         </tbody>

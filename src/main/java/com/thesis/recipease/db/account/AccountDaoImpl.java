@@ -1,6 +1,7 @@
 package com.thesis.recipease.db.account;
 
 import com.thesis.recipease.model.domain.account.Account;
+import com.thesis.recipease.model.user.User;
 import com.thesis.recipease.model.web.account.WebAccount;
 import com.thesis.recipease.model.web.profile.WebProfile;
 import org.springframework.stereotype.Repository;
@@ -145,6 +146,19 @@ public class AccountDaoImpl implements AccountDao{
         }
     }
 
+    public List<User> getUsers(){
+        final String SQL = "select a.id, a.email, a.active, p.firstName, p.lastName, " +
+                "string_agg(lower(replace(auth.role, 'ROLE_', '')), ', ' " +
+                "order by lower(replace(auth.role, 'ROLE_', '')) desc) as roles " +
+                "from account a left join profile p on a.id = p.id left join authority auth on a.email = auth.email " +
+                "group by a.id, a.email, a.active, p.firstName, p.lastName";
+        try {
+            return jdbcTemplate.query(SQL, new UserMapper());
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
     // ------------------------------------------------
     // UPDATE OPS
     // ------------------------------------------------
@@ -246,6 +260,19 @@ public class AccountDaoImpl implements AccountDao{
             account.setPassword(rs.getString("password"));
             account.setVerificationCode(rs.getInt("verificationCode"));
             return account;
+        }
+    }
+
+    class UserMapper implements RowMapper<User>{
+        @Override
+        public User mapRow(ResultSet rs, int rowNum) throws SQLException{
+            User user = new User();
+            user.setId(rs.getInt("id"));
+            user.setEmail(rs.getString("email"));
+            user.setActive(rs.getBoolean("active"));
+            user.setName(rs.getString("firstname") + " " + rs.getString("lastname"));
+            user.setRoles(rs.getString("roles"));
+            return user;
         }
     }
 }

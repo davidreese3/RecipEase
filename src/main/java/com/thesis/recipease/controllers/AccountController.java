@@ -3,6 +3,7 @@ package com.thesis.recipease.controllers;
 import com.thesis.recipease.db.AppService;
 import com.thesis.recipease.model.domain.account.Account;
 import com.thesis.recipease.model.domain.form.RegistrationForm;
+import com.thesis.recipease.model.user.User;
 import com.thesis.recipease.model.web.account.WebAccount;
 import com.thesis.recipease.model.web.profile.WebProfile;
 import com.thesis.recipease.util.mail.service.MailService;
@@ -288,6 +289,13 @@ public class AccountController {
         redirectAttributes.addFlashAttribute("message", "This user's email has been changed.");
         mailService.sendEmailChangedByModeratorEmail(oldAccount.getEmail(), newAccount.getEmail());
         return "redirect:/profile/view?id=" + id;
+    }
+
+    @RequestMapping(value="/userDashboard", method = RequestMethod.GET)
+    public String displayUserDashboard(Model model){
+        List<User> users = appService.getUsers();
+        model.addAttribute("users", users);
+        return "moderation/adminDashboard";
     }
 
     // ------------------------------------------------

@@ -2,6 +2,7 @@ package com.thesis.recipease.db.account;
 
 
 import com.thesis.recipease.model.domain.account.Account;
+import com.thesis.recipease.model.user.User;
 import com.thesis.recipease.model.web.account.WebAccount;
 import com.thesis.recipease.model.web.profile.WebProfile;
 import org.springframework.stereotype.Repository;
@@ -19,6 +20,7 @@ public interface AccountDao {
     public Account getAccountByEmail(String email);
     public Integer getVerificationCodeById(int id);
     public String getPasswordById(int id);
+    public List<User> getUsers();
     // UPDATE OPS
     public Account updatePasswordById(int id, String password);
     public boolean verifyVerificationCodeAndActivate(int id, int code, int verificationCode);
