@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="UTF-8">
@@ -16,6 +17,10 @@
     </header>
 
     <main>
+        <form id="deleteForm" th:action="@{/account/delete}" method="post" sec:authorize="hasRole('ADMIN')" >
+            <input type="hidden" name="id" th:value="${profile.id}" />
+            <button type="submit">Delete Account</button>
+        </form>
         <button onclick="location.href='/profile/edit'" th:if="${isPersonal}">Edit Profile</button>
         <button onclick="location.href='/account/edit/email'" th:if="${isPersonal}">Edit Email</button>
         <button onclick="location.href='/account/edit/password'" th:if="${isPersonal}">Edit Password</button>

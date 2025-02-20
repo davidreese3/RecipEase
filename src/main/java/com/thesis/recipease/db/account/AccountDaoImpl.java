@@ -213,16 +213,14 @@ public class AccountDaoImpl implements AccountDao{
     // ------------------------------------------------
 
     @Override
-    public Account deleteAccountById(int id) {
-        final String getSQL = "select * from account where id = ?";
-        Account account = getAccountById(id);
+    public int deleteAccountById(int id) {
         final String SQL = "delete from account where id = ?";
-        jdbcTemplate.update(dataSource -> {
-            PreparedStatement ps = dataSource.prepareStatement(SQL);
-            ps.setInt(1, id);
-            return ps;
-        });
-        return account;
+        try {
+            jdbcTemplate.update(SQL, id);
+        } catch (DataAccessException e) {
+            return -1;
+        }
+        return 0;
     }
 
     // ------------------------------------------------

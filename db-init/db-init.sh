@@ -25,7 +25,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
 
     -- profile
     create table if not exists profile (
-        id int references account(id),
+        id int references account(id) on delete cascade on update cascade,
         firstName varchar(20),
         lastName varchar(20),
         cookingLevel varchar(20),
@@ -405,6 +405,8 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
 
         -- Insert into authority table
         INSERT INTO authority (email, role) VALUES
+          ('david33reese@gmail.com', 'ROLE_MOD'),
+          ('david33reese@gmail.com', 'ROLE_ADMIN'),
           ('david33reese@gmail.com', 'ROLE_USER'),
           ('frank_reese@yahoo.com', 'ROLE_USER');
 

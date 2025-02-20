@@ -243,6 +243,17 @@ public class AccountController {
         return "account/resetPassword";
     }
 
+    @RequestMapping(value = "account/delete", method = RequestMethod.POST)
+    public String displayResetAccountPasswordForm(Model model, @RequestParam("id") int id, RedirectAttributes redirectAttributes){
+        if (appService.deleteAccountById(id) == -1) {
+            redirectAttributes.addFlashAttribute("error", "Error deleting account. Try again.");
+            return "redirect:/profile/view?id=" + id;
+        }
+            appService.deleteAccountById(id);
+        //send email to user?
+        return "account/accountDeleted";
+    }
+
     // ------------------------------------------------
     // HELPER METHODS
     // ------------------------------------------------

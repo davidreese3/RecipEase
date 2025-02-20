@@ -62,7 +62,7 @@ public class AppService {
     public int generateAndSaveVerificationCode(int id) { return accountDao.generateAndSaveVerificationCode(id); }
 
     // DELETE OPS
-    public Account deleteAccountById(int id){
+    public int deleteAccountById(int id){
         return accountDao.deleteAccountById(id);
     }
     // ------------------------

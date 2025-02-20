@@ -26,6 +26,6 @@ public interface AccountDao {
     public Account deactivateAccountById(int id);
     public int generateAndSaveVerificationCode(int id);
     // DELETE OPS
-    public Account deleteAccountById(int id);
+    public int deleteAccountById(int id);
 
 }
