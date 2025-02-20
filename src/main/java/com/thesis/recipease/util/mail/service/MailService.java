@@ -175,4 +175,90 @@ public class MailService {
         }
     }
 
+    public void sendAccountDeletedByModeratorEmail(String to) {
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            helper.setTo(to);
+            helper.setFrom("RecipEase <recipeasecommunication@gmail.com>");
+            helper.setSubject("Your RecipEase Account Has Been Deleted");
+
+            String body = """
+        <html>
+        <body>
+            <p>Dear User,</p>
+            <p>We regret to inform you that your <strong>RecipEase</strong> account has been permanently deleted by a moderator or staff member.</p>
+            <p>This action was taken due to a violation of our community guidelines, which include prohibitions against hate speech, harassment, and other harmful activities.</p>
+            <p>If you believe this action was taken in error, you may reach out to our support team at <a href="mailto:recipeasecommunication@gmail.com">recipeasecommunication@gmail.com</a> for further clarification.</p>
+            <p>We strive to make RecipEase a safe and welcoming environment for all users, and we appreciate your understanding.</p>
+            <p><strong>The RecipEase Team</strong></p>
+        </body>
+        </html>
+        """;
+
+            helper.setText(body, true);
+            mailSender.send(message);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void sendAccountReactivatedByModeratorEmail(String to) {
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            helper.setTo(to);
+            helper.setFrom("RecipEase <recipeasecommunication@gmail.com>");
+            helper.setSubject("Your RecipEase Account Has Been Reactivated");
+
+            String body = """
+        <html>
+        <body>
+            <p>Dear User,</p>
+            <p>We’re pleased to inform you that your <strong>RecipEase</strong> account has been reactivated by a moderator or staff member.</p>
+            <p>You can now log back into your account and continue enjoying all the features of RecipEase.</p>
+            <p>If you experience any issues accessing your account, please reach out to our support team at <a href="mailto:recipeasecommunication@gmail.com">recipeasecommunication@gmail.com</a>.</p>
+            <p>Welcome back! We look forward to seeing your recipes and contributions again.</p>
+            <p><strong>Bon appétit,</strong><br>The RecipEase Team</p>
+        </body>
+        </html>
+        """;
+
+            helper.setText(body, true);
+            mailSender.send(message);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void sendEmailChangedByModeratorEmail(String to, String newEmail) {
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            helper.setTo(to);
+            helper.setFrom("RecipEase <recipeasecommunication@gmail.com>");
+            helper.setSubject("Your RecipEase Email Address Has Been Updated");
+
+            String body = """
+        <html>
+        <body>
+            <p>Dear User,</p>
+            <p>We wanted to let you know that the email address associated with your <strong>RecipEase</strong> account has been updated by a moderator or staff member.</p>
+            <p>Your new registered email is: <strong>%s</strong></p>
+            <p>If you have any questions or need further assistance, feel free to reach out to our support team at <a href="mailto:recipeasecommunication@gmail.com">recipeasecommunication@gmail.com</a>.</p>
+            <p>Thank you for being a part of the <strong>RecipEase</strong> community!</p>
+            <p><strong>Bon appétit,</strong><br>The RecipEase Team</p>
+        </body>
+        </html>
+        """.formatted(newEmail);
+
+            helper.setText(body, true);
+            mailSender.send(message);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

@@ -245,21 +245,23 @@ public class AccountController {
 
     @RequestMapping(value = "account/delete", method = RequestMethod.POST)
     public String processDeleteAccountForm(Model model, @RequestParam("id") int id, RedirectAttributes redirectAttributes){
+        Account acct = appService.getAccountById(id);
         if (appService.deleteAccountById(id) == -1) {
             redirectAttributes.addFlashAttribute("error", "Error deleting account. Try again.");
             return "redirect:/profile/view?id=" + id;
         }
-        //send email to user?
+        mailService.sendAccountDeletedByModeratorEmail(acct.getEmail());
         return "account/accountDeleted";
     }
 
     @RequestMapping(value = "account/reactivate", method = RequestMethod.POST)
     public String processReactivateAccountPasswordForm(Model model, @RequestParam("id") int id, RedirectAttributes redirectAttributes){
+        Account acct = appService.getAccountById(id);
         if (appService.reactivateAccountById(id) == -1) {
             redirectAttributes.addFlashAttribute("error", "Error reactivating account. Try again.");
             return "redirect:/profile/view?id=" + id;
         }
-        //send email to user?
+        mailService.sendAccountReactivatedByModeratorEmail(acct.getEmail());
         redirectAttributes.addFlashAttribute("message", "This account has been reactivated.");
         return "redirect:/profile/view?id=" + id;
     }
@@ -272,18 +274,19 @@ public class AccountController {
         model.addAttribute("webAccount",webAccount);
         model.addAttribute("fromDashboard",false);
         model.addAttribute("id",id);
-        return "account/changeUserEmail";
+        return "moderation/changeUserEmail";
     }
 
     @RequestMapping(value = "/account/change/email", method = RequestMethod.POST)
     public String processChangeEmailForm(Model model, RedirectAttributes redirectAttributes, HttpServletRequest request, HttpServletResponse response, WebAccount webAccount, @RequestParam("id") int id){
+        Account oldAccount = appService.getAccountById(id);
         if(!accountValidator.isEmailValid(webAccount.getEmail())){
             model.addAttribute("error", "Invalid email address.");
-            return "account/editEmail";
+            return "moderation/changeUserEmail";
         }
-        Account account = appService.updateEmailById(id, webAccount.getEmail());
+        Account newAccount = appService.updateEmailById(id, webAccount.getEmail());
         redirectAttributes.addFlashAttribute("message", "This user's email has been changed.");
-        //send email
+        mailService.sendEmailChangedByModeratorEmail(oldAccount.getEmail(), newAccount.getEmail());
         return "redirect:/profile/view?id=" + id;
     }
 
