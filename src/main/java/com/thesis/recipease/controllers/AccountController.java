@@ -282,8 +282,8 @@ public class AccountController {
     public String processChangeEmailForm(Model model, RedirectAttributes redirectAttributes, HttpServletRequest request, HttpServletResponse response, WebAccount webAccount, @RequestParam("id") int id){
         Account oldAccount = appService.getAccountById(id);
         if(!accountValidator.isEmailValid(webAccount.getEmail())){
-            model.addAttribute("error", "Invalid email address.");
-            return "moderation/changeUserEmail";
+            redirectAttributes.addFlashAttribute("error", "Invalid email address.");
+            return "redirect:/account/change/email?id=" + id;
         }
         Account newAccount = appService.updateEmailById(id, webAccount.getEmail());
         redirectAttributes.addFlashAttribute("message", "This user's email has been changed.");
@@ -298,12 +298,31 @@ public class AccountController {
         return "moderation/adminDashboard";
     }
 
-//
-//    @RequestMapping(value="/adminDashboard", method = RequestMethod.POST)
-//    public String processChangeEmailAdminDashboard(Model model){
-//            return "redirect:/adminDashboard";
-//    }
-//
+
+    @RequestMapping(value="/adminDashboard/change", method = RequestMethod.GET)
+    public String displayChangeEmailAdminDashboard(Model model, @RequestParam("id") int id){
+        WebAccount webAccount = new WebAccount();
+        Account acct = appService.getAccountById(id);
+        webAccount.setEmail(acct.getEmail());
+        model.addAttribute("webAccount",webAccount);
+        model.addAttribute("fromDashboard",true);
+        model.addAttribute("id",id);
+        return "moderation/changeUserEmail";
+    }
+
+    @RequestMapping(value="/adminDashboard/change", method = RequestMethod.POST)
+    public String processChangeEmailAdminDashboard(Model model, RedirectAttributes redirectAttributes, WebAccount webAccount, @RequestParam("id") int id){
+        Account oldAccount = appService.getAccountById(id);
+        if(!accountValidator.isEmailValid(webAccount.getEmail())){
+            redirectAttributes.addFlashAttribute("error", "Invalid email address.");
+            return "redirect:/adminDashboard/change?id=" + id;
+        }
+        Account newAccount = appService.updateEmailById(id, webAccount.getEmail());
+        redirectAttributes.addFlashAttribute("message", "This user's email has been changed.");
+        mailService.sendEmailChangedByModeratorEmail(oldAccount.getEmail(), newAccount.getEmail());
+        return "redirect:/adminDashboard";
+    }
+
     @RequestMapping(value="/adminDashboard/delete", method = RequestMethod.POST)
     public String processDeleteAdminDashboard(RedirectAttributes redirectAttributes, @RequestParam("id") int id, @RequestParam("email") String email){
         if (appService.deleteAccountById(id) == -1) {
