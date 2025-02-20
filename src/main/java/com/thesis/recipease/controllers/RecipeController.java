@@ -12,12 +12,14 @@ import com.thesis.recipease.util.error.RecipeErrorMessageGenerator;
 import com.thesis.recipease.util.normalizer.recipe.RecipeNormalizer;
 import com.thesis.recipease.util.normalizer.substitution.SubstitutionNormalizer;
 import com.thesis.recipease.util.processer.PrepopulatedEntryProcessor;
+import com.thesis.recipease.util.sanitizer.CommentSanitizer;
 import com.thesis.recipease.util.sanitizer.IngredientSanitizer;
 import com.thesis.recipease.util.sanitizer.RecipeSanitizer;
 import com.thesis.recipease.util.sanitizer.SearchSanitizer;
 import com.thesis.recipease.util.scaler.IngredientScaler;
 import com.thesis.recipease.util.security.SecurityService;
 import com.thesis.recipease.util.storage.StorageService;
+import com.thesis.recipease.util.validator.recipe.CommentValidator;
 import com.thesis.recipease.util.validator.recipe.RecipeValidator;
 import com.thesis.recipease.util.validator.recipe.SearchValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.xml.stream.events.Comment;
 import java.nio.file.Path;
 import java.security.Principal;
 import java.util.*;
@@ -51,6 +54,10 @@ public class RecipeController {
     private RecipeErrorMessageGenerator recipeErrorMessageGenerator;
     @Autowired
     private RecipeValidator recipeValidator;
+    @Autowired
+    private CommentSanitizer commentSanitizer;
+    @Autowired
+    private CommentValidator commentValidator;
     @Autowired
     IngredientScaler ingredientScaler;
     @Autowired
@@ -202,6 +209,13 @@ public class RecipeController {
 
     @RequestMapping(value = "/recipe/comment/add", method = RequestMethod.POST)
     public String processCommentForm(Model model, WebComment webComment, RedirectAttributes redirectAttributes){
+        webComment = commentSanitizer.sanitize(webComment);
+        String error = commentValidator.validate(webComment);
+        if (error != null) {
+            redirectAttributes.addFlashAttribute("webComment",webComment);
+            redirectAttributes.addFlashAttribute("error", error);
+            return "redirect:/recipe/view?recipeId=" + webComment.getRecipeId();
+        }
         RecipeComment recipeComment = appService.addComment(securityService.getLoggedInUserId(), webComment.getRecipeId(), webComment);
         if(recipeComment != null){
             redirectAttributes.addFlashAttribute("message", "Your comment (\'"+webComment.getCommentText()+"\') has be posted");
