@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Account</title>
+</head>
+
+<body>
+<header>
+    <div th:replace="~{fragments/headerAndNavbar}"></div>
+    <h2>Change user email</h2>
+</header>
+
+<main>
+    <div th:if="${error}" th:text="${error}" style="color: red;"></div>
+    <div th:if="${message}" th:text="${message}" style="color: orange;"></div>
+    <div th:if="${success}" th:text="${success}" style="color: green;"></div>
+    <form action="#" th:action="@{${fromDashboard} ? '/account/change/email' : '/account/change/email'}" th:object="${webAccount}" method="post">
+        <input type="hidden" name="id" th:value="${id}" />
+        <table>
+            <tr>
+                <td>Email</td>
+                <td><input type="text" th:field="*{email}" th:placeholder="${webAccount.email}" maxlength="50" required/></td>
+            </tr>
+            <tr>
+                <td><button type="submit">Edit</button></td><td></td>
+            </tr>
+        </table>
+    </form>
+</main>
+
+<footer>
+    <button onclick="location.href='/profile/view/personal'">Back to profile</button>
+</footer>
+</body>
+
+</html>
