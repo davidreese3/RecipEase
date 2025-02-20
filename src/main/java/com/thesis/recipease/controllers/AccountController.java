@@ -244,14 +244,24 @@ public class AccountController {
     }
 
     @RequestMapping(value = "account/delete", method = RequestMethod.POST)
-    public String displayResetAccountPasswordForm(Model model, @RequestParam("id") int id, RedirectAttributes redirectAttributes){
+    public String processDeleteAccountForm(Model model, @RequestParam("id") int id, RedirectAttributes redirectAttributes){
         if (appService.deleteAccountById(id) == -1) {
             redirectAttributes.addFlashAttribute("error", "Error deleting account. Try again.");
             return "redirect:/profile/view?id=" + id;
         }
-            appService.deleteAccountById(id);
         //send email to user?
         return "account/accountDeleted";
+    }
+
+    @RequestMapping(value = "account/reactivate", method = RequestMethod.POST)
+    public String processReactivateAccountPasswordForm(Model model, @RequestParam("id") int id, RedirectAttributes redirectAttributes){
+        if (appService.reactivateAccountById(id) == -1) {
+            redirectAttributes.addFlashAttribute("error", "Error reactivating account. Try again.");
+            return "redirect:/profile/view?id=" + id;
+        }
+        //send email to user?
+        redirectAttributes.addFlashAttribute("message", "This account has been reactivated.");
+        return "redirect:/profile/view?id=" + id;
     }
 
     // ------------------------------------------------

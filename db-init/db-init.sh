@@ -395,20 +395,20 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
     -- Insert into account table
         INSERT INTO account (email, password, active, verificationCode) VALUES
         ('david33reese@gmail.com', '\$argon2id\$v=19\$m=65536,t=3,p=1\$2qnmXPBW7VUtoy4tPmGe3w\$CopbmJNKnWJ9DklYbSqgjPSYHfPTIvctvmSYidgmBBM', TRUE, 123456),
-        ('frank_reese@yahoo.com', '\$argon2id\$v=19\$m=65536,t=3,p=1\$2qnmXPBW7VUtoy4tPmGe3w\$CopbmJNKnWJ9DklYbSqgjPSYHfPTIvctvmSYidgmBBM', TRUE, 123456);
+        ('david598research@gmail.com', '\$argon2id\$v=19\$m=65536,t=3,p=1\$2qnmXPBW7VUtoy4tPmGe3w\$CopbmJNKnWJ9DklYbSqgjPSYHfPTIvctvmSYidgmBBM', TRUE, 123456);
 
 
         -- Insert into profile table
         INSERT INTO profile (id, firstName, lastName, cookingLevel, favoriteDish, favoriteCuisine) VALUES
           (1, 'David', 'Reese', 'Intermediate', 'Spaghetti Carbonara', 'Italian'),
-          (2, 'Frank', 'Reese', 'Intermediate', 'Enchiladas', 'Mexican');
+          (2, 'David', 'Reese (2nd acct)', 'Intermediate', 'Enchiladas', 'Mexican');
 
         -- Insert into authority table
         INSERT INTO authority (email, role) VALUES
           ('david33reese@gmail.com', 'ROLE_MOD'),
           ('david33reese@gmail.com', 'ROLE_ADMIN'),
           ('david33reese@gmail.com', 'ROLE_USER'),
-          ('frank_reese@yahoo.com', 'ROLE_USER');
+          ('david598research@gmail.com', 'ROLE_USER');
 
     alter table account owner to docker;
     alter table authority owner to docker;

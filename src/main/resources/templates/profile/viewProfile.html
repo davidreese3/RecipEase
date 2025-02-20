@@ -21,6 +21,10 @@
             <input type="hidden" name="id" th:value="${profile.id}" />
             <button type="submit">Delete Account</button>
         </form>
+        <form id="reactivateForm" th:action="@{/account/reactivate}" method="post" sec:authorize="hasRole('ADMIN')" >
+            <input type="hidden" name="id" th:value="${profile.id}" />
+            <button type="submit">Reactivate Account</button>
+        </form>
         <button onclick="location.href='/profile/edit'" th:if="${isPersonal}">Edit Profile</button>
         <button onclick="location.href='/account/edit/email'" th:if="${isPersonal}">Edit Email</button>
         <button onclick="location.href='/account/edit/password'" th:if="${isPersonal}">Edit Password</button>

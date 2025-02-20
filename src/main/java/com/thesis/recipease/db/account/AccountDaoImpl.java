@@ -208,6 +208,17 @@ public class AccountDaoImpl implements AccountDao{
         return verificationCode;
     }
 
+    @Override
+    public int reactivateAccountById(int id) {
+        final String SQL = "update account set active = true where id = ?";
+        try {
+            jdbcTemplate.update(SQL, id);
+        } catch (DataAccessException e) {
+            return -1;
+        }
+        return 0;
+    }
+
     // ------------------------------------------------
     // DELETE OPS
     // ------------------------------------------------
