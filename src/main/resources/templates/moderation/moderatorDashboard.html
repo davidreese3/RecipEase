@@ -16,6 +16,14 @@
 </header>
 
 <main>
+    <table>
+        <tr>
+            <td>Total Recipes: <span th:text="${totalRecipes}"></span></td>
+        </tr>
+        <tr>
+            <td>Trending Recipes: <span th:text="${totalTrending}"></span></td>
+        </tr>
+    </table>
     <div th:if="${error}" th:text="${error}" style="color: red;"></div>
     <div th:if="${message}" th:text="${message}" style="color: green;"></div>
     <table>

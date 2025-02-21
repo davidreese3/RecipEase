@@ -42,6 +42,14 @@ public class ModeratorRecipeController {
     public String displayModeratorDashboard(Model model){
         List<RecipeInfo> recipes = appService.getRecipes();
         model.addAttribute("recipes", recipes);
+        int numTrending = 0;
+        for(RecipeInfo recipe : recipes){
+            if(recipe.isStaffTrending()) {
+                numTrending++;
+            }
+        }
+        model.addAttribute("totalRecipes", recipes.size());
+        model.addAttribute("totalTrending", numTrending);
         return "moderation/moderatorDashboard";
     }
 

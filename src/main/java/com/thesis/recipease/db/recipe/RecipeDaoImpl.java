@@ -781,7 +781,7 @@ public class RecipeDaoImpl implements RecipeDao{
         final String SQL = "select i.*, " +
                 "coalesce((select avg(r.ratingvalue) from rating r where r.recipeid = i.recipeid), 0) as avgRating, " +
                 "coalesce((select count(r.ratingvalue) from rating r where r.recipeid = i.recipeid), 0) as numRaters " +
-                "from info i where staffTrending = true order by recipeId desc limit 8";
+                "from info i where staffTrending = true order by recipeId desc";
         try {
             return jdbcTemplate.query(SQL, new RecipeDaoImpl.RecipeInfoMapper());
         } catch (EmptyResultDataAccessException e) {
