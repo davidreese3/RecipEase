@@ -36,7 +36,7 @@
                 <td th:text="${user.id}"></td>
                 <td th:text="${user.email}"></td>
                 <td th:text="${user.active}"></td>
-                <td th:text="${user.name}"></td>
+                <td><a th:href="${'http://localhost:8080/profile/view?id=' + user.id}" th:text="${user.name}"></a></td>
                 <td th:text="${user.roles}"></td>
                 <td>
                     <button th:onclick="|location.href='/adminDashboard/change?id=' + ${user.id}|" >Change</button>
