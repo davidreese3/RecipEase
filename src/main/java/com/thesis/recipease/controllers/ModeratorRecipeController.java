@@ -54,4 +54,25 @@ public class ModeratorRecipeController {
         redirectAttributes.addFlashAttribute("message","Recipe has been deleted. Thank you for cleaning up RecipEase!");
         return "redirect:/moderatorDashboard";
     }
+
+    @RequestMapping(value = "/moderatorDashboard/trending/add", method = RequestMethod.POST)
+    public String processTrendingAddModeratorDashboard(RedirectAttributes redirectAttributes, @RequestParam("id") int id){
+        if (appService.addRecipeToTrendingById(id) == -1) {
+            redirectAttributes.addFlashAttribute("error", "Error adding recipe. Try again.");
+            return "redirect:/moderatorDashboard";
+        }
+        redirectAttributes.addFlashAttribute("message","Recipe has been added to trending.");
+        return "redirect:/moderatorDashboard";
+    }
+
+    @RequestMapping(value = "/moderatorDashboard/trending/remove", method = RequestMethod.POST)
+    public String processTrendingRemoveModeratorDashboard(RedirectAttributes redirectAttributes, @RequestParam("id") int id){
+        if (appService.removeRecipeFromTrendingById(id) == -1) {
+            redirectAttributes.addFlashAttribute("error", "Error removing recipe. Try again.");
+            return "redirect:/moderatorDashboard";
+        }
+        redirectAttributes.addFlashAttribute("message","Recipe has been removed from trending.");
+        return "redirect:/moderatorDashboard";
+    }
+
 }

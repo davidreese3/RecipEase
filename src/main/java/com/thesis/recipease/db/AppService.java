@@ -111,6 +111,9 @@ public class AppService {
     public List<RecipeInfo> getStaffTrendingRecipes() { return recipeDao.getStaffTrendingRecipes(); }
 
     // UPDATE OPS
+    public int addRecipeToTrendingById(int recipeId) {return recipeDao.addRecipeToTrendingById(recipeId);}
+    public int removeRecipeFromTrendingById(int recipeId) {return recipeDao.removeRecipeFromTrendingById(recipeId);}
+
     // DELETE OPS
     public int deleteRecipeByRecipeId(int recipeId) { return recipeDao.deleteRecipeByRecipeId(recipeId); }
     public int deleteCommentByCommentId(int commentId) { return recipeDao.deleteCommentByCommentId(commentId); }

@@ -794,6 +794,26 @@ public class RecipeDaoImpl implements RecipeDao{
     // UPDATE OPS
     // ------------------------------------------------
 
+    public int addRecipeToTrendingById(int recipeId){
+        final String SQL = "update info set staffTrending = true where recipeid = ?";
+        try {
+            jdbcTemplate.update(SQL, recipeId);
+        } catch (DataAccessException e) {
+            return -1;
+        }
+        return 0;
+    }
+
+    public int removeRecipeFromTrendingById(int recipeId){
+        final String SQL = "update info set staffTrending = false where recipeid = ?";
+        try {
+            jdbcTemplate.update(SQL, recipeId);
+        } catch (DataAccessException e) {
+            return -1;
+        }
+        return 0;
+    }
+
     // ------------------------------------------------
     // DELETE OPS
     // ------------------------------------------------

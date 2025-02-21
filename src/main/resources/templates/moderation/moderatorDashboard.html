@@ -26,6 +26,8 @@
             <th>Description</th>
             <th>Rating</th>
             <th>Delete</th>
+            <th>Trending Status</th>
+            <th>Trending Action</th>
         </tr>
         </thead>
         <tbody th:each="recipe : ${recipes}">
@@ -38,6 +40,15 @@
                 <form id="deleteForm" th:action="@{/moderatorDashboard/delete}" method="post">
                     <input type="hidden" name="id" th:value="${recipe.recipeId}" />
                     <button type="submit">Delete</button>
+                </form>
+            </td>
+            <td>
+                <span th:text="${recipe.staffTrending ? 'Trending' : 'Not Trending'}"></span>
+            </td>
+            <td>
+                <form th:action="@{${recipe.staffTrending} ? '/moderatorDashboard/trending/remove' : '/moderatorDashboard/trending/add'}" method="post">
+                    <input type="hidden" name="id" th:value="${recipe.recipeId}" />
+                    <button type="submit" th:text="${recipe.staffTrending} ? 'Remove' : 'Add'"></button>
                 </form>
             </td>
         </tr>

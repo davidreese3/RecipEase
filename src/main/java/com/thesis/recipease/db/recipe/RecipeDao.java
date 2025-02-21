@@ -32,6 +32,8 @@ public interface RecipeDao {
     public List<RecipeInfo> getCommunityTrendingRecipes();
     public List<RecipeInfo> getStaffTrendingRecipes();
     // UPDATE OPS
+    public int addRecipeToTrendingById(int recipeId);
+    public int removeRecipeFromTrendingById(int recipeId);
     // DELETE OPS
     public int deleteRecipeByRecipeId(int recipeId);
     public int deleteCommentByCommentId(int commentId);
