@@ -57,6 +57,7 @@ public class WebSecurityConfig {
                         .requestMatchers("/", "/403", "/login", "/account/register", "/account/activate", "/account/reset/**", "/403", "/logout", "/resources/**", "/static/**", "/css/**").permitAll()
                         // Protected URLs
                         .requestMatchers("/landing","/profile/**","/glossary/**").authenticated()
+                        .requestMatchers("/moderatorDashboard/**").hasRole("ADMIN")
                         .requestMatchers("/adminDashboard/**").hasRole("ADMIN")
                         .anyRequest().authenticated();
             } catch (Exception e) {
