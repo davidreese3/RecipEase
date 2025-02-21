@@ -105,7 +105,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
     create table if not exists comment (
         recipeId int references info(recipeId) on delete cascade,
         commentId serial, --used for PK
-        commentUserId int references account(id), --technically do they link?
+        commentUserId int references account(id) on delete cascade,
         commentText varchar(500),
         primary key(recipeId, commentID)
     );

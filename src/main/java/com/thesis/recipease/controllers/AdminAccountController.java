@@ -27,7 +27,7 @@ public class AdminAccountController {
     @Autowired
     private MailService mailService;
 
-    @RequestMapping(value = "account/delete", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin/account/delete", method = RequestMethod.POST)
     public String processDeleteAccountForm(Model model, @RequestParam("id") int id, RedirectAttributes redirectAttributes){
         Account acct = appService.getAccountById(id);
         if (appService.deleteAccountById(id) == -1) {
@@ -38,7 +38,7 @@ public class AdminAccountController {
         return "account/accountDeleted";
     }
 
-    @RequestMapping(value = "account/reactivate", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin/account/reactivate", method = RequestMethod.POST)
     public String processReactivateAccountPasswordForm(Model model, @RequestParam("id") int id, RedirectAttributes redirectAttributes){
         Account acct = appService.getAccountById(id);
         if (appService.reactivateAccountById(id) == -1) {
@@ -50,7 +50,7 @@ public class AdminAccountController {
         return "redirect:/profile/view?id=" + id;
     }
 
-    @RequestMapping(value = "account/change/email", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/account/change/email", method = RequestMethod.GET)
     public String displayChangeEmailForm(Model model, @RequestParam("id") int id){
         WebAccount webAccount = new WebAccount();
         Account acct = appService.getAccountById(id);
@@ -61,12 +61,12 @@ public class AdminAccountController {
         return "moderation/changeUserEmail";
     }
 
-    @RequestMapping(value = "/account/change/email", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin/account/change/email", method = RequestMethod.POST)
     public String processChangeEmailForm(Model model, RedirectAttributes redirectAttributes, HttpServletRequest request, HttpServletResponse response, WebAccount webAccount, @RequestParam("id") int id){
         Account oldAccount = appService.getAccountById(id);
         if(!accountValidator.isEmailValid(webAccount.getEmail())){
             redirectAttributes.addFlashAttribute("error", "Invalid email address.");
-            return "redirect:/account/change/email?id=" + id;
+            return "redirect:/admin/account/change/email?id=" + id;
         }
         Account newAccount = appService.updateEmailById(id, webAccount.getEmail());
         redirectAttributes.addFlashAttribute("message", "This user's email has been changed.");

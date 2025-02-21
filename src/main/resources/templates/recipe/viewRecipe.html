@@ -30,7 +30,7 @@
         <button type="submit" name="scalingValue" value="2">2x</button>
         <button type="submit" name="scalingValue" value="4">4x</button>
     </form>
-    <form id="deleteRecipeForm" th:action="@{/recipe/delete}" method="post" sec:authorize="hasRole('MOD') or hasRole('ADMIN')" >
+    <form id="deleteRecipeForm" th:action="@{/mod/recipe/delete}" method="post" sec:authorize="hasRole('MOD') or hasRole('ADMIN')" >
         <input type="hidden" name="recipeId" th:value="${recipe.recipeInfo.recipeId}" />
         <button type="submit">Delete Recipe</button>
     </form>
@@ -176,7 +176,7 @@
                 <td th:text="${comment.commentUserName} + ': '"></td>
                 <td th:text="${comment.commentText}"></td>
                 <td>
-                    <form id="deleteCommentForm" th:action="@{/recipe/comment/delete}" method="post" sec:authorize="hasRole('MOD') or hasRole('ADMIN')" >
+                    <form id="deleteCommentForm" th:action="@{/mod/recipe/comment/delete}" method="post" sec:authorize="hasRole('MOD') or hasRole('ADMIN')" >
                         <input type="hidden" name="comment" th:value="${comment.commentText}" />
                         <input type="hidden" name="recipeId" th:value="${comment.recipeId}" />
                         <input type="hidden" name="commentId" th:value="${comment.commentId}" />
