@@ -87,7 +87,7 @@ public class RecipeDaoImpl implements RecipeDao{
     // HELPER METHODS
     private int insertRecipeInfo(int userId, WebInfo webInfo){
         int recipeId;
-        final String SQL = "insert into info (userid, name, description, yield, unitOfYield, prepMin, prepHr, processMin, processHr, totalMin, totalHr) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        final String SQL = "insert into info (userid, name, description, yield, unitOfYield, prepMin, prepHr, processMin, processHr, totalMin, totalHr, staffTrending) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(dataSource -> {
             PreparedStatement ps = dataSource.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
@@ -102,6 +102,7 @@ public class RecipeDaoImpl implements RecipeDao{
             ps.setInt(9, webInfo.getProcessHr());
             ps.setInt(10, webInfo.getTotalMin());
             ps.setInt(11, webInfo.getTotalHr());
+            ps.setBoolean(12, false);
             return ps;
         }, keyHolder);
         List<Map<String, Object>> keylist= keyHolder.getKeyList();
@@ -774,6 +775,18 @@ public class RecipeDaoImpl implements RecipeDao{
         }
     }
 
+    public List<RecipeInfo> getStaffTrendingRecipes(){
+        final String SQL = "select i.*, " +
+                "coalesce((select avg(r.ratingvalue) from rating r where r.recipeid = i.recipeid), 0) as avgRating, " +
+                "coalesce((select count(r.ratingvalue) from rating r where r.recipeid = i.recipeid), 0) as numRaters " +
+                "from info i where staffTrending = true order by recipeId desc limit 8";
+        try {
+            return jdbcTemplate.query(SQL, new RecipeDaoImpl.RecipeInfoMapper());
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
 
     // ------------------------------------------------
     // UPDATE OPS
@@ -823,6 +836,7 @@ public class RecipeDaoImpl implements RecipeDao{
             recipeInfo.setTotalMin(rs.getInt("totalMin"));
             recipeInfo.setTotalHr(rs.getInt("totalHr"));
             recipeInfo.setRatingInfo(new RatingInfo(rs.getDouble("avgRating"), rs.getInt("numRaters")));
+            recipeInfo.setStaffTrending(rs.getBoolean("stafftrending"));
             return recipeInfo;
         }
     }

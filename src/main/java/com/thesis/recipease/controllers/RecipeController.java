@@ -275,7 +275,8 @@ public class RecipeController {
         //community recipes
         List<RecipeInfo> communityRecipes = appService.getCommunityTrendingRecipes();
         model.addAttribute("communityRecipes",communityRecipes);
-        //staff recipes - not implemented yet
+        List<RecipeInfo> staffRecipes = appService.getStaffTrendingRecipes();
+        model.addAttribute("staffRecipes",staffRecipes);
         return "recipe/trendingRecipes";
     }
 }

@@ -108,6 +108,7 @@ public class AppService {
     public List<RecipeInfo> getRecipesBySearchCriteria(WebSearch webSearch){ return recipeDao.getRecipesBySearchCriteria(webSearch); }
     public List<RecipeInfo> getRecipes() { return recipeDao.getRecipes(); }
     public List<RecipeInfo> getCommunityTrendingRecipes() { return recipeDao.getCommunityTrendingRecipes(); }
+    public List<RecipeInfo> getStaffTrendingRecipes() { return recipeDao.getStaffTrendingRecipes(); }
 
     // UPDATE OPS
     // DELETE OPS

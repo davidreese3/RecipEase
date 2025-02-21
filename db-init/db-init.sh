@@ -63,18 +63,11 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
                 setweight(to_tsvector('english', name), 'A') ||
                 setweight(to_tsvector('english', description), 'C')
             ) stored,
+        staffTrending boolean,
         primary key (recipeId)
     );
 
     create index info_fts_idx on info using gin(fts_document);
-
-    -- variation
-    create table if not exists variation (
-        originalRecipeId int references info(recipeId) on delete cascade,
-        variationRecipeId int references info(recipeId) on delete cascade,
-        primary key (originalRecipeId, variationRecipeId)
-    );
-
 
     -- ingredient
     create table if not exists ingredient (
@@ -135,6 +128,17 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
         tagField varchar(30),
         tagValue varchar(30),
         primary key (recipeId, tagField, tagValue)
+    );
+
+    -- ======
+    -- Types
+    -- ======
+
+    -- variation
+    create table if not exists variation (
+        originalRecipeId int references info(recipeId) on delete cascade,
+        variationRecipeId int references info(recipeId) on delete cascade,
+        primary key (originalRecipeId, variationRecipeId)
     );
 
     -- ======
@@ -450,27 +454,27 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
         ('jackson.taylor@example.com', 'ROLE_USER');
 
     --Insert all recipes in one statement
-    INSERT INTO info(recipeId, userId, name, description, yield, unitOfYield, prepMin, prepHr, processMin, processHr, totalMin, totalHr) VALUES
-        (1, 1, 'Spaghetti Carbonara', 'Classic Italian pasta dish with eggs, cheese, pancetta, and pepper.', 4, 'servings', 10, 0, 10, 0, 20, 0),
-        (2, 2, 'Chicken Alfredo', 'Creamy pasta dish with grilled chicken and Alfredo sauce.', 4, 'servings', 15, 0, 15, 0, 30, 0),
-        (3, 3, 'Beef Stroganoff', 'Russian dish with sautéed beef in a creamy mushroom sauce.', 4, 'servings', 20, 0, 15, 0, 35, 0),
-        (4, 4, 'Vegetable Stir Fry', 'Healthy stir-fried vegetables with soy sauce and garlic.', 2, 'servings', 10, 0, 5, 0, 15, 0),
-        (5, 5, 'Tacos al Pastor', 'Mexican-style pork tacos with pineapple and onions.', 4, 'servings', 20, 0, 5, 0, 25, 0),
-        (6, 6, 'Margherita Pizza', 'Classic Italian pizza with tomato, mozzarella, and basil.', 2, 'pizzas', 20, 0, 20, 0, 40, 0),
-        (7, 7, 'Chicken Tikka Masala', 'Indian-style chicken in a spiced tomato-based sauce.', 4, 'servings', 30, 0, 15, 0, 45, 0),
-        (8, 8, 'Sushi Rolls', 'Japanese sushi rolls with fish and vegetables.', 4, 'rolls', 40, 0, 20, 0, 60, 0),
-        (9, 9, 'Clam Chowder', 'Creamy soup with clams, potatoes, and onions.', 6, 'bowls', 30, 0, 20, 0, 50, 0),
-        (10, 10, 'French Onion Soup', 'Classic French soup with caramelized onions and melted cheese.', 4, 'bowls', 15, 0, 45, 0, 60, 0),
-        (11, 1, 'Lobster Bisque', 'Rich and creamy seafood soup with lobster.', 4, 'bowls', 20, 0, 40, 0, 60, 0),
-        (12, 2, 'Greek Salad', 'Refreshing salad with tomatoes, cucumbers, olives, and feta cheese.', 2, 'servings', 10, 0, 0, 0, 10, 0),
-        (13, 3, 'Caprese Salad', 'Simple Italian salad with tomatoes, mozzarella, basil, and balsamic glaze.', 2, 'servings', 5, 0, 0, 0, 5, 0),
-        (14, 4, 'Ratatouille', 'French vegetable stew with eggplant, zucchini, and tomatoes.', 4, 'servings', 20, 0, 40, 0, 60, 0),
-        (15, 5, 'Paella', 'Spanish rice dish with seafood, sausage, and saffron.', 6, 'servings', 30, 0, 45, 0, 75, 0),
-        (16, 6, 'Biryani', 'Indian spiced rice dish with chicken and yogurt.', 6, 'servings', 25, 0, 40, 0, 65, 0),
-        (17, 7, 'Lasagna', 'Layered pasta dish with ricotta, meat sauce, and mozzarella.', 8, 'servings', 30, 0, 60, 0, 90, 0),
-        (18, 8, 'Chili Con Carne', 'Spicy stew with beans, ground beef, and tomatoes.', 6, 'servings', 20, 0, 60, 0, 80, 0),
-        (19, 9, 'Mac and Cheese', 'Creamy baked macaroni and cheese with a crispy topping.', 4, 'servings', 15, 0, 30, 0, 45, 0),
-        (20, 10, 'Stuffed Bell Peppers', 'Bell peppers stuffed with ground meat, rice, and spices.', 4, 'servings', 20, 0, 40, 0, 60, 0);
+    INSERT INTO info(recipeId, userId, name, description, yield, unitOfYield, prepMin, prepHr, processMin, processHr, totalMin, totalHr, staffTrending) VALUES
+        (1, 1, 'Spaghetti Carbonara', 'Classic Italian pasta dish with eggs, cheese, pancetta, and pepper.', 4, 'servings', 10, 0, 10, 0, 20, 0, false),
+        (2, 2, 'Chicken Alfredo', 'Creamy pasta dish with grilled chicken and Alfredo sauce.', 4, 'servings', 15, 0, 15, 0, 30, 0, false),
+        (3, 3, 'Beef Stroganoff', 'Russian dish with sautéed beef in a creamy mushroom sauce.', 4, 'servings', 20, 0, 15, 0, 35, 0, false),
+        (4, 4, 'Vegetable Stir Fry', 'Healthy stir-fried vegetables with soy sauce and garlic.', 2, 'servings', 10, 0, 5, 0, 15, 0, false),
+        (5, 5, 'Tacos al Pastor', 'Mexican-style pork tacos with pineapple and onions.', 4, 'servings', 20, 0, 5, 0, 25, 0, false),
+        (6, 6, 'Margherita Pizza', 'Classic Italian pizza with tomato, mozzarella, and basil.', 2, 'pizzas', 20, 0, 20, 0, 40, 0, false),
+        (7, 7, 'Chicken Tikka Masala', 'Indian-style chicken in a spiced tomato-based sauce.', 4, 'servings', 30, 0, 15, 0, 45, 0, false),
+        (8, 8, 'Sushi Rolls', 'Japanese sushi rolls with fish and vegetables.', 4, 'rolls', 40, 0, 20, 0, 60, 0, false),
+        (9, 9, 'Clam Chowder', 'Creamy soup with clams, potatoes, and onions.', 6, 'bowls', 30, 0, 20, 0, 50, 0, false),
+        (10, 10, 'French Onion Soup', 'Classic French soup with caramelized onions and melted cheese.', 4, 'bowls', 15, 0, 45, 0, 60, 0, false),
+        (11, 1, 'Lobster Bisque', 'Rich and creamy seafood soup with lobster.', 4, 'bowls', 20, 0, 40, 0, 60, 0, false),
+        (12, 2, 'Greek Salad', 'Refreshing salad with tomatoes, cucumbers, olives, and feta cheese.', 2, 'servings', 10, 0, 0, 0, 10, 0, false),
+        (13, 3, 'Caprese Salad', 'Simple Italian salad with tomatoes, mozzarella, basil, and balsamic glaze.', 2, 'servings', 5, 0, 0, 0, 5, 0, false),
+        (14, 4, 'Ratatouille', 'French vegetable stew with eggplant, zucchini, and tomatoes.', 4, 'servings', 20, 0, 40, 0, 60, 0, false),
+        (15, 5, 'Paella', 'Spanish rice dish with seafood, sausage, and saffron.', 6, 'servings', 30, 0, 45, 0, 75, 0, false),
+        (16, 6, 'Biryani', 'Indian spiced rice dish with chicken and yogurt.', 6, 'servings', 25, 0, 40, 0, 65, 0, false),
+        (17, 7, 'Lasagna', 'Layered pasta dish with ricotta, meat sauce, and mozzarella.', 8, 'servings', 30, 0, 60, 0, 90, 0, false),
+        (18, 8, 'Chili Con Carne', 'Spicy stew with beans, ground beef, and tomatoes.', 6, 'servings', 20, 0, 60, 0, 80, 0, false),
+        (19, 9, 'Mac and Cheese', 'Creamy baked macaroni and cheese with a crispy topping.', 4, 'servings', 15, 0, 30, 0, 45, 0, false),
+        (20, 10, 'Stuffed Bell Peppers', 'Bell peppers stuffed with ground meat, rice, and spices.', 4, 'servings', 20, 0, 40, 0, 60, 0, false);
 
     --Insert ratings
     INSERT INTO rating(recipeId, ratingUserId, ratingValue) VALUES

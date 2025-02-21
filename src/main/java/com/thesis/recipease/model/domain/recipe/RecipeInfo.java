@@ -14,10 +14,11 @@ public class RecipeInfo {
     private int totalMin;
     private int totalHr;
     private RatingInfo ratingInfo;
+    private boolean staffTrending;
 
     public RecipeInfo(){}
 
-    public RecipeInfo(int recipeId, int userId, String name, String description, double yield, String unitOfYield, int prepMin, int prepHr, int processMin, int processHr, int totalMin, int totalHr, RatingInfo ratingInfo) {
+    public RecipeInfo(int recipeId, int userId, String name, String description, double yield, String unitOfYield, int prepMin, int prepHr, int processMin, int processHr, int totalMin, int totalHr, RatingInfo ratingInfo, boolean staffTrending) {
         this.recipeId = recipeId;
         this.userId = userId;
         this.name = name;
@@ -31,6 +32,7 @@ public class RecipeInfo {
         this.totalMin = totalMin;
         this.totalHr = totalHr;
         this.ratingInfo = ratingInfo;
+        this.staffTrending = staffTrending;
     }
 
     public int getRecipeId() {
@@ -121,6 +123,14 @@ public class RecipeInfo {
 
     public void setRatingInfo(RatingInfo ratingInfo) {
         this.ratingInfo = ratingInfo;
+    }
+
+    public boolean isStaffTrending() {
+        return staffTrending;
+    }
+
+    public void setStaffTrending(boolean staffTrending) {
+        this.staffTrending = staffTrending;
     }
 
     @Override
