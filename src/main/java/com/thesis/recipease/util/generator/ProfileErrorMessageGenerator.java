@@ -1,8 +1,5 @@
 package com.thesis.recipease.util.generator;
 
-import org.springframework.stereotype.Service;
-
-@Service
 public class ProfileErrorMessageGenerator {
     private static final String [] PROFILE_ERRORS = {
             "Profile Not Found! Did it go on vacation? Let’s find someone else!",

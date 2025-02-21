@@ -1,8 +1,5 @@
 package com.thesis.recipease.util.generator;
 
-import org.springframework.stereotype.Service;
-
-@Service
 public class RecipeErrorMessageGenerator {
     private static final String [] RECIPE_ERRORS = {
             "Oops! Looks like this recipe took a vacation. Try cooking up a search for something else!",
