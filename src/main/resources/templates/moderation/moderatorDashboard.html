@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RecipEase Mod Dashboard</title>
+</head>
+
+<body>
+<header>
+    <div th:replace="~{fragments/headerAndNavbar}"></div>
+    <h2>Moderator Dashboard</h2>
+</header>
+
+<main>
+    <div th:if="${error}" th:text="${error}" style="color: red;"></div>
+    <div th:if="${message}" th:text="${message}" style="color: green;"></div>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Rating</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody th:each="recipe : ${recipes}">
+        <tr>
+            <td th:text="${recipe.recipeId}"></td>
+            <td><a th:href="${'http://localhost:8080/recipe/view?recipeId=' + recipe.recipeId}" th:text="${recipe.name}"></a></td>
+            <td th:text="${recipe.description}"></td>
+            <td th:text="${@recipeUtils.formatRatingShort(recipe.ratingInfo.averageRating, recipe.ratingInfo.numberOfRaters)}"></td>
+            <td>
+                <form id="deleteForm" th:action="@{/moderatorDashboard/delete}" method="post">
+                    <input type="hidden" name="id" th:value="${recipe.recipeId}" />
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+
+<footer>
+    <p>footer</p>
+</footer>
+</body>
+
+</html>

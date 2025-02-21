@@ -75,7 +75,7 @@ public class AdminAccountController {
     }
 
     @RequestMapping(value="/adminDashboard", method = RequestMethod.GET)
-    public String displayUserDashboard(Model model){
+    public String displayAdminDashboard(Model model){
         List<User> users = appService.getUsers();
         model.addAttribute("users", users);
         return "moderation/adminDashboard";

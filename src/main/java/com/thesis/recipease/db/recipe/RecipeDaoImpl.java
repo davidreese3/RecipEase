@@ -1,6 +1,8 @@
 package com.thesis.recipease.db.recipe;
 
+import com.thesis.recipease.db.account.AccountDaoImpl;
 import com.thesis.recipease.model.domain.recipe.*;
+import com.thesis.recipease.model.user.User;
 import com.thesis.recipease.model.web.recipe.*;
 import com.thesis.recipease.model.web.recipe.WebComment;
 import com.thesis.recipease.model.web.recipe.util.WebRating;
@@ -740,6 +742,18 @@ public class RecipeDaoImpl implements RecipeDao{
         params.add(webSearch.getName());
         try {
             return jdbcTemplate.query(SQL, new RecipeDaoImpl.RecipeInfoMapper(), params.toArray());
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
+    public List<RecipeInfo> getRecipes(){
+        final String SQL = "select i.*, " +
+                "coalesce((select avg(r.ratingvalue) from rating r where r.recipeid = i.recipeid), 0) as avgRating, " +
+                "coalesce((select count(r.ratingvalue) from rating r where r.recipeid = i.recipeid), 0) as numRaters " +
+                "from info i";
+        try {
+            return jdbcTemplate.query(SQL, new RecipeDaoImpl.RecipeInfoMapper());
         } catch (EmptyResultDataAccessException e) {
             return null;
         }

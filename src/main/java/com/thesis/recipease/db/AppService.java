@@ -106,7 +106,7 @@ public class AppService {
     public int getNumberOfVariationByOriginalRecipeId(int originalRecipeId) { return recipeDao.getNumberOfVariationByOriginalRecipeId(originalRecipeId); };
     public int getDepthOfVariationByOriginalRecipeId(int originalRecipeId) { return recipeDao.getDepthOfVariationByOriginalRecipeId(originalRecipeId); }
     public List<RecipeInfo> getRecipesBySearchCriteria(WebSearch webSearch){ return recipeDao.getRecipesBySearchCriteria(webSearch); }
-
+    public List<RecipeInfo> getRecipes() { return recipeDao.getRecipes(); }
         // UPDATE OPS
     // DELETE OPS
     public int deleteRecipeByRecipeId(int recipeId) { return recipeDao.deleteRecipeByRecipeId(recipeId); }
