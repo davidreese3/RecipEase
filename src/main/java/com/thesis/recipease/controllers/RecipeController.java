@@ -8,12 +8,11 @@ import com.thesis.recipease.model.web.recipe.*;
 import com.thesis.recipease.model.web.recipe.util.WebRating;
 import com.thesis.recipease.model.web.recipe.util.WebScaling;
 import com.thesis.recipease.model.web.recipe.util.WebSearch;
-import com.thesis.recipease.util.error.RecipeErrorMessageGenerator;
+import com.thesis.recipease.util.generator.RecipeErrorMessageGenerator;
 import com.thesis.recipease.util.normalizer.recipe.RecipeNormalizer;
 import com.thesis.recipease.util.normalizer.substitution.SubstitutionNormalizer;
 import com.thesis.recipease.util.processer.PrepopulatedEntryProcessor;
 import com.thesis.recipease.util.sanitizer.CommentSanitizer;
-import com.thesis.recipease.util.sanitizer.IngredientSanitizer;
 import com.thesis.recipease.util.sanitizer.RecipeSanitizer;
 import com.thesis.recipease.util.sanitizer.SearchSanitizer;
 import com.thesis.recipease.util.scaler.IngredientScaler;
@@ -31,7 +30,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.xml.stream.events.Comment;
 import java.nio.file.Path;
 import java.security.Principal;
 import java.util.*;
@@ -50,8 +48,6 @@ public class RecipeController {
     private SubstitutionNormalizer substitutionNormalizer;
     @Autowired
     private RecipeNormalizer recipeNormalizer;
-    @Autowired
-    private RecipeErrorMessageGenerator recipeErrorMessageGenerator;
     @Autowired
     private RecipeValidator recipeValidator;
     @Autowired
@@ -84,7 +80,7 @@ public class RecipeController {
     public String displayVariationCreationForm(Model model, @RequestParam("recipeId") int recipeId) {
         WebRecipe webRecipe = appService.getWebRecipeById(recipeId);
         if (webRecipe == null) {
-            model.addAttribute("message", recipeErrorMessageGenerator.getVariationError());
+            model.addAttribute("message", RecipeErrorMessageGenerator.getVariationError());
             return "recipe/createVariationDNE";
         }
 
@@ -145,7 +141,7 @@ public class RecipeController {
                                 @RequestParam(value = "scale", required = false) Double scale) {
         Recipe recipe = appService.getRecipeById(recipeId);
         if (recipe == null){
-            model.addAttribute("message", recipeErrorMessageGenerator.getRecipeError());
+            model.addAttribute("message", RecipeErrorMessageGenerator.getRecipeError());
             return "recipe/viewRecipeDNE";
         }
         if (scale != null){

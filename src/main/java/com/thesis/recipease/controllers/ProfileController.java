@@ -4,7 +4,7 @@ import com.thesis.recipease.db.AppService;
 import com.thesis.recipease.model.domain.profile.Profile;
 import com.thesis.recipease.model.domain.recipe.RecipeInfo;
 import com.thesis.recipease.model.web.profile.WebProfile;
-import com.thesis.recipease.util.error.ProfileErrorMessageGenerator;
+import com.thesis.recipease.util.generator.ProfileErrorMessageGenerator;
 import com.thesis.recipease.util.normalizer.recipe.RecipeNormalizer;
 import com.thesis.recipease.util.security.SecurityService;
 import com.thesis.recipease.util.validator.profile.ProfileValidator;
@@ -29,15 +29,13 @@ public class ProfileController {
     private SecurityService securityService;
     @Autowired
     private RecipeNormalizer recipeNormalizer;
-    @Autowired
-    ProfileErrorMessageGenerator profileErrorMessageGenerator;
 
     @RequestMapping(value = "/profile/view/personal", method = RequestMethod.GET)
     public String displayPersonalProfile(Model model){
         int userId = securityService.getLoggedInUserId();
         Profile profile = appService.getProfileById(userId);
         if(profile == null){
-            model.addAttribute("message",profileErrorMessageGenerator.getPersonalProfileError());
+            model.addAttribute("message",ProfileErrorMessageGenerator.getPersonalProfileError());
             return "profile/viewProfileDNE";
         }
         else{
@@ -60,7 +58,7 @@ public class ProfileController {
         else {
             Profile profile = appService.getProfileById(id);
             if(profile == null){
-                model.addAttribute("message",profileErrorMessageGenerator.getProfileError());
+                model.addAttribute("message",ProfileErrorMessageGenerator.getProfileError());
                 return "profile/viewProfileDNE";
             }
             else {
@@ -73,7 +71,7 @@ public class ProfileController {
 
                 model.addAttribute("isPersonal", false);
                 if (!profile.isActive()){
-                    model.addAttribute("error", profileErrorMessageGenerator.getDeactivatedProfileError());
+                    model.addAttribute("error", ProfileErrorMessageGenerator.getDeactivatedProfileError());
                 }
             }
         }

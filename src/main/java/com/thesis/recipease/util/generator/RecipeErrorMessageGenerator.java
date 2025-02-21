@@ -1,4 +1,4 @@
-package com.thesis.recipease.util.error;
+package com.thesis.recipease.util.generator;
 
 import org.springframework.stereotype.Service;
 
@@ -24,11 +24,11 @@ public class RecipeErrorMessageGenerator {
             "Recipe not found! Unfortunately, you can’t build on something that doesn’t exist."
     };
 
-    public String getRecipeError(){
+    public static String getRecipeError(){
         return RECIPE_ERRORS[(int) Math.floor(Math.random() * RECIPE_ERRORS.length)];
     }
 
-    public String getVariationError(){
+    public static String getVariationError(){
         return VARIATION_ERRORS[(int) Math.floor(Math.random() * VARIATION_ERRORS.length)];
     }
 }

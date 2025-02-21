@@ -1,4 +1,4 @@
-package com.thesis.recipease.util.error;
+package com.thesis.recipease.util.generator;
 
 import org.springframework.stereotype.Service;
 
@@ -27,15 +27,15 @@ public class ProfileErrorMessageGenerator {
             "Chef’s gone fishing! No new recipes, but you can enjoy their past creations.",
     };
 
-    public String getProfileError(){
+    public static String getProfileError(){
         return PROFILE_ERRORS[(int) Math.floor(Math.random() * PROFILE_ERRORS.length)];
     }
 
-    public String getPersonalProfileError(){
+    public static String getPersonalProfileError(){
         return "You do not have a profile created.";
     }
 
-    public String getDeactivatedProfileError(){
+    public static String getDeactivatedProfileError(){
         return DEACTIVATED_PROFILE_ERRORS[(int) Math.floor(Math.random() * DEACTIVATED_PROFILE_ERRORS.length)];
     }
 }
