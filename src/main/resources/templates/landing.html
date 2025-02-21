@@ -4,23 +4,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RecipEase Landing</title>
+    <title>RecipEase Home</title>
 </head>
 
 <body>
 <header>
     <div th:replace="~{fragments/headerAndNavbar}"></div>
-    <h2>Welcome to RecipEase</h2>
 </header>
 
 <main>
-    <p>main</p>
-    <div>
-    </div>
+    <section>
+        <h1>Welcome to RecipEase</h1>
+        <p>Your go-to platform for discovering, creating, and sharing delicious recipes.</p>
+        <a href="/recipe/search">Find Recipes</a>
+    </section>
+
+    <section>
+        <h3>Create Your Own Recipes</h3>
+        <p>Share your culinary creations with the world. Add ingredients, instructions, and even photos!</p>
+        <a href="/recipe/create">Create a Recipe</a>
+    </section>
+
+    <section>
+        <h3>Explore the Glossary</h3>
+        <p>New to cooking? Check out our glossary for definitions of common cooking terms.</p>
+        <a href="/glossary/view">View Glossary</a>
+    </section>
+
+    <section>
+        <h3>Ingredient Substitutions</h3>
+        <p>Missing an ingredient? No worries! Find suitable substitutions with ease.</p>
+        <a href="/substitution/view">View Substitutions</a>
+    </section>
 </main>
 
 <footer>
-    <p>footer</p>
+    <p></p>
 </footer>
 </body>
 

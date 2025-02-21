@@ -759,6 +759,21 @@ public class RecipeDaoImpl implements RecipeDao{
         }
     }
 
+    public List<RecipeInfo> getCommunityTrendingRecipes(){
+        final String SQL = "select i.*, " +
+                "coalesce((select avg(r.ratingvalue) from rating r where r.recipeid = i.recipeid), 0) as avgRating, " +
+                "coalesce((select count(r.ratingvalue) from rating r where r.recipeid = i.recipeid), 0) as numRaters " +
+                "from info i " +
+                "where coalesce((select count(r.ratingvalue) from rating r where r.recipeid = i.recipeid), 0) >= 5 " +
+                "order by i.recipeid desc, avgRating desc " +
+                "limit 8";
+        try {
+            return jdbcTemplate.query(SQL, new RecipeDaoImpl.RecipeInfoMapper());
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
 
     // ------------------------------------------------
     // UPDATE OPS

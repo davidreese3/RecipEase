@@ -29,6 +29,7 @@ public interface RecipeDao {
     public int getDepthOfVariationByOriginalRecipeId(int originalRecipeId);
     public List<RecipeInfo> getRecipesBySearchCriteria(WebSearch webSearch);
     public List<RecipeInfo> getRecipes();
+    public List<RecipeInfo> getCommunityTrendingRecipes();
     // UPDATE OPS
     // DELETE OPS
     public int deleteRecipeByRecipeId(int recipeId);

@@ -269,4 +269,13 @@ public class RecipeController {
         model.addAttribute("results", results);
         return "recipe/searchRecipe";
     }
+
+    @RequestMapping(value = "/recipe/trending", method = RequestMethod.GET)
+    public String displayTrendingRecipes(Model model){
+        //community recipes
+        List<RecipeInfo> communityRecipes = appService.getCommunityTrendingRecipes();
+        model.addAttribute("communityRecipes",communityRecipes);
+        //staff recipes - not implemented yet
+        return "recipe/trendingRecipes";
+    }
 }
