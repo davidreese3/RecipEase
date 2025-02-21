@@ -761,11 +761,13 @@ public class RecipeDaoImpl implements RecipeDao{
     }
 
     public List<RecipeInfo> getCommunityTrendingRecipes(){
+        //higher than 5 raters and higher than 4 rating
         final String SQL = "select i.*, " +
                 "coalesce((select avg(r.ratingvalue) from rating r where r.recipeid = i.recipeid), 0) as avgRating, " +
                 "coalesce((select count(r.ratingvalue) from rating r where r.recipeid = i.recipeid), 0) as numRaters " +
                 "from info i " +
                 "where coalesce((select count(r.ratingvalue) from rating r where r.recipeid = i.recipeid), 0) >= 5 " +
+                "and coalesce((select avg(r.ratingvalue) from rating r where r.recipeid = i.recipeid), 0) >= 4 " +
                 "order by i.recipeid desc, avgRating desc " +
                 "limit 8";
         try {
