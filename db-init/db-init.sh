@@ -106,7 +106,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
     --rating
     create table if not exists rating (
         recipeId int references info(recipeId) on delete cascade,
-        ratingUserId int references account(id), --technically do they link?
+        ratingUserId int references account(id) on delete cascade,
         ratingValue int,
         primary key (recipeId, ratingUserId)
     );

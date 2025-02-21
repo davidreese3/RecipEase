@@ -17,7 +17,7 @@
     <div th:if="${error}" th:text="${error}" style="color: red;"></div>
     <div th:if="${message}" th:text="${message}" style="color: orange;"></div>
     <div th:if="${success}" th:text="${success}" style="color: green;"></div>
-    <form action="#" th:action="@{${fromDashboard} ? '/adminDashboard/change' : '/admin/account/change/email'}" th:object="${webAccount}" method="post">
+    <form action="#" th:action="@{${fromDashboard} ? '/userDashboard/change' : '/admin/account/change/email'}" th:object="${webAccount}" method="post">
         <input type="hidden" name="id" th:value="${id}" />
         <table>
             <tr>

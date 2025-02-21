@@ -6,13 +6,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RecipEase Mod Dashboard</title>
+    <title>RecipEase Recipe Dashboard</title>
 </head>
 
 <body>
 <header>
     <div th:replace="~{fragments/headerAndNavbar}"></div>
-    <h2>Moderator Dashboard</h2>
+    <h2>Recipe Dashboard</h2>
 </header>
 
 <main>
@@ -45,7 +45,7 @@
             <td th:text="${recipe.description}"></td>
             <td th:text="${@recipeUtils.formatRatingShort(recipe.ratingInfo.averageRating, recipe.ratingInfo.numberOfRaters)}"></td>
             <td>
-                <form id="deleteForm" th:action="@{/moderatorDashboard/delete}" method="post">
+                <form id="deleteForm" th:action="@{/recipeDashboard/delete}" method="post">
                     <input type="hidden" name="id" th:value="${recipe.recipeId}" />
                     <button type="submit">Delete</button>
                 </form>
@@ -54,7 +54,7 @@
                 <span th:text="${recipe.staffTrending ? 'Trending' : 'Not Trending'}"></span>
             </td>
             <td>
-                <form th:action="@{${recipe.staffTrending} ? '/moderatorDashboard/trending/remove' : '/moderatorDashboard/trending/add'}" method="post">
+                <form th:action="@{${recipe.staffTrending} ? '/recipeDashboard/trending/remove' : '/recipeDashboard/trending/add'}" method="post">
                     <input type="hidden" name="id" th:value="${recipe.recipeId}" />
                     <button type="submit" th:text="${recipe.staffTrending} ? 'Remove' : 'Add'"></button>
                 </form>

@@ -38,8 +38,8 @@ public class ModeratorRecipeController {
         return "redirect:/recipe/view?recipeId=" + recipeId;
     }
 
-    @RequestMapping(value = "/moderatorDashboard", method = RequestMethod.GET)
-    public String displayModeratorDashboard(Model model){
+    @RequestMapping(value = "/recipeDashboard", method = RequestMethod.GET)
+    public String displayRecipeDashboard(Model model){
         List<RecipeInfo> recipes = appService.getRecipes();
         model.addAttribute("recipes", recipes);
         int numTrending = 0;
@@ -50,37 +50,37 @@ public class ModeratorRecipeController {
         }
         model.addAttribute("totalRecipes", recipes.size());
         model.addAttribute("totalTrending", numTrending);
-        return "moderation/moderatorDashboard";
+        return "moderation/recipeDashboard";
     }
 
-    @RequestMapping(value = "/moderatorDashboard/delete", method = RequestMethod.POST)
-    public String processDeleteModeratorDashboard(RedirectAttributes redirectAttributes, @RequestParam("id") int id){
+    @RequestMapping(value = "/recipeDashboard/delete", method = RequestMethod.POST)
+    public String processDeleteRecipeDashboard(RedirectAttributes redirectAttributes, @RequestParam("id") int id){
         if (appService.deleteRecipeByRecipeId(id) == -1) {
             redirectAttributes.addFlashAttribute("error", "Error deleting recipe. Try again.");
-            return "redirect:/moderatorDashboard";
+            return "redirect:/recipeDashboard";
         }
         redirectAttributes.addFlashAttribute("message","Recipe has been deleted. Thank you for cleaning up RecipEase!");
-        return "redirect:/moderatorDashboard";
+        return "redirect:/recipeDashboard";
     }
 
-    @RequestMapping(value = "/moderatorDashboard/trending/add", method = RequestMethod.POST)
-    public String processTrendingAddModeratorDashboard(RedirectAttributes redirectAttributes, @RequestParam("id") int id){
+    @RequestMapping(value = "/recipeDashboard/trending/add", method = RequestMethod.POST)
+    public String processTrendingAddRecipeDashboard(RedirectAttributes redirectAttributes, @RequestParam("id") int id){
         if (appService.addRecipeToTrendingById(id) == -1) {
             redirectAttributes.addFlashAttribute("error", "Error adding recipe. Try again.");
-            return "redirect:/moderatorDashboard";
+            return "redirect:/recipeDashboard";
         }
         redirectAttributes.addFlashAttribute("message","Recipe has been added to trending.");
-        return "redirect:/moderatorDashboard";
+        return "redirect:/recipeDashboard";
     }
 
-    @RequestMapping(value = "/moderatorDashboard/trending/remove", method = RequestMethod.POST)
-    public String processTrendingRemoveModeratorDashboard(RedirectAttributes redirectAttributes, @RequestParam("id") int id){
+    @RequestMapping(value = "/recipeDashboard/trending/remove", method = RequestMethod.POST)
+    public String processTrendingRemoveRecipeDashboard(RedirectAttributes redirectAttributes, @RequestParam("id") int id){
         if (appService.removeRecipeFromTrendingById(id) == -1) {
             redirectAttributes.addFlashAttribute("error", "Error removing recipe. Try again.");
-            return "redirect:/moderatorDashboard";
+            return "redirect:/recipeDashboard";
         }
         redirectAttributes.addFlashAttribute("message","Recipe has been removed from trending.");
-        return "redirect:/moderatorDashboard";
+        return "redirect:/recipeDashboard";
     }
 
 }

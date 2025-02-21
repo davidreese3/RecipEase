@@ -42,12 +42,12 @@
                 <!-- Moderator Section -->
                 <li sec:authorize="hasRole('MOD') or hasRole('ADMIN')"><a href="#">Moderator</a>
                     <ul>
-                        <li><a href="/moderatorDashboard">Moderator Dashboard</a></li>
+                        <li><a href="/recipeDashboard">Recipe Dashboard</a></li>
                     </ul>
                 </li>
                 <li sec:authorize="hasRole('ADMIN')"><a href="#">Admin</a>
                     <ul>
-                        <li><a href="/adminDashboard">Admin Dashboard</a></li>
+                        <li><a href="/userDashboard">User Dashboard</a></li>
                     </ul>
                 </li>
                 <li>
