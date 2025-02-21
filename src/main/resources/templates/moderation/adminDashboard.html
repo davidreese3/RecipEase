@@ -16,6 +16,14 @@
 </header>
 
 <main>
+    <table>
+        <tr>
+            <td>Total Users: <span th:text="${totalUsers}"></span></td>
+        </tr>
+        <tr>
+            <td>Active Users: <span th:text="${totalActive}"></span></td>
+        </tr>
+    </table>
     <div th:if="${error}" th:text="${error}" style="color: red;"></div>
     <div th:if="${message}" th:text="${message}" style="color: green;"></div>
     <table>
