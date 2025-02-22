@@ -18,9 +18,39 @@
 <main>
     <div th:if="${error}" th:text="${error}" style="color: red;"></div>
     <div th:if="${message}" th:text="${message}" style="color: green;"></div>
-    <h3>Trending Community Selected Recipes</h3>
-    <table th:if="${communityRecipes}">
-        <thead>
+    <div th:if="${communityRecipes.size != 0}">
+        <h3>Trending Community Selected Recipes</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Makes</th>
+                    <th>Prep Time</th>
+                    <th>Make Time</th>
+                    <th>Total Time</th>
+                    <th>Rating</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="recipe : ${communityRecipes}">
+                    <td>
+                        <a th:href="${'http://localhost:8080/recipe/view?recipeId=' + recipe.recipeId}" th:text="${recipe.name}"></a>
+                    </td>
+                    <td th:text="${recipe.description}"></td>
+                    <td th:text="${#numbers.formatDecimal(recipe.yield, 0, recipe.yield % 1 == 0 ? 0 : 1)} + ' ' + ${recipe.unitOfYield}"></td>
+                    <td th:text="${@recipeUtils.formatTimeShort(recipe.prepHr, recipe.prepMin)}"></td>
+                    <td th:text="${@recipeUtils.formatTimeShort(recipe.processHr, recipe.processMin)}"></td>
+                    <td th:text="${@recipeUtils.formatTimeShort(recipe.totalHr, recipe.totalMin)}"></td>
+                    <td th:text="${@recipeUtils.formatRatingShort(recipe.ratingInfo.averageRating, recipe.ratingInfo.numberOfRaters)}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:if="${staffRecipes.size != 0}">
+        <h3>Trending Staff Recommended Recipes</h3>
+        <table>
+            <thead>
             <tr>
                 <th>Name</th>
                 <th>Description</th>
@@ -30,9 +60,9 @@
                 <th>Total Time</th>
                 <th>Rating</th>
             </tr>
-        </thead>
-        <tbody>
-            <tr th:each="recipe : ${communityRecipes}">
+            </thead>
+            <tbody>
+            <tr th:each="recipe : ${staffRecipes}">
                 <td>
                     <a th:href="${'http://localhost:8080/recipe/view?recipeId=' + recipe.recipeId}" th:text="${recipe.name}"></a>
                 </td>
@@ -43,37 +73,9 @@
                 <td th:text="${@recipeUtils.formatTimeShort(recipe.totalHr, recipe.totalMin)}"></td>
                 <td th:text="${@recipeUtils.formatRatingShort(recipe.ratingInfo.averageRating, recipe.ratingInfo.numberOfRaters)}"></td>
             </tr>
-        </tbody>
-    </table>
-
-    <h3>Trending Staff Selected Recipes</h3>
-    <table th:if="${staffRecipes}">
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Makes</th>
-            <th>Prep Time</th>
-            <th>Make Time</th>
-            <th>Total Time</th>
-            <th>Rating</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="recipe : ${staffRecipes}">
-            <td>
-                <a th:href="${'http://localhost:8080/recipe/view?recipeId=' + recipe.recipeId}" th:text="${recipe.name}"></a>
-            </td>
-            <td th:text="${recipe.description}"></td>
-            <td th:text="${#numbers.formatDecimal(recipe.yield, 0, recipe.yield % 1 == 0 ? 0 : 1)} + ' ' + ${recipe.unitOfYield}"></td>
-            <td th:text="${@recipeUtils.formatTimeShort(recipe.prepHr, recipe.prepMin)}"></td>
-            <td th:text="${@recipeUtils.formatTimeShort(recipe.processHr, recipe.processMin)}"></td>
-            <td th:text="${@recipeUtils.formatTimeShort(recipe.totalHr, recipe.totalMin)}"></td>
-            <td th:text="${@recipeUtils.formatRatingShort(recipe.ratingInfo.averageRating, recipe.ratingInfo.numberOfRaters)}"></td>
-        </tr>
-        </tbody>
-    </table>
-
+            </tbody>
+        </table>
+    </div>
 </main>
 
 <footer>
