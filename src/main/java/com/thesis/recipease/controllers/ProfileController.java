@@ -45,6 +45,12 @@ public class ProfileController {
                 recipeInfo = recipeNormalizer.normalizeRecipeInfo(recipeInfo);
             }
             model.addAttribute("recipes", recipes);
+
+            List<RecipeInfo> bookmarks = appService.getBookmarksByUserId(userId);
+            for (RecipeInfo recipeInfo : bookmarks) {
+                recipeInfo = recipeNormalizer.normalizeRecipeInfo(recipeInfo);
+            }
+            model.addAttribute("bookmarks", bookmarks);
         }
         model.addAttribute("isPersonal",true);
         return "profile/viewProfile";
@@ -68,6 +74,12 @@ public class ProfileController {
                     recipeInfo = recipeNormalizer.normalizeRecipeInfo(recipeInfo);
                 }
                 model.addAttribute("recipes", recipes);
+
+                List<RecipeInfo> bookmarks = appService.getBookmarksByUserId(id);
+                for (RecipeInfo recipeInfo : bookmarks) {
+                    recipeInfo = recipeNormalizer.normalizeRecipeInfo(recipeInfo);
+                }
+                model.addAttribute("bookmarks", bookmarks);
 
                 model.addAttribute("isPersonal", false);
                 if (!profile.isActive()){

@@ -109,6 +109,7 @@ public class AppService {
     public List<RecipeInfo> getRecipes() { return recipeDao.getRecipes(); }
     public List<RecipeInfo> getCommunityTrendingRecipes() { return recipeDao.getCommunityTrendingRecipes(); }
     public List<RecipeInfo> getStaffTrendingRecipes() { return recipeDao.getStaffTrendingRecipes(); }
+    public List<RecipeInfo> getBookmarksByUserId(int userId) { return recipeDao.getBookmarksByUserId(userId); }
 
     // UPDATE OPS
     public int addRecipeToTrendingById(int recipeId) {return recipeDao.addRecipeToTrendingById(recipeId);}

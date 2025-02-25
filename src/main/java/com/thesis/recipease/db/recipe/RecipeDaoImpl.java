@@ -282,8 +282,8 @@ public class RecipeDaoImpl implements RecipeDao{
         try {
             jdbcTemplate.update(dataSource -> {
                 PreparedStatement ps = dataSource.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
-                ps.setInt(1, recipeId);
-                ps.setInt(2, userId);
+                ps.setInt(1, userId);
+                ps.setInt(2, recipeId);
                 return ps;
             });
         } catch (DataAccessException e) {
@@ -804,6 +804,18 @@ public class RecipeDaoImpl implements RecipeDao{
         }
     }
 
+    public List<RecipeInfo> getBookmarksByUserId(int userId){
+        final String SQL = "select i.*, " +
+                "coalesce((select avg(r.ratingvalue) from rating r where r.recipeid = i.recipeid), 0) as avgRating, " +
+                "coalesce((select count(r.ratingvalue) from rating r where r.recipeid = i.recipeid), 0) as numRaters " +
+                "from info i right join bookmark b on i.recipeid = b.recipeid " +
+                "where b.userid = ? ";
+        try {
+            return jdbcTemplate.query(SQL, new RecipeDaoImpl.RecipeInfoMapper(), userId);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
 
     // ------------------------------------------------
     // UPDATE OPS
@@ -858,8 +870,8 @@ public class RecipeDaoImpl implements RecipeDao{
         try {
             jdbcTemplate.update(dataSource -> {
                 PreparedStatement ps = dataSource.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
-                ps.setInt(1, recipeId);
-                ps.setInt(2, userId);
+                ps.setInt(1, userId);
+                ps.setInt(2, recipeId);
                 return ps;
             });
         } catch (DataAccessException e) {

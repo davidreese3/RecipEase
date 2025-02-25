@@ -59,8 +59,40 @@
             </tr>
         </table>
         <br>
-        <table th:if="${recipes.size != 0}">
-            <thead>
+        <div th:if="${recipes.size != 0}">
+            <h2>Recipes:</h2>
+            <table>
+                <thead>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Makes</th>
+                    <th>Prep Time</th>
+                    <th>Make Time</th>
+                    <th>Total Time</th>
+                    <th>Rating</th>
+                </thead>
+
+                <tbody>
+                    <tr th:each="recipe : ${recipes}">
+                        <td>
+                            <a th:href="${'http://localhost:8080/recipe/view?recipeId=' + recipe.recipeId}" th:text="${recipe.name}"></a>
+                        </td>
+                        <td th:text="${recipe.description}"></td>
+                        <td th:text="${#numbers.formatDecimal(recipe.yield, 0, recipe.yield % 1 == 0 ? 0 : 1)} + ' ' + ${recipe.unitOfYield}"></td>
+                        <td th:text="${@recipeUtils.formatTimeShort(recipe.prepHr, recipe.prepMin)}"></td>
+                        <td th:text="${@recipeUtils.formatTimeShort(recipe.processHr, recipe.processMin)}"></td>
+                        <td th:text="${@recipeUtils.formatTimeShort(recipe.totalHr, recipe.totalMin)}"></td>
+                        <td th:text="${@recipeUtils.formatRatingShort(recipe.ratingInfo.averageRating, recipe.ratingInfo.numberOfRaters)}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <span th:if="${recipes.size == 0 && isPersonal}">You have no published recipes.</span>
+        <span th:if="${recipes.size == 0 && !isPersonal}">This user has no published recipes.</span>
+        <br>
+        <div th:if="${bookmarks.size != 0}">
+            <table>
+                <thead>
                 <th>Name</th>
                 <th>Description</th>
                 <th>Makes</th>
@@ -68,10 +100,11 @@
                 <th>Make Time</th>
                 <th>Total Time</th>
                 <th>Rating</th>
-            </thead>
+                <th>Remove</th>
+                </thead>
 
-            <tbody>
-                <tr th:each="recipe : ${recipes}">
+                <tbody>
+                <tr th:each="recipe : ${bookmarks}">
                     <td>
                         <a th:href="${'http://localhost:8080/recipe/view?recipeId=' + recipe.recipeId}" th:text="${recipe.name}"></a>
                     </td>
@@ -81,12 +114,18 @@
                     <td th:text="${@recipeUtils.formatTimeShort(recipe.processHr, recipe.processMin)}"></td>
                     <td th:text="${@recipeUtils.formatTimeShort(recipe.totalHr, recipe.totalMin)}"></td>
                     <td th:text="${@recipeUtils.formatRatingShort(recipe.ratingInfo.averageRating, recipe.ratingInfo.numberOfRaters)}"></td>
+                    <td>
+                        <form id="removeFromBookmarkForm" th:action="@{/recipe/bookmark/list/remove}" method="post">
+                            <input type="hidden" name="recipeId" th:value="${recipe.recipeId}" />
+                            <button type="submit">Remove Bookmark</button>
+                        </form>
+                    </td>
                 </tr>
-            </tbody>
-        </table>
-
-        <span th:if="${recipes.size == 0 && isPersonal}">You have no published recipes.</span>
-        <span th:if="${recipes.size == 0 && !isPersonal}">This user has no published recipes.</span>
+                </tbody>
+            </table>
+        </div>
+        <span th:if="${bookmarks.size == 0 && isPersonal}">You have no bookmarked recipes.</span>
+        <span th:if="${bookmarks.size == 0 && !isPersonal}">This user has no bookmarked recipes.</span>
     </main>
 
     <footer>

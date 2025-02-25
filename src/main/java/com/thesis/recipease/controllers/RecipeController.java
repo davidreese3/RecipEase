@@ -299,4 +299,16 @@ public class RecipeController {
 
         return "redirect:/recipe/view?recipeId=" + recipeId;
     }
+
+    @RequestMapping(value = "/recipe/bookmark/list/remove", method = RequestMethod.POST)
+    public String processBookmarkRemoveFromProfileForm(Model model, @RequestParam("recipeId") int recipeId, RedirectAttributes redirectAttributes){
+        int userId = securityService.getLoggedInUserId();
+        if (appService.deleteRecipeFromBookmark(userId,recipeId) == -1) {
+            redirectAttributes.addFlashAttribute("error", "Recipe could not be removed from bookmark. Please try again.");
+            return "redirect:/profile/view/personal";
+        }
+        redirectAttributes.addFlashAttribute("message", "This recipe was remove from your bookmark.");
+
+        return "redirect:/profile/view/personal";
+    }
 }
