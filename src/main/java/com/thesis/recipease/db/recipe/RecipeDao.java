@@ -33,6 +33,7 @@ public interface RecipeDao {
     public List<RecipeInfo> getRecipes();
     public List<RecipeInfo> getCommunityTrendingRecipes();
     public List<RecipeInfo> getStaffTrendingRecipes();
+    public List<RecipeInfo> getBookmarksByUserId(int userId);
     // UPDATE OPS
     public int addRecipeToTrendingById(int recipeId);
     public int removeRecipeFromTrendingById(int recipeId);
