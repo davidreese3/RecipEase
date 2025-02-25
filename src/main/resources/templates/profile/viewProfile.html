@@ -100,6 +100,7 @@
                 <th>Make Time</th>
                 <th>Total Time</th>
                 <th>Rating</th>
+                <th>Remove</th>
                 </thead>
 
                 <tbody>
@@ -113,6 +114,12 @@
                     <td th:text="${@recipeUtils.formatTimeShort(recipe.processHr, recipe.processMin)}"></td>
                     <td th:text="${@recipeUtils.formatTimeShort(recipe.totalHr, recipe.totalMin)}"></td>
                     <td th:text="${@recipeUtils.formatRatingShort(recipe.ratingInfo.averageRating, recipe.ratingInfo.numberOfRaters)}"></td>
+                    <td>
+                        <form id="removeFromBookmarkForm" th:action="@{/recipe/bookmark/list/remove}" method="post">
+                            <input type="hidden" name="recipeId" th:value="${recipe.recipeId}" />
+                            <button type="submit">Remove Bookmark</button>
+                        </form>
+                    </td>
                 </tr>
                 </tbody>
             </table>
