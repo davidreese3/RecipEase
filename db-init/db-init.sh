@@ -171,6 +171,13 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
         primary key (recipeId)
     );
 
+    -- bookmark
+    create table if not exists bookmark (
+        userId int references account(id) on delete cascade,
+        recipeId int references info(recipeId) on delete cascade,
+        primary key (userId, recipeId)
+    );
+
     -- user substitutions
     create table if not exists userSubs (
         recipeId int references info(recipeId) on delete cascade,
@@ -502,6 +509,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
     alter table photo owner to docker;
     alter table link owner to docker;
     alter table note owner to docker;
+    alter table bookmark owner to docker;
     alter table userSubs owner to docker;
     alter table knownSubs owner to docker;
     alter table glossary owner to docker;
