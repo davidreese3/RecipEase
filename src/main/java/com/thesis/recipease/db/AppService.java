@@ -97,7 +97,7 @@ public class AppService {
     public Recipe addRecipe(int userId, WebRecipe webRecipe){ return recipeDao.addRecipe(userId, webRecipe); }
     public RecipeComment addComment(int userId, int recipeId, WebComment webComment){ return recipeDao.addComment(userId, recipeId, webComment); }
     public RecipeRating addRating(int userId, int recipeId, WebRating webRating) {return recipeDao.addRating(userId, recipeId, webRating); }
-
+    public int addRecipeToBookmark(int userId, int recipeId) { return recipeDao.addRecipeToBookmark(userId, recipeId);}
     // READ OPS
     public Recipe getRecipeById(int recipeId) { return recipeDao.getRecipeById(recipeId); }
     public List<RecipeInfo> getRecipesByUserId(int userId) { return recipeDao.getRecipesByUserId(userId); }
@@ -117,6 +117,7 @@ public class AppService {
     // DELETE OPS
     public int deleteRecipeByRecipeId(int recipeId) { return recipeDao.deleteRecipeByRecipeId(recipeId); }
     public int deleteCommentByCommentId(int commentId) { return recipeDao.deleteCommentByCommentId(commentId); }
+    public int deleteRecipeFromBookmark(int userId, int recipeId) { return recipeDao.deleteRecipeFromBookmark(userId, recipeId);}
 
 
     // ------------------------

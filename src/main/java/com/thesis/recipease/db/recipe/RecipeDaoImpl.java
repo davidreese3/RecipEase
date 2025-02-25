@@ -277,6 +277,21 @@ public class RecipeDaoImpl implements RecipeDao{
         return new RecipeRating(recipeId, userId, webRating.getRatingValue());
     }
 
+    public int addRecipeToBookmark(int userId, int recipeId){
+        final String SQL = "insert into bookmark (userid, recipeid) values (?, ?)";
+        try {
+            jdbcTemplate.update(dataSource -> {
+                PreparedStatement ps = dataSource.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
+                ps.setInt(1, recipeId);
+                ps.setInt(2, userId);
+                return ps;
+            });
+        } catch (DataAccessException e) {
+            return -1;
+        }
+        return 0;
+    }
+
     // ------------------------------------------------
     // READ OPS
     // ------------------------------------------------
@@ -832,6 +847,21 @@ public class RecipeDaoImpl implements RecipeDao{
         final String SQL = "delete from comment where commentid = ?";
         try {
             jdbcTemplate.update(SQL, commentId);
+        } catch (DataAccessException e) {
+            return -1;
+        }
+        return 0;
+    }
+
+    public int deleteRecipeFromBookmark(int userId, int recipeId){
+        final String SQL = "delete from bookmark where userid = ? and recipeid = ?";
+        try {
+            jdbcTemplate.update(dataSource -> {
+                PreparedStatement ps = dataSource.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
+                ps.setInt(1, recipeId);
+                ps.setInt(2, userId);
+                return ps;
+            });
         } catch (DataAccessException e) {
             return -1;
         }

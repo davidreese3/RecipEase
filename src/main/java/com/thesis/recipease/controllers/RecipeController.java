@@ -275,4 +275,28 @@ public class RecipeController {
         model.addAttribute("staffRecipes",staffRecipes);
         return "recipe/trendingRecipes";
     }
+
+    @RequestMapping(value = "/recipe/bookmark/add", method = RequestMethod.POST)
+    public String processBookmarkAddForm(Model model, @RequestParam("recipeId") int recipeId, RedirectAttributes redirectAttributes){
+        int userId = securityService.getLoggedInUserId();
+        if (appService.addRecipeToBookmark(userId,recipeId) == -1) {
+            redirectAttributes.addFlashAttribute("error", "Recipe could not be added to bookmark. Please try again.");
+            return "redirect:/recipe/view?recipeId=" + recipeId;
+        }
+        redirectAttributes.addFlashAttribute("message", "This recipe was added to your bookmark.");
+
+        return "redirect:/recipe/view?recipeId=" + recipeId;
+    }
+
+    @RequestMapping(value = "/recipe/bookmark/remove", method = RequestMethod.POST)
+    public String processBookmarkRemoveForm(Model model, @RequestParam("recipeId") int recipeId, RedirectAttributes redirectAttributes){
+        int userId = securityService.getLoggedInUserId();
+        if (appService.deleteRecipeFromBookmark(userId,recipeId) == -1) {
+            redirectAttributes.addFlashAttribute("error", "Recipe could not be removed from bookmark. Please try again.");
+            return "redirect:/recipe/view?recipeId=" + recipeId;
+        }
+        redirectAttributes.addFlashAttribute("message", "This recipe was remove from your bookmark.");
+
+        return "redirect:/recipe/view?recipeId=" + recipeId;
+    }
 }

@@ -20,6 +20,8 @@ public interface RecipeDao {
     public Recipe addRecipe(int userId, WebRecipe webRecipe);
     public RecipeComment addComment(int userId, int recipeId, WebComment webComment);
     public RecipeRating addRating(int userId, int recipeId, WebRating webRating);
+    public int addRecipeToBookmark(int userId, int recipeId);
+
     // READ OPS
     public Recipe getRecipeById(int recipeId);
     public WebRecipe getWebRecipeById(int recipeId);
@@ -37,4 +39,5 @@ public interface RecipeDao {
     // DELETE OPS
     public int deleteRecipeByRecipeId(int recipeId);
     public int deleteCommentByCommentId(int commentId);
+    public int deleteRecipeFromBookmark(int userId, int recipeId);
 }
