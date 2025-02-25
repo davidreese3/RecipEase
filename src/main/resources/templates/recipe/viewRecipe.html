@@ -34,6 +34,14 @@
         <input type="hidden" name="recipeId" th:value="${recipe.recipeInfo.recipeId}" />
         <button type="submit">Delete Recipe</button>
     </form>
+    <form id="addToBookmarkForm" th:action="@{/recipe/bookmark/add}" method="post">
+        <input type="hidden" name="recipeId" th:value="${recipe.recipeInfo.recipeId}" />
+        <button type="submit">Bookmark Recipe</button>
+    </form>
+    <form id="removeFromBookmarkForm" th:action="@{/recipe/bookmark/remove}" method="post">
+        <input type="hidden" name="recipeId" th:value="${recipe.recipeInfo.recipeId}" />
+        <button type="submit">Remove Bookmark</button>
+    </form>
 
 </div>
 <main id="printable-section">
