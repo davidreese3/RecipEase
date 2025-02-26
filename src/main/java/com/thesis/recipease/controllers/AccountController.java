@@ -172,7 +172,7 @@ public class AccountController {
             return "account/deactivateAccount";
         }
         appService.deactivateAccountById(id);
-        mailService.sendAccountDeletionEmail(principal.getName());
+        mailService.sendAccountDeactivatedEmail(principal.getName());
         invalidateSession(request, response);
         redirectAttributes.addFlashAttribute("success","Your account has been deactivated.");
         return "redirect:/login";

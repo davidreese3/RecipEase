@@ -121,7 +121,7 @@ public class AdminAccountController {
             redirectAttributes.addFlashAttribute("error", "Error deleting account. Try again.");
             return "redirect:/userDashboard";
         }
-        mailService.sendAccountDeletionEmail(email);
+        mailService.sendAccountDeletedByModeratorEmail(email);
         redirectAttributes.addFlashAttribute("message", "This account has been deleted.");
         return "redirect:/userDashboard";
     }
