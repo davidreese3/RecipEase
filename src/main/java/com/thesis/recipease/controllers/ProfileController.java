@@ -33,58 +33,33 @@ public class ProfileController {
     @RequestMapping(value = "/profile/view/personal", method = RequestMethod.GET)
     public String displayPersonalProfile(Model model){
         int userId = securityService.getLoggedInUserId();
-        Profile profile = appService.getProfileById(userId);
+        return displayProfile(model, userId);
+    }
+
+    @RequestMapping(value = "/profile/view", method = RequestMethod.GET)
+    public String displayProfile(Model model, @RequestParam("id") int id){
+        Profile profile = appService.getProfileById(id);
         if(profile == null){
-            model.addAttribute("message",ProfileErrorMessageGenerator.getPersonalProfileError());
+            model.addAttribute("message",ProfileErrorMessageGenerator.getProfileError());
             return "profile/viewProfileDNE";
         }
-        else{
+        else {
             model.addAttribute("profile", profile);
-            List<RecipeInfo> recipes = appService.getRecipesByUserId(userId);
-            for(RecipeInfo recipeInfo : recipes) {
+            List<RecipeInfo> recipes = appService.getRecipesByUserId(id);
+            for (RecipeInfo recipeInfo : recipes) {
                 recipeInfo = recipeNormalizer.normalizeRecipeInfo(recipeInfo);
             }
             model.addAttribute("recipes", recipes);
 
-            List<RecipeInfo> bookmarks = appService.getBookmarksByUserId(userId);
+            List<RecipeInfo> bookmarks = appService.getBookmarksByUserId(id);
             for (RecipeInfo recipeInfo : bookmarks) {
                 recipeInfo = recipeNormalizer.normalizeRecipeInfo(recipeInfo);
             }
             model.addAttribute("bookmarks", bookmarks);
-        }
-        model.addAttribute("isPersonal",true);
-        return "profile/viewProfile";
-    }
 
-    @RequestMapping(value = "/profile/view", method = RequestMethod.GET)
-    public String displayOtherProfile(Model model, @RequestParam("id") int id){
-        if(id == securityService.getLoggedInUserId()){
-            return "redirect:/profile/view/personal";
-        }
-        else {
-            Profile profile = appService.getProfileById(id);
-            if(profile == null){
-                model.addAttribute("message",ProfileErrorMessageGenerator.getProfileError());
-                return "profile/viewProfileDNE";
-            }
-            else {
-                model.addAttribute("profile", profile);
-                List<RecipeInfo> recipes = appService.getRecipesByUserId(id);
-                for (RecipeInfo recipeInfo : recipes) {
-                    recipeInfo = recipeNormalizer.normalizeRecipeInfo(recipeInfo);
-                }
-                model.addAttribute("recipes", recipes);
-
-                List<RecipeInfo> bookmarks = appService.getBookmarksByUserId(id);
-                for (RecipeInfo recipeInfo : bookmarks) {
-                    recipeInfo = recipeNormalizer.normalizeRecipeInfo(recipeInfo);
-                }
-                model.addAttribute("bookmarks", bookmarks);
-
-                model.addAttribute("isPersonal", false);
-                if (!profile.isActive()){
-                    model.addAttribute("error", ProfileErrorMessageGenerator.getDeactivatedProfileError());
-                }
+            model.addAttribute("isPersonal", false);
+            if (!profile.isActive()){
+                model.addAttribute("error", ProfileErrorMessageGenerator.getDeactivatedProfileError());
             }
         }
         return "profile/viewProfile";
