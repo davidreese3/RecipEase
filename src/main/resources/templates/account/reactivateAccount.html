@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reactivate Account</title>
+</head>
+
+<body>
+    <header>
+        <div th:replace="~{fragments/headerAndNavbar}"></div>
+        <h2>Reactivate your account</h2>
+    </header>
+
+    <main>
+        <div th:if="${error}" th:text="${error}" style="color: red;"></div>
+        <div th:if="${message}" th:text="${message}" style="color: orange;"></div>
+        <div th:if="${success}" th:text="${success}" style="color: green;"></div>
+        <form action="#" th:action="@{/account/reactivate}" th:object="${webAccount}" method="post">
+            <input type="hidden" name="id" th:value="${id}" />
+
+            <table>
+                <tr>
+                    <td>Activation Code:</td>
+                    <td><input type="number" th:name="code" /></td>
+                </tr>
+                <tr>
+                    <td><button type="submit">Reactivate</button></td><td></td>
+                </tr>
+            </table>
+            <button onclick="location.href='/login'">Login</button>
+        </form>
+    </main>
+
+    <footer>
+        <p>footer</p>
+    </footer>
+</body>
+
+</html>

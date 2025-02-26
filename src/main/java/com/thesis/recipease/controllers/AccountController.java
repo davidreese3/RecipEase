@@ -243,6 +243,46 @@ public class AccountController {
         return "account/resetPassword";
     }
 
+    @RequestMapping(value = "account/reactivate/request", method = RequestMethod.GET)
+    public String displayReactivationRequestForm(Model model) {
+        return "account/reactivateAccountRequest";
+    }
+
+    @RequestMapping(value = "account/reactivate/request", method = RequestMethod.POST)
+    public String processReactivationRequestForm(@RequestParam("email") String email, Model model) {
+        System.out.println("INSIDE POST");
+        Account account = appService.getAccountByEmail(email);
+        if (account == null) {
+            model.addAttribute("error", "No account found with that email.");
+            return "account/reactivateAccountRequest";
+        }
+        int verificationCode = appService.generateAndSaveVerificationCode(account.getId());
+        String activationLink = "http://localhost:8080/account/reactivate?id=" + account.getId();
+        mailService.sendReactivationEmail(account.getEmail(), activationLink, verificationCode);
+        model.addAttribute("success", "A reactivation code link has been sent to your email.");
+        return "login";
+    }
+
+    @RequestMapping(value = "account/reactivate", method = RequestMethod.GET)
+    public String displayReactivationForm(Model model, @RequestParam("id") int id){
+        WebAccount webAccount = new WebAccount();
+        model.addAttribute("webAccount",webAccount);
+        model.addAttribute("id", id);
+        return "account/reactivateAccount";
+    }
+
+    @RequestMapping(value = "account/reactivate", method = RequestMethod.POST)
+    public String processReactivationForm(Model model, WebAccount webAccount, @RequestParam("id") int id, @RequestParam("code") int code){
+        int verificationCode = appService.getVerificationCodeById(id);
+        if(!appService.verifyVerificationCodeAndActivate(id, code, verificationCode)){
+            model.addAttribute("id",id);
+            model.addAttribute("error", "Invalid Reactivation Code");
+            return "account/reactivateAccount";
+        }
+        model.addAttribute("success", "Your account has been reactivated.");
+        return "account/reactivateAccount";
+    }
+
     // ------------------------------------------------
     // HELPER METHODS
     // ------------------------------------------------
