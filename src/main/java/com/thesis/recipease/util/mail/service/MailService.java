@@ -260,5 +260,41 @@ public class MailService {
         }
     }
 
+    public void sendReactivationEmail(String to, String reactivationLink, int reactivationCode) {
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            helper.setTo(to);
+            helper.setFrom("RecipEase <recipeasecommunication@gmail.com>");
+            helper.setSubject("Reactivate Your RecipEase Account");
+
+            String body = """
+            <html>
+            <body>
+                <p>Dear User,</p>
+                <p>To regain access to your <strong>RecipEase</strong> account, simply reactivate your account by clicking the link below:</p>
+                <p><a href="%s" target="_blank" rel="noopener noreferrer" style="color: #06D2FF; text-decoration: none; font-weight: bold;">Reactivate My Account</a></p>
+                <p>Once you reach the reactivation page, enter the following reactivation code:</p>
+                <p style="font-size: 1.5em; font-weight: bold; color: #333; border: 1px solid #ddd; padding: 10px; display: inline-block; background-color: #f9f9f9;">%s</p>
+                <p>By reactivating, you'll be able to:</p>
+                <ul>
+                    <li>Continue exploring and sharing recipes.</li>
+                    <li>Re-access your saved favorites.</li>
+                    <li>Enjoy our latest features and updates.</li>
+                </ul>
+                <p>If you have any questions or need assistance, feel free to reach out to our support team at <a href="mailto:recipeasecommunication@gmail.com">recipeasecommunication@gmail.com</a>.</p>
+                <p>We’re excited to have you back!</p>
+                <p><strong>Happy Cooking,</strong><br>The RecipEase Team</p>
+            </body>
+            </html>
+            """.formatted(reactivationLink, reactivationCode);
+
+            helper.setText(body, true); // 'true' indicates HTML content
+            mailSender.send(message);
+        } catch (MessagingException e) {
+            e.printStackTrace(); // Log the error for debugging
+        }
+    }
+
 
 }
