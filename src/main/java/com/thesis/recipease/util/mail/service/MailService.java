@@ -105,7 +105,7 @@ public class MailService {
         }
     }
 
-    public void sendAccountDeletionEmail(String to) {
+    public void sendAccountDeactivatedEmail(String to) {
         try {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
@@ -117,7 +117,7 @@ public class MailService {
         <html>
         <body>
             <p>Dear User,</p>
-            <p>We’re sorry to see you go. Your account with <strong>RecipEase</strong> has been successfully deleted.</p>
+            <p>We’re sorry to see you go. Your account with <strong>RecipEase</strong> has been successfully deactivated.</p>
             <p>We’d like to take this opportunity to thank you for being a part of our community. It’s been a pleasure to help you explore, create, and share your culinary adventures.</p>
             <p>If there’s anything we could have done better or if you’d like to share your feedback, please don’t hesitate to reach out to us at <a href="mailto:recipeasecommunication@gmail.com">recipeasecommunication@gmail.com</a>.</p>
             <p>Remember, the door is always open if you wish to rejoin in the future. Until then, we wish you all the best in your cooking journey!</p>
