@@ -189,6 +189,12 @@ public class RecipeController {
 
         model.addAttribute("tagsExist", tagsExist);
 
+        boolean bookmarkExist = false;
+        if(recipe.getRecipeBookmark() != null){
+            bookmarkExist = true;
+        }
+        model.addAttribute("bookmarkExist", bookmarkExist);
+
         WebScaling webScaling = new WebScaling();
         webScaling.setRecipeId(recipeId);
         model.addAttribute("webScaling", webScaling);

@@ -14,11 +14,11 @@ public class Recipe {
     private RecipeVariation recipeVariation;
     private LinkedHashMap<String, String> recipeTags;
     private List<RecipeComment> recipeComments;
-
+    private RecipeBookmark recipeBookmark;
 
     public Recipe(){}
 
-    public Recipe(RecipeInfo recipeInfo, List<RecipeIngredient> recipeIngredients, List<RecipeDirection> recipeDirections, RecipeNote recipeNote, List<RecipeLink> recipeLinks, List<RecipeUserSubstitutionEntry> userSubstitutionEntries, RecipePhoto recipePhoto, RecipeVariation recipeVariation, LinkedHashMap<String, String> recipeTags, List<RecipeComment> recipeComments) {
+    public Recipe(RecipeInfo recipeInfo, List<RecipeIngredient> recipeIngredients, List<RecipeDirection> recipeDirections, RecipeNote recipeNote, List<RecipeLink> recipeLinks, List<RecipeUserSubstitutionEntry> userSubstitutionEntries, RecipePhoto recipePhoto, RecipeVariation recipeVariation, LinkedHashMap<String, String> recipeTags, List<RecipeComment> recipeComments, RecipeBookmark recipeBookmark) {
         this.recipeInfo = recipeInfo;
         this.recipeIngredients = recipeIngredients;
         this.recipeDirections = recipeDirections;
@@ -29,6 +29,7 @@ public class Recipe {
         this.recipeVariation = recipeVariation;
         this.recipeTags = recipeTags;
         this.recipeComments = recipeComments;
+        this.recipeBookmark = recipeBookmark;
     }
 
     public RecipeInfo getRecipeInfo() {
@@ -109,5 +110,13 @@ public class Recipe {
 
     public void setRecipeComments(List<RecipeComment> recipeComments) {
         this.recipeComments = recipeComments;
+    }
+
+    public RecipeBookmark getRecipeBookmark() {
+        return recipeBookmark;
+    }
+
+    public void setRecipeBookmark(RecipeBookmark recipeBookmark) {
+        this.recipeBookmark = recipeBookmark;
     }
 }

@@ -328,7 +328,9 @@ public class RecipeDaoImpl implements RecipeDao{
 
         List<RecipeComment> recipeComments = getCommentsById(recipeId);
 
-        return new Recipe(recipeInfo, recipeIngredients, recipeDirections, recipeNote, recipeLinks, recipeUserSubs, recipePhoto, recipeVariation, recipeTags, recipeComments);
+        RecipeBookmark recipeBookmark = getBookmarkById(recipeId, recipeInfo.getUserId());
+
+        return new Recipe(recipeInfo, recipeIngredients, recipeDirections, recipeNote, recipeLinks, recipeUserSubs, recipePhoto, recipeVariation, recipeTags, recipeComments, recipeBookmark);
 
     }
 
@@ -434,6 +436,18 @@ public class RecipeDaoImpl implements RecipeDao{
             joiner.add(tag.getValue());
         }
         return joiner.toString();
+    }
+
+    private RecipeBookmark getBookmarkById(int recipeId, int userId){
+        final String SQL = "select * from bookmark where recipeid = ? and userid = ?";
+        List<Object> params = new ArrayList<>();
+        params.add(recipeId);
+        params.add(userId);
+        try{
+            return jdbcTemplate.queryForObject(SQL, new RecipeDaoImpl.BookmarkMapper(), params.toArray());
+        }catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     public List<RecipeInfo> getRecipesByUserId(int userId){
@@ -1022,6 +1036,16 @@ public class RecipeDaoImpl implements RecipeDao{
             ratingInfo.setAverageRating(rs.getDouble("avgRating"));
             ratingInfo.setNumberOfRaters(rs.getInt("numRaters"));
             return ratingInfo;
+        }
+    }
+
+    class BookmarkMapper implements RowMapper<RecipeBookmark> {
+        @Override
+        public RecipeBookmark mapRow(ResultSet rs, int rowNum) throws SQLException {
+            RecipeBookmark recipeBookmark = new RecipeBookmark();
+            recipeBookmark.setRecipeId(rs.getInt("recipeId"));
+            recipeBookmark.setUserId(rs.getInt("userId"));
+            return recipeBookmark;
         }
     }
 
