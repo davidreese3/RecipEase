@@ -223,7 +223,7 @@ public class AccountDaoImpl implements AccountDao{
     }
 
     @Override
-    public int reactivateAccountById(int id) {
+    public int activateAccountById(int id) {
         final String SQL = "update account set active = true where id = ?";
         try {
             jdbcTemplate.update(SQL, id);
