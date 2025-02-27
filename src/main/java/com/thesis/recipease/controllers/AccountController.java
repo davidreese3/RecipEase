@@ -168,10 +168,13 @@ public class AccountController {
     public String ProcessDeactivateForm(Model model, HttpServletRequest request, Principal principal, HttpServletResponse response, WebAccount webAccount, RedirectAttributes redirectAttributes){
         int id = securityService.getLoggedInUserId();
         if(!passwordEncoder.matches(webAccount.getPassword(),appService.getPasswordById(id))){
-            model.addAttribute("error","The password you entered is incorrect.");
-            return "account/deactivateAccount";
+            redirectAttributes.addFlashAttribute("error","The password you entered is incorrect.");
+            return "redirect:/account/deactivateAccount";
         }
-        appService.deactivateAccountById(id);
+        if(appService.deactivateAccountById(id) == -1){
+            redirectAttributes.addFlashAttribute("error","There was an error deactivating your account. Please try again.");
+            return "redirect:/account/deactivateAccount";
+        }
         mailService.sendAccountDeactivatedEmail(principal.getName());
         invalidateSession(request, response);
         redirectAttributes.addFlashAttribute("success","Your account has been deactivated.");
