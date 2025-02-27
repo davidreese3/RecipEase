@@ -203,7 +203,7 @@ public class MailService {
         }
     }
 
-    public void sendAccountReactivatedByModeratorEmail(String to) {
+    public void sendAccountActivatedByModeratorEmail(String to) {
         try {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
@@ -215,8 +215,8 @@ public class MailService {
         <html>
         <body>
             <p>Dear User,</p>
-            <p>We’re pleased to inform you that your <strong>RecipEase</strong> account has been reactivated by a moderator or staff member.</p>
-            <p>You can now log back into your account and continue enjoying all the features of RecipEase.</p>
+            <p>We’re pleased to inform you that your <strong>RecipEase</strong> account has been activated by a staff member.</p>
+            <p>You can now log into your account and enjoy all the features of RecipEase.</p>
             <p>If you experience any issues accessing your account, please reach out to our support team at <a href="mailto:recipeasecommunication@gmail.com">recipeasecommunication@gmail.com</a>.</p>
             <p>Welcome back! We look forward to seeing your recipes and contributions again.</p>
             <p><strong>Bon appétit,</strong><br>The RecipEase Team</p>

@@ -39,15 +39,15 @@ public class AdminAccountController {
         return "account/accountDeleted";
     }
 
-    @RequestMapping(value = "/admin/account/reactivate", method = RequestMethod.POST)
-    public String processReactivateAccountForm(Model model, @RequestParam("id") int id, RedirectAttributes redirectAttributes){
+    @RequestMapping(value = "/admin/account/activate", method = RequestMethod.POST)
+    public String processActivateAccountForm(Model model, @RequestParam("id") int id, RedirectAttributes redirectAttributes){
         Account acct = appService.getAccountById(id);
-        if (appService.reactivateAccountById(id) == -1) {
-            redirectAttributes.addFlashAttribute("error", "Error reactivating account. Try again.");
+        if (appService.activateAccountById(id) == -1) {
+            redirectAttributes.addFlashAttribute("error", "Error activating account. Try again.");
             return "redirect:/profile/view?id=" + id;
         }
-        mailService.sendAccountReactivatedByModeratorEmail(acct.getEmail());
-        redirectAttributes.addFlashAttribute("message", "This account has been reactivated.");
+        mailService.sendAccountActivatedByModeratorEmail(acct.getEmail());
+        redirectAttributes.addFlashAttribute("message", "This account has been activated.");
         return "redirect:/profile/view?id=" + id;
     }
 
@@ -122,7 +122,7 @@ public class AdminAccountController {
             return "redirect:/userDashboard/change?id=" + id;
         }
         Account newAccount = appService.updateEmailById(id, webAccount.getEmail());
-        redirectAttributes.addFlashAttribute("message", "This user's email has been changed.");
+        redirectAttributes.addFlashAttribute("message", "Email has been changed.");
         mailService.sendEmailChangedByModeratorEmail(oldAccount.getEmail(), newAccount.getEmail());
         return "redirect:/userDashboard";
     }
@@ -134,18 +134,18 @@ public class AdminAccountController {
             return "redirect:/userDashboard";
         }
         mailService.sendAccountDeletedByModeratorEmail(email);
-        redirectAttributes.addFlashAttribute("message", "This account has been deleted.");
+        redirectAttributes.addFlashAttribute("message", "Account has been deleted.");
         return "redirect:/userDashboard";
     }
 
     @RequestMapping(value="/userDashboard/activate", method = RequestMethod.POST)
     public String processActivateUserDashboard(RedirectAttributes redirectAttributes, @RequestParam("id") int id, @RequestParam("email") String email){
-        if (appService.reactivateAccountById(id) == -1) {
+        if (appService.activateAccountById(id) == -1) {
             redirectAttributes.addFlashAttribute("error", "Error activating account. Try again.");
             return "redirect:/userDashboard";
         }
-        mailService.sendAccountReactivatedByModeratorEmail(email);
-        redirectAttributes.addFlashAttribute("message", "This account has been reactivated.");
+        mailService.sendAccountActivatedByModeratorEmail(email);
+        redirectAttributes.addFlashAttribute("message", "Account has been activated.");
         return "redirect:/userDashboard";
     }
 
@@ -156,7 +156,7 @@ public class AdminAccountController {
             return "redirect:/userDashboard";
         }
         mailService.sendAccountDeactivatedByModeratorEmail(email);
-        redirectAttributes.addFlashAttribute("message", "This account has been deactivated.");
+        redirectAttributes.addFlashAttribute("message", "Account has been deactivated.");
         return "redirect:/userDashboard";
     }
 }

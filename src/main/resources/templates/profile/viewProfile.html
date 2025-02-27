@@ -23,7 +23,7 @@
             <input type="hidden" name="id" th:value="${profile.id}" />
             <button type="submit">Delete Account</button>
         </form>
-        <form id="reactivateOrDeactivateForm" th:action="@{${profile.active} ? '/admin/account/deactivate' : '/admin/account/reactivate'}" method="post" sec:authorize="hasRole('ADMIN')" >
+        <form id="reactivateOrDeactivateForm" th:action="@{${profile.active} ? '/admin/account/deactivate' : '/admin/account/activate'}" method="post" sec:authorize="hasRole('ADMIN')" >
             <input type="hidden" name="id" th:value="${profile.id}" />
             <button type="submit" th:text="${profile.active} ? 'Deactivate Account' : 'Reactivate Account'"></button>
         </form>

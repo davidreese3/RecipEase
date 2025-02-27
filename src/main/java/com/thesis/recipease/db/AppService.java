@@ -62,7 +62,7 @@ public class AppService {
     public Account updatePasswordById(int id, String password){ return accountDao.updatePasswordById(id, password); }
     public int deactivateAccountById(int id) { return accountDao.deactivateAccountById(id); }
     public int generateAndSaveVerificationCode(int id) { return accountDao.generateAndSaveVerificationCode(id); }
-    public int reactivateAccountById(int id) { return accountDao.reactivateAccountById(id); }
+    public int activateAccountById(int id) { return accountDao.activateAccountById(id); }
 
     // DELETE OPS
     public int deleteAccountById(int id){
