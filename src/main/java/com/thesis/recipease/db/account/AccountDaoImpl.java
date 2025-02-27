@@ -200,14 +200,14 @@ public class AccountDaoImpl implements AccountDao{
     }
 
     @Override
-    public Account deactivateAccountById(int id) {
+    public int deactivateAccountById(int id) {
         final String SQL = "update account set active = false where id = ?";
-        jdbcTemplate.update(dataSource -> {
-            PreparedStatement ps = dataSource.prepareStatement(SQL);
-            ps.setInt(1, id);
-            return ps;
-        });
-        return getAccountById(id);
+        try {
+            jdbcTemplate.update(SQL, id);
+        } catch (DataAccessException e) {
+            return -1;
+        }
+        return 0;
     }
 
     public int generateAndSaveVerificationCode(int id){

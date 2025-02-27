@@ -231,6 +231,35 @@ public class MailService {
         }
     }
 
+    public void sendAccountDeactivatedByModeratorEmail(String to) {
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            helper.setTo(to);
+            helper.setFrom("RecipEase <recipeasecommunication@gmail.com>");
+            helper.setSubject("Your RecipEase Account Has Been Deactivated");
+
+            String body = """
+        <html>
+        <body>
+            <p>Dear User,</p>
+            <p>We are writing to let you know that your <strong>RecipEase</strong> account has been temporarily deactivated by a moderator or staff member.</p>
+            <p>This action was taken as part of a review process and may be related to activity that raised concerns under our community guidelines.</p>
+            <p>If you would like to **reactivate your account**, or if you believe this action was taken in error, please contact our support team at <a href="mailto:recipeasecommunication@gmail.com">recipeasecommunication@gmail.com</a>.</p>
+            <p>We value all of our community members and would be happy to work with you to resolve any issues.</p>
+            <p>Thank you for your attention, and we hope to welcome you back soon.</p>
+            <p><strong>The RecipEase Team</strong></p>
+        </body>
+        </html>
+        """;
+
+            helper.setText(body, true); // 'true' indicates HTML content
+            mailSender.send(message);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public void sendEmailChangedByModeratorEmail(String to, String newEmail) {
         try {

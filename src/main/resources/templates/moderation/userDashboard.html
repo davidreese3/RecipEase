@@ -36,7 +36,8 @@
                 <th>Roles</th>
                 <th>Edit Email</th>
                 <th>Delete Account</th>
-                <th>Activate</th>
+                <th>Active Status</th>
+                <th>Active Action</th>
             </tr>
         </thead>
         <tbody th:each="user : ${users}">
@@ -56,14 +57,14 @@
                         <button type="submit">Delete</button>
                     </form>
                 </td>
-                <td th:if="${!user.active}">
-                    <form id="activateForm" th:action="@{/userDashboard/activate}" method="post" sec:authorize="hasRole('ADMIN')" >
+                <td th:text="${user.active ? 'Active' : 'No Active'}" ></td>
+                <td>
+                    <form id="activateForm" th:action="@{${user.active} ? '/userDashboard/deactivate' : '/userDashboard/activate'}" method="post" sec:authorize="hasRole('ADMIN')" >
                         <input type="hidden" name="email" th:value="${user.email}" />
                         <input type="hidden" name="id" th:value="${user.id}" />
-                        <button type="submit">Activate</button>
+                        <button type="submit" th:text="@{${user.active} ? 'Deactivate' : 'Activate'}"></button>
                     </form>
                 </td>
-                <td th:if="${user.active}">Currently Active</td>
             </tr>
         </tbody>
     </table>
