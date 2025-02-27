@@ -60,7 +60,7 @@ public class AppService {
     public boolean verifyVerificationCodeAndActivate(int id, int code, int verificationCode) { return accountDao.verifyVerificationCodeAndActivate(id, code, verificationCode); }
     public Account updateEmailById(int id, String newEmail){ return accountDao.updateEmailById(id, newEmail); }
     public Account updatePasswordById(int id, String password){ return accountDao.updatePasswordById(id, password); }
-    public Account deactivateAccountById(int id) { return accountDao.deactivateAccountById(id); }
+    public int deactivateAccountById(int id) { return accountDao.deactivateAccountById(id); }
     public int generateAndSaveVerificationCode(int id) { return accountDao.generateAndSaveVerificationCode(id); }
     public int reactivateAccountById(int id) { return accountDao.reactivateAccountById(id); }
 

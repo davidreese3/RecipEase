@@ -40,7 +40,7 @@ public class AdminAccountController {
     }
 
     @RequestMapping(value = "/admin/account/reactivate", method = RequestMethod.POST)
-    public String processReactivateAccountPasswordForm(Model model, @RequestParam("id") int id, RedirectAttributes redirectAttributes){
+    public String processReactivateAccountForm(Model model, @RequestParam("id") int id, RedirectAttributes redirectAttributes){
         Account acct = appService.getAccountById(id);
         if (appService.reactivateAccountById(id) == -1) {
             redirectAttributes.addFlashAttribute("error", "Error reactivating account. Try again.");
@@ -48,6 +48,18 @@ public class AdminAccountController {
         }
         mailService.sendAccountReactivatedByModeratorEmail(acct.getEmail());
         redirectAttributes.addFlashAttribute("message", "This account has been reactivated.");
+        return "redirect:/profile/view?id=" + id;
+    }
+
+    @RequestMapping(value = "/admin/account/deactivate", method = RequestMethod.POST)
+    public String processDeactivateAccountForm(Model model, @RequestParam("id") int id, RedirectAttributes redirectAttributes){
+        Account acct = appService.getAccountById(id);
+        if (appService.deactivateAccountById(id) == -1) {
+            redirectAttributes.addFlashAttribute("error", "Error deactivating account. Try again.");
+            return "redirect:/profile/view?id=" + id;
+        }
+        mailService.sendAccountDeactivatedByModeratorEmail(acct.getEmail());
+        redirectAttributes.addFlashAttribute("message", "This account has been deactivated.");
         return "redirect:/profile/view?id=" + id;
     }
 
@@ -134,6 +146,17 @@ public class AdminAccountController {
         }
         mailService.sendAccountReactivatedByModeratorEmail(email);
         redirectAttributes.addFlashAttribute("message", "This account has been reactivated.");
+        return "redirect:/userDashboard";
+    }
+
+    @RequestMapping(value="/userDashboard/deactivate", method = RequestMethod.POST)
+    public String processDeactivateUserDashboard(RedirectAttributes redirectAttributes, @RequestParam("id") int id, @RequestParam("email") String email){
+        if (appService.deactivateAccountById(id) == -1) {
+            redirectAttributes.addFlashAttribute("error", "Error deactivating account. Try again.");
+            return "redirect:/userDashboard";
+        }
+        mailService.sendAccountDeactivatedByModeratorEmail(email);
+        redirectAttributes.addFlashAttribute("message", "This account has been deactivated.");
         return "redirect:/userDashboard";
     }
 }
