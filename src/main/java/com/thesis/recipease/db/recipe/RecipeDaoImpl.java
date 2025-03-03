@@ -629,7 +629,7 @@ public class RecipeDaoImpl implements RecipeDao{
                 "coalesce((select count(r.ratingvalue) from rating r where r.recipeid = i.recipeid), 0) as numRaters " +
                 "from info i " +
                 "group by i.recipeid " +
-//                "having coalesce((select count(r.ratingvalue) from rating r where r.recipeid = i.recipeid), 0) >= 1 " +
+                "having coalesce((select count(r.ratingvalue) from rating r where r.recipeid = i.recipeid), 0) >= 5 " +
                 "order by avgrating desc";
         try {
             return jdbcTemplate.query(SQL, new RecipeDaoImpl.RecipeInfoMapper());
@@ -688,7 +688,7 @@ public class RecipeDaoImpl implements RecipeDao{
         SQL += "and (" + String.join(" or " , tagConditions) + ") " +
                 "group by i.recipeid " +
                 "having count(distinct t.tagField) = ? " +
-//                "and coalesce((select count(r.ratingvalue) from rating r where r.recipeid = i.recipeid), 0) >= 1 " +
+                "and coalesce((select count(r.ratingvalue) from rating r where r.recipeid = i.recipeid), 0) >= 5 " +
                 "order by avgrating desc";
         params.add(tagConditions.size());
 
@@ -705,7 +705,7 @@ public class RecipeDaoImpl implements RecipeDao{
                 "coalesce((select count(r.ratingvalue) from rating r where r.recipeid = i.recipeid), 0) as numRaters " +
                 "from info i " +
                 "where i.fts_document @@ to_tsquery('english', ?) " +
-                "order by ts_rank(i.fts_document, to_tsquery('english', ?)) DESC";
+                "order by ts_rank(i.fts_document, to_tsquery('english', ?)) desc";
         List<Object> params = new ArrayList<>();
         params.add(webSearch.getName());
         params.add(webSearch.getName());
