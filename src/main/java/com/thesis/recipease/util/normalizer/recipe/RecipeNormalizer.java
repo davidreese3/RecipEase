@@ -3,13 +3,14 @@ package com.thesis.recipease.util.normalizer.recipe;
 import com.thesis.recipease.model.domain.recipe.Recipe;
 import com.thesis.recipease.model.domain.recipe.RecipeInfo;
 import com.thesis.recipease.model.domain.recipe.RecipeIngredient;
+import com.thesis.recipease.util.normalizer.Normalizer;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class RecipeNormalizer {
-    public Recipe normalizeRecipe(Recipe recipe){
+public class RecipeNormalizer implements Normalizer<Recipe> {
+    public Recipe normalize(Recipe recipe){
         List<RecipeIngredient> recipeIngredients = recipe.getRecipeIngredients();
         for(RecipeIngredient recipeIngredient : recipeIngredients){
             recipeIngredient.setMeasurement(normalizeMeasurement(

@@ -150,7 +150,7 @@ public class RecipeController {
                 recipe.setRecipeIngredients(ingredientScaler.Scale(scale, ingredients));
             }
         }
-        recipe = recipeNormalizer.normalizeRecipe(recipe);
+        recipe = recipeNormalizer.normalize(recipe);
         model.addAttribute("recipe", recipe);
 
         String authorName = appService.getNameById(recipe.getRecipeInfo().getUserId());
@@ -161,7 +161,7 @@ public class RecipeController {
         model.addAttribute("glossaryList", glossaryList);
 
         List<SubstitutionEntry> substitutionList = prepopulatedEntryProcessor.ProcessSubstitutionEntries(recipe);
-        substitutionList = substitutionNormalizer.normalizeSubs(substitutionList);
+        substitutionList = substitutionNormalizer.normalize(substitutionList);
         model.addAttribute("substitutionList", substitutionList);
 
         List<RecipeUserSubstitutionEntry> userSubs = recipe.getUserSubstitutionEntries();
