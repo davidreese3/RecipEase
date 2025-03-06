@@ -2,44 +2,47 @@ package com.thesis.recipease.util.validator.profile;
 
 import com.thesis.recipease.db.AppService;
 import com.thesis.recipease.model.web.profile.WebProfile;
+import com.thesis.recipease.util.validator.Validator;
+import com.thesis.recipease.util.validator.recipe.DropdownValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
+
+import java.util.ArrayList;
 
 @Service
-public class ProfileValidator {
+public class ProfileValidator implements Validator<WebProfile, ArrayList<String>> {
     @Autowired
     private AppService appService;
+    @Autowired
+    private DropdownValidator dropdownValidator;
+    private ArrayList<String> errors;
 
     public ProfileValidator(){}
 
-    public boolean isProfileValid(Model model, WebProfile webProfile){
+    public ArrayList<String> validate(WebProfile webProfile){
+        errors = new ArrayList<String>();
         if(!isFieldValid(webProfile.getFirstName())){
-            model.addAttribute("error", "First name cannot be blank.");
-            return false;
+            errors.add("First name cannot be blank.");
         }
         if(!isFeildLengthValid(webProfile.getFirstName(), 20)) {
-            model.addAttribute("error", "First name cannot be longer than 20 characters.");
-            return false;
+            errors.add("First name cannot be longer than 20 characters.");
         }
         if(!isFieldValid(webProfile.getLastName())){
-            model.addAttribute("error", "Last name cannot be blank.");
-            return false;
+            errors.add("Last name cannot be blank.");
         }
         if(!isFeildLengthValid(webProfile.getLastName(), 20)) {
-            model.addAttribute("error", "Last name cannot be longer than 20 characters.");
-            return false;
+            errors.add("Last name cannot be longer than 20 characters.");
         }
-        //cooking level is from drop down
+        if(!dropdownValidator.isValidCookingLevel(webProfile.getCookingLevel())){
+            errors.add("Cooking level is not a valid selection.");
+        }
         if(!isFeildLengthValid(webProfile.getFavoriteDish(), 40)) {
-            model.addAttribute("error", "Favorite Dish cannot be longer than 20 characters.");
-            return false;
+            errors.add("Favorite Dish cannot be longer than 40 characters.");
         }
         if(!isFeildLengthValid(webProfile.getFavoriteCuisine(), 40)) {
-            model.addAttribute("error", "Favorite Cuisine cannot be longer than 20 characters.");
-            return false;
+            errors.add("Favorite Cuisine cannot be longer than 40 characters.");
         }
-        return true;
+        return errors;
     }
 
     public boolean isFieldValid(String field) {

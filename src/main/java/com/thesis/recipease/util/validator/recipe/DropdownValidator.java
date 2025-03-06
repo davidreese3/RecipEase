@@ -84,7 +84,6 @@ public class DropdownValidator {
     // Ingredients and subs
     public boolean isValidMeasurement(String measurement){ return VALID_MEASUREMENTS.contains(measurement); }
     public boolean isValidPreparation(String preparation){ return VALID_PREPARATIONS.contains(preparation); }
-    public boolean isValidFraction(String fraction){ return VALID_FRACTIONAL_QUANTITIES.contains(fraction); }
 
     // Directions
     public boolean isValidMethod(String method){ return VALID_METHODS.contains(method); }

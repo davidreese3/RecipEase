@@ -107,7 +107,7 @@ public class RecipeController {
             webRecipe.setPhoto(null);
         }
         ArrayList<String> errors = new ArrayList<String>();
-        errors = recipeValidator.isRecipeValid(model, webRecipe);
+        errors = recipeValidator.validate(webRecipe);
         if (!errors.isEmpty()) {
             model.addAttribute(webRecipe);
             model.addAttribute("errors", errors);
@@ -212,10 +212,10 @@ public class RecipeController {
     @RequestMapping(value = "/recipe/comment/add", method = RequestMethod.POST)
     public String processCommentForm(Model model, WebComment webComment, RedirectAttributes redirectAttributes){
         webComment = commentSanitizer.sanitize(webComment);
-        String error = commentValidator.validate(webComment);
-        if (error != null) {
+        ArrayList<String> errors = commentValidator.validate(webComment);
+        if (errors.size() > 0) {
             redirectAttributes.addFlashAttribute("webComment",webComment);
-            redirectAttributes.addFlashAttribute("error", error);
+            redirectAttributes.addFlashAttribute("errors", errors);
             return "redirect:/recipe/view?recipeId=" + webComment.getRecipeId();
         }
         RecipeComment recipeComment = appService.addComment(securityService.getLoggedInUserId(), webComment.getRecipeId(), webComment);

@@ -1,15 +1,16 @@
 package com.thesis.recipease.util.validator.recipe;
 
 import com.thesis.recipease.model.web.recipe.WebRecipe;
+import com.thesis.recipease.util.validator.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
+
 
 import java.util.ArrayList;
 
 
 @Service
-public class RecipeValidator {
+public class RecipeValidator implements Validator<WebRecipe, ArrayList<String>> {
     @Autowired
     private InfoValidator infoValidator;
     @Autowired
@@ -28,7 +29,7 @@ public class RecipeValidator {
     private TagValidator tagValidator;
     private ArrayList<String> errors;
 
-    public ArrayList<String> isRecipeValid(Model model, WebRecipe webRecipe) {
+    public ArrayList<String> validate(WebRecipe webRecipe) {
         errors = new ArrayList<String>();
         errors.addAll(infoValidator.validate(webRecipe));
         errors.addAll(ingredientValidator.validate(webRecipe));

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -74,7 +75,9 @@ public class ProfileController {
     @RequestMapping(value = "profile/edit", method = RequestMethod.POST)
     public String processEditProfileForm(Model model, Principal principal,RedirectAttributes redirectAttributes, WebProfile webProfile){
         webProfile.setId(securityService.getLoggedInUserId());
-        if (!profileValidator.isProfileValid(model, webProfile)){
+        ArrayList<String> errors = profileValidator.validate(webProfile);
+        if (errors.size() > 0){
+            model.addAttribute("errors", errors);
             return "profile/editProfile";
         }
         appService.updateProfile(webProfile);
