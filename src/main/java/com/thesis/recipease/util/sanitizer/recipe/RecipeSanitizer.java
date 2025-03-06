@@ -1,14 +1,12 @@
-package com.thesis.recipease.util.sanitizer;
+package com.thesis.recipease.util.sanitizer.recipe;
 
 import com.thesis.recipease.model.web.recipe.*;
-import com.thesis.recipease.util.validator.recipe.*;
+import com.thesis.recipease.util.sanitizer.Sanitizer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
-
 @Service
-public class RecipeSanitizer implements Sanitizer<WebRecipe>{
+public class RecipeSanitizer implements Sanitizer<WebRecipe> {
     @Autowired
     private InfoSanitizer infoSanitizer;
     @Autowired

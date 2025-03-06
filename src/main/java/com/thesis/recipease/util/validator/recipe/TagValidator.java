@@ -3,6 +3,7 @@ package com.thesis.recipease.util.validator.recipe;
 import com.thesis.recipease.model.web.recipe.WebRecipe;
 import com.thesis.recipease.model.web.recipe.WebTag;
 import com.thesis.recipease.util.validator.Validator;
+import com.thesis.recipease.util.validator.util.DropdownValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

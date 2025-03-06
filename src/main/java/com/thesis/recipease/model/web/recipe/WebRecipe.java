@@ -1,5 +1,7 @@
 package com.thesis.recipease.model.web.recipe;
 
+import com.thesis.recipease.model.web.recipe.util.WebVariation;
+
 import java.util.List;
 
 public class WebRecipe {

@@ -1,6 +1,7 @@
-package com.thesis.recipease.util.sanitizer;
+package com.thesis.recipease.util.sanitizer.recipe.util;
 
 import com.thesis.recipease.model.web.recipe.util.WebSearch;
+import com.thesis.recipease.util.sanitizer.Sanitizer;
 import org.springframework.stereotype.Service;
 
 @Service

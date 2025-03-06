@@ -1,12 +1,9 @@
-package com.thesis.recipease.util.validator.recipe;
+package com.thesis.recipease.util.validator.recipe.util;
 
-import com.thesis.recipease.model.web.recipe.WebComment;
-import com.thesis.recipease.model.web.recipe.WebNote;
-import com.thesis.recipease.model.web.recipe.WebRecipe;
+import com.thesis.recipease.model.web.recipe.util.WebComment;
 import com.thesis.recipease.util.validator.Validator;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 

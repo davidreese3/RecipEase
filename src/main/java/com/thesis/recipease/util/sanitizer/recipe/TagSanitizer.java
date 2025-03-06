@@ -1,7 +1,8 @@
-package com.thesis.recipease.util.sanitizer;
+package com.thesis.recipease.util.sanitizer.recipe;
 
 import com.thesis.recipease.model.web.recipe.WebRecipe;
 import com.thesis.recipease.model.web.recipe.WebTag;
+import com.thesis.recipease.util.sanitizer.Sanitizer;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -9,7 +10,7 @@ import java.util.Comparator;
 import java.util.List;
 
 @Service
-public class TagSanitizer implements Sanitizer<WebRecipe>{
+public class TagSanitizer implements Sanitizer<WebRecipe> {
     public WebRecipe sanitize(WebRecipe webRecipe){
         List<WebTag> holidays = webRecipe.getHolidays();
         if(holidays != null) {

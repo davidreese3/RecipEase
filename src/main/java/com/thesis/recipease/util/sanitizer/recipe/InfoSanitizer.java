@@ -1,11 +1,12 @@
-package com.thesis.recipease.util.sanitizer;
+package com.thesis.recipease.util.sanitizer.recipe;
 
 import com.thesis.recipease.model.web.recipe.WebInfo;
 import com.thesis.recipease.model.web.recipe.WebRecipe;
+import com.thesis.recipease.util.sanitizer.Sanitizer;
 import org.springframework.stereotype.Service;
 
 @Service
-public class InfoSanitizer implements Sanitizer<WebRecipe>{
+public class InfoSanitizer implements Sanitizer<WebRecipe> {
     public WebRecipe sanitize(WebRecipe webRecipe){
         WebInfo webInfo = webRecipe.getInfo();
         if (webInfo.getPrepMin() == null) webInfo.setPrepMin(0);

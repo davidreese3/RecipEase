@@ -1,4 +1,4 @@
-package com.thesis.recipease.model.domain.recipe;
+package com.thesis.recipease.model.domain.recipe.util;
 
 public class RecipeBookmark {
     private int userId;

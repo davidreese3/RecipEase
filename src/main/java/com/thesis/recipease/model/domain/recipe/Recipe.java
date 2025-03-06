@@ -1,5 +1,9 @@
 package com.thesis.recipease.model.domain.recipe;
 
+import com.thesis.recipease.model.domain.recipe.util.RecipeBookmark;
+import com.thesis.recipease.model.domain.recipe.util.RecipeComment;
+import com.thesis.recipease.model.domain.recipe.util.RecipeVariation;
+
 import java.util.LinkedHashMap;
 import java.util.List;
 

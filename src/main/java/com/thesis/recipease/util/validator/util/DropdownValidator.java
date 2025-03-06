@@ -1,4 +1,4 @@
-package com.thesis.recipease.util.validator.recipe;
+package com.thesis.recipease.util.validator.util;
 
 import org.springframework.stereotype.Service;
 
@@ -88,6 +88,8 @@ public class DropdownValidator {
     // Directions
     public boolean isValidMethod(String method){ return VALID_METHODS.contains(method); }
     public boolean isValidHeatLevel(String heatLevel){ return VALID_HEAT_LEVELS.contains(heatLevel); }
+
+    // Tags
     public boolean isValidHoliday(String holiday){ return VALID_HOLIDAYS.contains(holiday); }
     public boolean isValidMealType(String mealType){ return VALID_MEAL_TYPES.contains(mealType); }
     public boolean isValidCuisine(String cuisine){ return VALID_CUISINES.contains(cuisine); }
