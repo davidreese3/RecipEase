@@ -1,4 +1,4 @@
-package com.thesis.recipease.util.mail.service;
+package com.thesis.recipease.util.mail;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
