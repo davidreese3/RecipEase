@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 
 @Service
-public class LinkSanitizer implements Sanitizer{
+public class LinkSanitizer implements Sanitizer<WebRecipe>{
     public WebRecipe sanitize(WebRecipe webRecipe){
         List<WebLink> webLinks = webRecipe.getLinks();
         if (webLinks != null){

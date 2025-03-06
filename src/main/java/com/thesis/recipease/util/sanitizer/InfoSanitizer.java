@@ -5,7 +5,7 @@ import com.thesis.recipease.model.web.recipe.WebRecipe;
 import org.springframework.stereotype.Service;
 
 @Service
-public class InfoSanitizer implements Sanitizer{
+public class InfoSanitizer implements Sanitizer<WebRecipe>{
     public WebRecipe sanitize(WebRecipe webRecipe){
         WebInfo webInfo = webRecipe.getInfo();
         if (webInfo.getPrepMin() == null) webInfo.setPrepMin(0);

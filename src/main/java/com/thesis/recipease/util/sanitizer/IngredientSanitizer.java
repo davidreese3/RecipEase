@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 
 @Service
-public class IngredientSanitizer implements Sanitizer{
+public class IngredientSanitizer implements Sanitizer<WebRecipe>{
     @Autowired
     QuantitySanitizer quantitySanitizer;
 

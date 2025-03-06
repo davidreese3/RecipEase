@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 
 @Service
-public class DirectionSanitizer implements Sanitizer{
+public class DirectionSanitizer implements Sanitizer<WebRecipe>{
     public WebRecipe sanitize(WebRecipe webRecipe) {
         List<WebDirection> webDirections = webRecipe.getDirections();
         if (webDirections != null) {

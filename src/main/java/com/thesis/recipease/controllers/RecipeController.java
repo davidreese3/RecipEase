@@ -99,7 +99,7 @@ public class RecipeController {
 
     @RequestMapping(value = {"/recipe/create", "/recipe/variation/create"}, method = RequestMethod.POST)
     public String processRecipeCreationForm(Model model, Principal principal, WebRecipe webRecipe, @RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
-        webRecipe = recipeSanitizer.sanitizeRecipe(webRecipe);
+        webRecipe = recipeSanitizer.sanitize(webRecipe);
         if (!file.isEmpty()) {
             String extension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf('.')); // Get file extension
             webRecipe.setPhoto(new WebPhoto("recipe|" + extension, file));

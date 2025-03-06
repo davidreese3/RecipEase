@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 
 @Service
-public class UserSubstitutionSanitizer implements Sanitizer{
+public class UserSubstitutionSanitizer implements Sanitizer<WebRecipe>{
     public WebRecipe sanitize(WebRecipe webRecipe){
         List<WebUserSubstitutionEntry> webUserSubstitutionEntries = webRecipe.getUserSubstitutionEntries();
         if(webUserSubstitutionEntries != null) {
