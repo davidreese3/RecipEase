@@ -1,4 +1,4 @@
-package com.thesis.recipease.util.generator;
+package com.thesis.recipease.util.auth;
 
 import java.util.Random;
 
