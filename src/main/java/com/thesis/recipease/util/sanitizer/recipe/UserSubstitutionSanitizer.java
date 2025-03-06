@@ -1,14 +1,15 @@
-package com.thesis.recipease.util.sanitizer;
+package com.thesis.recipease.util.sanitizer.recipe;
 
 import com.thesis.recipease.model.web.recipe.WebRecipe;
 import com.thesis.recipease.model.web.recipe.WebUserSubstitutionEntry;
+import com.thesis.recipease.util.sanitizer.Sanitizer;
 import org.springframework.stereotype.Service;
 
 import java.util.Iterator;
 import java.util.List;
 
 @Service
-public class UserSubstitutionSanitizer implements Sanitizer<WebRecipe>{
+public class UserSubstitutionSanitizer implements Sanitizer<WebRecipe> {
     public WebRecipe sanitize(WebRecipe webRecipe){
         List<WebUserSubstitutionEntry> webUserSubstitutionEntries = webRecipe.getUserSubstitutionEntries();
         if(webUserSubstitutionEntries != null) {

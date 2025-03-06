@@ -1,7 +1,9 @@
-package com.thesis.recipease.util.sanitizer;
+package com.thesis.recipease.util.sanitizer.recipe;
 
 import com.thesis.recipease.model.web.recipe.WebIngredient;
 import com.thesis.recipease.model.web.recipe.WebRecipe;
+import com.thesis.recipease.util.sanitizer.Sanitizer;
+import com.thesis.recipease.util.sanitizer.recipe.util.QuantitySanitizer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +11,7 @@ import java.util.Iterator;
 import java.util.List;
 
 @Service
-public class IngredientSanitizer implements Sanitizer<WebRecipe>{
+public class IngredientSanitizer implements Sanitizer<WebRecipe> {
     @Autowired
     QuantitySanitizer quantitySanitizer;
 

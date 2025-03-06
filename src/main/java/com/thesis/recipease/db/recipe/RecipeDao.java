@@ -2,11 +2,11 @@ package com.thesis.recipease.db.recipe;
 
 import com.thesis.recipease.model.domain.recipe.Recipe;
 import com.thesis.recipease.model.domain.recipe.RecipeInfo;
-import com.thesis.recipease.model.domain.recipe.RecipeComment;
-import com.thesis.recipease.model.domain.recipe.RecipeRating;
+import com.thesis.recipease.model.domain.recipe.util.RecipeComment;
+import com.thesis.recipease.model.domain.recipe.util.RecipeRating;
 import com.thesis.recipease.model.web.recipe.util.WebRating;
 import com.thesis.recipease.model.web.recipe.WebRecipe;
-import com.thesis.recipease.model.web.recipe.WebComment;
+import com.thesis.recipease.model.web.recipe.util.WebComment;
 import com.thesis.recipease.model.web.recipe.util.WebSearch;
 import org.springframework.stereotype.Repository;
 

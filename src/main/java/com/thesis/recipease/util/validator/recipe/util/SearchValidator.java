@@ -1,8 +1,8 @@
-package com.thesis.recipease.util.validator.recipe;
+package com.thesis.recipease.util.validator.recipe.util;
 
-import com.thesis.recipease.model.web.recipe.WebRecipe;
 import com.thesis.recipease.model.web.recipe.util.WebSearch;
 import com.thesis.recipease.util.validator.Validator;
+import com.thesis.recipease.util.validator.util.DropdownValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

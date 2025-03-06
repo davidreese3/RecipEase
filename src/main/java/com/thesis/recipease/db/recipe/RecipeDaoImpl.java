@@ -1,12 +1,15 @@
 package com.thesis.recipease.db.recipe;
 
-import com.thesis.recipease.db.account.AccountDaoImpl;
 import com.thesis.recipease.model.domain.recipe.*;
-import com.thesis.recipease.model.user.User;
+import com.thesis.recipease.model.domain.recipe.util.RecipeBookmark;
+import com.thesis.recipease.model.domain.recipe.util.RecipeComment;
+import com.thesis.recipease.model.domain.recipe.util.RecipeRating;
+import com.thesis.recipease.model.domain.recipe.util.RecipeVariation;
 import com.thesis.recipease.model.web.recipe.*;
-import com.thesis.recipease.model.web.recipe.WebComment;
+import com.thesis.recipease.model.web.recipe.util.WebComment;
 import com.thesis.recipease.model.web.recipe.util.WebRating;
 import com.thesis.recipease.model.web.recipe.util.WebSearch;
+import com.thesis.recipease.model.web.recipe.util.WebVariation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;

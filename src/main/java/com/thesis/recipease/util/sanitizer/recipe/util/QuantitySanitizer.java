@@ -1,10 +1,10 @@
-package com.thesis.recipease.util.sanitizer;
+package com.thesis.recipease.util.sanitizer.recipe.util;
 
-import com.thesis.recipease.model.web.recipe.WebRecipe;
+import com.thesis.recipease.util.sanitizer.Sanitizer;
 import org.springframework.stereotype.Service;
 
 @Service
-public class QuantitySanitizer implements Sanitizer<String>{
+public class QuantitySanitizer implements Sanitizer<String> {
 // Will be used for ingredients & user subs
 
     public String sanitize(String quantity) {

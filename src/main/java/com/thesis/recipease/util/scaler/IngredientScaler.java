@@ -1,7 +1,7 @@
 package com.thesis.recipease.util.scaler;
 
 import com.thesis.recipease.model.domain.recipe.RecipeIngredient;
-import com.thesis.recipease.util.sanitizer.QuantitySanitizer;
+import com.thesis.recipease.util.sanitizer.recipe.util.QuantitySanitizer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
