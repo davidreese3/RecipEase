@@ -4,7 +4,7 @@ import com.thesis.recipease.model.web.recipe.WebRecipe;
 import org.springframework.stereotype.Service;
 
 @Service
-public class QuantitySanitizer{
+public class QuantitySanitizer implements Sanitizer<String>{
 // Will be used for ingredients & user subs
 
     public String sanitize(String quantity) {

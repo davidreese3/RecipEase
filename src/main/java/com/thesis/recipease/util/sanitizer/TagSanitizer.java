@@ -9,7 +9,7 @@ import java.util.Comparator;
 import java.util.List;
 
 @Service
-public class TagSanitizer implements Sanitizer{
+public class TagSanitizer implements Sanitizer<WebRecipe>{
     public WebRecipe sanitize(WebRecipe webRecipe){
         List<WebTag> holidays = webRecipe.getHolidays();
         if(holidays != null) {

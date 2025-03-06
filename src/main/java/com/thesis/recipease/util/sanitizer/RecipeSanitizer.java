@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
-public class RecipeSanitizer {
+public class RecipeSanitizer implements Sanitizer<WebRecipe>{
     @Autowired
     private InfoSanitizer infoSanitizer;
     @Autowired
@@ -24,7 +24,7 @@ public class RecipeSanitizer {
     @Autowired
     private TagSanitizer tagSanitizer;
 
-    public WebRecipe sanitizeRecipe(WebRecipe webRecipe) {
+    public WebRecipe sanitize(WebRecipe webRecipe) {
         webRecipe = infoSanitizer.sanitize(webRecipe);
         webRecipe = ingredientSanitizer.sanitize(webRecipe);
         webRecipe = directionSanitizer.sanitize(webRecipe);

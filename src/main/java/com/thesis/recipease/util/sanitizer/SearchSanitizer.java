@@ -4,7 +4,7 @@ import com.thesis.recipease.model.web.recipe.util.WebSearch;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SearchSanitizer {
+public class SearchSanitizer implements Sanitizer<WebSearch> {
     public WebSearch sanitize(WebSearch webSearch){
         webSearch.setName(webSearch.getName().trim());
         if(webSearch.getHolidays() == null) {

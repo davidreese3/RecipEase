@@ -5,7 +5,7 @@ import com.thesis.recipease.model.web.recipe.WebRecipe;
 import org.springframework.stereotype.Service;
 
 @Service
-public class NoteSanitizer implements Sanitizer{
+public class NoteSanitizer implements Sanitizer<WebRecipe>{
     public WebRecipe sanitize(WebRecipe webRecipe){
         WebNote webNote = webRecipe.getNote();
         webNote.setNote(webNote.getNote().trim());
