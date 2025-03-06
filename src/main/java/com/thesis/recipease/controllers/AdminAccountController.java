@@ -2,10 +2,9 @@ package com.thesis.recipease.controllers;
 
 import com.thesis.recipease.db.AppService;
 import com.thesis.recipease.model.domain.account.Account;
-import com.thesis.recipease.model.domain.recipe.RecipeInfo;
 import com.thesis.recipease.model.user.User;
 import com.thesis.recipease.model.web.account.WebAccount;
-import com.thesis.recipease.util.mail.service.MailService;
+import com.thesis.recipease.util.mail.MailService;
 import com.thesis.recipease.util.validator.account.AccountValidator;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

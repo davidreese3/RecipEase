@@ -5,7 +5,7 @@ import com.thesis.recipease.model.domain.account.Account;
 import com.thesis.recipease.model.domain.form.RegistrationForm;
 import com.thesis.recipease.model.web.account.WebAccount;
 import com.thesis.recipease.model.web.profile.WebProfile;
-import com.thesis.recipease.util.mail.service.MailService;
+import com.thesis.recipease.util.mail.MailService;
 import com.thesis.recipease.util.security.SecurityService;
 import com.thesis.recipease.util.validator.account.AccountValidator;
 import com.thesis.recipease.util.validator.account.ValidationResults;
