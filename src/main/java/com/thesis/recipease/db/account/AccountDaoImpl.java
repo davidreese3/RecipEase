@@ -25,7 +25,7 @@ import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 import java.util.List;
-import com.thesis.recipease.util.generator.VerificationCodeGenerator;
+import com.thesis.recipease.util.auth.VerificationCodeGenerator;
 
 
 @Repository
