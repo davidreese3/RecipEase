@@ -2,13 +2,14 @@ package com.thesis.recipease.util.normalizer.substitution;
 
 import com.thesis.recipease.model.domain.substitution.SubstitutionEntry;
 import com.thesis.recipease.model.domain.recipe.RecipeUserSubstitutionEntry;
+import com.thesis.recipease.util.normalizer.Normalizer;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class SubstitutionNormalizer {
-    public List<SubstitutionEntry> normalizeSubs(List<SubstitutionEntry> substitutionList){
+public class SubstitutionNormalizer implements Normalizer<List<SubstitutionEntry>> {
+    public List<SubstitutionEntry> normalize(List<SubstitutionEntry> substitutionList){
         for (SubstitutionEntry substitution : substitutionList) {
             String fixedOriginal = normalizeMeasurement(
                     substitution.getOriginalMeasurement(),

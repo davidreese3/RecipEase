@@ -1,11 +1,12 @@
 package com.thesis.recipease.util.normalizer.glossary;
 
+import com.thesis.recipease.util.normalizer.Normalizer;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 
 @Service
-public class GlossaryNormalizer {
+public class GlossaryNormalizer implements Normalizer<String> {
     HashMap<String, String> replacements;
 
     public GlossaryNormalizer(){
