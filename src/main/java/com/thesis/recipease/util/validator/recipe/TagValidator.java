@@ -2,6 +2,7 @@ package com.thesis.recipease.util.validator.recipe;
 
 import com.thesis.recipease.model.web.recipe.WebRecipe;
 import com.thesis.recipease.model.web.recipe.WebTag;
+import com.thesis.recipease.util.validator.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class TagValidator implements Validator{
+public class TagValidator implements Validator<WebRecipe, ArrayList<String>> {
     @Autowired
     private DropdownValidator dropdownValidator;
     private ArrayList<String> errors;

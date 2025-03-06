@@ -14,7 +14,9 @@
     </header>
 
     <main>
-        <div th:if="${error}" th:text="${error}" style="color: red;"></div>
+        <div th:each="error : ${errors}">
+            <span th:text="${error}" style="color: red;"></span>
+        </div>
         <form action="#" th:action="@{/profile/edit}" th:object="${webProfile}" method="post">
             <table>
                 <tr>

@@ -2,13 +2,14 @@ package com.thesis.recipease.util.validator.recipe;
 
 import com.thesis.recipease.model.web.recipe.WebInfo;
 import com.thesis.recipease.model.web.recipe.WebRecipe;
+import com.thesis.recipease.util.validator.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
 @Service
-public class InfoValidator implements Validator{
+public class InfoValidator implements Validator<WebRecipe, ArrayList<String>> {
     @Autowired
     private DropdownValidator dropdownValidator;
     private ArrayList<String> errors;

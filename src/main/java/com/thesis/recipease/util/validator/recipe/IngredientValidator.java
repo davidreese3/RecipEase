@@ -1,8 +1,8 @@
 package com.thesis.recipease.util.validator.recipe;
 
-import com.thesis.recipease.model.web.recipe.WebInfo;
 import com.thesis.recipease.model.web.recipe.WebIngredient;
 import com.thesis.recipease.model.web.recipe.WebRecipe;
+import com.thesis.recipease.util.validator.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Service
-public class IngredientValidator implements Validator{
+public class IngredientValidator implements Validator<WebRecipe, ArrayList<String>> {
     @Autowired
     private DropdownValidator dropdownValidator;
     private ArrayList<String> errors;

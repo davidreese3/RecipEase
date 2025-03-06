@@ -1,13 +1,15 @@
 package com.thesis.recipease.util.validator.recipe;
 
+import com.thesis.recipease.model.web.recipe.WebRecipe;
 import com.thesis.recipease.model.web.recipe.util.WebSearch;
+import com.thesis.recipease.util.validator.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
 @Service
-public class SearchValidator{
+public class SearchValidator implements Validator<WebSearch, ArrayList<String>> {
     @Autowired
     private DropdownValidator dropdownValidator;
     private ArrayList<String> errors;

@@ -8,6 +8,7 @@ import com.thesis.recipease.model.web.profile.WebProfile;
 import com.thesis.recipease.util.mail.service.MailService;
 import com.thesis.recipease.util.security.SecurityService;
 import com.thesis.recipease.util.validator.account.AccountValidator;
+import com.thesis.recipease.util.validator.account.ValidationResults;
 import com.thesis.recipease.util.validator.profile.ProfileValidator;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -26,7 +27,7 @@ import com.thesis.recipease.util.generator.VerificationCodeGenerator;
 
 
 import java.security.Principal;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -59,7 +60,18 @@ public class AccountController {
         webAccount.setEmail(webAccount.getEmail().toLowerCase());
         WebProfile webProfile = registrationForm.getWebProfile();
         webProfile.setId(0);
-        if (!accountValidator.isAccountValid(model, webAccount) || !profileValidator.isProfileValid(model, webProfile)) {
+        ValidationResults validationResults = accountValidator.validate(webAccount);
+        ArrayList<String> errors = validationResults.getErrors();
+        errors.addAll(profileValidator.validate(webProfile));
+        ArrayList<String> passwordCriteria = validationResults.getPasswordCriteria();
+        System.out.println(passwordCriteria.toString());
+        if(errors.size() > 0){
+            model.addAttribute("errors", errors);
+        }
+        if(passwordCriteria.size() > 0){
+            model.addAttribute("passwordCriteria", passwordCriteria);
+        }
+        if (errors.size() > 0 || passwordCriteria.size() > 0) {
             model.addAttribute(registrationForm);
             return "account/registration";
         }
@@ -129,27 +141,19 @@ public class AccountController {
 
     @RequestMapping(value = "account/edit/password", method = RequestMethod.POST)
     public String processEditAccountPasswordForm(Model model, Principal principal, WebAccount webAccount){
-        if(!accountValidator.isPasswordValid(webAccount.getPassword())){
-            model.addAttribute("error", "Password is not strong enough. It must include:");
-            List<String> passwordCriteria = Arrays.asList(
-                    "At least one lowercase letter",
-                    "At least one uppercase letter",
-                    "At least one special character",
-                    "A minimum length of 8 characters",
-                    "No spaces at all."
-            );
+        ValidationResults validationResults = accountValidator.validatePassword(webAccount);
+        ArrayList<String> passwordCriteria = validationResults.getPasswordCriteria();
+        ArrayList<String> errors = validationResults.getErrors();
+        if(passwordCriteria.size() > 0){
             model.addAttribute("passwordCriteria",passwordCriteria);
-            return "account/editPassword";
         }
-        if(!accountValidator.arePasswordsMatching(webAccount.getPassword(), webAccount.getConfirmPassword())){
-            model.addAttribute("error", "Passwords do not match.");
+        if(errors.size() > 0){
+            model.addAttribute("errors", errors);
+        }
+        if(passwordCriteria.size() > 0 || errors.size() > 0) {
             return "account/editPassword";
         }
         int id = securityService.getLoggedInUserId();
-        if(passwordEncoder.matches(webAccount.getPassword(),appService.getPasswordById(id))){
-            model.addAttribute("message","The password you entered is the same as your current one. No changes have been made.");
-            return "account/editPassword";
-        }
         webAccount.setPassword(passwordEncoder.encode(webAccount.getPassword()));
         Account account = appService.updatePasswordById(id, webAccount.getPassword());
         mailService.sendPasswordResetEmail(principal.getName());
@@ -217,26 +221,19 @@ public class AccountController {
     @RequestMapping(value = "account/reset/password", method = RequestMethod.POST)
     public String processResetAccountPasswordForm(Model model, WebAccount webAccount, @RequestParam("id") int id, @RequestParam("code") int code){
         int verificationCode = appService.getVerificationCodeById(id);
+        ValidationResults validationResults = accountValidator.validatePassword(webAccount);
+        ArrayList<String> passwordCriteria = validationResults.getPasswordCriteria();
+        ArrayList<String> errors = validationResults.getErrors();
         if(!appService.verifyVerificationCodeAndActivate(id, code, verificationCode)){
-            model.addAttribute("id",id);
-            model.addAttribute("error", "Invalid Activation Code");
-            return "account/resetPassword";
+            errors.add("Invalid Activation Code");
         }
-        if(!accountValidator.isPasswordValid(webAccount.getPassword())){
-            model.addAttribute("error", "Password is not strong enough. It must include:");
-            List<String> passwordCriteria = Arrays.asList(
-                    "At least one lowercase letter",
-                    "At least one uppercase letter",
-                    "At least one special character",
-                    "A minimum length of 8 characters",
-                    "No spaces at all."
-            );
-            model.addAttribute("id",id);
+        if(passwordCriteria.size() > 0){
             model.addAttribute("passwordCriteria",passwordCriteria);
-            return "account/resetPassword";
         }
-        if(!accountValidator.arePasswordsMatching(webAccount.getPassword(), webAccount.getConfirmPassword())){
-            model.addAttribute("error", "Passwords do not match.");
+        if(errors.size() > 0){
+            model.addAttribute("errors", errors);
+        }
+        if(errors.size() > 0 || passwordCriteria.size() > 0){
             model.addAttribute("id",id);
             return "account/resetPassword";
         }

@@ -2,6 +2,7 @@ package com.thesis.recipease.util.validator.recipe;
 
 import com.thesis.recipease.model.web.recipe.WebPhoto;
 import com.thesis.recipease.model.web.recipe.WebRecipe;
+import com.thesis.recipease.util.validator.Validator;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
@@ -12,7 +13,7 @@ import org.apache.tika.Tika;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
-public class PhotoValidator implements Validator {
+public class PhotoValidator implements Validator<WebRecipe, ArrayList<String>> {
     private ArrayList<String> errors;
 
     public ArrayList<String> validate(WebRecipe webRecipe) {

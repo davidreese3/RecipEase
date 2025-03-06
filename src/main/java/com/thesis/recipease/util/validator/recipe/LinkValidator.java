@@ -2,13 +2,14 @@ package com.thesis.recipease.util.validator.recipe;
 
 import com.thesis.recipease.model.web.recipe.WebLink;
 import com.thesis.recipease.model.web.recipe.WebRecipe;
+import com.thesis.recipease.util.validator.Validator;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class LinkValidator implements Validator{
+public class LinkValidator implements Validator<WebRecipe, ArrayList<String>> {
     public ArrayList<String> validate(WebRecipe webRecipe){
         ArrayList<String> errors = new ArrayList<String>();
         List<WebLink> webLinks = webRecipe.getLinks();
