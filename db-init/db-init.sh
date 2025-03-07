@@ -111,10 +111,6 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
         primary key (recipeId, ratingUserId)
     );
 
-    create index idx_rating_recipeid on rating(recipeid);
-    create index idx_info_recipeid on info(recipeid);
-
-
     -- =============================
     -- Recipe Option Fields Tables
     -- =============================
