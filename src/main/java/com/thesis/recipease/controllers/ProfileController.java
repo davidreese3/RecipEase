@@ -4,7 +4,9 @@ import com.thesis.recipease.db.AppService;
 import com.thesis.recipease.model.domain.profile.Profile;
 import com.thesis.recipease.model.domain.recipe.RecipeInfo;
 import com.thesis.recipease.model.web.profile.WebProfile;
-import com.thesis.recipease.util.generator.ProfileErrorMessageGenerator;
+import com.thesis.recipease.util.generator.profile.ProfileDeactivatedErrorGenerator;
+import com.thesis.recipease.util.generator.profile.ProfileNotCreatedErrorGenerator;
+import com.thesis.recipease.util.generator.profile.ProfileNotFoundErrorGenerator;
 import com.thesis.recipease.util.normalizer.recipe.RecipeNormalizer;
 import com.thesis.recipease.util.security.SecurityService;
 import com.thesis.recipease.util.validator.profile.ProfileValidator;
@@ -30,6 +32,12 @@ public class ProfileController {
     private SecurityService securityService;
     @Autowired
     private RecipeNormalizer recipeNormalizer;
+    @Autowired
+    private ProfileDeactivatedErrorGenerator profileDeactivatedErrorGenerator;
+    @Autowired
+    private ProfileNotCreatedErrorGenerator profileNotCreatedErrorGenerator;
+    @Autowired
+    private ProfileNotFoundErrorGenerator profileNotFoundErrorGenerator;
 
     @RequestMapping(value = "/profile/view/personal", method = RequestMethod.GET)
     public String displayPersonalProfile(Model model){
@@ -41,7 +49,12 @@ public class ProfileController {
     public String displayProfile(Model model, @RequestParam("id") int id){
         Profile profile = appService.getProfileById(id);
         if(profile == null){
-            model.addAttribute("message",ProfileErrorMessageGenerator.getProfileError());
+            if(id==securityService.getLoggedInUserId()){
+                model.addAttribute("message", profileNotCreatedErrorGenerator.getError());
+            }
+            else {
+                model.addAttribute("message", profileNotFoundErrorGenerator.getError());
+            }
             return "profile/viewProfileDNE";
         }
         else {
@@ -60,7 +73,7 @@ public class ProfileController {
 
             model.addAttribute("isPersonal", false);
             if (!profile.isActive()){
-                model.addAttribute("error", ProfileErrorMessageGenerator.getDeactivatedProfileError());
+                model.addAttribute("error", profileDeactivatedErrorGenerator.getError());
             }
         }
         return "profile/viewProfile";

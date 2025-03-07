@@ -9,7 +9,8 @@ import com.thesis.recipease.model.domain.recipe.util.RecipeRating;
 import com.thesis.recipease.model.domain.recipe.util.RecipeVariation;
 import com.thesis.recipease.model.web.recipe.*;
 import com.thesis.recipease.model.web.recipe.util.*;
-import com.thesis.recipease.util.generator.RecipeErrorMessageGenerator;
+import com.thesis.recipease.util.generator.recipe.RecipeNotFoundErrorGenerator;
+import com.thesis.recipease.util.generator.recipe.VariationNotFoundErrorGenerator;
 import com.thesis.recipease.util.normalizer.recipe.RecipeNormalizer;
 import com.thesis.recipease.util.normalizer.substitution.SubstitutionNormalizer;
 import com.thesis.recipease.util.processer.PrepopulatedEntryProcessor;
@@ -56,11 +57,15 @@ public class RecipeController {
     @Autowired
     private CommentValidator commentValidator;
     @Autowired
-    IngredientScaler ingredientScaler;
+    private IngredientScaler ingredientScaler;
     @Autowired
-    SearchSanitizer searchSanitizer;
+    private SearchSanitizer searchSanitizer;
     @Autowired
-    SearchValidator searchValidator;
+    private SearchValidator searchValidator;
+    @Autowired
+    private RecipeNotFoundErrorGenerator recipeNotFoundErrorGenerator;
+    @Autowired
+    private VariationNotFoundErrorGenerator variationNotFoundErrorGenerator;
 
     private final StorageService storageService;
 
@@ -81,7 +86,7 @@ public class RecipeController {
     public String displayVariationCreationForm(Model model, @RequestParam("recipeId") int recipeId) {
         WebRecipe webRecipe = appService.getWebRecipeById(recipeId);
         if (webRecipe == null) {
-            model.addAttribute("message", RecipeErrorMessageGenerator.getVariationError());
+            model.addAttribute("message", variationNotFoundErrorGenerator.getError());
             return "recipe/createVariationDNE";
         }
 
@@ -142,7 +147,7 @@ public class RecipeController {
                                 @RequestParam(value = "scale", required = false) Double scale) {
         Recipe recipe = appService.getRecipeById(recipeId);
         if (recipe == null){
-            model.addAttribute("message", RecipeErrorMessageGenerator.getRecipeError());
+            model.addAttribute("message", recipeNotFoundErrorGenerator.getError());
             return "recipe/viewRecipeDNE";
         }
         if (scale != null){
