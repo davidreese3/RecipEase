@@ -81,6 +81,10 @@ public class AdminAccountController {
             return "redirect:/admin/account/change/email?id=" + id;
         }
         Account newAccount = appService.updateEmailById(id, webAccount.getEmail());
+        if(newAccount == null) {
+            redirectAttributes.addFlashAttribute("error", "Error changing email. Please try again.");
+            return "redirect:/admin/account/change/email?id=" + id;
+        }
         redirectAttributes.addFlashAttribute("message", "This user's email has been changed.");
         mailService.sendEmailChangedByModeratorEmail(oldAccount.getEmail(), newAccount.getEmail());
         return "redirect:/profile/view?id=" + id;
@@ -121,6 +125,10 @@ public class AdminAccountController {
             return "redirect:/userDashboard/change?id=" + id;
         }
         Account newAccount = appService.updateEmailById(id, webAccount.getEmail());
+        if(newAccount == null){
+            redirectAttributes.addFlashAttribute("error", "Error changing email. Please try again.");
+            return "redirect:/userDashboard/change?id=" + id;
+        }
         redirectAttributes.addFlashAttribute("message", "Email has been changed.");
         mailService.sendEmailChangedByModeratorEmail(oldAccount.getEmail(), newAccount.getEmail());
         return "redirect:/userDashboard";
