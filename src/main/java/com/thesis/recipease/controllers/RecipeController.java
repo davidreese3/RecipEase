@@ -9,7 +9,7 @@ import com.thesis.recipease.model.domain.recipe.util.RecipeRating;
 import com.thesis.recipease.model.domain.recipe.util.RecipeVariation;
 import com.thesis.recipease.model.web.recipe.*;
 import com.thesis.recipease.model.web.recipe.util.*;
-import com.thesis.recipease.util.errors.RecipeErrorMessageGenerator;
+import com.thesis.recipease.util.generator.RecipeErrorMessageGenerator;
 import com.thesis.recipease.util.normalizer.recipe.RecipeNormalizer;
 import com.thesis.recipease.util.normalizer.substitution.SubstitutionNormalizer;
 import com.thesis.recipease.util.processer.PrepopulatedEntryProcessor;

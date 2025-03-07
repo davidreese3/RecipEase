@@ -1,4 +1,4 @@
-package com.thesis.recipease.util.errors;
+package com.thesis.recipease.util.generator;
 
 public class RecipeErrorMessageGenerator {
     private static final String [] RECIPE_ERRORS = {

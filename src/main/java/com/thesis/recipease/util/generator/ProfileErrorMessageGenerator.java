@@ -1,4 +1,4 @@
-package com.thesis.recipease.util.errors;
+package com.thesis.recipease.util.generator;
 
 public class ProfileErrorMessageGenerator {
     private static final String [] PROFILE_ERRORS = {

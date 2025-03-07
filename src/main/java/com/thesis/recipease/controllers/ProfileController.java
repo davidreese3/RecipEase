@@ -4,7 +4,7 @@ import com.thesis.recipease.db.AppService;
 import com.thesis.recipease.model.domain.profile.Profile;
 import com.thesis.recipease.model.domain.recipe.RecipeInfo;
 import com.thesis.recipease.model.web.profile.WebProfile;
-import com.thesis.recipease.util.errors.ProfileErrorMessageGenerator;
+import com.thesis.recipease.util.generator.ProfileErrorMessageGenerator;
 import com.thesis.recipease.util.normalizer.recipe.RecipeNormalizer;
 import com.thesis.recipease.util.security.SecurityService;
 import com.thesis.recipease.util.validator.profile.ProfileValidator;
