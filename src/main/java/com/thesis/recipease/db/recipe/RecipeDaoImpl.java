@@ -628,11 +628,12 @@ public class RecipeDaoImpl implements RecipeDao{
     private List<RecipeInfo> getRecipesBySearchCriteriaByNothing(){
         // top-rated recipes in general
         final String SQL = "select i.*, " +
-                "coalesce((select avg(r.ratingvalue) from rating r where r.recipeid = i.recipeid), 0) as avgRating, " +
-                "coalesce((select count(r.ratingvalue) from rating r where r.recipeid = i.recipeid), 0) as numRaters " +
+                "coalesce(avg(r.ratingvalue), 0) as avgRating, " +
+                "count(r.ratingvalue) as numRaters " +
                 "from info i " +
+                "left join rating r on i.recipeid = r.recipeid " +
                 "group by i.recipeid " +
-                "having coalesce((select count(r.ratingvalue) from rating r where r.recipeid = i.recipeid), 0) >= 5 " +
+                "having count(r.ratingvalue) >= 5 " +
                 "order by avgrating desc";
         try {
             return jdbcTemplate.query(SQL, new RecipeDaoImpl.RecipeInfoMapper());
@@ -644,9 +645,10 @@ public class RecipeDaoImpl implements RecipeDao{
     private List<RecipeInfo> getRecipesBySearchCriteriaByTags(WebSearch webSearch){
         // top-rated recipes with tags
         String SQL = "select i.*, " +
-                "coalesce((select avg(r.ratingvalue) from rating r where r.recipeid = i.recipeid), 0) as avgRating, " +
-                "coalesce((select count(r.ratingvalue) from rating r where r.recipeid = i.recipeid), 0) as numRaters " +
-                "from info i left join tags t on i.recipeid = t.recipeid " +
+                "coalesce(avg(r.ratingvalue), 0) as avgRating, " +
+                "count(r.ratingvalue) as numRaters  " +
+                "from info i left join rating r on i.recipeid = r.recipeid " +
+                "left join tags t on i.recipeid = t.recipeid " +
                 "where 1=1 ";
 
         List<Object> params = new ArrayList<>();
@@ -691,7 +693,7 @@ public class RecipeDaoImpl implements RecipeDao{
         SQL += "and (" + String.join(" or " , tagConditions) + ") " +
                 "group by i.recipeid " +
                 "having count(distinct t.tagField) = ? " +
-                "and coalesce((select count(r.ratingvalue) from rating r where r.recipeid = i.recipeid), 0) >= 5 " +
+                "and count(r.ratingvalue) >= 5  " +
                 "order by avgrating desc";
         params.add(tagConditions.size());
 
@@ -704,10 +706,12 @@ public class RecipeDaoImpl implements RecipeDao{
 
     private List<RecipeInfo> getRecipesBySearchCriteriaByName(WebSearch webSearch){
         String SQL = "select i.*, " +
-                "coalesce((select avg(r.ratingvalue) from rating r where r.recipeid = i.recipeid), 0) as avgRating, " +
-                "coalesce((select count(r.ratingvalue) from rating r where r.recipeid = i.recipeid), 0) as numRaters " +
+                "coalesce(avg(r.ratingvalue), 0) as avgRating, " +
+                "count(r.ratingvalue) as numRaters  " +
                 "from info i " +
+                "left join rating r on i.recipeid = r.recipeid " +
                 "where i.fts_document @@ to_tsquery('english', ?) " +
+                "group by i.recipeid " +
                 "order by ts_rank(i.fts_document, to_tsquery('english', ?)) desc";
         List<Object> params = new ArrayList<>();
         params.add(webSearch.getName());
@@ -721,9 +725,10 @@ public class RecipeDaoImpl implements RecipeDao{
 
     private List<RecipeInfo> getRecipesBySearchCriteriaByNameAndTags(WebSearch webSearch){
         String SQL = "select i.*, " +
-                "coalesce((select avg(r.ratingvalue) from rating r where r.recipeid = i.recipeid), 0) as avgRating, " +
-                "coalesce((select count(r.ratingvalue) from rating r where r.recipeid = i.recipeid), 0) as numRaters " +
-                "from info i left join tags t on i.recipeid = t.recipeid " +
+                "coalesce(avg(r.ratingvalue), 0) as avgRating, " +
+                "count(r.ratingvalue) as numRaters  " +
+                "from info i left join rating r on i.recipeid = r.recipeid " +
+                "left join tags t on i.recipeid = t.recipeid " +
                 "where i.fts_document @@ to_tsquery('english', ?) ";
 
         List<Object> params = new ArrayList<>();
