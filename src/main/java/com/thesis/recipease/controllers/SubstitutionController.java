@@ -21,6 +21,9 @@ public class SubstitutionController {
     @RequestMapping(value = "/substitution/view" , method = RequestMethod.GET)
     public String displayCommonSubstitition(Model model){
         List<SubstitutionEntry> substitutions = appService.getAllSubstitutionEntries();
+        if(substitutions == null){
+            model.addAttribute("error","There are no substitutions saved in the system.");
+        }
         substitutions = substitutionNormalizer.normalize(substitutions);
         model.addAttribute("substitutions",substitutions);
         return "substitution/commonSubstitutions";

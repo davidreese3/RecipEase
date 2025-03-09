@@ -16,7 +16,10 @@
 </header>
 
 <main>
-    <table>
+    <div th:if="${totalUsers == 0}">
+        <span th:text="There are no users registered in the system." style="color: red;"></span>
+    </div>
+    <table th:if="${totalUsers > 0}">
         <tr>
             <td>Total Users: <span th:text="${totalUsers}"></span></td>
         </tr>
@@ -26,7 +29,7 @@
     </table>
     <div th:if="${error}" th:text="${error}" style="color: red;"></div>
     <div th:if="${message}" th:text="${message}" style="color: green;"></div>
-    <table>
+    <table th:if="${totalUsers > 0}">
         <thead>
             <tr>
                 <th>ID</th>

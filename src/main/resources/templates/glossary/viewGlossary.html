@@ -14,8 +14,8 @@
 </header>
 
 <main>
-    <p>main</p>
-    <table>
+    <div th:if="${error}" th:text="${error}" style="color: red;"></div>
+    <table th:if="${error == null}">
         <thead>
             <tr>
                 <th>Term</th>
