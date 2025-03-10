@@ -93,7 +93,11 @@ public class ProfileController {
             model.addAttribute("errors", errors);
             return "profile/editProfile";
         }
-        appService.updateProfile(webProfile);
+        if(appService.updateProfile(webProfile) == null){
+            errors.add("There was an issue saving your profile. Please try again.");
+            model.addAttribute("errors", errors);
+            return "profile/editProfile";
+        }
         //needed bc redirect creates new HTTP request
         redirectAttributes.addFlashAttribute("message", "Your profile has been updated!");
         return "redirect:/profile/view/personal";
