@@ -1,4 +1,4 @@
-package com.thesis.recipease.controllers;
+package com.thesis.recipease.web;
 
 import com.thesis.recipease.db.AppService;
 import com.thesis.recipease.model.domain.substitution.SubstitutionEntry;

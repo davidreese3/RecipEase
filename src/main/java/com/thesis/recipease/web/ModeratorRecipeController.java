@@ -1,9 +1,7 @@
-package com.thesis.recipease.controllers;
+package com.thesis.recipease.web;
 
 import com.thesis.recipease.db.AppService;
 import com.thesis.recipease.model.domain.recipe.RecipeInfo;
-import org.apache.coyote.Request;
-import org.bouncycastle.cert.ocsp.Req;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
