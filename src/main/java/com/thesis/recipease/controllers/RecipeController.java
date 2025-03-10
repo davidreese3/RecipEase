@@ -133,13 +133,11 @@ public class RecipeController {
             model.addAttribute("errors", errors);
             return "recipe/createRecipe";
         }
-        else {
-            if (!file.isEmpty()) {
-                storageService.store(file, recipe.getRecipeInfo().getRecipeId());
-            }
-            redirectAttributes.addFlashAttribute("message", "Your recipe has been posted!");
-            return "redirect:/recipe/view?recipeId=" + recipe.getRecipeInfo().getRecipeId();
+        if (!file.isEmpty()) {
+            storageService.store(file, recipe.getRecipeInfo().getRecipeId());
         }
+        redirectAttributes.addFlashAttribute("message", "Your recipe has been posted!");
+        return "redirect:/recipe/view?recipeId=" + recipe.getRecipeInfo().getRecipeId();
     }
 
     @RequestMapping(value = "/recipe/view", method = RequestMethod.GET)
