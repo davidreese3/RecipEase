@@ -89,7 +89,6 @@ public class RecipeController {
             model.addAttribute("message", variationNotFoundErrorGenerator.getError());
             return "recipe/createVariationDNE";
         }
-
         String variationPattern = ".*\\[v\\d+\\.\\d+]$";
         WebInfo webInfo = webRecipe.getInfo();
         String name = webInfo.getName();
@@ -226,6 +225,9 @@ public class RecipeController {
         if(recipeComment != null){
             redirectAttributes.addFlashAttribute("message", "Your comment (\'"+webComment.getCommentText()+"\') has be posted");
         }
+        else {
+            redirectAttributes.addFlashAttribute("error", "There was an issue saving your comment. Please try again.");
+        }
         return "redirect:/recipe/view?recipeId=" + webComment.getRecipeId();
     }
 
@@ -239,6 +241,9 @@ public class RecipeController {
         RecipeRating recipeRating = appService.addRating(securityService.getLoggedInUserId(), webRating.getRecipeId(), webRating);
         if (recipeRating != null) {
             redirectAttributes.addFlashAttribute("message", "Your rating ("+webRating.getRatingValue()+") has be added");
+        }
+        else{
+            redirectAttributes.addFlashAttribute("error", "There was an issue saving your rating. Please try again.");
         }
         return "redirect:/recipe/view?recipeId=" + webRating.getRecipeId();
     }
@@ -278,11 +283,30 @@ public class RecipeController {
 
     @RequestMapping(value = "/recipe/trending", method = RequestMethod.GET)
     public String displayTrendingRecipes(Model model){
-        //community recipes
+        ArrayList<String> messages = new ArrayList<>();
+        ArrayList<String> errors = new ArrayList<>();
         List<RecipeInfo> communityRecipes = appService.getCommunityTrendingRecipes();
         model.addAttribute("communityRecipes",communityRecipes);
+        if(communityRecipes == null){
+            errors.add("There was an issue getting trending community recipes. Please try again.");
+        }
+        if(communityRecipes.size() == 0){
+            messages.add("There are no current trending community recipes. Please check back later.");
+        }
         List<RecipeInfo> staffRecipes = appService.getStaffTrendingRecipes();
         model.addAttribute("staffRecipes",staffRecipes);
+        if(staffRecipes == null){
+            errors.add("There was an issue getting trending staff recipes. Please try again.");
+        }
+        if(staffRecipes.size() == 0){
+            messages.add("There are no current trending staff recipes. Please check back later.");
+        }
+        if (messages.size() != 0){
+            model.addAttribute("messages",messages);
+        }
+        if (errors.size() != 0){
+            model.addAttribute("errors",errors);
+        }
         return "recipe/trendingRecipes";
     }
 
