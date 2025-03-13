@@ -79,6 +79,11 @@ public class AccountController {
         webAccount.setPassword(passwordEncoder.encode(webAccount.getPassword()));
         webAccount.setVerificationCode(VerificationCodeGenerator.generateVerificationCode());
         Account account = appService.addAccount(webAccount, roles, webProfile);
+        if (account == null){
+            errors.add("Account could not be registered. Please try again.");
+            model.addAttribute("errors", errors);
+            return "account/registration";
+        }
         String activationLink = "http://localhost:8080/account/activate?id=" + account.getId();
         mailService.sendActivationEmail(webAccount.getEmail(), activationLink, account.getVerificationCode());
         model.addAttribute("email", webAccount.getEmail());
@@ -127,6 +132,10 @@ public class AccountController {
         }
         int id = securityService.getLoggedInUserId();
         Account account = appService.updateEmailById(id, webAccount.getEmail());
+        if (account == null){
+            model.addAttribute("error", "Email address could not be changed. Please try again.");
+            return "account/editEmail";
+        }
         redirectAttributes.addFlashAttribute("success", "Your email has been updated. Please log in again.");
         invalidateSession(request, response);
         return "redirect:/login";
@@ -156,6 +165,11 @@ public class AccountController {
         int id = securityService.getLoggedInUserId();
         webAccount.setPassword(passwordEncoder.encode(webAccount.getPassword()));
         Account account = appService.updatePasswordById(id, webAccount.getPassword());
+        if (account == null){
+            errors.add("Could not change password. Please try again.");
+            model.addAttribute("errors", errors);
+            return "account/editPassword";
+        }
         mailService.sendPasswordResetEmail(principal.getName());
         model.addAttribute("success", "Your password has been updated.");
         return "account/editPassword";
@@ -192,19 +206,14 @@ public class AccountController {
 
     @RequestMapping(value = "account/reset/password/request", method = RequestMethod.POST)
     public String processPasswordResetForm(@RequestParam("email") String email, Model model) {
-        System.out.println("Inside processPasswordResetForm");
         Account account = appService.getAccountByEmail(email);
-
         if (account == null) {
             model.addAttribute("error", "No account found with that email.");
             return "login";
         }
-
         int verificationCode = appService.generateAndSaveVerificationCode(account.getId());
         String resetLink = "http://localhost:8080/account/reset/password?id=" + account.getId();
-
         mailService.sendResetPasswordEmail(email, resetLink, verificationCode);
-
         model.addAttribute("success", "A password reset link has been sent to your email.");
         return "login";
     }
@@ -239,6 +248,11 @@ public class AccountController {
         }
         webAccount.setPassword(passwordEncoder.encode(webAccount.getPassword()));
         Account account = appService.updatePasswordById(id, webAccount.getPassword());
+        if(account == null){
+            errors.add("There was an error resetting your password. Please try again.");
+            model.addAttribute("errors", errors);
+            return "account/resetPassword";
+        }
         model.addAttribute("success", "Your password has been updated.");
         return "account/resetPassword";
     }
@@ -250,7 +264,6 @@ public class AccountController {
 
     @RequestMapping(value = "account/reactivate/request", method = RequestMethod.POST)
     public String processReactivationRequestForm(@RequestParam("email") String email, Model model) {
-        System.out.println("INSIDE POST");
         Account account = appService.getAccountByEmail(email);
         if (account == null) {
             model.addAttribute("error", "No account found with that email.");
