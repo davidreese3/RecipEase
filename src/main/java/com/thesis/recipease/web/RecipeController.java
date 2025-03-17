@@ -341,7 +341,7 @@ public class RecipeController {
             redirectAttributes.addFlashAttribute("error", "Recipe could not be removed from bookmark. Please try again.");
             return "redirect:/profile/view/personal";
         }
-        redirectAttributes.addFlashAttribute("message", "This recipe was remove from your bookmark.");
+        redirectAttributes.addFlashAttribute("message", "This recipe was removed from your bookmark.");
 
         return "redirect:/profile/view/personal";
     }
