@@ -27,10 +27,9 @@ public class RecipeValidator implements Validator<WebRecipe, ArrayList<String>> 
     private PhotoValidator photoValidator;
     @Autowired
     private TagValidator tagValidator;
-    private ArrayList<String> errors;
 
     public ArrayList<String> validate(WebRecipe webRecipe) {
-        errors = new ArrayList<String>();
+        ArrayList<String> errors = new ArrayList<String>();
         errors.addAll(infoValidator.validate(webRecipe));
         errors.addAll(ingredientValidator.validate(webRecipe));
         errors.addAll(directionValidator.validate(webRecipe));

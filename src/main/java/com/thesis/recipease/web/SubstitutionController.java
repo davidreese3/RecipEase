@@ -22,7 +22,8 @@ public class SubstitutionController {
     public String displayCommonSubstitition(Model model){
         List<SubstitutionEntry> substitutions = appService.getAllSubstitutionEntries();
         if(substitutions == null){
-            model.addAttribute("error","There are no substitutions saved in the system.");
+            model.addAttribute("error","There are no substitutions in the system.");
+            return "substitution/commonSubstitutions";
         }
         substitutions = substitutionNormalizer.normalize(substitutions);
         model.addAttribute("substitutions",substitutions);

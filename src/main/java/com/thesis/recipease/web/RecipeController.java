@@ -127,7 +127,7 @@ public class RecipeController {
         }
         Recipe recipe = appService.addRecipe(securityService.getLoggedInUserId(), webRecipe);
         if (recipe == null){
-            errors.add("There was an issue saving your recipe. Please try again");
+            errors.add("There was an issue saving your recipe. Please try again.");
             model.addAttribute(webRecipe);
             model.addAttribute("errors", errors);
             return "recipe/createRecipe";
@@ -135,7 +135,7 @@ public class RecipeController {
         if (!file.isEmpty()) {
             storageService.store(file, recipe.getRecipeInfo().getRecipeId());
         }
-        redirectAttributes.addFlashAttribute("message", "Your recipe has been posted!");
+        redirectAttributes.addFlashAttribute("message", "Your recipe has been posted.");
         return "redirect:/recipe/view?recipeId=" + recipe.getRecipeInfo().getRecipeId();
     }
 
@@ -223,7 +223,7 @@ public class RecipeController {
         }
         RecipeComment recipeComment = appService.addComment(securityService.getLoggedInUserId(), webComment.getRecipeId(), webComment);
         if(recipeComment != null){
-            redirectAttributes.addFlashAttribute("message", "Your comment (\'"+webComment.getCommentText()+"\') has be posted");
+            redirectAttributes.addFlashAttribute("message", "Your comment (\'"+webComment.getCommentText()+"\') has be posted.");
         }
         else {
             redirectAttributes.addFlashAttribute("error", "There was an issue saving your comment. Please try again.");
@@ -234,13 +234,13 @@ public class RecipeController {
     @RequestMapping(value = "/recipe/rating/add", method = RequestMethod.POST)
     public String processRatingForm(Model model, WebRating webRating, RedirectAttributes redirectAttributes){
         if (securityService.getLoggedInUserId() == appService.getUserIdByRecipeId(webRating.getRecipeId())){
-            redirectAttributes.addFlashAttribute("error", "You cannot rate your own recipe");
+            redirectAttributes.addFlashAttribute("error", "You cannot rate your own recipe.");
             return "redirect:/recipe/view?recipeId=" + webRating.getRecipeId();
 
         }
         RecipeRating recipeRating = appService.addRating(securityService.getLoggedInUserId(), webRating.getRecipeId(), webRating);
         if (recipeRating != null) {
-            redirectAttributes.addFlashAttribute("message", "Your rating ("+webRating.getRatingValue()+") has be added");
+            redirectAttributes.addFlashAttribute("message", "Your rating ("+webRating.getRatingValue()+") has be added.");
         }
         else{
             redirectAttributes.addFlashAttribute("error", "There was an issue saving your rating. Please try again.");
@@ -274,7 +274,7 @@ public class RecipeController {
         webSearch.setName(str);
         model.addAttribute("webSearch", webSearch);
         if(results.isEmpty()){
-            model.addAttribute("message", "There are no search results with your search criteria");
+            model.addAttribute("message", "There are no search results with your search criteria.");
             return "recipe/searchRecipe";
         }
         model.addAttribute("results", results);

@@ -15,12 +15,11 @@ public class ProfileValidator implements Validator<WebProfile, ArrayList<String>
     private AppService appService;
     @Autowired
     private DropdownValidator dropdownValidator;
-    private ArrayList<String> errors;
 
     public ProfileValidator(){}
 
     public ArrayList<String> validate(WebProfile webProfile){
-        errors = new ArrayList<String>();
+        ArrayList<String> errors = new ArrayList<String>();
         if(!isFieldValid(webProfile.getFirstName())){
             errors.add("First name cannot be blank.");
         }
@@ -37,10 +36,10 @@ public class ProfileValidator implements Validator<WebProfile, ArrayList<String>
             errors.add("Cooking level is not a valid selection.");
         }
         if(!isFeildLengthValid(webProfile.getFavoriteDish(), 40)) {
-            errors.add("Favorite Dish cannot be longer than 40 characters.");
+            errors.add("Favorite dish cannot be longer than 40 characters.");
         }
         if(!isFeildLengthValid(webProfile.getFavoriteCuisine(), 40)) {
-            errors.add("Favorite Cuisine cannot be longer than 40 characters.");
+            errors.add("Favorite cuisine cannot be longer than 40 characters.");
         }
         return errors;
     }
