@@ -38,10 +38,10 @@ public class ValidationResults {
 
     public void initializePasswordCriteria(){
         passwordCriteria = new ArrayList<>(Arrays.asList(
-                "At least one lowercase letter",
-                "At least one uppercase letter",
-                "At least one special character",
-                "A minimum length of 8 characters",
+                "At least one lowercase letter.",
+                "At least one uppercase letter.",
+                "At least one special character.",
+                "A minimum length of 8 characters.",
                 "No spaces at all."
         ));
     }
