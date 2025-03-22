@@ -32,7 +32,7 @@ public class SubstitutionDaoImpl implements SubstitutionDao{
     // ------------------------------------------------
     @Override
     public List<SubstitutionEntry> getAllSubstitutionEntries(){
-        final String SQL = "select * from knownSubs order by originalComponent asc";
+        final String SQL = "select * from commonSubs order by originalComponent asc";
         List<SubstitutionEntry> substitutions = jdbcTemplate.query(SQL, new SubstitutionDaoImpl.SubstitutionEntryMapper());
         return substitutions;
     }
