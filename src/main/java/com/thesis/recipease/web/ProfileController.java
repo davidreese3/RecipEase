@@ -99,7 +99,7 @@ public class ProfileController {
             return "profile/editProfile";
         }
         //needed bc redirect creates new HTTP request
-        redirectAttributes.addFlashAttribute("message", "Your profile has been updated!");
+        redirectAttributes.addFlashAttribute("message", "Your profile has been updated.");
         return "redirect:/profile/view/personal";
     }
 

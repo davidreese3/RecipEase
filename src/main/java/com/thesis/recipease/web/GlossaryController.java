@@ -19,7 +19,7 @@ public class GlossaryController {
     public String displayGlossary(Model model){
         List<GlossaryEntry> glossary = appService.getAllGlossaryEntries();
         if(glossary == null){
-            model.addAttribute("error","There are no definitions saved in the system.");
+            model.addAttribute("error","There are no definitions in the system.");
         }
         model.addAttribute("glossary",glossary);
         return "glossary/viewGlossary";

@@ -32,7 +32,7 @@ public class ModeratorRecipeController {
             redirectAttributes.addFlashAttribute("error", "Error deleting recipe. Try again.");
             return "redirect:/recipe/view?recipeId=" + recipeId;
         }
-        redirectAttributes.addFlashAttribute("message", "The comment (\'"+comment+"\') has be deleted. ");
+        redirectAttributes.addFlashAttribute("message", "The comment (\'"+comment+"\') has be deleted.");
         return "redirect:/recipe/view?recipeId=" + recipeId;
     }
 

@@ -64,7 +64,6 @@ public class AccountController {
         ArrayList<String> errors = validationResults.getErrors();
         errors.addAll(profileValidator.validate(webProfile));
         ArrayList<String> passwordCriteria = validationResults.getPasswordCriteria();
-        System.out.println(passwordCriteria.toString());
         if(errors.size() > 0){
             model.addAttribute("errors", errors);
         }
@@ -104,7 +103,7 @@ public class AccountController {
         int verificationCode = appService.getVerificationCodeById(id);
         if (!appService.verifyVerificationCodeAndActivate(id,code,verificationCode)){
             model.addAttribute("id",id);
-            model.addAttribute("error", "Invalid Activation Code");
+            model.addAttribute("error", "Invalid activation code.");
             return "account/activation";
         }
         return "account/activationConfirmation";
@@ -289,7 +288,7 @@ public class AccountController {
         int verificationCode = appService.getVerificationCodeById(id);
         if(!appService.verifyVerificationCodeAndActivate(id, code, verificationCode)){
             model.addAttribute("id",id);
-            model.addAttribute("error", "Invalid Reactivation Code");
+            model.addAttribute("error", "Invalid reactivation code.");
             return "account/reactivateAccount";
         }
         model.addAttribute("success", "Your account has been reactivated.");

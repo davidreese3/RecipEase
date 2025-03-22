@@ -12,30 +12,29 @@ import java.util.ArrayList;
 public class SearchValidator implements Validator<WebSearch, ArrayList<String>> {
     @Autowired
     private DropdownValidator dropdownValidator;
-    private ArrayList<String> errors;
 
     public ArrayList<String> validate(WebSearch webSearch) {
-        errors = new ArrayList<String>();
+        ArrayList<String> errors = new ArrayList<String>();
         if (!dropdownValidator.isValidHoliday(webSearch.getHolidays())) {
-            errors.add("Invalid Holiday: '" + webSearch.getHolidays() + "'");
+            errors.add("Invalid holiday: '" + webSearch.getHolidays() + "'");
         }
         if (!dropdownValidator.isValidMealType(webSearch.getMealTypes())) {
-            errors.add("Invalid Meal Type: '" + webSearch.getMealTypes() + "'");
+            errors.add("Invalid meal type: '" + webSearch.getMealTypes() + "'");
         }
         if (!dropdownValidator.isValidCuisine(webSearch.getCuisines())) {
-            errors.add("Invalid Cuisine: '" + webSearch.getCuisines() + "'");
+            errors.add("Invalid cuisine: '" + webSearch.getCuisines() + "'");
         }
         if (!dropdownValidator.isValidAllergen(webSearch.getAllergens())) {
-            errors.add("Invalid Allergen: '" + webSearch.getAllergens() + "'");
+            errors.add("Invalid allergen: '" + webSearch.getAllergens() + "'");
         }
         if (!dropdownValidator.isValidDietType(webSearch.getDietTypes())) {
-            errors.add("Invalid Diet Type: '" + webSearch.getDietTypes() + "'");
+            errors.add("Invalid diet type: '" + webSearch.getDietTypes() + "'");
         }
         if (!dropdownValidator.isValidCookingLevel(webSearch.getCookingLevels())) {
-            errors.add("Invalid Cooking Level: '" + webSearch.getCookingLevels() + "'");
+            errors.add("Invalid cooking level: '" + webSearch.getCookingLevels() + "'");
         }
         if (!dropdownValidator.isValidCookingStyle(webSearch.getCookingStyles())) {
-            errors.add("Invalid Cooking Style: '" + webSearch.getCookingStyles() + "'");
+            errors.add("Invalid cooking style: '" + webSearch.getCookingStyles() + "'");
         }
         return errors;
     }
