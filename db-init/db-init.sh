@@ -192,8 +192,8 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
     -- Recipe Set Up Tables
     -- =============================
 
-    -- knownSubs
-    create table if not exists knownSubs (
+    -- Common Subs
+    create table if not exists commonSubs (
         originalComponent varchar(45),
         originalQuantity varchar(12),
         originalMeasurement varchar(20), --change once prepop made
@@ -324,7 +324,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
 
 
     --Common baking and cooking substitutions
-    INSERT INTO knownSubs(
+    INSERT INTO commonSubs(
         originalComponent, originalQuantity, originalMeasurement, originalPreparation,
         substitutedComponent, substitutedQuantity, substitutedMeasurement, substitutedPreparation
     )
@@ -507,7 +507,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
     alter table note owner to docker;
     alter table bookmark owner to docker;
     alter table userSubs owner to docker;
-    alter table knownSubs owner to docker;
+    alter table commonSubs owner to docker;
     alter table glossary owner to docker;
 
 EOSQL
