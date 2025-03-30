@@ -26,10 +26,8 @@
         <span th:text="${error}" style="color: red;"></span>
     </div>
     <form id= "recipeForm" action="#" th:action="@{/recipe/create}" th:object="${webRecipe}" method="post" enctype="multipart/form-data">
+        <h3>Recipe Information</h3>
         <table>
-            <tr>
-                <td><h3>Recipe Info</h3></td>
-            </tr>
             <tr>
                 <td><label>Recipe Name: </label></td>
                 <td><input type="text" th:field="*{info.name}" maxlength="40" required/></td>
@@ -91,15 +89,14 @@
             </tr>
         </table>
         <h3>Ingredients</h3>
-        <button type="button" id="addIngredientBtn">Add Ingredient</button>
-        <table>
+        <table class="alternating">
             <thead>
             <tr>
                 <th>Ingredient Name</th>
                 <th>Quantity</th>
                 <th>Measurement</th>
                 <th>Preparation</th>
-                <th>&nbsp;</th>
+                <th><button type="button" id="addIngredientBtn">Add Ingredient</button></th>
             </tr>
             </thead>
             <tbody id="ingredientList">
@@ -156,14 +153,14 @@
         </table>
 
         <h3>Directions</h3>
-        <button type="button" id="addDirectionBtn">Add Direction</button>
-        <table>
+        <table class="alternating">
             <thead>
             <tr>
                 <th>Direction</th>
                 <th>Method</th>
                 <th>Temperature (°F)</th>
                 <th>Heat Level</th>
+                <th><button type="button" id="addDirectionBtn">Add Direction</button></th>
             </tr>
             </thead>
             <tbody id="directionList">
@@ -195,20 +192,17 @@
             </tr>
             </tbody>
         </table>
+        <h3>Recipe Notes</h3>
+        <label>Add any additional notes or tips about the recipe.</label>
         <table>
-            <tr>
-                <td><h3>Recipe Notes</h3><label>Add any additional notes or tips about the recipe.</label></td>
-            </tr>
             <tr>
                 <td>
                     <textarea th:field="*{note.note}" maxlength="2500"></textarea>
                 </td>
             </tr>
         </table>
+        <h3>Recipe Links</h3>
         <table>
-            <tr>
-                <td><h3>Recipe Links</h3></td>
-            </tr>
             <tr>
                 <td>
                     <button type="button" id="addLinkBtn">Add Link</button>
@@ -222,8 +216,7 @@
             </tr>
         </table>
         <h3>User Substitutions</h3>
-        <button type="button" id="addUserSubBtn">Add Substitution</button>
-        <table class="userSubs">
+        <table class="alternating">
             <thead>
             <tr>
                 <th>Type</th>
@@ -231,6 +224,7 @@
                 <th>Quantity</th>
                 <th>Measurement</th>
                 <th>Preparation</th>
+                <th><button type="button" id="addUserSubBtn">Add Substitution</button></th>
             </tr>
             </thead>
             <tbody id="userSubList">
@@ -341,21 +335,15 @@
             </tr>
             </tbody>
         </table>
+        <h3>Upload Recipe Image</h3>
+        <label>Max file size is 5MB. Only jpeg, png, and gif are allowed.</label>
         <table>
-            <tr>
-                <td><h3>Upload Recipe Image</h3></td>
-            </tr>
-            <tr>
-                <td><span>Max file size is 5MB. Only jpeg, png, and gif are allowed.</span></td>
-            </tr>
             <tr>
                 <td><input type="file" name="file" /></td>
             </tr>
         </table>
+        <h3>Recipe Tags</h3>
         <table>
-            <tr>
-                <td><h3>Recipe Tags</h3></td>
-            </tr>
             <tr>
                 <td>
                     <button type="button" id="addHolidayBtn">Add Holiday</button>

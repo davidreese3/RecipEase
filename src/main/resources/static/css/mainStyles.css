@@ -5,6 +5,7 @@ body {
     justify-content: center;
     margin: 0;
     padding: 50px 0;
+    font-size: 14px;
 }
 
 .container {
@@ -32,14 +33,47 @@ th {
     background-color: #f2f2f2;
 }
 
-tr:nth-child(even) {
+.alternating tr:nth-child(even) {
     background-color: #f2f2f2;
 }
 
-tr:nth-child(odd) {
+.alternating tr:nth-child(odd) {
     background-color: #ffffff;
 }
 
-tr:hover {
+.alternating tr:hover {
     background-color: #ddd;
+}
+
+button {
+    background-color: #ebe6df;
+    color: #5a5a5a;
+    border: 1px solid #5a5a5a;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+button:hover {
+    background-color: #ebe6df;
+}
+
+button:active {
+    background-color: #ddd8d0;
+}
+
+img {
+    text-align:center;
+}
+
+#utility {
+    display: flex;
+    flex-wrap: wrap; /* Allows wrapping if the screen is too narrow */
+    gap: 10px; /* Adds spacing between buttons */
+    align-items: center; /* Aligns items vertically */
+}
+
+#utility form {
+    display: inline-block; /* Ensures forms stay inline */
+    margin: 0;
 }
