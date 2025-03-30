@@ -8,9 +8,14 @@
     <title>RecipEase View Recipe</title>
     <script src="/js/print.js" defer></script>
     <link rel="stylesheet" type="text/css" href="/print.css">
+    <link rel="stylesheet" th:href="@{/css/mainStyles.css}" />
+
+
 </head>
 
 <body>
+<div class="container">
+
 <header class="noPrint">
     <div th:replace="~{fragments/headerAndNavbar}"></div>
     <h2 th:text="'View ' + ${recipe.recipeInfo.name}"></h2>
@@ -165,9 +170,9 @@
     <div th:if="${recipe.recipeLinks.size != 0}">
         <h3>Links</h3>
         <p>Links below are added by users to external sites</p>
-        <li th:each="link : ${recipe.recipeLinks}">
-            <a th:href="${link.link}" th:text="${link.link}"></a>
-        </li>
+        <ul th:each="link : ${recipe.recipeLinks}">
+            <li><a th:href="${link.link}" th:text="${link.link}"></a></li>
+        </ul>
     </div>
     <div>
         <img th:if="${recipe.recipePhoto != null}" th:src="${recipe.recipePhoto.fileLocation}" alt="Recipe Photo" height="200px">
@@ -231,6 +236,7 @@
 <footer>
     <p>footer</p>
 </footer>
+</div>
 </body>
 
 </html>
