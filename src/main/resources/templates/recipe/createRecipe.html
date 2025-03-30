@@ -11,10 +11,11 @@
     <script src="/js/addUserSubstitutionEntry.js" defer></script>
     <script src="/js/addTags.js" defer></script>
     <script src="/js/repopulateRemoveButtons.js" defer></script>
-    <link rel="stylesheet" th:href="@{/testingStyles.css}">
+    <link rel="stylesheet" th:href="@{/css/mainStyles.css}" />
 </head>
 
 <body>
+<div class="container">
 <header>
     <div th:replace="~{fragments/headerAndNavbar}"></div>
     <h2>Create Your Recipe</h2>
@@ -536,6 +537,7 @@
 <footer>
     <p>footer</p>
 </footer>
+</div>
 </body>
 
 </html>
