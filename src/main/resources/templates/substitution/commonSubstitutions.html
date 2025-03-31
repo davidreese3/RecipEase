@@ -8,14 +8,17 @@
 </head>
 
 <body>
+<div class="container">
     <header>
-        <div th:replace="~{fragments/headerAndNavbar}"></div>
+        <div th:replace="~{fragments/navbar}"></div>
+        <link rel="stylesheet" th:href="@{/css/mainStyles.css}" />
+        <link rel="stylesheet" th:href="@{/css/navbar.css}" />
         <h2>Browse Through Common Substitutions</h2>
     </header>
 
     <main>
         <div th:if="${error}" th:text="${error}" style="color: red;"></div>
-        <table th:if="${error == null}">
+        <table th:if="${error == null}" class="alternating">
             <thead>
             <tr>
                 <th>Original</th>
@@ -40,9 +43,7 @@
         </table>
     </main>
 
-    <footer>
-        <p>footer</p>
-    </footer>
+</div>
 </body>
 
 </html>

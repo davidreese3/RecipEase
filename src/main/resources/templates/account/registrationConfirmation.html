@@ -9,8 +9,11 @@
 </head>
 
 <body>
+<div class="container">
     <header>
-        <div th:replace="~{fragments/headerAndNavbar}"></div>
+        <div th:replace="~{fragments/navbar}"></div>
+        <link rel="stylesheet" th:href="@{/css/mainStyles.css}" />
+        <link rel="stylesheet" th:href="@{/css/navbar.css}" />
         <h2>Your Account Has Been Registered!</h2>
     </header>
 
@@ -18,10 +21,8 @@
         <p th:text="'An account has been created for ' + ${email} + '.'">
         <p>Please check your email regarding account activation.</p>
     </main>
-
-    <footer>
-        <button onclick="location.href='/'">Back to homepage</button>
-    </footer>
+    <button onclick="location.href='/'">Back to homepage</button>
+</div>
 </body>
 
 </html>

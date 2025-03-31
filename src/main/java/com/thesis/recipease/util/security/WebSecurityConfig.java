@@ -55,7 +55,7 @@ public class WebSecurityConfig {
             try {
                 authz
                         .requestMatchers("/", "/403", "/login", "/account/register", "/account/activate", "/account/reset/**", "/account/reactivate/**").permitAll()
-                        .requestMatchers("/403", "/logout", "/resources/**", "/static/**", "/css/**").permitAll()
+                        .requestMatchers("/403", "/logout", "/resources/**", "/static/**", "/css/**", "/css/").permitAll()
                         // Protected URLs
                         .requestMatchers("/landing","/profile/**","/glossary/**","/recipe/**").authenticated()
                         .requestMatchers("/recipeDashboard/**", "/mod/**").hasRole("ADMIN")

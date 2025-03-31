@@ -17,7 +17,7 @@
 <div class="container">
 
 <header class="noPrint">
-    <div th:replace="~{fragments/headerAndNavbar}"></div>
+    <div th:replace="~{fragments/navbar}"></div>
     <h2>
         <span th:text="${recipe.recipeInfo.name}"></span>
         <a th:href="@{'http://localhost:8080/profile/view?id=' + ${recipe.recipeInfo.userId}}"

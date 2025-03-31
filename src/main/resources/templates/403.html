@@ -8,8 +8,11 @@
 </head>
 
 <body>
+<div class="container">
 <header>
-    <div th:replace="~{fragments/headerAndNavbar}"></div>
+    <div th:replace="~{fragments/navbar}"></div>
+    <link rel="stylesheet" th:href="@{/css/mainStyles.css}" />
+    <link rel="stylesheet" th:href="@{/css/navbar.css}" />
 </header>
 
 <main>
@@ -17,9 +20,7 @@
     <p>Oops! You don't have permission to access this recipe. Maybe it's a secret family recipe? 🤫</p>
     <a href="/landing">Back to homepage</a>
 </main>
-
-<footer>
-</footer>
+</div>
 </body>
 
 </html>

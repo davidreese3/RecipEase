@@ -11,7 +11,9 @@
 <body>
 <div class="container">
 <header>
-    <div th:replace="~{fragments/headerAndNavbar}"></div>
+    <div th:replace="~{fragments/navbar}"></div>
+    <link rel="stylesheet" th:href="@{/css/mainStyles.css}" />
+    <link rel="stylesheet" th:href="@{/css/navbar.css}" />
 </header>
 
 <main>
@@ -44,10 +46,6 @@
         <a href="/substitution/view">View Substitutions</a>
     </section>
 </main>
-
-<footer>
-    <p></p>
-</footer>
 </div>
 </body>
 
