@@ -12,6 +12,8 @@
     <script src="/js/addTags.js" defer></script>
     <script src="/js/repopulateRemoveButtons.js" defer></script>
     <link rel="stylesheet" th:href="@{/css/mainStyles.css}" />
+    <link rel="stylesheet" th:href="@{/css/createRecipe.css}" />
+
 </head>
 
 <body>
@@ -20,7 +22,6 @@
     <div th:replace="~{fragments/headerAndNavbar}"></div>
     <h2>Create Your Recipe</h2>
 </header>
-
 <main>
     <div th:each="error : ${errors}">
         <span th:text="${error}" style="color: red;"></span>
@@ -29,23 +30,22 @@
         <h3>Recipe Information</h3>
         <table>
             <tr>
-                <td><label>Recipe Name: </label></td>
+                <td><label>Recipe Name</label><span class="required"> *</span></td>
                 <td><input type="text" th:field="*{info.name}" maxlength="40" required/></td>
             </tr>
             <tr>
-                <td><label>Recipe Description:</label><br><label>(Not required, but encouraged.)</label></td>
+                <td><label>Recipe Description</label><br><label>(Not required, but encouraged.)</label></td>
                 <td><textarea th:field="*{info.description}" maxlength="1000"></textarea></td>
             </tr>
             <tr>
-                <td><label>Servings: </label></td>
+                <td><label>Servings</label><span class="required"> *</span></td>
                 <td><input type="text" th:field="*{info.yield}" required/></td>
             </tr>
             <tr>
-                <td><label>Unit of Servings</label></td>
+                <td><label>Unit of Servings</label><span class="required"> *</span></td>
                 <td>
                     <select th:field="*{info.unitOfYield}" required>
                         <option value=""></option>
-                        <!-- Specific Food Portions -->
                         <option value="Bowls">Bowls</option>
                         <option value="Cakes">Cakes</option>
                         <option value="Cookies">Cookies</option>
@@ -71,20 +71,21 @@
                     </select>
                 </td>
             </tr>
+            <tr><td colspan="2">If times are left empty, they will default to 0.</td></tr>
             <tr>
-                <td><label>Preparation Hours: </label></td>
+                <td><label>Preparation Hours</label></td>
                 <td><input type="number" step="1" min="0" value="0" th:field="*{info.prepHr}"></td>
             </tr>
             <tr>
-                <td><label>Preparation Minutes: </label></td>
+                <td><label>Preparation Minutes</label></td>
                 <td><input type="number" step="1" min="0" max="59" value="0" th:field="*{info.prepMin}"></td>
             </tr>
             <tr>
-                <td><label>Process Hours: </label></td>
+                <td><label>Process Hours</label></td>
                 <td><input type="number" step="1" min="0" value="0" th:field="*{info.processHr}"></td>
             </tr>
             <tr>
-                <td><label>Process Minutes:</label></td>
+                <td><label>Process Minutes</label></td>
                 <td><input type="number" step="1" min="0" max="59" value="0" th:field="*{info.processMin}"></td>
             </tr>
         </table>
@@ -92,10 +93,10 @@
         <table class="alternating">
             <thead>
             <tr>
-                <th>Ingredient Name</th>
-                <th>Quantity</th>
-                <th>Measurement</th>
-                <th>Preparation</th>
+                <th>Ingredient Name<span class="required"> *</span></th>
+                <th>Quantity<span class="required"> *</span></th>
+                <th>Measurement<span class="required"> *</span></th>
+                <th>Preparation<span class="required"> *</span></th>
                 <th><button type="button" id="addIngredientBtn">Add Ingredient</button></th>
             </tr>
             </thead>
@@ -156,7 +157,7 @@
         <table class="alternating">
             <thead>
             <tr>
-                <th>Direction</th>
+                <th>Direction<span class="required"> *</span></th>
                 <th>Method</th>
                 <th>Temperature (°F)</th>
                 <th>Heat Level</th>
