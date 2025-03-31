@@ -97,7 +97,7 @@ public class RecipeDaoImpl implements RecipeDao{
             ps.setInt(1, userId);
             ps.setString(2, webInfo.getName());
             ps.setString(3, webInfo.getDescription());
-            ps.setDouble(4, webInfo.getYield());
+            ps.setString(4, webInfo.getYield());
             ps.setString(5, webInfo.getUnitOfYield());
             ps.setInt(6, webInfo.getPrepMin());
             ps.setInt(7, webInfo.getPrepHr());
@@ -913,7 +913,7 @@ public class RecipeDaoImpl implements RecipeDao{
             recipeInfo.setUserId(rs.getInt("userId"));
             recipeInfo.setName(rs.getString("name"));
             recipeInfo.setDescription(rs.getString("description"));
-            recipeInfo.setYield(rs.getDouble("yield"));
+            recipeInfo.setYield(rs.getString("yield"));
             recipeInfo.setUnitOfYield(rs.getString("unitofyield"));
             recipeInfo.setPrepMin(rs.getInt("prepMin"));
             recipeInfo.setPrepHr(rs.getInt("prepHr"));
@@ -1063,7 +1063,7 @@ public class RecipeDaoImpl implements RecipeDao{
             WebInfo recipeInfo = new WebInfo();
             recipeInfo.setName(rs.getString("name"));
             recipeInfo.setDescription(rs.getString("description"));
-            recipeInfo.setYield(rs.getDouble("yield"));
+            recipeInfo.setYield(rs.getString("yield"));
             recipeInfo.setUnitOfYield(rs.getString("unitofyield"));
             recipeInfo.setPrepMin(rs.getInt("prepMin"));
             recipeInfo.setPrepHr(rs.getInt("prepHr"));

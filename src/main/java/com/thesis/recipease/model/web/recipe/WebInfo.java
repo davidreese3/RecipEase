@@ -3,7 +3,7 @@ package com.thesis.recipease.model.web.recipe;
 public class WebInfo {
     private String name;
     private String description;
-    private Double yield;
+    private String yield;
     private String unitOfYield;
     private Integer prepMin;
     private Integer prepHr;
@@ -14,7 +14,7 @@ public class WebInfo {
 
     public WebInfo(){}
 
-    public WebInfo(String name, String description, Double yield, String unitOfYield, Integer prepMin, Integer prepHr, Integer processMin, Integer processHr, int totalMin, int totalHr) {
+    public WebInfo(String name, String description, String yield, String unitOfYield, Integer prepMin, Integer prepHr, Integer processMin, Integer processHr, int totalMin, int totalHr) {
         this.name = name;
         this.description = description;
         this.yield = yield;
@@ -43,11 +43,11 @@ public class WebInfo {
         this.description = description;
     }
 
-    public Double getYield() {
+    public String getYield() {
         return yield;
     }
 
-    public void setYield(Double yield) {
+    public void setYield(String yield) {
         this.yield = yield;
     }
 
