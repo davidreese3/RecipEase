@@ -71,9 +71,10 @@ public class RecipeNormalizer implements Normalizer<Recipe> {
     }
 
     public String normalizeDescription(String description){
+        if (description == null){ return description; }
         if (description.length() > 150) {
-            description = description.substring(0, 150);
-            description = description.substring(0, description.lastIndexOf(" ")) + "...";
+                description = description.substring(0, 150);
+                description = description.substring(0, description.lastIndexOf(" ")) + "...";
         }
         return description;
     }

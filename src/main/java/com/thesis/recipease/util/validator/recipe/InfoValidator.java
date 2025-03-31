@@ -40,8 +40,10 @@ public class InfoValidator implements Validator<WebRecipe, ArrayList<String>> {
     }
 
     private void validateDescription(String description) {
-        if (description.length() > 1000){
-            errors.add("Recipe description cannot exceed 1000 characters.");
+        if (description != null) {
+            if (description.length() > 1000) {
+                errors.add("Recipe description cannot exceed 1000 characters.");
+            }
         }
     }
 
