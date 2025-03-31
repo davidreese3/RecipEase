@@ -1,5 +1,6 @@
 package com.thesis.recipease.util.scaler;
 
+import com.thesis.recipease.model.domain.recipe.RecipeInfo;
 import com.thesis.recipease.model.domain.recipe.RecipeIngredient;
 import com.thesis.recipease.util.sanitizer.recipe.util.QuantitySanitizer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,11 +9,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class IngredientScaler {
+public class Scaler {
     @Autowired
     QuantitySanitizer quantitySanitizer;
 
-    public List<RecipeIngredient> Scale(double scaleFactor, List<RecipeIngredient> ingredientList){
+    public List<RecipeIngredient> scaleIngredients(double scaleFactor, List<RecipeIngredient> ingredientList){
         double quantity;
         for(RecipeIngredient ingredient : ingredientList){
             quantity = parse(ingredient.getQuantity());
@@ -22,6 +23,15 @@ public class IngredientScaler {
             ingredient.setQuantity(quantityStr);
         }
         return ingredientList;
+    }
+
+    public RecipeInfo scaleYield(double scaleFactor, RecipeInfo recipeInfo){
+        double quantity = parse(recipeInfo.getYield());
+        quantity = quantity * scaleFactor;
+        String quantityStr = "" + quantity;
+        quantityStr = quantitySanitizer.sanitize(quantityStr);
+        recipeInfo.setYield(quantityStr);
+        return recipeInfo;
     }
 
     private double parse(String quantity){

@@ -49,8 +49,8 @@ public class RecipeNormalizer implements Normalizer<Recipe> {
         return measurement;
     }
 
-    public String normalizeUnitOfYield(String unitOfYield, double yield) {
-        if (yield != 1){
+    public String normalizeUnitOfYield(String unitOfYield, String yield) {
+        if (!yield.equals("1")){
             return unitOfYield;
         }
         else{

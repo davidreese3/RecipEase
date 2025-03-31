@@ -17,7 +17,7 @@ import com.thesis.recipease.util.processer.PrepopulatedEntryProcessor;
 import com.thesis.recipease.util.sanitizer.recipe.util.CommentSanitizer;
 import com.thesis.recipease.util.sanitizer.recipe.RecipeSanitizer;
 import com.thesis.recipease.util.sanitizer.recipe.util.SearchSanitizer;
-import com.thesis.recipease.util.scaler.IngredientScaler;
+import com.thesis.recipease.util.scaler.Scaler;
 import com.thesis.recipease.util.security.SecurityService;
 import com.thesis.recipease.util.storage.StorageService;
 import com.thesis.recipease.util.validator.recipe.util.CommentValidator;
@@ -57,7 +57,7 @@ public class RecipeController {
     @Autowired
     private CommentValidator commentValidator;
     @Autowired
-    private IngredientScaler ingredientScaler;
+    private Scaler scaler;
     @Autowired
     private SearchSanitizer searchSanitizer;
     @Autowired
@@ -149,8 +149,8 @@ public class RecipeController {
         }
         if (scale != null){
             if (scale != 1) {
-                List<RecipeIngredient> ingredients = recipe.getRecipeIngredients();
-                recipe.setRecipeIngredients(ingredientScaler.Scale(scale, ingredients));
+                recipe.setRecipeIngredients(scaler.scaleIngredients(scale, recipe.getRecipeIngredients()));
+                recipe.setRecipeInfo(scaler.scaleYield(scale, recipe.getRecipeInfo()));
             }
         }
         recipe = recipeNormalizer.normalize(recipe);

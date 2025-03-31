@@ -45,9 +45,21 @@ public class QuantitySanitizer implements Sanitizer<String> {
     }
 
     private String decimalToFraction(double decimal) {
-        // Handle 1/3 and 2/3
-        if (Math.abs(decimal - 0.333) < 0.005) { return "1/3"; }
-        if (Math.abs(decimal - 0.666) < 0.005) { return "2/3"; }
+        if (Math.abs(decimal - 0.0625) < 0.005) { return "1/16"; }
+        if (Math.abs(decimal - 0.125) < 0.005) { return "1/8"; }
+        if (Math.abs(decimal - 0.1875) < 0.005) { return "3/16"; }
+        if (Math.abs(decimal - 0.25) < 0.005) { return "1/4"; }
+        if (Math.abs(decimal - 0.3125) < 0.005) { return "5/16"; }
+        if (Math.abs(decimal - 0.375) < 0.005) { return "3/8"; }
+        if (Math.abs(decimal - 0.4375) < 0.005) { return "7/16"; }
+        if (Math.abs(decimal - 0.5) < 0.005) { return "1/2"; }
+        if (Math.abs(decimal - 0.5625) < 0.005) { return "9/16"; }
+        if (Math.abs(decimal - 0.625) < 0.005) { return "5/8"; }
+        if (Math.abs(decimal - 0.6875) < 0.005) { return "11/16"; }
+        if (Math.abs(decimal - 0.75) < 0.005) { return "3/4"; }
+        if (Math.abs(decimal - 0.8125) < 0.005) { return "13/16"; }
+        if (Math.abs(decimal - 0.875) < 0.005) { return "7/8"; }
+        if (Math.abs(decimal - 0.9375) < 0.005) { return "15/16"; }
 
         String decimalStr = String.valueOf(decimal);
         int decimalPlaces;

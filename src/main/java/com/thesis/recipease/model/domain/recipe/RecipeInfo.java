@@ -5,7 +5,7 @@ public class RecipeInfo {
     private int userId;
     private String name;
     private String description;
-    private double yield;
+    private String yield;
     private String unitOfYield;
     private int prepMin;
     private int prepHr;
@@ -18,7 +18,7 @@ public class RecipeInfo {
 
     public RecipeInfo(){}
 
-    public RecipeInfo(int recipeId, int userId, String name, String description, double yield, String unitOfYield, int prepMin, int prepHr, int processMin, int processHr, int totalMin, int totalHr, RatingInfo ratingInfo, boolean staffTrending) {
+    public RecipeInfo(int recipeId, int userId, String name, String description, String yield, String unitOfYield, int prepMin, int prepHr, int processMin, int processHr, int totalMin, int totalHr, RatingInfo ratingInfo, boolean staffTrending) {
         this.recipeId = recipeId;
         this.userId = userId;
         this.name = name;
@@ -65,11 +65,11 @@ public class RecipeInfo {
 
     public void setDescription(String description) { this.description = description; }
 
-    public double getYield() {
+    public String getYield() {
         return yield;
     }
 
-    public void setYield(double yield) { this.yield = yield; }
+    public void setYield(String yield) { this.yield = yield; }
 
     public String getUnitOfYield() {
         return unitOfYield;
