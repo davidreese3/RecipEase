@@ -3,9 +3,9 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <div th:fragment="navbar">
     <header>
+        <h1 id="title"><a href="/landing">RecipEase</a></h1>
         <nav>
             <ul>
-                <!-- Account Section -->
                 <li><a href="#">Account</a>
                     <ul>
                         <li><a href="/profile/view/personal">View Your Profile</a></li>
@@ -15,8 +15,6 @@
                         <li><a href="/account/deactivate">Deactivate Account</a></li>
                     </ul>
                 </li>
-
-                <!-- Recipe Section -->
                 <li><a href="#">Recipe</a>
                     <ul>
                         <li><a href="/recipe/create">Create a Recipe</a></li>
@@ -24,22 +22,16 @@
                         <li><a href="/recipe/trending">Trending Recipes</a></li>
                     </ul>
                 </li>
-
-                <!-- Glossary Section -->
                 <li><a href="#">Glossary</a>
                     <ul>
                         <li><a href="/glossary/view">View Glossary</a></li>
                     </ul>
                 </li>
-
-                <!-- Substitutions Section -->
                 <li><a href="#">Substitutions</a>
                     <ul>
                         <li><a href="/substitution/view">View Common Substitutions</a></li>
                     </ul>
                 </li>
-
-                <!-- Moderator Section -->
                 <li sec:authorize="hasRole('MOD') or hasRole('ADMIN')"><a href="#">Moderator</a>
                     <ul>
                         <li><a href="/recipeDashboard">Recipe Dashboard</a></li>
