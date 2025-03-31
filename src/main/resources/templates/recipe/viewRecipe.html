@@ -9,7 +9,7 @@
     <script src="/js/print.js" defer></script>
     <link rel="stylesheet" type="text/css" href="/print.css">
     <link rel="stylesheet" th:href="@{/css/mainStyles.css}" />
-
+    <link rel="stylesheet" th:href="@{/css/navbar.css}" />
 
 </head>
 
@@ -18,34 +18,17 @@
 
 <header class="noPrint">
     <div th:replace="~{fragments/headerAndNavbar}"></div>
-    <h2 th:text="'View ' + ${recipe.recipeInfo.name}"></h2>
+    <h2 th:text="${recipe.recipeInfo.name}">
+        <a th:href="@{'http://localhost:8080/profile/view?id=' + recipe.recipeInfo.userId}"
+           th:text="' (' + ${authorName} + ')'"></a>
+    </h2>
     <div th:if="${message}" th:text="${message}" style="color: green;"></div>
     <div th:if="${error}" th:text="${error}" style="color: red;"></div>
 
 </header>
 
-<div class="noPrint" id="utility">
-    <button th:onclick="|location.href='/recipe/variation/create?recipeId=' + ${recipe.recipeInfo.recipeId}|">Create Variation</button>
-    <button id="printWithImages">Print Recipe</button>
-    <button th:if="${recipe.recipePhoto != null}" id="printWithoutImages">Print Recipe without Image</button>
-    <form id="deleteRecipeForm" th:action="@{/mod/recipe/delete}" method="post" sec:authorize="hasRole('MOD') or hasRole('ADMIN')" >
-        <input type="hidden" name="recipeId" th:value="${recipe.recipeInfo.recipeId}" />
-        <button type="submit">Delete Recipe</button>
-    </form>
-    <form id="bookmarkForm" th:action="@{${bookmarkExist} ? '/recipe/bookmark/remove' : '/recipe/bookmark/add'}" method="post">
-        <input type="hidden" name="recipeId" th:value="${recipe.recipeInfo.recipeId}" />
-        <button type="submit" th:text="@{${bookmarkExist} ? 'Remove From Bookmarks' : 'Bookmark Recipe'}"></button>
-    </form>
-
-</div>
 <main id="printable-section">
-    <h3>Recipe Info</h3>
     <table>
-        <thead>
-        <tr>
-            <th colspan="2" th:text="${recipe.recipeInfo.name}"></th>
-        </tr>
-        </thead>
         <tbody>
         <tr>
             <td th:text="${recipe.recipeInfo.description}"></td>
@@ -54,23 +37,19 @@
             </td>
         </tr>
         <tr>
+        </tr>
+        <tr>
             <td>
-                <a th:href="@{'http://localhost:8080/profile/view?id=' + recipe.recipeInfo.userId}"
-                   th:text="${authorName}"></a> •
+                <span th:text="'Recipe makes ' + ${#numbers.formatDecimal(recipe.recipeInfo.yield, 0,
+                              recipe.recipeInfo.yield % 1 == 0 ? 0 : 1)} + ' ' + ${recipe.recipeInfo.unitOfYield}"></span> |
                 <span th:text="${@recipeUtils.formatRatingLong(recipe.recipeInfo.ratingInfo.averageRating,
                                                                 recipe.recipeInfo.ratingInfo.numberOfRaters)}"></span>
             </td>
         </tr>
         <tr>
             <td>
-                <span th:text="'Makes ' + ${#numbers.formatDecimal(recipe.recipeInfo.yield, 0,
-                              recipe.recipeInfo.yield % 1 == 0 ? 0 : 1)} + ' ' + ${recipe.recipeInfo.unitOfYield}"></span>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <span th:text="${@recipeUtils.formatTimeLong('Prep', recipe.recipeInfo.prepHr, recipe.recipeInfo.prepMin)}"></span> •
-                <span th:text="${@recipeUtils.formatTimeLong('Process', recipe.recipeInfo.processHr, recipe.recipeInfo.processMin)}"></span> •
+                <span th:text="${@recipeUtils.formatTimeLong('Prep', recipe.recipeInfo.prepHr, recipe.recipeInfo.prepMin)}"></span> |
+                <span th:text="${@recipeUtils.formatTimeLong('Process', recipe.recipeInfo.processHr, recipe.recipeInfo.processMin)}"></span> |
                 <span th:text="${@recipeUtils.formatTimeLong('Total', recipe.recipeInfo.totalHr, recipe.recipeInfo.totalMin)}"></span>
             </td>
         </tr>
@@ -79,10 +58,23 @@
                 <a th:href="${originalLink}">Original Recipe</a>
             </td>
         </tr>
+        <tr>
+            <td class="noPrint" id="utility">
+                <button th:onclick="|location.href='/recipe/variation/create?recipeId=' + ${recipe.recipeInfo.recipeId}|">Create Variation</button>
+                <button id="printWithImages">Print Recipe</button>
+                <button th:if="${recipe.recipePhoto != null}" id="printWithoutImages">Print Recipe without Image</button>
+                <form id="deleteRecipeForm" th:action="@{/mod/recipe/delete}" method="post" sec:authorize="hasRole('MOD') or hasRole('ADMIN')" >
+                    <input type="hidden" name="recipeId" th:value="${recipe.recipeInfo.recipeId}" />
+                    <button type="submit">Delete Recipe</button>
+                </form>
+                <form id="bookmarkForm" th:action="@{${bookmarkExist} ? '/recipe/bookmark/remove' : '/recipe/bookmark/add'}" method="post">
+                    <input type="hidden" name="recipeId" th:value="${recipe.recipeInfo.recipeId}" />
+                    <button type="submit" th:text="@{${bookmarkExist} ? 'Remove From Bookmarks' : 'Bookmark Recipe'}"></button>
+                </form>
+            </td>
+        </tr>
         </tbody>
     </table>
-
-
 
     <h3>Ingredients</h3>
     <form id="scalingForm" th:action="@{/recipe/scaling}" th:object="${webScaling}" method="post">

@@ -52,6 +52,7 @@ button {
     border-radius: 6px;
     cursor: pointer;
     font-size: 14px;
+    padding: 5px;
 }
 
 button:hover {
@@ -63,17 +64,18 @@ button:active {
 }
 
 img {
-    text-align:center;
+    display: block;
+    margin: auto;
 }
 
 #utility {
     display: flex;
-    flex-wrap: wrap; /* Allows wrapping if the screen is too narrow */
-    gap: 10px; /* Adds spacing between buttons */
-    align-items: center; /* Aligns items vertically */
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
 }
 
 #utility form {
-    display: inline-block; /* Ensures forms stay inline */
+    display: inline-block;
     margin: 0;
 }
