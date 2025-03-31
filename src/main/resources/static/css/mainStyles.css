@@ -62,20 +62,3 @@ button:hover {
 button:active {
     background-color: #ddd8d0;
 }
-
-img {
-    display: block;
-    margin: auto;
-}
-
-#utility {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    align-items: center;
-}
-
-#utility form {
-    display: inline-block;
-    margin: 0;
-}
