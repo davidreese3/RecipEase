@@ -171,9 +171,14 @@ public class RecipeController {
         userSubs = substitutionNormalizer.normalizeUserSubs(userSubs);
         recipe.setUserSubstitutionEntries(userSubs);
 
+        int rowSpan = 3;
         RecipeVariation recipeVariation = recipe.getRecipeVariation();
         if(recipeVariation  != null) {
+            rowSpan++;
             model.addAttribute("originalLink", "/recipe/view?recipeId=" + recipe.getRecipeVariation().getOriginalRecipeId());
+        }
+        if(recipe.getRecipeInfo().getDescription() != null){
+            rowSpan++;
         }
 
         RecipePhoto recipePhoto = recipe.getRecipePhoto();
@@ -209,6 +214,9 @@ public class RecipeController {
         WebRating webRating = new WebRating();
         webRating.setRecipeId(recipeId);
         model.addAttribute("webRating", webRating);
+
+        model.addAttribute("rowSpan", rowSpan);
+        System.out.println("[ROWSPAN: " + rowSpan + "]");
         return "recipe/viewRecipe";
     }
 

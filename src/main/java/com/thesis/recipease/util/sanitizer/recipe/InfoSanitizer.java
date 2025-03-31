@@ -14,6 +14,7 @@ public class InfoSanitizer implements Sanitizer<WebRecipe> {
         if (webInfo.getProcessMin() == null) webInfo.setProcessMin(0);
         if (webInfo.getProcessHr() == null) webInfo.setProcessHr(0);
         if (webInfo.getYield() == null) webInfo.setYield("1.0");
+        if (webInfo.getDescription() == null || webInfo.getDescription().trim().isEmpty()) {webInfo.setDescription(null);}
         webInfo.setTotalMin((webInfo.getPrepMin() + webInfo.getProcessMin()) % 60);
         webInfo.setTotalHr(webInfo.getPrepHr() + webInfo.getProcessHr() + ((webInfo.getPrepMin() + webInfo.getProcessMin()) / 60));
         webRecipe.setInfo(webInfo);
