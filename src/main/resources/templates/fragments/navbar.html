@@ -50,10 +50,13 @@
                         <li><a href="/userDashboard">User Dashboard</a></li>
                     </ul>
                 </li>
-                <li>
+                <li sec:authorize="isAuthenticated()">
                     <form th:action="@{/logout}" method="post">
                         <button type="submit">Logout</button>
                     </form>
+                </li>
+                <li sec:authorize="isAnonymous()">
+                    <a href="/login">Login</a>
                 </li>
             </ul>
         </nav>
