@@ -18,11 +18,7 @@
 
 <header class="noPrint">
     <div th:replace="~{fragments/navbar}"></div>
-    <h2>
-        <span th:text="${recipe.recipeInfo.name}"></span>
-        <a th:href="@{'http://localhost:8080/profile/view?id=' + ${recipe.recipeInfo.userId}}"
-           th:text="'(' + ${authorName} + ')'"></a>
-    </h2>
+    <h2><span th:text="${recipe.recipeInfo.name}"></span></h2>
     <div th:if="${message}" th:text="${message}" style="color: green;"></div>
     <div th:if="${error}" th:text="${error}" style="color: red;"></div>
 
@@ -142,7 +138,7 @@
     <div th:if="${glossaryList.size != 0}">
         <hr>
         <details><summary>Glossary Terms</summary>
-            <table>
+            <table class="alternating">
                 <tr th:each="entry : ${glossaryList}">
                     <td>
                         <strong th:text="${entry.term}"></strong>

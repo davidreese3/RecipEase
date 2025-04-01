@@ -70,8 +70,8 @@ public class ProfileController {
                 recipeInfo = recipeNormalizer.normalizeRecipeInfo(recipeInfo);
             }
             model.addAttribute("bookmarks", bookmarks);
-
-            model.addAttribute("isPersonal", false);
+            if(id==securityService.getLoggedInUserId()){model.addAttribute("isPersonal", true);}
+            else {model.addAttribute("isPersonal", false);}
             if (!profile.isActive()){
                 model.addAttribute("error", profileDeactivatedErrorGenerator.getError());
             }
