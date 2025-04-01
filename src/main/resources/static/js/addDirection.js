@@ -29,9 +29,6 @@ function addDirectionFields() {
     // Textarea for direction step description
     const directionTextarea = document.createElement('textarea');
     directionTextarea.setAttribute('name', `directions[${rowCount}].direction`);
-    directionTextarea.setAttribute('rows', '2');
-    directionTextarea.setAttribute('cols', '50');
-    directionTextarea.setAttribute('maxlength', '300');
     directionTextarea.required = true;
 
     // Dropdown for method

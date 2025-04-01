@@ -74,3 +74,29 @@ button:active {
     display: inline-block;
     margin: 0;
 }
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+textarea,
+select {
+    background-color: #fff;
+    border: 1px solid #bbb;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #333;
+    width: 100%;
+    max-width: 280px;
+    height: 32px;
+}
+
+input[type="number"] {
+    appearance: textfield;
+}
+
+select {
+    appearance: none;
+    cursor: pointer;
+    height: 32px;
+}

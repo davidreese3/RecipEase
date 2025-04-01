@@ -16,7 +16,6 @@ function addLinkField() {
     const linkInput = document.createElement('input');
     linkInput.setAttribute('type', 'text');
     linkInput.setAttribute('name', `links[${linkList.children.length}].link`);
-    linkInput.setAttribute('placeholder', 'Link');
     linkInput.setAttribute('maxlength', '125');
 
     linkDiv.appendChild(linkInput);
