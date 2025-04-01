@@ -8,12 +8,16 @@
 </head>
 
 <body>
+<div class="container">
 <header>
-    <div th:replace="~{fragments/headerAndNavbar}"></div>
+    <div th:replace="~{fragments/navbar}"></div>
+    <link rel="stylesheet" th:href="@{/css/mainStyles.css}" />
+    <link rel="stylesheet" th:href="@{/css/navbar.css}" />
     <h2>Change Your Email</h2>
 </header>
 
 <main>
+    <div class="container">
     <div th:if="${error}" th:text="${error}" style="color: red;"></div>
     <div th:if="${message}" th:text="${message}" style="color: orange;"></div>
     <div th:if="${success}" th:text="${success}" style="color: green;"></div>
@@ -28,11 +32,10 @@
             </tr>
         </table>
     </form>
+    <button onclick="location.href='/profile/view/personal'">Back to profile</button>
+</div>
 </main>
 
-<footer>
-    <button onclick="location.href='/profile/view/personal'">Back to profile</button>
-</footer>
 </body>
 
 </html>

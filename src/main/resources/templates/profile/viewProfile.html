@@ -10,8 +10,11 @@
 </head>
 
 <body>
+<div class="container">
     <header>
-        <div th:replace="~{fragments/headerAndNavbar}"></div>
+        <div th:replace="~{fragments/navbar}"></div>
+        <link rel="stylesheet" th:href="@{/css/mainStyles.css}" />
+        <link rel="stylesheet" th:href="@{/css/navbar.css}" />
         <h2 th:if="${isPersonal}">View Your Profile</h2>
         <h2 th:if="${!isPersonal}" th:text="'View ' + ${profile.firstName} + ' ' + ${profile.lastName} + '\'s Profile'"></h2>
     </header>
@@ -61,7 +64,7 @@
         <br>
         <div th:if="${recipes.size != 0}">
             <h2>Recipes:</h2>
-            <table>
+            <table class="alternating">
                 <thead>
                     <th>Name</th>
                     <th>Description</th>
@@ -91,7 +94,7 @@
         <span th:if="${recipes.size == 0 && !isPersonal}">This user has no published recipes.</span>
         <br>
         <div th:if="${bookmarks.size != 0}">
-            <table>
+            <table class="alternating">
                 <thead>
                 <th>Name</th>
                 <th>Description</th>
@@ -127,10 +130,7 @@
         <span th:if="${bookmarks.size == 0 && isPersonal}">You have no bookmarked recipes.</span>
         <span th:if="${bookmarks.size == 0 && !isPersonal}">This user has no bookmarked recipes.</span>
     </main>
-
-    <footer>
-        <p>footer</p>
-    </footer>
+</div>
 </body>
 
 </html>

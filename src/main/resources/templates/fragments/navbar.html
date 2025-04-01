@@ -3,7 +3,9 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <div th:fragment="navbar">
     <header>
-        <h1 id="title"><a href="/landing">RecipEase</a></h1>
+        <h1 sec:authorize="isAuthenticated()" class="title"><a href="/landing">RecipEase</a></h1>
+        <h1 sec:authorize="isAnonymous()" class="title"><a href="/">RecipEase</a></h1>
+
         <nav>
             <ul>
                 <li><a href="#">Account</a>

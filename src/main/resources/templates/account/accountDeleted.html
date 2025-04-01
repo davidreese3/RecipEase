@@ -9,12 +9,16 @@
 
 <body>
 <header>
-    <div th:replace="~{fragments/headerAndNavbar}"></div>
+    <div th:replace="~{fragments/navbar}"></div>
+    <link rel="stylesheet" th:href="@{/css/mainStyles.css}" />
+    <link rel="stylesheet" th:href="@{/css/navbar.css}" />
     <h2>Account Deleted</h2>
 </header>
 
 <main>
-    <p style="color: green;">This account has been deleted. Thank you for cleaning up RecipEase!</p>
+    <div class="container">
+        <p style="color: green;">This account has been deleted. Thank you for cleaning up RecipEase!</p>
+    </div>
 </main>
 
 <footer>

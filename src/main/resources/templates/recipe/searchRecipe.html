@@ -8,12 +8,16 @@
 </head>
 
 <body>
+<div class="container">
 <header>
-    <div th:replace="~{fragments/headerAndNavbar}"></div>
+    <div th:replace="~{fragments/navbar}"></div>
+    <link rel="stylesheet" th:href="@{/css/mainStyles.css}" />
+    <link rel="stylesheet" th:href="@{/css/navbar.css}" />
     <h2>Search For a Recipe</h2>
 </header>
 
 <main>
+
     <div th:each="error : ${errors}">
         <span th:text="${error}" style="color: red;"></span>
     </div>
@@ -153,7 +157,7 @@
         <div th:if="${message}">
             <span th:text="${message}"></span>
         </div>
-        <table th:if="${results}">
+        <table th:if="${results}" class="alternating">
             <thead>
             <th>Name</th>
             <th>Description</th>
@@ -169,7 +173,7 @@
                     <a th:href="${'http://localhost:8080/recipe/view?recipeId=' + recipe.recipeId}" th:text="${recipe.name}"></a>
                 </td>
                 <td th:text="${recipe.description}"></td>
-                <td th:text="${#numbers.formatDecimal(recipe.yield, 0, recipe.yield % 1 == 0 ? 0 : 1)} + ' ' + ${recipe.unitOfYield}"></td>
+                <td th:text="${recipe.yield} + ' ' + ${recipe.unitOfYield}"></td>
                 <td th:text="${@recipeUtils.formatTimeShort(recipe.prepHr, recipe.prepMin)}"></td>
                 <td th:text="${@recipeUtils.formatTimeShort(recipe.processHr, recipe.processMin)}"></td>
                 <td th:text="${@recipeUtils.formatTimeShort(recipe.totalHr, recipe.totalMin)}"></td>
@@ -179,10 +183,7 @@
         </table>
     </form>
 </main>
-
-<footer>
-    <p>footer</p>
-</footer>
+</div>
 </body>
 
 </html>
