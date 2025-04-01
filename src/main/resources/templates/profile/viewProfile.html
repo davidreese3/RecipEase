@@ -22,43 +22,41 @@
     <main>
         <div th:if="${message}" th:text="${message}" style="color: green;"></div>
         <div th:if="${error}" th:text="${error}" style="color: red;"></div>
-        <form id="deleteForm" th:action="@{/admin/account/delete}" method="post" sec:authorize="hasRole('ADMIN')" >
-            <input type="hidden" name="id" th:value="${profile.id}" />
-            <button type="submit">Delete Account</button>
-        </form>
-        <form id="reactivateOrDeactivateForm" th:action="@{${profile.active} ? '/admin/account/deactivate' : '/admin/account/activate'}" method="post" sec:authorize="hasRole('ADMIN')" >
-            <input type="hidden" name="id" th:value="${profile.id}" />
-            <button type="submit" th:text="${profile.active} ? 'Deactivate Account' : 'Reactivate Account'"></button>
-        </form>
-        <div sec:authorize="hasRole('ADMIN')">
-            <button th:onclick="|location.href='/admin/account/change/email?id=' + ${profile.id}|" >Change User Email</button>
-        </div>
-
-        <button onclick="location.href='/profile/edit'" th:if="${isPersonal}">Edit Profile</button>
-        <button onclick="location.href='/account/edit/email'" th:if="${isPersonal}">Edit Email</button>
-        <button onclick="location.href='/account/edit/password'" th:if="${isPersonal}">Edit Password</button>
-        <button onclick="location.href='/account/deactivate'" th:if="${isPersonal}">Deactivate Account</button>
-        <p>main</p>
+        </table>
         <table th:if="${profile}">
             <tr>
-                <td>First Name:</td>
-                <td th:text="${profile.firstName}"></td>
+                <td>First Name: <span th:text="${profile.firstName}"></span></td>
             </tr>
             <tr>
-                <td>Last Name:</td>
-                <td th:text="${profile.lastName}"></td>
+                <td>Last Name: <span th:text="${profile.lastName}"></span></td>
             </tr>
             <tr>
-                <td>Cooking Level:</td>
-                <td th:text="${profile.cookingLevel}"></td>
+                <td>Cooking Level: <span th:text="${profile.cookingLevel}"></span></td>
             </tr>
             <tr>
-                <td>Favorite Dish:</td>
-                <td th:text="${profile.favoriteDish}"></td>
+                <td>Favorite Dish: <span th:text="${profile.favoriteDish}"></span></td>
             </tr>
             <tr>
-                <td>Favorite Cuisine:</td>
-                <td th:text="${profile.favoriteCuisine}"></td>
+                <td>Favorite Cuisine: <span th:text="${profile.favoriteCuisine}"></span></td>
+            </tr>
+            <tr>
+                <td id="utility" colspan="2">
+                    <form id="deleteForm" th:action="@{/admin/account/delete}" method="post" sec:authorize="hasRole('ADMIN')" >
+                        <input type="hidden" name="id" th:value="${profile.id}" />
+                        <button type="submit">Delete Account</button>
+                    </form>
+                    <form id="reactivateOrDeactivateForm" th:action="@{${profile.active} ? '/admin/account/deactivate' : '/admin/account/activate'}" method="post" sec:authorize="hasRole('ADMIN')" >
+                        <input type="hidden" name="id" th:value="${profile.id}" />
+                        <button type="submit" th:text="${profile.active} ? 'Deactivate Account' : 'Reactivate Account'"></button>
+                    </form>
+                    <div sec:authorize="hasRole('ADMIN')">
+                        <button th:onclick="|location.href='/admin/account/change/email?id=' + ${profile.id}|" >Change User Email</button>
+                    </div>
+                    <button th:onclick="|location.href='/profile/edit'|" th:if="${isPersonal}">Edit Profile</button>
+                    <button th:onclick="|location.href='/account/edit/email'|" th:if="${isPersonal}">Edit Email</button>
+                    <button th:onclick="|location.href='/account/edit/password'|" th:if="${isPersonal}">Edit Password</button>
+                    <button th:onclick="|location.href='/account/deactivate'|" th:if="${isPersonal}">Deactivate Account</button>
+                </td>
             </tr>
         </table>
         <br>
