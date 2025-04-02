@@ -22,7 +22,6 @@
     <main>
         <div th:if="${message}" th:text="${message}" style="color: green;"></div>
         <div th:if="${error}" th:text="${error}" style="color: red;"></div>
-        </table>
         <table th:if="${profile}">
             <tr>
                 <td>First Name: <span th:text="${profile.firstName}"></span></td>
@@ -40,7 +39,7 @@
                 <td>Favorite Cuisine: <span th:text="${profile.favoriteCuisine}"></span></td>
             </tr>
             <tr>
-                <td id="utility" colspan="2">
+                <td class="utility" colspan="2">
                     <form id="deleteForm" th:action="@{/admin/account/delete}" method="post" sec:authorize="hasRole('ADMIN')" >
                         <input type="hidden" name="id" th:value="${profile.id}" />
                         <button type="submit">Delete Account</button>

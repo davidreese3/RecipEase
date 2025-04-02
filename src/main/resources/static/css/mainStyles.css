@@ -21,6 +21,7 @@ table {
     width: 100%;
     border-collapse: collapse;
     border: 1px solid #ddd;
+    table-layout: fixed;
 }
 
 th, td {
@@ -63,14 +64,14 @@ button:active {
     background-color: #ddd8d0;
 }
 
-#utility {
+.utility {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
     align-items: center;
 }
 
-#utility form {
+.utility form {
     display: inline-block;
     margin: 0;
 }
@@ -87,16 +88,25 @@ select {
     font-size: 14px;
     color: #333;
     width: 100%;
-    max-width: 280px;
+    min-width: 15vw;
+    max-width: 20vw;
     height: 32px;
+    box-sizing: border-box;
+    line-height: 32px;
 }
 
 input[type="number"] {
     appearance: textfield;
 }
 
+textarea {
+    height: 32px;
+    resize: none;
+}
+
 select {
-    appearance: none;
     cursor: pointer;
     height: 32px;
+    line-height: 32px;
+    padding: 5px;
 }

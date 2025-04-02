@@ -68,8 +68,8 @@
                 <a th:href="${originalLink}">Original Recipe</a>
             </td>
         </tr>
-        <tr>
-            <td class="noPrint" id="utility">
+        <tr class="noPrint">
+            <td class="utility">
                 <button th:onclick="|location.href='/recipe/variation/create?recipeId=' + ${recipe.recipeInfo.recipeId}|">Create Variation</button>
                 <button id="printWithImages">Print Recipe</button>
                 <button th:if="${recipe.recipePhoto != null}" id="printWithoutImages">Print Recipe without Image</button>

@@ -1,3 +1,14 @@
 .required {
     color: red;
 }
+
+#userSubs input[type="text"],
+#userSubs input[type="email"],
+#userSubs input[type="password"],
+#userSubs input[type="number"],
+#userSubs textarea,
+#userSubs select,
+#tags select{
+    min-width: 12vw;
+    max-width: 15vw;
+}
