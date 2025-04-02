@@ -2,3 +2,15 @@ img {
     display: block;
     margin: auto;
 }
+.rating button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #ccc;
+    font-size: 20px;
+}
+
+.rating button:hover,
+.rating button.active {
+    color: gold;
+}

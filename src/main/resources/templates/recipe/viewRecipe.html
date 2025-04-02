@@ -7,10 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RecipEase View Recipe</title>
     <script src="/js/print.js" defer></script>
+    <script src="/js/rating.js" defer></script>
     <link rel="stylesheet" type="text/css" href="/print.css">
     <link rel="stylesheet" th:href="@{/css/mainStyles.css}" />
     <link rel="stylesheet" th:href="@{/css/navbar.css}" />
     <link rel="stylesheet" th:href="@{/css/viewRecipe.css}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
 </head>
 
 <body>
@@ -77,6 +80,18 @@
                 <form id="bookmarkForm" th:action="@{${bookmarkExist} ? '/recipe/bookmark/remove' : '/recipe/bookmark/add'}" method="post">
                     <input type="hidden" name="recipeId" th:value="${recipe.recipeInfo.recipeId}" />
                     <button type="submit" th:text="@{${bookmarkExist} ? 'Remove From Bookmarks' : 'Bookmark Recipe'}"></button>
+                </form>
+                <h4>Add your rating:</h4>
+                <form id="ratingForm" th:action="@{/recipe/rating/add}" th:object="${webRating}" method="post">
+                    <input type="hidden" th:field="*{recipeId}" />
+                    <div class="rating" id="ratingContainer">
+                        <!-- icons provided by Font Awesome (https://fontawesome.com/) -->
+                        <button type="submit" name="ratingValue" value="1"><i class="fa fa-star"></i></button>
+                        <button type="submit" name="ratingValue" value="2"><i class="fa fa-star"></i></button>
+                        <button type="submit" name="ratingValue" value="3"><i class="fa fa-star"></i></button>
+                        <button type="submit" name="ratingValue" value="4"><i class="fa fa-star"></i></button>
+                        <button type="submit" name="ratingValue" value="5"><i class="fa fa-star"></i></button>
+                    </div>
                 </form>
             </td>
         </tr>
@@ -212,17 +227,6 @@
             <input type="hidden" th:field="*{recipeId}" />
             <textarea th:field="*{commentText}" placeholder="Add your comment here..." maxlength="500"></textarea>
             <button type="submit">Add Comment</button>
-        </form>
-    </div>
-    <div class="noPrint">
-        <h4>Add your rating:</h4>
-        <form id="ratingForm" th:action="@{/recipe/rating/add}" th:object="${webRating}" method="post">
-            <input type="hidden" th:field="*{recipeId}" />
-            <button type="submit" name="ratingValue" value="1">1</button>
-            <button type="submit" name="ratingValue" value="2">2</button>
-            <button type="submit" name="ratingValue" value="3">3</button>
-            <button type="submit" name="ratingValue" value="4">4</button>
-            <button type="submit" name="ratingValue" value="5">5</button>
         </form>
     </div>
     <div th:if="${tagsExist}">
