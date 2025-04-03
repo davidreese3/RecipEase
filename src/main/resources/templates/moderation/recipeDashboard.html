@@ -15,6 +15,7 @@
     <div th:replace="~{fragments/navbar}"></div>
     <link rel="stylesheet" th:href="@{/css/mainStyles.css}" />
     <link rel="stylesheet" th:href="@{/css/navbar.css}" />
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}" />
     <h2>Recipe Dashboard</h2>
 </header>
 
@@ -32,20 +33,20 @@
     </table>
     <div th:if="${error}" th:text="${error}" style="color: red;"></div>
     <div th:if="${message}" th:text="${message}" style="color: green;"></div>
-    <table th:if="${totalRecipes > 0}" class="alternating">
+    <table th:if="${totalRecipes > 0}" class="alternating" id="recipe">
         <thead>
         <tr>
             <th>ID</th>
             <th>Name</th>
             <th>Description</th>
             <th>Rating</th>
-            <th>Delete</th>
+            <th>Delete Recipe</th>
             <th>Trending Status</th>
             <th>Trending Action</th>
         </tr>
         </thead>
-        <tbody th:each="recipe : ${recipes}">
-        <tr>
+        <tbody>
+        <tr th:each="recipe : ${recipes}">
             <td th:text="${recipe.recipeId}"></td>
             <td><a th:href="${'http://localhost:8080/recipe/view?recipeId=' + recipe.recipeId}" th:text="${recipe.name}"></a></td>
             <td th:text="${recipe.description}"></td>
