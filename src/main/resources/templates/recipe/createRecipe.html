@@ -11,6 +11,7 @@
     <script src="/js/addUserSubstitutionEntry.js" defer></script>
     <script src="/js/addTags.js" defer></script>
     <script src="/js/repopulateRemoveButtons.js" defer></script>
+    <script src="/js/file.js" defer></script>
     <link rel="stylesheet" th:href="@{/css/mainStyles.css}" />
     <link rel="stylesheet" th:href="@{/css/createRecipe.css}" />
     <link rel="stylesheet" th:href="@{/css/navbar.css}" />
@@ -340,7 +341,12 @@
         <label>Max file size is 5MB. Only jpeg, png, and gif are allowed.</label>
         <table>
             <tr>
-                <td><input type="file" name="file" /></td>
+                <td>
+                    <div class="file-input">
+                        <input type="file" name="file" id="file" />
+                        <label for="file" id="file-label">Select Image</label>
+                    </div>
+                </td>
             </tr>
         </table>
         <h3>Recipe Tags</h3>

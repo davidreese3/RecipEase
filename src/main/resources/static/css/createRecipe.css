@@ -12,3 +12,38 @@
     min-width: 12vw;
     max-width: 15vw;
 }
+
+.file-input {
+    position: relative;
+    display: inline-block;
+}
+
+.file-input input[type="file"] {
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.file-input label {
+    background-color: #ebe6df;
+    color: #5a5a5a;
+    border: 1px solid #5a5a5a;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 5px 10px;
+    display: inline-block;
+    text-align: center;
+}
+
+.file-input label:hover {
+    background-color: #ddd8d0;
+}
+
+.file-input label:active {
+    background-color: #ccc;
+}

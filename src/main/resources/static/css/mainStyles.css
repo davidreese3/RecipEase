@@ -101,7 +101,6 @@ input[type="number"] {
 
 textarea {
     height: 32px;
-    resize: none;
 }
 
 select {
