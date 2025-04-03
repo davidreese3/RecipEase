@@ -15,6 +15,7 @@
     <div th:replace="~{fragments/navbar}"></div>
     <link rel="stylesheet" th:href="@{/css/mainStyles.css}" />
     <link rel="stylesheet" th:href="@{/css/navbar.css}" />
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}" />
     <h2>User Dashboard</h2>
 </header>
 
@@ -32,12 +33,11 @@
     </table>
     <div th:if="${error}" th:text="${error}" style="color: red;"></div>
     <div th:if="${message}" th:text="${message}" style="color: green;"></div>
-    <table th:if="${totalUsers > 0}" class="alternating">
+    <table th:if="${totalUsers > 0}" class="alternating" id="user">
         <thead>
             <tr>
                 <th>ID</th>
                 <th>Email</th>
-                <th>Active</th>
                 <th>Name</th>
                 <th>Roles</th>
                 <th>Edit Email</th>
@@ -46,11 +46,10 @@
                 <th>Active Action</th>
             </tr>
         </thead>
-        <tbody th:each="user : ${users}">
-            <tr>
+        <tbody>
+            <tr th:each="user : ${users}">
                 <td th:text="${user.id}"></td>
                 <td th:text="${user.email}"></td>
-                <td th:text="${user.active}"></td>
                 <td><a th:href="${'http://localhost:8080/profile/view?id=' + user.id}" th:text="${user.name}"></a></td>
                 <td th:text="${user.roles}"></td>
                 <td>

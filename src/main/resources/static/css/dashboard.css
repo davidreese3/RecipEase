@@ -1,0 +1,26 @@
+#user th:nth-child(1), #user td:nth-child(1)  {
+    width: 5%;
+    min-width: 50px;
+}
+
+#user th:nth-child(2), #user td:nth-child(2) {
+    width: 20%;
+    min-width: 200px;
+    word-break: break-word;
+}
+
+#recipe th:nth-child(1), #recipe td:nth-child(1),  #recipe th:nth-child(4), #recipe td:nth-child(4){
+    width: 5%;
+    min-width: 50px;
+}
+
+#recipe th:nth-child(2), #recipe td:nth-child(2){
+    width: 15%;
+    min-width: 150px;
+}
+
+#recipe th:nth-child(3), #recipe td:nth-child(3) {
+    width: 30%;
+    min-width: 200px;
+    word-break: break-word;
+}
