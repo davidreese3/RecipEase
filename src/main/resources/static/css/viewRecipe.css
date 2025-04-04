@@ -14,3 +14,17 @@ img {
 .rating button.active {
     color: gold;
 }
+
+table.utility-table {
+    border-collapse: collapse;
+    border-top: none;
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    border-top: none;
+    width: 100%;
+}
+
+table.utility-table td {
+    border-bottom: 1px solid #ddd;
+}
