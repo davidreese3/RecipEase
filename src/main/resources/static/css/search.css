@@ -1,0 +1,21 @@
+#search select{
+    width: 15%;
+    min-width: 150px !important;
+}
+
+#results th:nth-child(1), #results td:nth-child(1){
+    width: 15%;
+    min-width: 150px;
+    word-break: break-word;
+}
+
+#results th:nth-child(3), #results td:nth-child(3){
+    width: 10%;
+    min-width: 100px;
+}
+
+#results th:nth-child(4), #results td:nth-child(4),  #results th:nth-child(5), #results td:nth-child(5),
+#results th:nth-child(6), #results td:nth-child(6),  #results th:nth-child(7), #results td:nth-child(7){
+    width: 5%;
+    min-width: 50px;
+}

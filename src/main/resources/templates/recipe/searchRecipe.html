@@ -13,6 +13,7 @@
     <div th:replace="~{fragments/navbar}"></div>
     <link rel="stylesheet" th:href="@{/css/mainStyles.css}" />
     <link rel="stylesheet" th:href="@{/css/navbar.css}" />
+    <link rel="stylesheet" th:href="@{/css/search.css}" />
     <h2>Search For a Recipe</h2>
 </header>
 
@@ -22,7 +23,10 @@
         <span th:text="${error}" style="color: red;"></span>
     </div>
     <form id= "recipeForm" action="#" th:action="@{/recipe/search}" th:object="${webSearch}" method="post">
-        <table>
+        <table id="search">
+            <tr>
+                <td colspan="7">Find recipes by text, tags, a combination of both, or without any filters.</td>
+            </tr>
             <tr>
                 <td colspan="7">
                     <label>Search here: </label><input type="text" th:field="*{name}">
@@ -31,7 +35,7 @@
             <tr>
                 <td>
                     <select th:field="*{holidays}" class="existingHoliday">
-                        <option value="">Select a holiday</option>
+                        <option value="">Holiday</option>
                         <option value="Birthday">Birthday</option>
                         <option value="Christmas">Christmas</option>
                         <option value="Diwali">Diwali</option>
@@ -53,7 +57,7 @@
                 </td>
                 <td>
                     <select th:field="*{mealTypes}" class="existingMealType">
-                        <option value="">Select a meal type</option>
+                        <option value="">Meal type</option>
                         <option value="Appetizer">Appetizer</option>
                         <option value="Breakfast">Breakfast</option>
                         <option value="Brunch">Brunch</option>
@@ -66,7 +70,7 @@
                 </td>
                 <td>
                     <select th:field="*{cuisines}" class="existingCuisine">
-                        <option value="">Select a cuisine</option>
+                        <option value="">Cuisine</option>
                         <option value="African">African</option>
                         <option value="American">American</option>
                         <option value="Caribbean">Caribbean</option>
@@ -87,7 +91,7 @@
                 </td>
                 <td>
                     <select th:field="*{allergens}" class="existingAllergen">
-                        <option value="">Select an allergy</option>
+                        <option value="">Allergy</option>
                         <option value="Dairy-Free">Dairy-Free</option>
                         <option value="Egg-Free">Egg-Free</option>
                         <option value="Fish-Free">Fish-Free</option>
@@ -102,7 +106,7 @@
                 </td>
                 <td>
                     <select th:field="*{dietTypes}" class="existingDietType">
-                        <option value="">Select a diet type</option>
+                        <option value="">Diet type</option>
                         <option value="Keto">Keto</option>
                         <option value="Low-Carb">Low-Carb</option>
                         <option value="Low-Fat">Low-Fat</option>
@@ -115,7 +119,7 @@
                 </td>
                 <td>
                     <select th:field="*{cookingLevels}" class="existingCookingLevel">
-                        <option value="">Select a cooking level</option>
+                        <option value="">Cooking level</option>
                         <option value="Novice">Novice</option>
                         <option value="Beginner">Beginner</option>
                         <option value="Intermediate">Intermediate</option>
@@ -126,7 +130,7 @@
                 </td>
                 <td>
                     <select th:field="*{cookingStyles}" class="existingCookingStyle">
-                        <option value="">Select a cooking style</option>
+                        <option value="">Cooking style</option>
                         <option value="30-Minute Meals">30-Minute Meals</option>
                         <option value="Air Fryer Recipes">Air Fryer Recipes</option>
                         <option value="Baking">Baking</option>
@@ -157,7 +161,7 @@
         <div th:if="${message}">
             <span th:text="${message}"></span>
         </div>
-        <table th:if="${results}" class="alternating">
+        <table th:if="${results}" class="alternating" id="results">
             <thead>
             <th>Name</th>
             <th>Description</th>
