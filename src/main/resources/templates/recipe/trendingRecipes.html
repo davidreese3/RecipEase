@@ -15,6 +15,7 @@
     <div th:replace="~{fragments/navbar}"></div>
     <link rel="stylesheet" th:href="@{/css/mainStyles.css}" />
     <link rel="stylesheet" th:href="@{/css/navbar.css}" />
+    <link rel="stylesheet" th:href="@{/css/genericRecipeDisplay.css}" />
     <h2>Trending Recipes</h2>
 </header>
 
@@ -24,7 +25,7 @@
     </div>
     <div th:if="${communityRecipes.size != 0}">
         <h3>Trending Community Selected Recipes</h3>
-        <table class="alternating">
+        <table class="alternating recipeDisplay">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -53,7 +54,7 @@
     </div>
     <div th:if="${staffRecipes.size != 0}">
         <h3>Trending Staff Recommended Recipes</h3>
-        <table class="alternating">
+        <table class="alternating recipeDisplay">
             <thead>
             <tr>
                 <th>Name</th>
