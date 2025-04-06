@@ -17,7 +17,6 @@
 </header>
 
 <main>
-    <div class="container">
     <div th:if="${error}" th:text="${error}" style="color: red;"></div>
     <div th:if="${message}" th:text="${message}" style="color: orange;"></div>
     <div th:if="${success}" th:text="${success}" style="color: green;"></div>
@@ -33,9 +32,8 @@
         </table>
     </form>
     <button onclick="location.href='/profile/view/personal'">Back to profile</button>
-</div>
 </main>
-
+</div>
 </body>
 
 </html>
