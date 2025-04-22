@@ -8,7 +8,7 @@
     <title>RecipEase View Recipe</title>
     <script src="/js/print.js" defer></script>
     <script src="/js/rating.js" defer></script>
-    <link rel="stylesheet" type="text/css" href="/print.css">
+    <link rel="stylesheet" th:href="@{/css/print.css}" />
     <link rel="stylesheet" th:href="@{/css/mainStyles.css}" />
     <link rel="stylesheet" th:href="@{/css/navbar.css}" />
     <link rel="stylesheet" th:href="@{/css/viewRecipe.css}" />
@@ -19,7 +19,7 @@
 <body>
 <div class="container">
 
-<header class="noPrint">
+<header>
     <div th:replace="~{fragments/navbar}"></div>
     <h2><span th:text="${recipe.recipeInfo.name}"></span></h2>
     <div th:if="${message}" th:text="${message}" style="color: green;"></div>
@@ -27,7 +27,7 @@
 
 </header>
 
-<main id="printable-section">
+<main>
     <table>
         <thead>
         <tr>
@@ -42,7 +42,7 @@
                 <a th:href="@{'http://localhost:8080/profile/view?id=' + ${recipe.recipeInfo.userId}}"
                    th:text="${authorName}"></a>
             </td>
-            <td th:if="${recipe.recipePhoto != null}" th:attr="rowspan=${rowSpan}">
+            <td class="" th:if="${recipe.recipePhoto != null}" th:attr="rowspan=${rowSpan}">
                  <img th:src="${recipe.recipePhoto.fileLocation}" alt="Recipe Photo" height="150px">
             </td>
         </tr>
@@ -75,7 +75,7 @@
         </tbody>
     </table>
     <table class="utility-table">
-        <tr class="noPrint">
+        <tr>
             <td class="utility">
                 <button th:onclick="|location.href='/recipe/variation/create?recipeId=' + ${recipe.recipeInfo.recipeId}|">Create Variation</button>
                 <button id="printWithImages">Print Recipe</button>
@@ -227,7 +227,7 @@
         <h3>Comments</h3>
         <span>There are no comments on this recipe.</span>
     </div>
-    <div class="noPrint">
+    <div class="">
         <h4>Add your own comment:</h4>
         <form id="commentForm" action="#" th:action="@{/recipe/comment/add}" th:object="${webComment}" method="post">
             <input type="hidden" th:field="*{recipeId}" />
