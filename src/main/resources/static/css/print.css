@@ -1,9 +1,13 @@
 @media print {
-    .noPrint {
+    .hide {
         display: none !important;
     }
 }
 
-.hideImages img {
+.hide img {
     display: none !important;
+}
+
+.hide {
+    display: none;
 }
