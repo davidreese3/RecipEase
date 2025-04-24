@@ -158,7 +158,7 @@
     </div>
     <div th:if="${glossaryList.size != 0}">
         <hr>
-        <details><summary>Glossary Terms</summary>
+        <details><summary><span class="prepop">Glossary Terms</span></summary>
             <table class="alternating">
                 <tr th:each="entry : ${glossaryList}">
                     <td>
@@ -171,7 +171,7 @@
     </div>
     <div th:if="${substitutionList.size != 0}">
         <hr>
-        <details><summary>Common Substitution</summary>
+        <details><summary><span class="prepop">Common Substitution</span></summary>
             <table>
                 <thead>
                 <tr>

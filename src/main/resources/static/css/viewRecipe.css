@@ -28,3 +28,8 @@ table.utility-table {
 table.utility-table td {
     border-bottom: 1px solid #ddd;
 }
+
+.prepop {
+    font-size: 1.17em;
+    font-weight: bold;
+}
