@@ -23,12 +23,8 @@ public class DropdownValidator {
 
     private static final List<String> VALID_PREPARATIONS = Arrays.asList(
             "Beaten", "Boiled", "Chopped", "Crushed", "Cubed", "Diced", "Grated",
-            "Ground", "Julienned", "Mashed", "Melted", "Minced", "Peeled", "Roasted",
-            "Shaken", "Sliced", "Stirred", "Toasted", "Unprepared", "Whisked", "Zested"
-    );
-
-    private static final List<String> VALID_FRACTIONAL_QUANTITIES = Arrays.asList(
-            "0", "1/8", "1/4", "3/8", "1/3", "1/2", "5/8", "2/3", "3/4", "7/8"
+            "Ground", "Juiced", "Julienned", "Mashed", "Melted", "Minced", "Peeled", "Roasted",
+            "Shaken", "Sifted", "Sliced", "Stirred", "Toasted", "Unprepared", "Whisked", "Zested"
     );
 
     // Directions
