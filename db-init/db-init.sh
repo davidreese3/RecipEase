@@ -677,6 +677,9 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
     (14, 2, 4), (14, 3, 4), (14, 4, 5), (14, 5, 5), (14, 6, 4), (14, 7, 5),
     (15, 2, 5), (15, 3, 4), (15, 4, 4), (15, 5, 5), (15, 6, 4), (15, 7, 5);
 
+    alter sequence info_recipeId_seq restart with 20;
+    alter sequence account_id_seq restart with 20;
+
     alter table account owner to docker;
     alter table authority owner to docker;
     alter table profile owner to docker;
