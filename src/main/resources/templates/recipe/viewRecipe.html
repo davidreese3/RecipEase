@@ -77,19 +77,23 @@
     <table class="utility-table">
         <tr>
             <td class="utility">
+                <form id="deleteRecipeForm" th:action="@{/mod/recipe/delete}" method="post" sec:authorize="hasRole('MOD') or hasRole('ADMIN')">
+                    <input type="hidden" name="recipeId" th:value="${recipe.recipeInfo.recipeId}" />
+                    <button type="submit">Delete Recipe</button>
+                </form>
                 <button th:onclick="|location.href='/recipe/variation/create?recipeId=' + ${recipe.recipeInfo.recipeId}|">Create Variation</button>
                 <!--
                 <button id="printWithImages">Print Recipe</button>
                 <button th:if="${recipe.recipePhoto != null}" id="printWithoutImages">Print Recipe without Image</button>
                 -->
-                <form id="deleteRecipeForm" th:action="@{/mod/recipe/delete}" method="post" sec:authorize="hasRole('MOD') or hasRole('ADMIN')">
+                <form id="bookmarkForm"
+                      th:action="${bookmarkExist} ? @{/recipe/bookmark/remove} : @{/recipe/bookmark/add}" method="post">
                     <input type="hidden" name="recipeId" th:value="${recipe.recipeInfo.recipeId}" />
-                    <button type="submit">Delete Recipe</button>
+                    <button type="submit"
+                            th:text="${bookmarkExist} ? 'Remove From Bookmarks' : 'Bookmark Recipe'">
+                    </button>
                 </form>
-                <form id="bookmarkForm" th:action="@{${bookmarkExist} ? '/recipe/bookmark/remove' : '/recipe/bookmark/add'}" method="post">
-                    <input type="hidden" name="recipeId" th:value="${recipe.recipeInfo.recipeId}" />
-                    <button type="submit" th:text="@{${bookmarkExist} ? 'Remove From Bookmarks' : 'Bookmark Recipe'}"></button>
-                </form>
+
                 <h4>Add your rating:</h4>
                 <form id="ratingForm" th:action="@{/recipe/rating/add}" th:object="${webRating}" method="post">
                     <input type="hidden" th:field="*{recipeId}" />

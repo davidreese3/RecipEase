@@ -10,6 +10,7 @@ import com.thesis.recipease.model.web.recipe.util.WebComment;
 import com.thesis.recipease.model.web.recipe.util.WebRating;
 import com.thesis.recipease.model.web.recipe.util.WebSearch;
 import com.thesis.recipease.model.web.recipe.util.WebVariation;
+import com.thesis.recipease.util.security.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -39,6 +40,8 @@ public class RecipeDaoImpl implements RecipeDao{
 
     @Autowired
     private DataSourceTransactionManager transactionManager;
+    @Autowired
+    private SecurityService securityService;
 
 
     @Override
@@ -331,7 +334,7 @@ public class RecipeDaoImpl implements RecipeDao{
 
         List<RecipeComment> recipeComments = getCommentsById(recipeId);
 
-        RecipeBookmark recipeBookmark = getBookmarkById(recipeId, recipeInfo.getUserId());
+        RecipeBookmark recipeBookmark = getBookmarkById(recipeId, securityService.getLoggedInUserId());
 
         return new Recipe(recipeInfo, recipeIngredients, recipeDirections, recipeNote, recipeLinks, recipeUserSubs, recipePhoto, recipeVariation, recipeTags, recipeComments, recipeBookmark);
 
@@ -447,7 +450,7 @@ public class RecipeDaoImpl implements RecipeDao{
         params.add(recipeId);
         params.add(userId);
         try{
-            return jdbcTemplate.queryForObject(SQL, new RecipeDaoImpl.BookmarkMapper(), params.toArray());
+            return jdbcTemplate.queryForObject(SQL, new RecipeDaoImpl.BookmarkMapper(), recipeId, userId);
         }catch (EmptyResultDataAccessException e) {
             return null;
         }
@@ -1051,8 +1054,8 @@ public class RecipeDaoImpl implements RecipeDao{
         @Override
         public RecipeBookmark mapRow(ResultSet rs, int rowNum) throws SQLException {
             RecipeBookmark recipeBookmark = new RecipeBookmark();
-            recipeBookmark.setRecipeId(rs.getInt("recipeId"));
-            recipeBookmark.setUserId(rs.getInt("userId"));
+            recipeBookmark.setRecipeId(rs.getInt("recipeid"));
+            recipeBookmark.setUserId(rs.getInt("userid"));
             return recipeBookmark;
         }
     }
