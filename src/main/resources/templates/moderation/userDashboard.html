@@ -62,7 +62,7 @@
                         <button type="submit">Delete</button>
                     </form>
                 </td>
-                <td th:text="${user.active ? 'Active' : 'No Active'}" ></td>
+                <td th:text="${user.active ? 'Active' : 'Not Active'}" ></td>
                 <td>
                     <form id="activateForm" th:action="@{${user.active} ? '/userDashboard/deactivate' : '/userDashboard/activate'}" method="post" sec:authorize="hasRole('ADMIN')" >
                         <input type="hidden" name="email" th:value="${user.email}" />

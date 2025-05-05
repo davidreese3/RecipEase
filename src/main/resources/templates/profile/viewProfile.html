@@ -92,6 +92,7 @@
         <span th:if="${recipes.size == 0 && !isPersonal}">This user has no published recipes.</span>
         <br>
         <div th:if="${bookmarks.size != 0}">
+            <h2>Bookmarked Recipes:</h2>
             <table class="alternating recipeDisplay">
                 <thead>
                 <th>Name</th>
