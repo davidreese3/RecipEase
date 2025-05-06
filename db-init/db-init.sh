@@ -457,7 +457,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
         ('jackson.taylor@example.com', 'ROLE_USER');
 
     INSERT INTO info (userId, name, description, yield, unitOfYield, prepMin, prepHr, processMin, processHr, totalMin, totalHr, staffTrending) VALUES
-    (3, 'Classic Grilled Burger', 'A juicy grilled burger perfect for any summer BBQ.', '4', 'Patties', 10, 0, 10, 0, 20, 0, FALSE);
+    (3, 'Classic Grilled Burger', 'A juicy grilled burger perfect for any summer BBQ.', '4', 'Patties', 10, 0, 10, 0, 20, 0, TRUE);
 
     INSERT INTO ingredient (recipeId, component, quantity, measurement, preparation) VALUES
     (1, 'Ground Beef', '1', 'Pounds', 'Ground'),
