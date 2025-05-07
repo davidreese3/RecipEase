@@ -27,12 +27,16 @@ This project is part of my Master's thesis in Software Engineering at The Univer
    cd RecipEase
    ```
 
-3. Build and run the application using Docker:
+3. Note for Windows users: You may need to change the line endings of the db-init.sh script from CRLF (Windows-style) to LF (Unix-style) for the database to initialize correctly.
+    To do this in IntelliJ (or any other editor), open the file, click on CRLF in the bottom-right corner, and select LF.
+    Then save the file. 
+
+4. Build and run the application using Docker:
    ```bash
    docker compose up --build
    ```
 
-4. Access the application at:
+5. Access the application at:
    ```
    http://localhost:8080
    ```
