@@ -1,8 +1,8 @@
 # RecipEase
 
-RecipEase is a web-based social network built with Spring Boot, designed to help novice cooks create, share, and discover recipes. 
-It features a dynamic recipe system that automatically integrates a prepopulated glossary of cooking terms and ingredient substitutions. 
-The platform ensures secure user authentication with profile management and implements role-based access control for content moderation. 
+RecipEase is a web-based social network built with Spring Boot, designed to help novice cooks create, share, and discover recipes.
+It features a dynamic recipe system that automatically integrates a prepopulated glossary of cooking terms and ingredient substitutions.
+The platform ensures secure user authentication with profile management and implements role-based access control for content moderation.
 To enhance scalability and streamline deployment, both the application and its PostgreSQL database are containerized using Docker.
 
 This project is part of my Master's thesis in Software Engineering at The University of Scranton.
@@ -19,17 +19,17 @@ This project is part of my Master's thesis in Software Engineering at The Univer
 
 1. Clone the repository:
    ```bash
-   git clone git clone reese-david-recipease.bundle
+   git clone https://github.com/davidreese3/RecipEase.git
    ```
 
 2. Navigate to the project directory:
    ```bash
-   cd reese-david-recipease
+   cd RecipEase
    ```
 
 3. Note for Windows users: You may need to change the line endings of the db-init.sh script from CRLF (Windows-style) to LF (Unix-style) for the database to initialize correctly.
-    To do this in IntelliJ (or any other editor), open the file, click on CRLF in the bottom-right corner, and select LF.
-    Then save the file. 
+   To do this in IntelliJ (or any other editor), open the file, click on CRLF in the bottom-right corner, and select LF.
+   Then save the file.
 
 4. Build and run the application using Docker:
    ```bash
