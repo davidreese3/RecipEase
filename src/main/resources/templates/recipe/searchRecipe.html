@@ -175,7 +175,7 @@
             <tbody>
             <tr th:each="recipe : ${results}">
                 <td>
-                    <a th:href="${'http://localhost:8080/recipe/view?recipeId=' + recipe.recipeId}" th:text="${recipe.name}"></a>
+                    <a th:href="${'/recipe/view?recipeId=' + recipe.recipeId}" th:text="${recipe.name}"></a>
                 </td>
                 <td th:text="${recipe.description}"></td>
                 <td th:text="${recipe.yield} + ' ' + ${recipe.unitOfYield}"></td>
