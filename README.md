@@ -19,12 +19,12 @@ This project is part of my Master's thesis in Software Engineering at The Univer
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/davidreese3/RecipEase.git
+   git clone git clone reese-david-recipease.bundle
    ```
 
 2. Navigate to the project directory:
    ```bash
-   cd RecipEase
+   cd reese-david-recipease
    ```
 
 3. Note for Windows users: You may need to change the line endings of the db-init.sh script from CRLF (Windows-style) to LF (Unix-style) for the database to initialize correctly.
