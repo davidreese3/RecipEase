@@ -39,7 +39,7 @@
             <td th:attr="colspan=${recipe.recipePhoto == null ? 2 : 1}"
                 th:style="${recipe.recipePhoto != null} ? 'border-right: 1px solid #ddd;' : ''">
                 <span th:text="${recipe.recipeInfo.name}"></span> by
-                <a th:href="@{'http://localhost:8080/profile/view?id=' + ${recipe.recipeInfo.userId}}"
+                <a th:href="@{'/profile/view?id=' + ${recipe.recipeInfo.userId}}"
                    th:text="${authorName}"></a>
             </td>
             <td class="" th:if="${recipe.recipePhoto != null}" th:attr="rowspan=${rowSpan}">
