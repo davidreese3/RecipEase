@@ -189,12 +189,13 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
     );
 
     -- Help tickets
-    create table if not exists tickets(
+    create table if not exists ticket(
         id serial unique,
-        classifier varchar(20),
         email varchar(50),
+        classifier varchar(20),
         subject varchar(40),
         note varchar(280),
+        solved boolean,
         primary key(id)
     );
 
@@ -705,7 +706,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
     alter table note owner to docker;
     alter table bookmark owner to docker;
     alter table userSubs owner to docker;
-    alter table tickets owner to docker;
+    alter table ticket owner to docker;
     alter table commonSubs owner to docker;
     alter table glossary owner to docker;
 

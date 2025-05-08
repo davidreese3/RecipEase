@@ -1,26 +1,18 @@
-package com.thesis.recipease.model.web.util;
+package com.thesis.recipease.model.web.ticket;
 
 public class WebTicket {
-    private String classifier;
     private String email;
+    private String classifier;
     private String subject;
     private String note;
 
     public WebTicket(){}
 
-    public WebTicket(String classifier, String email, String subject, String note) {
-        this.classifier = classifier;
+    public WebTicket(String email, String classifier, String subject, String note) {
         this.email = email;
+        this.classifier = classifier;
         this.subject = subject;
         this.note = note;
-    }
-
-    public String getClassifier() {
-        return classifier;
-    }
-
-    public void setClassifier(String classifier) {
-        this.classifier = classifier;
     }
 
     public String getEmail() {
@@ -29,6 +21,14 @@ public class WebTicket {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getClassifier() {
+        return classifier;
+    }
+
+    public void setClassifier(String classifier) {
+        this.classifier = classifier;
     }
 
     public String getSubject() {
