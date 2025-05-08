@@ -22,7 +22,7 @@ public class DropdownValidator {
     );
 
     private static final List<String> VALID_PREPARATIONS = Arrays.asList(
-            "Beaten", "Boiled", "Chopped", "Crushed", "Cubed", "Diced", "Grated",
+            "Beaten", "Boiled", "Chopped", "Creamed", "Crushed", "Cubed", "Diced", "Grated",
             "Ground", "Juiced", "Julienned", "Mashed", "Melted", "Minced", "Peeled", "Roasted",
             "Shaken", "Sifted", "Sliced", "Stirred", "Toasted", "Unprepared", "Whisked", "Zested"
     );
