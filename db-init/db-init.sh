@@ -188,6 +188,16 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
         primary key(recipeId, originalComponent, originalPreparation, substitutedComponent, substitutedPreparation)
     );
 
+    -- Help tickets
+    create table if not exists tickets(
+        id serial unique,
+        classifier varchar(20),
+        email varchar(50),
+        subject varchar(40),
+        note varchar(280),
+        primary key(id)
+    );
+
     -- =============================
     -- Recipe Set Up Tables
     -- =============================
@@ -695,6 +705,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
     alter table note owner to docker;
     alter table bookmark owner to docker;
     alter table userSubs owner to docker;
+    alter table tickets owner to docker;
     alter table commonSubs owner to docker;
     alter table glossary owner to docker;
 

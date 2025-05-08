@@ -24,14 +24,15 @@
                         <li><a href="/recipe/trending">Trending Recipes</a></li>
                     </ul>
                 </li>
-                <li><a href="#">Glossary</a>
+                <li><a href="#">Kitchen Help</a>
                     <ul>
                         <li><a href="/glossary/view">View Glossary</a></li>
+                        <li><a href="/substitution/view">View Common Substitutions</a></li>
                     </ul>
                 </li>
-                <li><a href="#">Substitutions</a>
+                <li><a href="#">Support</a>
                     <ul>
-                        <li><a href="/substitution/view">View Common Substitutions</a></li>
+                        <li><a href="/ticket/create">Submit Help Ticket</a></li>
                     </ul>
                 </li>
                 <li sec:authorize="hasRole('MOD') or hasRole('ADMIN')"><a href="#">Moderator</a>
@@ -42,6 +43,7 @@
                 <li sec:authorize="hasRole('ADMIN')"><a href="#">Admin</a>
                     <ul>
                         <li><a href="/userDashboard">User Dashboard</a></li>
+                        <li><a href="/ticketDashboard">Ticket Dashboard</a></li>
                     </ul>
                 </li>
                 <li sec:authorize="isAuthenticated()">
