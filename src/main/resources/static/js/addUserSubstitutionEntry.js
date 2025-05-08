@@ -37,6 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
         { value: 'Beaten', text: 'Beaten' },
         { value: 'Boiled', text: 'Boiled' },
         { value: 'Chopped', text: 'Chopped' },
+        { value: 'Creamed', text: 'Creamed' },
         { value: 'Crushed', text: 'Crushed' },
         { value: 'Cubed', text: 'Cubed' },
         { value: 'Diced', text: 'Diced' },
