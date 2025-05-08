@@ -74,6 +74,8 @@ public class DropdownValidator {
             "Slow Cooker Recipes", "Other"
     );
 
+    private static final List<String> VALID_CLASSIFIERS = Arrays.asList("Issue", "Suggestion");
+
     // Info
     public boolean isValidUnitOfYield(String unit){ return VALID_UNITS_OF_YIELD.contains(unit); }
 
@@ -93,4 +95,8 @@ public class DropdownValidator {
     public boolean isValidDietType(String dietType){ return VALID_DIET_TYPES.contains(dietType); }
     public boolean isValidCookingLevel(String level){ return VALID_COOKING_LEVELS.contains(level); }
     public boolean isValidCookingStyle(String style){ return VALID_COOKING_STYLES.contains(style); }
+
+    // Ticket
+    public boolean isValidClassifier(String classifier){ return VALID_CLASSIFIERS.contains(classifier); }
+
 }

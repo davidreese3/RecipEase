@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RecipEase Submit Help Ticket</title>
+    <link rel="stylesheet" th:href="@{/css/mainStyles.css}" />
+    <link rel="stylesheet" th:href="@{/css/required.css}" />
+    <link rel="stylesheet" th:href="@{/css/navbar.css}" />
+</head>
+
+<body>
+<div class="container">
+    <header>
+        <div th:replace="~{fragments/navbar}"></div>
+        <h2>Submit Help Ticket</h2>
+    </header>
+    <main>
+        <div th:text="${message}" style="color: green;"></div>
+        <div th:each="error : ${errors}">
+            <span th:text="${error}" style="color: red;"></span>
+        </div>
+        <form id= "ticketForm" action="#" th:action="@{/ticket/create}" th:object="${webTicket}" method="post">
+            <table>
+                <tr>
+                    <td><label>Email</label><span class="required"> *</span></td>
+                    <td><input type="text" th:field="*{email}" maxlength="50" required/></td>
+                </tr>
+                <tr>
+                    <td><label>Type of Ticket</label><span class="required"> *</span></td>
+                    <td>
+                        <select th:field="*{classifier}" required>
+                            <option value=""></option>
+                            <option value="Issue">Issue</option>
+                            <option value="Suggestion">Suggestion</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label>Subject</label><span class="required"> *</span></td>
+                    <td><input type="text" th:field="*{subject}" maxlength="40" required/></td>
+                </tr>
+                <tr>
+                    <td><label>Note</label><span class="required"> *</span></td>
+                    <td><textarea th:field="*{note}" maxlength="500" required/></td>
+                </tr>
+            </table>
+            <button type="submit">Submit Help Ticket</button>
+        </form>
+        <p>For additional help, please email recipeasecommunications@gmail.com</p>
+    </main>
+</div>
+</body>
+
+</html>

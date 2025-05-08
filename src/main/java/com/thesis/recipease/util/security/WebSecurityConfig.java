@@ -54,7 +54,7 @@ public class WebSecurityConfig {
         http.authorizeHttpRequests(authz -> {
             try {
                 authz
-                        .requestMatchers("/", "/403", "/login", "/account/register", "/account/activate", "/account/reset/**", "/account/reactivate/**").permitAll()
+                        .requestMatchers("/", "/403", "/login", "/account/register", "/account/activate", "/account/reset/**", "/account/reactivate/**", "/ticket/create").permitAll()
                         .requestMatchers("/403", "/logout", "/resources/**", "/static/**", "/css/**", "/css/").permitAll()
                         // Protected URLs
                         .requestMatchers("/landing","/profile/**","/glossary/**","/recipe/**").authenticated()

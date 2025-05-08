@@ -5,6 +5,7 @@ import com.thesis.recipease.db.profile.ProfileDao;
 import com.thesis.recipease.db.glossary.GlossaryDao;
 import com.thesis.recipease.db.recipe.RecipeDao;
 import com.thesis.recipease.db.substitution.SubstitutionDao;
+import com.thesis.recipease.db.ticket.TicketDao;
 import com.thesis.recipease.model.domain.glossary.GlossaryEntry;
 import com.thesis.recipease.model.domain.recipe.Recipe;
 import com.thesis.recipease.model.domain.account.Account;
@@ -13,6 +14,7 @@ import com.thesis.recipease.model.domain.recipe.RecipeInfo;
 import com.thesis.recipease.model.domain.recipe.util.RecipeComment;
 import com.thesis.recipease.model.domain.recipe.util.RecipeRating;
 import com.thesis.recipease.model.domain.substitution.SubstitutionEntry;
+import com.thesis.recipease.model.domain.ticket.Ticket;
 import com.thesis.recipease.model.user.User;
 import com.thesis.recipease.model.web.account.WebAccount;
 import com.thesis.recipease.model.web.profile.WebProfile;
@@ -20,6 +22,7 @@ import com.thesis.recipease.model.web.recipe.util.WebRating;
 import com.thesis.recipease.model.web.recipe.WebRecipe;
 import com.thesis.recipease.model.web.recipe.util.WebComment;
 import com.thesis.recipease.model.web.recipe.util.WebSearch;
+import com.thesis.recipease.model.web.ticket.WebTicket;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +40,8 @@ public class AppService {
     private RecipeDao recipeDao;
     @Autowired
     private SubstitutionDao substitutionDao;
+    @Autowired
+    private TicketDao ticketDao;
 
     // ------------------------
     // ACCOUNT OPERATIONS
@@ -141,6 +146,17 @@ public class AppService {
     // READ OPS
     public List<SubstitutionEntry> getAllSubstitutionEntries(){
         return substitutionDao.getAllSubstitutionEntries();
+    }
+    // UPDATE OPS
+    // DELETE OPS
+
+    // ------------------------
+    // TICKET OPERATIONS
+    // ------------------------
+
+    // CREATE OPS
+    // READ OPS
+    public Ticket addTicket(WebTicket webTicket){ return ticketDao.addTicket(webTicket);
     }
     // UPDATE OPS
     // DELETE OPS
