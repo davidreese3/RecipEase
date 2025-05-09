@@ -195,7 +195,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
         classifier varchar(20),
         subject varchar(40),
         note varchar(280),
-        solved boolean,
+        open boolean,
         primary key(id)
     );
 

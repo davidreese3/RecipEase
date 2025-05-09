@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RecipEase View Help Ticket</title>
+    <link rel="stylesheet" th:href="@{/css/mainStyles.css}" />
+    <link rel="stylesheet" th:href="@{/css/required.css}" />
+    <link rel="stylesheet" th:href="@{/css/navbar.css}" />
+</head>
+
+<body>
+<div class="container">
+    <header>
+        <div th:replace="~{fragments/navbar}"></div>
+        <h2>Help Ticket Does Not Exist</h2>
+    </header>
+    <main>
+        <p>The ticket you are looking for does not exist. Feel free to try again in case there was an issue loading.</p>
+    </main>
+</div>
+</body>
+
+</html>

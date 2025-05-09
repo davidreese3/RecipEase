@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RecipEase View Help Ticket</title>
+    <link rel="stylesheet" th:href="@{/css/mainStyles.css}" />
+    <link rel="stylesheet" th:href="@{/css/required.css}" />
+    <link rel="stylesheet" th:href="@{/css/navbar.css}" />
+</head>
+
+<body>
+<div class="container">
+    <header>
+        <div th:replace="~{fragments/navbar}"></div>
+        <h2>View Help Ticket</h2>
+    </header>
+    <main>
+        <div th:text="${message}" style="color: green;"></div>
+        <div th:text="${error}" style="color: red;"></div>
+        <table>
+            <tr>
+                <td>Ticket ID:</td>
+                <td th:text="${ticket.id}"></td>
+            </tr>
+            <tr>
+                <td>Email:</td>
+                <td th:text="${ticket.email}"></td>
+            </tr>
+            <tr>
+                <td>Type of Ticket:</td>
+                <td th:text="${ticket.classifier}"></td>
+            </tr>
+            <tr>
+                <td>Subject:</td>
+                <td th:text="${ticket.subject}"></td>
+            </tr>
+            <tr>
+                <td>Note:</td>
+                <td th:text="${ticket.note}"></td>
+            </tr>
+            <tr>
+                <td>Status:</td>
+                <td th:text="${ticket.open} ? 'Open' : 'Closed'"></td>
+            </tr>
+            <tr>
+                <td>
+                    <form id="statusForm" th:action="@{/ticket/statusChange}" method="post" sec:authorize="hasRole('ADMIN')" >
+                        <input type="hidden" name="id" th:value="${ticket.id}" />
+                        <input type="hidden" name="open" th:value="${ticket.open} ? false : true" />
+                        <button type="submit" th:text="@{${ticket.open} ? 'Close' : 'Open'}"></button>
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </main>
+</div>
+</body>
+
+</html>

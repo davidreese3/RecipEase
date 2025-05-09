@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RecipEase Ticket Dashboard</title>
+</head>
+
+<body>
+<div class="container">
+<header>
+    <div th:replace="~{fragments/navbar}"></div>
+    <link rel="stylesheet" th:href="@{/css/mainStyles.css}" />
+    <link rel="stylesheet" th:href="@{/css/navbar.css}" />
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}" />
+    <h2>Ticket Dashboard</h2>
+</header>
+
+<main>
+    <div th:if="${totalTickets == 0}">
+        <span style="color: red;">There are no tickets registered in the system.</span>
+    </div>
+    <table th:if="${totalTickets > 0}">
+        <tr><td>Total Tickets: <span th:text="${totalTickets}"></span></td></tr>
+        <tr><td>Total Open: <span th:text="${totalOpen}"></span></td></tr>
+        <tr><td>Total Issues: <span th:text="${totalIssues}"></span></td></tr>
+        <tr><td>Total Suggestions: <span th:text="${totalSuggestions}"></span></td></tr>
+
+    </table>
+    <div th:if="${error}" th:text="${error}" style="color: red;"></div>
+    <div th:if="${message}" th:text="${message}" style="color: green;"></div>
+    <table th:if="${totalTickets > 0}" class="alternating" id="ticket">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Email</th>
+            <th>Classifier</th>
+            <th>Subject</th>
+            <th>Note</th>
+            <th>Open?</th>
+            <th>Change Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="ticket : ${tickets}">
+            <td><a th:href="${'/ticket/view?id=' + ticket.id}" th:text="${ticket.id}"></a></td>
+            <td th:text="${ticket.email}"></td>
+            <td th:text="${ticket.classifier}"></td>
+            <td th:text="${ticket.subject}"></td>
+            <td th:text="${ticket.note}"></td>
+            <td th:text="${ticket.open ? 'Yes' : 'No'}"></td>
+            <td>
+                <form id="statusForm" th:action="@{/ticketDashboard/statusChange}" method="post" sec:authorize="hasRole('ADMIN')" >
+                    <input type="hidden" name="id" th:value="${ticket.id}" />
+                    <input type="hidden" name="open" th:value="${ticket.open} ? false : true" />
+                    <button type="submit" th:text="@{${ticket.open} ? 'Close' : 'Open'}"></button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+
+</div>
+</body>
+
+</html>
