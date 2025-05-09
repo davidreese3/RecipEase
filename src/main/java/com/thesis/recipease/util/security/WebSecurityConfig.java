@@ -59,7 +59,7 @@ public class WebSecurityConfig {
                         // Protected URLs
                         .requestMatchers("/landing","/profile/**","/glossary/**","/recipe/**").authenticated()
                         .requestMatchers("/recipeDashboard/**", "/mod/**").hasRole("ADMIN")
-                        .requestMatchers("/userDashboard/**", "/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/userDashboard/**", "/ticketDashboard/**", "/ticket/**", "/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated();
             } catch (Exception e) {
                 e.printStackTrace();

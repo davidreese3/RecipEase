@@ -6,17 +6,17 @@ public class Ticket {
     private String classifier;
     private String subject;
     private String note;
-    private boolean solved;
+    private boolean open;
 
     public Ticket(){}
 
-    public Ticket(int id, String email, String classifier, String subject, String note, boolean solved) {
+    public Ticket(int id, String email, String classifier, String subject, String note, boolean open) {
         this.id = id;
         this.email = email;
         this.classifier = classifier;
         this.subject = subject;
         this.note = note;
-        this.solved = solved;
+        this.open = open;
     }
 
     public int getId() {
@@ -59,11 +59,11 @@ public class Ticket {
         this.note = note;
     }
 
-    public boolean isSolved() {
-        return solved;
+    public boolean isOpen() {
+        return open;
     }
 
-    public void setSolved(boolean solved) {
-        this.solved = solved;
+    public void setOpen(boolean open) {
+        this.open = open;
     }
 }

@@ -22,6 +22,7 @@ import com.thesis.recipease.model.web.recipe.util.WebRating;
 import com.thesis.recipease.model.web.recipe.WebRecipe;
 import com.thesis.recipease.model.web.recipe.util.WebComment;
 import com.thesis.recipease.model.web.recipe.util.WebSearch;
+import com.thesis.recipease.model.web.ticket.TicketCriteria;
 import com.thesis.recipease.model.web.ticket.WebTicket;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -155,9 +156,12 @@ public class AppService {
     // ------------------------
 
     // CREATE OPS
+    public Ticket addTicket(WebTicket webTicket){ return ticketDao.addTicket(webTicket);}
     // READ OPS
-    public Ticket addTicket(WebTicket webTicket){ return ticketDao.addTicket(webTicket);
-    }
+    public List<Ticket> getAllTickets() {return ticketDao.getAllTickets();}
+    //public List<Ticket> getTicketsByCriteria(TicketCriteria ticketCriteria) {return ticketDao.getTicketsByCriteria(ticketCriteria);}
+    public Ticket getTicketById(int id){return ticketDao.getTicketById(id);}
     // UPDATE OPS
+    public int updateTicketOpenStatus(int id, boolean open){return ticketDao.updateTicketOpenStatus(id, open);}
     // DELETE OPS
 }

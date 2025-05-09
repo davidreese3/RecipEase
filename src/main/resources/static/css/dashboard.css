@@ -24,3 +24,36 @@
     min-width: 200px;
     word-break: break-word;
 }
+
+#ticket th:nth-child(1), #ticket td:nth-child(1) {
+    width: 3%;
+    min-width: 30px;
+}
+
+#ticket th:nth-child(2), #ticket td:nth-child(2) {
+    width: 15%;
+    min-width: 150px;
+    word-break: break-word;
+}
+
+#ticket th:nth-child(3), #ticket td:nth-child(3) {
+    width: 8%;
+    min-width: 80px;
+}
+
+#ticket th:nth-child(4), #ticket td:nth-child(4) {
+    width: 15%;
+    min-width: 150px;
+    word-break: break-word;
+}
+
+#ticket th:nth-child(5), #ticket td:nth-child(5) {
+    width: 30%;
+    min-width: 300px;
+    word-break: break-word;
+}
+
+#ticket th:nth-child(6), #ticket td:nth-child(6) {
+    width: 8%;
+    min-width: 80px;
+}
