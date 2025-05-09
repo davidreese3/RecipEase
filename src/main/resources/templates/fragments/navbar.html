@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
+</head>
 <div th:fragment="navbar">
     <header>
         <h1 sec:authorize="isAuthenticated()" class="title"><a href="/landing">RecipEase</a></h1>
