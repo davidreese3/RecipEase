@@ -51,7 +51,7 @@ public class WebSecurityConfig {
 
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.requiresChannel(channel -> channel.anyRequest().requiresSecure()).authorizeHttpRequests(authz -> {
+        http.authorizeHttpRequests(authz -> {
             try {
                 authz
                         .requestMatchers("/", "/403", "/login", "/account/register", "/account/activate", "/account/reset/**", "/account/reactivate/**", "/ticket/create").permitAll()
