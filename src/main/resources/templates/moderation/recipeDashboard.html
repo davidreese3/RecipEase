@@ -48,7 +48,7 @@
         <tbody>
         <tr th:each="recipe : ${recipes}">
             <td th:text="${recipe.recipeId}"></td>
-            <td><a th:href="${'http://localhost:8080/recipe/view?recipeId=' + recipe.recipeId}" th:text="${recipe.name}"></a></td>
+            <td><a th:href="${'/recipe/view?recipeId=' + recipe.recipeId}" th:text="${recipe.name}"></a></td>
             <td th:text="${recipe.description}"></td>
             <td th:text="${@recipeUtils.formatRatingShort(recipe.ratingInfo.averageRating, recipe.ratingInfo.numberOfRaters)}"></td>
             <td>

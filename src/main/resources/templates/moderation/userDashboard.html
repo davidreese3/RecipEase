@@ -50,7 +50,7 @@
             <tr th:each="user : ${users}">
                 <td th:text="${user.id}"></td>
                 <td th:text="${user.email}"></td>
-                <td><a th:href="${'http://localhost:8080/profile/view?id=' + user.id}" th:text="${user.name}"></a></td>
+                <td><a th:href="${'/profile/view?id=' + user.id}" th:text="${user.name}"></a></td>
                 <td th:text="${user.roles}"></td>
                 <td>
                     <button th:onclick="|location.href='/userDashboard/change?id=' + ${user.id}|" >Change</button>
